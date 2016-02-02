@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizRT">
+<head>
+  <meta charset="UTF-8">
+  <title>QuizRT</title>
+  <meta name="description" content="">
+	<!-- Mobile viewport optimized -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <script type="text/javascript" src='js/lib/jquery-2.1.4.js'></script>
+  <link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/lib/bootstrap.css">
+  <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/userProfile.css">
+  <link rel="stylesheet" ng-href="css/{{stylesheetName}}.css">
+</head>
+
+<body >
+  <!--
+         <a class="navbar-brand" ng-show="authenticated" href="#">Welcome to QuizRT {{current_user}}</a>
+        <a class="navbar-brand pull-right" ng-show="authenticated" ng-click="logout()">Logout</a>
+        <a class="navbar-brand pull-right" ng-hide="authenticated" ng-href="/#/login">Login</a>
+        <a class="navbar-brand pull-right" ng-hide="authenticated" ng-href="/#/register">Register</a>
+       </div>
+  </nav>
+-->
+    <div ng-view >
+    </div>
+</body>
+<script type="text/javascript" src='js/lib/socket-io-1.3.7.js'></script>
+<script type="text/javascript" src='js/lib/jquery-2.1.4.js'></script>
+<script type="text/javascript" src='js/lib/bootstrap.min.js'></script>
+<script type="text/javascript" src='js/lib/angular.min.js'></script>
+<script type="text/javascript" src='js/lib/angular-route.min.js'></script>
+<script type="text/javascript" src="js/lib/angular-cookies.min.js"></script>
+<script type="text/javascript" src='js/routeProvider.js'></script>
+<script type="text/javascript" src='js/controllers/quizPlayerController.js'></script>
+<script type="text/javascript" src='js/controllers/userProfileController.js'></script>
+<script type="text/javascript" src='js/controllers/categoriesController.js'></script>
+<script type="text/javascript" src='js/controllers/categoryController.js'></script>
+<script type="text/javascript" src='js/controllers/topicController.js'></script>
+<script type="text/javascript" src='js/controllers/authController.js'></script>
+</html>

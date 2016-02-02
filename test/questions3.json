@@ -1,0 +1,1310 @@
+[
+  {
+    "topicId": "Cartoons",
+    "question": "In The Jungle Book Baloo is which of the following?",
+    "options": [
+      "A bear",
+      "A shark",
+      "A tiger",
+      "A panther"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Peter Parker is the alter ego of which superhero?",
+    "options": [
+      "Superman",
+      "Spiderman",
+      "Batman",
+      "Shaktimaan"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Superman's Supercat is named what?",
+    "options": [
+      "Streaky",
+      "Snowy",
+      "Felix",
+      "Krazy Kat"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "The Porky Pig cartoon character has a girlfriend named what?",
+    "options": [
+      "Petunia",
+      "Zinia",
+      "Lily",
+      "Tulip"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What character first appeared in the film The Wise Little Hen?",
+    "options": [
+      "Minnie Mouse",
+      "Mickey Mouse",
+      "Goofy",
+      "Donald Duck"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Which cartoon characters were invented in 1957 in Belgium?",
+    "options": [
+      "Loony Toons",
+      "Peanuts",
+      "The Smurfs",
+      "Tom and Jerry"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Dik Browne is the author of which cartoon strip?",
+    "options": [
+      "Tintin",
+      "Minions",
+      "Hagar the Horrible",
+      "FlintStones"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the comic strip Garfield what is the teddy bear’s name?",
+    "options": [
+      "Bhalu",
+      "Pooky",
+      "Panda Bear",
+      "Grisley Bear"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Identify the character ",
+    "options": [
+      "Garfield",
+      "Donald Duck",
+      "Simba",
+      "Jackal"
+    ],
+    "correctIndex": "1",
+    "image": "https://www.google.co.in/search?q=garfield&biw=1366&bih=667&espv=2&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj_lNn4q73KAhUOv44KHUcYCPUQ\n_AUIBigB&dpr=1#imgrc=UYoG8nuy_sDTCM%3A"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Identify the character\n",
+    "options": [
+      "Bunny",
+      "Baby Bugs",
+      "Rabbit",
+      "Squirrel"
+    ],
+    "correctIndex": "2",
+    "image": "https://www.google.co.in/search?q=baby+bugs&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiQtvK-rb3KAhUD1I4KHR6bA48Q_AUIBygB&biw=1366&bih=667#imgrc=wqvocLEoenngiM%3A\n"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Identify the character ",
+    "options": [
+      "Peter",
+      "Sam",
+      "Popeye",
+      "Bunny"
+    ],
+    "correctIndex": "3",
+    "image": "https://www.google.co.in/search?q=baby+bugs&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiQtvK-rb3KAhUD1I4KHR6bA48Q_AUIBygB&biw=1366&bih=667#tbm=isch&q=popeye&imgrc=uPyZB0iuFQ59WM%3Aq=baby+bugs&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiQtvK-rb3KAhUD1I4KHR6bA48Q_AUIBygB&biw=1366&bih=667#imgrc=wqvocLEoenngiM%3A"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What is the name of Donald Duck's father?",
+    "options": [
+      "Quackemore",
+      "Doodle Duck",
+      "Duckling",
+      "Quacky"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What was the first daily comic strip in the USA?",
+    "options": [
+      "Tom and Jerry",
+      "Mutt and Jeff",
+      "Harry Potter",
+      "Minions"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What was Mickey Mouse's Pluto named when he first appeared?",
+    "options": [
+      "Rover",
+      "Nemo",
+      "Plano",
+      "Duffy"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Identify the character ",
+    "options": [
+      "Bagheera",
+      "Panther",
+      "Sher",
+      "Fox"
+    ],
+    "correctIndex": "1",
+    "image": "https://www.google.co.in/search?q=garfield&biw=1366&bih=667&espv=2&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj_lNn4q73KAhUOv44KHUcYCPUQ\n_AUIBigB&dpr=1#imgrc=UYoG8nuy_sDTCM%3A"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Identify the character ",
+    "options": [
+      "Jerry",
+      "Putty Cat",
+      "Cheshire Cat",
+      "Pink Cat"
+    ],
+    "correctIndex": "3",
+    "image": "https://www.google.co.in/search?q=cheshire+cat&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj1qKXJsL3KAhUMc44KHT5fACYQ_AUIBygB&biw=1366&bih=667#imgrc=hoErJhVlAZu4WM%3A\n"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the Flintstones what order did Fred and Barney belong to?",
+    "options": [
+      "Jungle Lions",
+      "Mermaids",
+      "Sea horse",
+      "Water Buffalos"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the comic strip cartoon Dilbert, what is Dilbert's girlfriends name?",
+    "options": [
+      "Liz",
+      "Paula",
+      "April",
+      "Kate"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In TinTin Comics,what is the license plate number of Thompson and Thomson’s jeep in The Land of Black Gold?\n",
+    "options": [
+      "443",
+      "433",
+      "33",
+      "404"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In TinTin comics,what does Snowy say when he barks?",
+    "options": [
+      "Wooah!",
+      "Wow!!",
+      "Woho!!",
+      "Yahooooo!!"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Identify the character\n",
+    "options": [
+      "Gilbert",
+      "Gotham",
+      "Gru",
+      "Gilfoyle"
+    ],
+    "correctIndex": "3",
+    "image": "https://www.google.co.in/search?q=gru+minions&espv=2&biw=1366&bih=667&source=lnms&tbm=isch&sa=X&sqi=2&ved=0ahUKEwj_vfKItr3KAhUMj44KHYoMBE8Q_AUIBigB#imgrc=ZvVE92sqd-4_xM%3A"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What was Woody Woodpecker's hometown called?",
+    "options": [
+      "Puddleburg",
+      "Hamburg",
+      "Eidelburg",
+      "Snowberg"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the cartoon Peanuts, Schroeder is a big fan of whose music?",
+    "options": [
+      "Beethoven",
+      "Yanni",
+      "Mozart",
+      "Pink Floyd"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the cartoon Casper -The Friendly Ghost, Casper had a horse-ghost friend named what?",
+    "options": [
+      "NightGhost",
+      "Nightmare",
+      "HalfHorse",
+      "HalfGhost"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In Disney cartoons, what was Goofy's nephew's name?",
+    "options": [
+      "Gotham",
+      "Ghost",
+      "Gru",
+      "Gilbert"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What is the last name of the cartoon characters Marge, Bart, and Homer?",
+    "options": [
+      "Simpson",
+      "Emerson",
+      "Robson",
+      "Nelson"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Who hosted the early series of The Pink Panther cartoons?",
+    "options": [
+      "Mike Tyson",
+      " Lenny Schulz",
+      "Oprah Winfrey",
+      "Johnny Depp"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What did Jeremy Boob, Ph.D., use to fix the sub's prop, enabling the Fab Four to escape the Blue Meanies in the 1968 cartoon fantasy Yellow Submarine?\n",
+    "options": [
+      " Bubble gum",
+      "Knife",
+      "Ropes",
+      "Ladder"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What Nickelodeon cartoon series was named after the cartoonist's apartment manager?",
+    "options": [
+      "School of Rock",
+      "Ren & Stimpy",
+      "The Loud Hose",
+      "The Dunes Club"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who was Fifa Player of the year 2014?",
+    "options": [
+      "Lionel Messi",
+      "Cristiano Ronaldo",
+      "Kaka",
+      "Fabio Cannavaro"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "who score the maximum goals in football world cup",
+    "options": [
+      "Lionel Messi",
+      "Cristiano Ronaldo",
+      "Fabio Cannavaro",
+      "Fabio Cannavaro"
+    ],
+    "correctIndex": "2",
+    "image": "https://www.google.co.in/search?q=football+players+image+link&rlz=1C1DFOC_enIN667IN667&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjI8P62r73KAhXWCY4KHQr5DxcQ_AUIBygB&biw=1600&bih=799#imgrc=y3gDA_oEGeUqmM%3A"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which footballer holds two doctorates, one in medicine and in philosophy?",
+    "options": [
+      "The Brazilian Socrates",
+      "The French Franck Ribery",
+      "The Italian Dino Zoff",
+      "The Dutch Marco Van Basten"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which soccer player was voted “Greatest Manchester United Player of the 20th Century” in 2001?",
+    "options": [
+      "Ryan Giggs",
+      "David Beckham",
+      " Eric Cantona",
+      "George Best"
+    ],
+    "correctIndex": "3",
+    "image": "https://en.wikipedia.org/wiki/Eric_Cantona#/media/File:Eric_Cantona_Cannes_2009.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which football legend is born with several physical defects?",
+    "options": [
+      "The Nigerian Jay-Jay Okocha",
+      "The Mexican Jorge Campos",
+      " The Colombian Carlos Valderrama",
+      "The Brazilian Garrincha"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "For which Portuguese club the legendary center-forward Eusebio played?",
+    "options": [
+      "FC Porto",
+      "Sporting Clube de Portugal",
+      "Benfica",
+      "Belenenses"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which of these football superstars has never played a World Cup match?",
+    "options": [
+      "Lev Yashin",
+      "Alfredo Di Stefano",
+      "Raul",
+      "Luis Figo"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who is renowned as the greatest Polish player ever?",
+    "options": [
+      "Jerzy Dudek",
+      "Grzegorz Lato",
+      "Zbigniew Boniek",
+      "Roman Kosecki"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which player contracted to Norwich City appeared in an England World Cup Finals squad?",
+    "options": [
+      "Jerzy Dudek",
+      "David Beckham",
+      "Fabio Cannavaro",
+      "chris woods"
+    ],
+    "correctIndex": "4",
+    "image": "https://en.wikipedia.org/wiki/Chris_Woods#/media/File:Austria_vs._USA_2013-11-19_(064).jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who was the only player to score a Premier League hat-trick for Crystal Palace?",
+    "options": [
+      "FC Porto",
+      "Lionel Messi",
+      "Yannick Bolasie",
+      "Grzegorz Lato"
+    ],
+    "correctIndex": "3",
+    "image": "http://marriedwiki.com/uploads/bio/yannick-bolasie.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which player scored 15 or more Premier League goals with Wigan Athletic?",
+    "options": [
+      "Lev Yashin",
+      "Benfica",
+      "Henri Camara",
+      "Fabio Cannavaro"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "What nationality was Carlos Caszely who received the first ever World Cup red card in 1974?",
+    "options": [
+      "U.S.A",
+      "Chilean",
+      "U.k",
+      "South korea"
+    ],
+    "correctIndex": "2",
+    "image": "http://s.weltsport.net/bilder/spieler/gross/1245.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which English goalkeeper has kept 10 clean sheets in World Cup games?",
+    "options": [
+      "Geoff Hurst",
+      "Peter Shilton",
+      "David James",
+      "Grzegorz Lato"
+    ],
+    "correctIndex": "2",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Anton_and_Rio_Ferdinand_with_West_Ham_United.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "How old was Pele when he won his first World Cup?",
+    "options": [
+      "17",
+      "23",
+      "28",
+      "18"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which German won the World Cup as both a player and a manager?",
+    "options": [
+      " Zinedine Zidane",
+      "Franz Beckenbauer",
+      "Roger Malia",
+      "Peter Shilton"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which Italian won the World Cup aged 40?",
+    "options": [
+      "Dino Zoff",
+      "Norman whiteside",
+      "graham poll",
+      "Roger Malia"
+    ],
+    "correctIndex": "1",
+    "image": "https://en.wikipedia.org/wiki/Dino_Zoff#/media/File:Dino_Zoff_(1974).jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who was England captain in Spain in 1982?",
+    "options": [
+      "Ferreira Eusebio",
+      "Dino Zoff",
+      "Peter Shilton",
+      "Mick Mills"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which player won the 2002 World Cup and also finished top scorer?",
+    "options": [
+      "Ronaldo ",
+      "Lionel Messi",
+      "David James",
+      "Mick Mills"
+    ],
+    "correctIndex": "1",
+    "image": "http://vignette1.wikia.nocookie.net/armchair-new/images/a/a3/Cristiano_Ronaldo_Real_Madrid_CF_v_RCD_Espanyol_4GbnBH1YpIel.jpeg/revision/latest?cb=20121204012325"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who scored the infamous 'Hand of God' goal?",
+    "options": [
+      "Ronaldo ",
+      "Diego Maradonna",
+      "David James",
+      "Paul Ince"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Who goes on the adventure with Merido in Brave?",
+    "options": [
+      "Her brothers",
+      "Her prince",
+      "Her mother",
+      "Her father"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In The Little Mermaid, who is NOT one of Triton’s daughter?",
+    "options": [
+      "Andrina",
+      "Adora",
+      "Attina",
+      "Alana"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/12/tmp/webdr01/05c4d0e1f2c99cb6cfbddfd50465ae65-20.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which phrase does the Evil Queen in Snow White actually say?",
+    "options": [
+      "Mirror,mirror,on the wall-who is the fairest of them all?",
+      "Magic mirror,on the wall-who is the fairest one of all?",
+      "Mirror,mirror,on the wall-who is the fairest one of all?",
+      "Magic mirror,on the wall-who is the fairest of them all?"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/13/tmp/webdr09/37b9a31efc8748f20aba303c0c3c2d3b-1.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In the movie Tangled, Flynn Rider is wanted dead or alive according to his wanted poster because he's a…",
+    "options": [
+      "Bandit",
+      "Thief",
+      "Treasonist",
+      "Robber"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/13/tmp/webdr02/2eb52ac096f0d8152a184f282f187ed2-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In Sleeping Beauty, what is the name of Maleficent’s pet raven?",
+    "options": [
+      "Diablo",
+      "Malum",
+      "Mauvais",
+      "Diable"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/14/tmp/webdr02/cc87334fc9e769fed292c7dcb4594be8-8.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Finish the lyrics: Wouldn't you think I'm the girl, the girl who has everything? Look at this trove, treasures untold…",
+    "options": [
+      "Its full of gizmos and gadgets galore",
+      "Wonders from all over the world",
+      "There so much to be known",
+      "How many wonders can one cavern hold?"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/14/tmp/webdr07/d567bc7bdfd09f430c9561fdccbf1b58-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Pocahontas, what did Pocahontas see in her dream that made her believe that a change was coming?",
+    "options": [
+      "A spinning arrow",
+      "A strange cloud formation",
+      "A hawk circling her village",
+      "A burning blue fire"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/14/tmp/webdr05/21d940e379b9a985a1ba124574ac9aed-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In Frozen, how many brothers does Hans have?",
+    "options": [
+      "7",
+      "9",
+      "12",
+      "15"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr02/9eb8797229845fef0d233ad61a330224-8.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Finish the lyrics: My soul is spiraling in frozen fractals all around…",
+    "options": [
+      "That wraps my heart in a cold and distant past.",
+      "And one thought crystallizes like an icy blast.",
+      "Somehow I’ve now been given a new chance.",
+      "And all my problems are far gone in the past."
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr02/22e240026d37610e15d91cededd986d7-13.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Sleeping Beauty, what do the fairies arm Prince Phillip with to fight Maleficent?",
+    "options": [
+      "Sword of Destiny and Shield of Bravery",
+      "Sword of Truth and Shield of Virtue",
+      "Sword of Righteousness and Shield of Honor",
+      "Sword of Valiantness and Shield of Triumph"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr07/7364275dfc063599bffff8bfd1128d9f-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Aladdin, what does Aladdin, and a reluctant Abu, give to the poor children to eat?",
+    "options": [
+      "Dates",
+      "Apples",
+      "Bread",
+      "Cheese"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr05/6ad7f077bd9d0239ad73d41c372d267d-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the organization Bernard and Miss Bianca work in The Rescuers?",
+    "options": [
+      "The Rescue Aid Society",
+      "The International Rescue Organization",
+      "The Rescuers",
+      "The Secret Helpers"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr11/1610bfbcad07ad4d31119a2427aa9f8c-11.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Beauty and the Beast, how many eggs does Gaston say he eats in order to stay roughly the size of barge?",
+    "options": [
+      "Four dozen",
+      "Nine dozen",
+      "Seven dozen",
+      "Five dozen"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr11/c023138811914c742b2d3cf522005d45-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Princess and the Frog, what fictional country is Prince Naveen from?",
+    "options": [
+      "Maramorgos",
+      "Mypos",
+      "Mrac",
+      "Maldonia"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr07/2ea7952c37d567cb51a6ce61e3da06d8-11.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Hercules, Hades promised not to harm Megara if Hercules gave up his strength for how long?",
+    "options": [
+      "12 hours",
+      "24 hours",
+      "36 hours",
+      "48 hours"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr07/99c0e66fc7fe103fdeb101f07c28fb03-3.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "On whose shoulders does Dopey stand on in order to dance with Snow White during The Silly Song scene?",
+    "options": [
+      "Doc",
+      "Grumpy",
+      "Sneezy",
+      "Happy"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr05/2bfe921faefbbf9a778b4658793ad7ca-1.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Alice in Wonderland, aside from a pocket watch, what else is the White Rabbit holding when Alice encounters him?",
+    "options": [
+      "A cane",
+      "An umbrella",
+      "A top hat",
+      "All of the above"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr05/a93b182845b280d3bcb88a8d5e8245dd-15.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "How many years does the Genie say he has been trapped in the lamp?",
+    "options": [
+      "100 years",
+      "500 years",
+      "1,000 years",
+      "10,000 years"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr11/e4ddea758685a1cf20dfcac130a0be72-13.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  The Sword in the Stone,  what is the name of Merlin’s pet owl?",
+    "options": [
+      "Aristotle",
+      "Socrates",
+      "Archimeded",
+      "Plato"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr10/1ba5b844b541ef06a69f4cdcae7465ab-2.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  Lady and the Tramp,  Jim Dear gives his wife Darling, Lady as a gift for…",
+    "options": [
+      "Valentines Day",
+      "Her Birthday",
+      "For their anniversary",
+      "Christmas"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr11/0ec0de936dd846d9e4f003fa8fa84681-5.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  The Little Mermaid,  what alias does Ursula use when she becomes human?",
+    "options": [
+      "Vanessa",
+      "Alexis",
+      "Sonia",
+      "Amber"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr08/1bc875bcda5ebf22a707c52f02d1db29-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In  Peter Pan,  what happens after Wendy wakes up?",
+    "options": [
+      "She finds Peter Pan chasing his shadow around the bedroom.",
+      "She finds Peter Pan trying to attach his shadow with soap.",
+      "She finds Peter Pan trying to calm Tinkerbell down.",
+      "1. She finds Peter Pan and Tinkerbell looking through her stuff."
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr10/961d2e2017170b0fe407d3b3932d47a5-20.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  101 Dalmatians,  how many puppies does Perdita give birth to?",
+    "options": [
+      "12",
+      "15",
+      "18",
+      "21"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr05/16b4185d0cf66da1b2cecda81c8703d6-1.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Why is the Horned King searching for the Black Cauldron?",
+    "options": [
+      "It has the power to create an army of undead warriors.",
+      "It has the power to bring him back to life.",
+      "It has the power to control the minds of humans.",
+      "It has the power to help him destroy the world."
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/18/tmp/webdr07/8ee38675007e5569a2839d812de47999-22.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " What does the matchmaker criticize Mulan for?",
+    "options": [
+      "Being too tall",
+      "Being too skinny",
+      "Having bad posture",
+      "Having big feet"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/18/tmp/webdr07/664bc2c8031e3994090e47c5d1d018de-14.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Gaston tells Belle they'll have about how many kids together?",
+    "options": [
+      "Four or five",
+      "Six or seven",
+      "Nine or 10",
+      "A dozen"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/18/tmp/webdr02/d2bae83b37d9181d0b20aab867c1af1b-4.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What do Aladdin and his monkey Abu steal from the marketplace when you’re first introduced to them in the movie?",
+    "options": [
+      "An Apple",
+      "Crackers",
+      "Cheese",
+      "A loaf of bread"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What popular Disney character makes an appearance as a stuffed animal in Frozen?",
+    "options": [
+      "Mickey Mouse",
+      "Winnie The Pooh",
+      "Mr. Potato Head",
+      "Tinker Bell"
+    ],
+    "correctIndex": "1",
+    "image": "https://en.wikipedia.org/wiki/File:Mickey_Mouse.png"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Who was the first Disney princess?",
+    "options": [
+      "Cinderella",
+      "Snow White",
+      "Aurora",
+      "Pocahontas"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Franz_J%C3%BCttner_Schneewittchen_5.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What were the names of Cinderella’s evil stepsisters?",
+    "options": [
+      "Beatrice and Daphine",
+      "Anastasia and Drizella",
+      "Mary and Prudence",
+      "Ana and Diana"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which one of these is NOT a Disney prince?",
+    "options": [
+      "Prince Naveen",
+      "Prince George",
+      "Prince Charming",
+      "Prince Eric"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What does the enchanted cake in Brave turn Merida’s mother into?",
+    "options": [
+      "A bear",
+      "A cat",
+      "A dog",
+      "A frog"
+    ],
+    "correctIndex": "1",
+    "image": "https://en.wikipedia.org/wiki/File:Ursus_arctos_-_Norway.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In The Little Mermaid, what name does Ursula go by when she disguises herself and uses Ariel’s voice to try and win over Eric?",
+    "options": [
+      "Vanessa",
+      "Caroline",
+      "Clarissa",
+      "Athena"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Who did Pocahontas’ father want her to marry?",
+    "options": [
+      "John Rolfe",
+      "Kocoum",
+      "John Smith",
+      "Percy"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the song that Cinderella and Prince Charming dance to at the ball?",
+    "options": [
+      "Perfectly Perfect",
+      "More Than A dream",
+      "So This Is Love",
+      "Sing, Sweet Niightingale"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which one of these is NOT a song from Sleeping Beauty?",
+    "options": [
+      "Once Upon A Dream",
+      "Part Of Your World",
+      "The Gifts of Beauty and Song",
+      "Keys to the Kingdom"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Movie_poster_mulan.JPG"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which of these official Disney Princesses is not actually a princess in the movie?",
+    "options": [
+      "Merida",
+      "Mulan",
+      "Pocahontas",
+      "Ariel"
+    ],
+    "correctIndex": "2",
+    "image": "http://cdn.playbuzz.com/cdn/abd0fa49-77fd-4eb6-97b1-26eefea9811e/b3a077f5-82d1-4979-8d6b-61110edc9468.gif"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "How many sisters does Ariel have?",
+    "options": [
+      "7",
+      "6",
+      "4",
+      "3"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which of these princesses is based on a real person?",
+    "options": [
+      "Cinderella",
+      "Pocahontas",
+      "Ariel",
+      "Jasmine"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Pocahontas_by_Simon_van_de_Passe_1616.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which famous princess attends Elsa’s coronation ceremony in Frozen?",
+    "options": [
+      "Cinderella",
+      "Aurora",
+      "Rapunzel",
+      "Merida"
+    ],
+    "correctIndex": "3",
+    "image": "https://en.wikipedia.org/wiki/File:Illustration_for_the_Brothers_Grimm_fairy_tale_Rapunzel..jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the pub that Flynn brings Rapunzel to in Tangled?",
+    "options": [
+      "O`Connors Pub",
+      "Ye Olde Pub",
+      "The Snuggly Duckling",
+      "Gothel`s Pub"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What U.S. city is the setting of The Princess and The Frog inspired by?",
+    "options": [
+      "New York",
+      "New Orleans",
+      "Nashville ",
+      "Atlanta"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:New_Orleans,_Louisiana_montage.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the tea cup from Beauty and the Beast?",
+    "options": [
+      "Monseiur Potts",
+      "Chippy Potts",
+      "Chip Potts",
+      "Mr. Potts"
+    ],
+    "correctIndex": "3",
+    "image": "https://en.wikipedia.org/wiki/File:BeautyBeastCharacters.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of Mulan’s pet dragon?",
+    "options": [
+      "Huns",
+      "Mushu",
+      "Li Shang",
+      "Fa Zhou"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:MulanCharacters.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which one of these princesses is NOT part of Disney’s official princess lineup?",
+    "options": [
+      "Pocahontas",
+      "Elsa",
+      "Merida",
+      "Rapunzel"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Elsa_from_Disney%27s_Frozen.png"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In the Lion King, where does Mufasa and his family live?",
+    "options": [
+      "The Gorge",
+      "Waterhole",
+      "Mount Kilimanjaro",
+      "Pride rock"
+    ],
+    "correctIndex": "4",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/23/LionKingCharacters.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Beauty and the Beast, how many egss does Gaston eat for breakfast?",
+    "options": [
+      "1 dozen",
+      "3 dozen",
+      "5 dozen",
+      "7 dozen"
+    ],
+    "correctIndex": "3",
+    "image": "http://vignette2.wikia.nocookie.net/disney/images/1/16/Beauty-and-the-beast-disneyscreencaps.com-541.jpg/revision/latest?cb=20130715181838"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "During the battle with Aladdin, what type of animal does Jafar transform himself into?",
+    "options": [
+      "Tiger",
+      "Cobra",
+      "Mongoose",
+      "Lion"
+    ],
+    "correctIndex": "2",
+    "image": "http://vignette2.wikia.nocookie.net/filmguide/images/d/d4/Jafar.gif/revision/latest?cb=20120414183741"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which full length animated feature did Walt Disney originally consider having as a Live Action Film with Mary Martin having the lead role?",
+    "options": [
+      "Peter Pan",
+      "Robin Hood",
+      "Cinderella",
+      "Snow White"
+    ],
+    "correctIndex": "1",
+    "image": "http://static.independent.co.uk/s3fs-public/thumbnails/image/2015/10/21/13/disney%20cartoon.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What actor provided the voice of Lumiere in Beauty & the Beast?",
+    "options": [
+      "Chris Sanders",
+      "Jerry Orbach",
+      "Jim Cummings",
+      "Brian Bedford"
+    ],
+    "correctIndex": "2",
+    "image": "http://i2.wp.com/bitcast-a-sm.bitgravity.com/slashfilm/wp/wp-content/images/Beauty-and-the-Beast.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Lady & the Tramp, by what name did Tony call Tramp?",
+    "options": [
+      "Butch",
+      "Witch",
+      "Groan",
+      "Cramp"
+    ],
+    "correctIndex": "1",
+    "image": "https://satinahall.files.wordpress.com/2015/06/lady-and-the-tramp-11.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the fictional city featured in Aladdin?",
+    "options": [
+      "Yanbu",
+      "Jubail",
+      "Qatif",
+      "Agrabah"
+    ],
+    "correctIndex": "4",
+    "image": "http://www.parisindiaconnections.com/wp-content/uploads/2013/04/aladin.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What nickname does Peter Pan give to Captain Hook?",
+    "options": [
+      "Seel",
+      "Eel",
+      "Codfish",
+      "Whale"
+    ],
+    "correctIndex": "3",
+    "image": "http://vignette4.wikia.nocookie.net/parody/images/a/af/Peterpan2-disneyscreencaps_com-1915.jpg/revision/latest?cb=20131014102022"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Peter Pan, what city does the story begin in?",
+    "options": [
+      "New York",
+      "London",
+      "Paris",
+      "Washington"
+    ],
+    "correctIndex": "2",
+    "image": "http://img2-2.timeinc.net/people/i/2014/news/140203/peter-pan-600.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What song was added to the special edition of Beauty and the Beast?",
+    "options": [
+      "Human Again",
+      "Belle",
+      "Gaston",
+      "Be our guest"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.toonbarn.com/wordpress/wp-content/uploads/2011/11/Disney-releases-Beauty-and-The-Beast-The-Enchanted-Christmas.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What movie did Walt Disney have dubbed in 7 different languages costing him an extra $65,000 but lost a major amount of the money because of WWII and the European Market having trouble because of the war?",
+    "options": [
+      "Peter Pan",
+      "Mickey mouse",
+      "Pinocchio",
+      "Cinderella"
+    ],
+    "correctIndex": "3",
+    "image": "http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-e6lzoj_4c65a315.jpeg?region=0,0,600,600&width=320"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "On what mountain was Hercules born?",
+    "options": [
+      "Mount Everest",
+      "Mound Eden",
+      "Mount Jade",
+      "Mount Olympus"
+    ],
+    "correctIndex": "4",
+    "image": "http://vignette1.wikia.nocookie.net/disney/images/c/cc/Disney_mount_olympus_4.jpg/revision/latest?cb=20110525062105"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What 2 colors make up the Queen of Hearts dress in Alice in Wonderland?",
+    "options": [
+      "Red and white",
+      "Red and black",
+      "Purple and Red",
+      "White and purple"
+    ],
+    "correctIndex": "2",
+    "image": "http://cdnvideo.dolimg.com/cdn_assets/fd5e5e0f847243c8ad67b72ed4c1b5705b404e25.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "When Hercules is a baby on Mount Olympus, what does he use as a crib to sleep in?",
+    "options": [
+      "Rock",
+      "Leaves",
+      "Cloud",
+      "Sword"
+    ],
+    "correctIndex": "3",
+    "image": "http://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/t/5390b599e4b0b45f2a56e4de/1434444090963/Walt-Disney-Posters-Hercules-walt-disney-characters-32518673-3000-2250.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "This is a character from which Disney movie - Aurora?",
+    "options": [
+      "Sleeping Beauty",
+      "Pinnocchio",
+      "The Little Mermaid",
+      "The Lion king"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is Jafar's title?",
+    "options": [
+      "Premier of Agrabah",
+      "Royal Vizier of Agrabah",
+      "Royal Advisor of Agrabah",
+      "Chancellor Of Agrabah"
+    ],
+    "correctIndex": "2",
+    "image": "http://www3.pictures.zimbio.com/mp/Y2y6UMuTuTCl.jpg"
+  }
+]

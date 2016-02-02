@@ -1,0 +1,58 @@
+<!--
+//Copyright {2016} {NIIT Limited, Wipro Limited}
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//   
+//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
+//  
+ -->
+<div class="container">
+
+  <div class="navbar navbar-fixed-top">
+    <div class="heading pull-left">
+      <span id="heading-name-category">
+        {{category.categoryName}}
+      </span>
+    </div>
+    <button type="submit" class="btn btn-default pull-right search-topic">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </div><!--end navbar-->
+
+  <div class="content">
+    <div class="row topic-row">
+      <div class="topic-div col-sm-6" ng-repeat="topic in category.categoryTopics" >
+        <div ng-click= "showTopic(topic._id)">
+
+          <a href="">
+
+            <div class="topic-icon col-xs-3"><img ng-src="{{topic.topicIcon}}">
+            </div><!--end topic-icon-->
+
+            <div class="topic-data col-xs-6">
+              <span class="topic-name-category">{{topic.topicName}}</span>
+              <span class="topic-desc">{{topic.topicDescription}}</span>
+            </div><!--end topic-data-->
+
+            <div class="topic-category col-xs-3">
+              <a href=""><small>{{topic.topicCategory[0]}}</small></a>
+            </div><!--end topic-category-->
+
+          </a>
+
+        </div><!--end ng-click-->
+      </div><!--end topic-->
+    </div><!--end row-topic-->
+  </div><!--end content-->
+
+</div><!-- end container-->

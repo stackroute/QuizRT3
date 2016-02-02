@@ -1,0 +1,208 @@
+/*Copyright {2016} {NIIT Limited, Wipro Limited}
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
+*/
+
+.container{
+  border-color: #AAA;
+  background-color: #f5f5f5;
+  /*width: 62%;
+  margin-left: 19%;
+   margin-right: 19%;
+  border-radius: 5px;
+  padding: 20px;*/
+
+}
+#questionInfoPanel h4{
+  border-color: #AAA;
+  border-width: medium;
+}
+
+.panel-me {
+  border-color: green;
+}
+
+.panel img
+{
+  height:100%;
+  width:100%;
+}
+
+
+
+col-xs-12 img{
+  width: 70%;
+  height: 72%;
+  margin: 0% 15%;
+  border-radius: 20px;
+  padding: 2%;
+}
+
+.questionImage{
+  width: 70%;
+  height: 72%;
+  margin: 0% 15%;
+  border-radius: 20px;
+  padding: 2%;
+}
+
+.questionText{
+  text-align: center;
+  border-width:thin;
+  border-style:solid;
+  border-color: black;
+  border-radius: 10px;
+  padding: 10px;
+  height: 28%;
+  margin: 0%;
+}
+
+#questionInfoPanel h4{
+  text-align: center;
+  border-width:thin;
+  border-style:dashed;
+  border-color: black;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0%;
+  margin-top: 15px;
+}
+
+.center-align {
+  text-align: center;
+}
+
+#questionInfoPanel{
+  height: 100%;
+}
+
+body{
+  color:black;
+  overflow: scroll;
+}
+
+.myRow{
+  padding-top: 1%;
+  margin-top: 2%;
+  height: 20%;
+}
+
+.btn{
+  white-space: normal; !important;
+}
+
+.btn-1{
+  white-space: normal; !important
+  overflow:hidden;
+  height: 60px;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 1%;
+}
+
+.centeredButton{
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.myOptions{
+  width: 50%;
+  padding: 0.5%;
+}
+
+#main{
+  height: 100%;
+}
+
+#timer{
+  text-align: center;
+  font-weight: bolder;
+  font-size: 30px;
+  color: rgb(254, 0, 0);
+}
+
+.img-circle{
+  width: 38%;
+  border-width:thin;
+  border-style:solid;
+  border-color: black;
+}
+
+
+
+#questionInfo{
+  height: 40%;
+}
+
+.navbar{
+  height: 8%;
+  margin-top: 2%;
+  margin-bottom: 4%;
+}
+
+.myStatus{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.myStatus h5{
+  font-weight: bold;
+  padding: 10px 3px;
+}
+
+.myStatus h4{
+  padding: 8px 3px;
+  text-decoration: underline;
+}
+
+.myPadding{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.score{
+  padding-top: 15px;
+}
+
+#scoreBoard{
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  font-size: 50px;
+  color: #DDD;
+  text-shadow: 2px 2px black;
+  font-weight: bolder;
+  opacity: 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+
+
+  .questionImage{
+    width: 40%;
+    height: 72%;
+    margin: 0% 15%;
+    border-radius: 20px;
+    padding: 2%;
+    margin: auto;
+  }
+
+  .myRow{
+    margin-top: -20px;
+    height: 40%;
+  }
+
+}

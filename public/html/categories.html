@@ -1,0 +1,61 @@
+<!--
+Copyright {2016} {NIIT Limited, Wipro Limited}
+
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//   
+//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
+-->
+  
+ 
+<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+
+  <div class="container" >
+		<div class="row" id="Quizzer">
+			<a href="#/userProfile" class="col-xs-offset-1 col-xs-9">
+				Quizart
+			</a>
+			<div class="col-xs-2">
+				<a ng-click="logout()" class="glyphicon glyphicon-off">
+				</a>
+			</div>
+		</div>
+
+  <div class="row topic-info" ng-repeat ="category in categories">
+      <div class="row">
+        <h4 class ="topic-category-name col-xs-9 pull-left ">{{category.categoryName}}</h4>
+      </div>
+
+			<div class="topicsholder"  ng-repeat ="topic in category.categoryTopics|limitTo:5">
+
+			<div class="topic-panel panel panel-default">
+				<div class="panel-body content">
+					<div ng-click="showTopic(topic._id)" class="topic-icon">
+						<a href="" class="topicPlay"><img ng-src="{{topic.topicIcon}}" alt=""></a>
+					</div><!--end topic-icon-->
+				</div>
+			<div class="panel-footer">
+					<div ng-click="showTopic(topic._id)">
+						<p>{{topic.topicName}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div> <!--topic info ends every category row -->
+ <!-- end topicinfo row -->
+		<div id="foot" class="row">
+			<div col-xs-12 class="play-button-bar">
+			</div>
+		</div>
+</div>

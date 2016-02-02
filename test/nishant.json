@@ -1,0 +1,14 @@
+{
+    "userId":"ni1",
+    "name":"Nishant",
+    "age":23,
+    "imageLink":"/images/userProfileImages/user.png",
+    "country":"Australia",
+    "flagLink":"/images/userProfileImages/indiaflag.png",
+    "badge":"Beginner",
+    "totalGames":0,
+    "wins":0,
+    "topicsPlayed":
+      [
+    ]
+}
