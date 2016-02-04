@@ -1,4 +1,4 @@
-db.tournaments.insert([
+[
   {
     "title":"Lord Of Series",
     "description":"Tournament for the persons who think they know all about English TV Series",
@@ -6,9 +6,9 @@ db.tournaments.insert([
     "playersPerMatch":3,
     "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
     "topics": [
-      "Game-of-Thrones",
-      "Lord-of-the-Rings",
-      "Sherlock"
+    { "name": "Game-of-Thrones"},
+    { "name": "Lord-of-the-Rings"},
+    { "name": "Sherlock"}
     ]
   },
   {
@@ -18,11 +18,11 @@ db.tournaments.insert([
     "playersPerMatch":3,
     "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
     "topics": [
-      "Football-Players",
-      "Basketball-Players",
-      "Cricket-Players",
-      "Cricket-World-Cup",
-      "Hockey"
+    {"name" : "Football-Players"},
+    {"name" : "Basketball-Players"},
+    {"name" : "Cricket-Players"},
+    {"name" : "Cricket-World-Cup"},
+    {"name" : "Hockey"}
     ]
   },
   {
@@ -32,10 +32,10 @@ db.tournaments.insert([
     "playersPerMatch":4,
     "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
     "topics": [
-      "Cartoons",
-      "Game-of-Thrones",
-      "Lord-of-the-Rings",
-      "Sherlock"
+    {"name" : "Cartoons"},
+    {"name" : "Game-of-Thrones"},
+    {"name" : "Lord-of-the-Rings"},
+    {"name":  "Sherlock"}
     ]
   },
   {
@@ -45,12 +45,11 @@ db.tournaments.insert([
     "playersPerMatch":2,
     "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
     "topics": [
-      "Bollywood-Movies",
-      "Harry-Potter-Movies",
-      "Sherlock",
-      "Lord-of-the-Rings",
-      "Disney-Movies"
+    {"name":  "Bollywood-Movies"},
+    {"name" : "Harry-Potter-Movies"},
+    {"name" : "Sherlock"},
+    {"name" : "Lord-of-the-Rings"},
+    {"name" : "Disney-Movies"}
     ]
   }
 ]
-)

@@ -16,11 +16,14 @@
 //
 
 var gameManager = require('./gameManager/gameManager.js');
+var tournamentManager = require('./tournamentManager/tournamentManager.js');
 var leaderBoard = require('./gameManager/leaderboard.js');
 var uuid= require('node-uuid');
 var Game = require("./../models/game");
 var Profile = require("./../models/profile");
 var maxPlayers =4;
+
+
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
   io.use(function(socket,next){
@@ -195,6 +198,33 @@ module.exports = function(server,sessionMiddleware) {
       // console.log(data);
       if(gameManager.players.get(topicID)) gameManager.players.get(topicID).delete(client.request.session.passport.user);
     });
+
+
+// Tournament Logics Start Here
+
+client.on('joinTournament',function(data){
+  console.log('session object -------------------------------------');
+  console.log(client.request.session);
+  console.log('session object -------------------------------------');
+  tournamentManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
+  var tMaxPlayers=data.maxPlayers;
+  if(tournamentManager.players.get(data.tid).size==tMaxPlayers){
+    var topicPlayers= tournamentManager.popPlayers(data.tid);
+    console.log("666666666666666666666666666666666");
+    console.log(topicPlayers);
+    console.log("666666666666666666666666666666666");
+
+    var gameId= makeid();
+
+    topicPlayers.forEach(function(player){
+    leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
+    player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:tMaxPlayers});
+    });
+  }
+
+});
+
+
 
   });
 

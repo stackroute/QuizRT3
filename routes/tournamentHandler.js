@@ -15,6 +15,7 @@
 //   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
 //
 var express = require('express');
+var Reservoir = require('reservoir');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Profile =require("../models/profile");
@@ -36,7 +37,7 @@ router.route('/tournaments')
 
 router.route('/tournaments/:tournamentID')
 	  .get(function(req , res){
-	  	var usr = req.session.user.local.username;
+	  	
 
 	  });
 
