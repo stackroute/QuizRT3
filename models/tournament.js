@@ -12,7 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant,
+//   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant,Venkata Gopichand
 //
 
 
@@ -21,7 +21,6 @@ var Topic = require('./topic');
 
 
 var tournamentSchema = mongoose.Schema({
-  _id: String,
   title:String,
   description:String,
   matches:Number,
