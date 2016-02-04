@@ -11,9 +11,9 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
-// 
+//
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -25,7 +25,7 @@ var Tournament =require("../models/tournament");
 router.route('/tournaments')
 	  .get(function(req, res){
 	    Tournament.find()
-	      .populate("topics")
+	      .populate("leg.topics")
 	          .exec(function(err,tournaments){
 	            if(err){
 	                return res.send(err);
@@ -37,7 +37,7 @@ router.route('/tournaments')
 router.route('/tournaments/:tournamentID')
 	  .get(function(req , res){
 	  	var usr = req.session.user.local.username;
-	  	
+
 	  });
 
 
