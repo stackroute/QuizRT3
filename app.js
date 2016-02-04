@@ -11,10 +11,10 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -41,7 +41,7 @@ var index = require('./routes/index');
 var quizPlayerHandler = require('./routes/quizPlayerHandler');
 var authenticationHandler = require('./routes/authenticationHandler')(passport);
 var redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient});
-mongoose.connect('mongodb://172.23.238.253/quizRT');
+mongoose.connect('mongodb://172.23.238.253/quizRT3');
 var db = mongoose.connection;
 
 var Quiz = require("./models/quiz");
@@ -75,6 +75,6 @@ app.use('/auth',authenticationHandler);
 var initPassport = require('./passport-init');
 initPassport(passport);
 
-server.listen(3000, function() {
-  console.log('App started for Quiz Play Testing!!');
+server.listen(8080, function() {
+  console.log('App started for Quiz Play!! Please use ur IP e.g 123.23.123.23:8080');
 });
