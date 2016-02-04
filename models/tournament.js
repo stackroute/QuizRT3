@@ -27,6 +27,7 @@ var tournamentSchema = mongoose.Schema({
   playersPerMatch:Number,
   imageUrl:String,
   topics: [{ type: String, ref: 'Topic' }]
+    
 });
 
 var Tournament = mongoose.model('Tournament', tournamentSchema);
