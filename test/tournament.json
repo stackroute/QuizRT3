@@ -1,0 +1,81 @@
+db.tournaments.insert([
+  {
+    "title":"Lord Of Series",
+    "description":"Tournament for the persons who think they know all about English TV Series",
+    "matches":3,
+    "playersPerMatch":3,
+    "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
+    "leg":
+    [
+      {
+        "topics": [
+          "Game-of-Thrones",
+          "Lord-of-the-Rings",
+          "Sherlock"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Sports Champ",
+    "description":"Lets Test Your Sports IQ",
+    "matches":5,
+    "playersPerMatch":3,
+    "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
+    "leg":
+    [
+      {
+        "type":"round-roboin",
+        "topics":
+        [
+          "Football-Players",
+          "Basketball-Players",
+          "Cricket-Players",
+          "Cricket-World-Cup",
+          "Hockey"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "TV Maniac",
+    "description":"Lets Test Your Sports IQ",
+    "matches":4,
+    "playersPerMatch":4,
+    "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
+    "leg":
+    [
+      {
+        "type":"round-roboin",
+        "topics": [
+          "Cartoons",
+          "Game-of-Thrones",
+          "Lord-of-the-Rings",
+          "Sherlock"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Bigest Hollywood Fan",
+    "description":"Lets Test Your Sports IQ",
+    "matches":5,
+    "playersPerMatch":2,
+    "imageUrl":"https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png&q=50&h=128&w=128",
+    "leg":
+    [
+      {
+        "type":"round-roboin",
+        "topics": [
+          "Bollywood-Movies",
+          "Harry-Potter-Movies",
+          "Sherlock",
+          "Lord-of-the-Rings",
+
+          "Disney-Movies"
+        ]
+      }
+    ]
+  }
+]
+)
