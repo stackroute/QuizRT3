@@ -11,10 +11,10 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 var mongoose = require('mongoose');
 
 var topicSchema = new mongoose.Schema({
@@ -26,6 +26,6 @@ var topicSchema = new mongoose.Schema({
   topicFollowers: Number
 });
 
-Topic = mongoose.model('Topic', topicSchema, "topics_collection");
+var Topic = mongoose.model('Topic', topicSchema, "topics_collection");
 
 module.exports = Topic;

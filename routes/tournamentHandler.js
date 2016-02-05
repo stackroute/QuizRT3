@@ -14,12 +14,11 @@
 //
 //   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
 //
-var express = require('express');
-var Reservoir = require('reservoir');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Profile =require("../models/profile");
-var Tournament =require("../models/tournament");
+var express = require('express'),
+		Reservoir = require('reservoir'),
+		router = express.Router(),
+		Profile =require("../models/profile"),
+		Tournament =require("../models/tournament");
 
 
 
@@ -37,7 +36,7 @@ router.route('/tournaments')
 
 router.route('/tournaments/:tournamentID')
 	  .get(function(req , res){
-	  	
+
 
 	  });
 
