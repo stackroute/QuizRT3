@@ -25,7 +25,7 @@ var express = require('express'),
 router.route('/tournaments')
 	  .get(function(req, res){
 	    Tournament.find()
-	      .populate("leg.topics")
+	      .populate("topics.name")
 	          .exec(function(err,tournaments){
 	            if(err){
 	                return res.send(err);
@@ -37,7 +37,7 @@ router.route('/tournaments')
 router.route('/tournament/:tId')
 	  .get(function(req , res){
 			Tournament.findById(req.params.tId)
-	      .populate("leg.topics")
+	      .populate("topics.name")
 	          .exec(function(err,tournaments){
 	            if(err){
 	                return res.send(err);
