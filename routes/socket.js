@@ -218,7 +218,7 @@ client.on('joinTournament',function(data){
 
     topicPlayers.forEach(function(player){
     leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-    player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:tMaxPlayers});
+    player.clientData.client.emit('startTournament',{gameId:gameId,maxPlayers:tMaxPlayers});
     });
   }
 
