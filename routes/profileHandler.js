@@ -11,15 +11,14 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
-var express = require('express');
-var bodyParser = require('body-parser');
-var router = express.Router();
+//
 
-var Profile = require("../models/profile");
+var express = require('express'),
+    router = express.Router(),
+    Profile = require("../models/profile");
+
 router.get('/profileData', function(req, res, next) {
 
    console.log(req.session.user);

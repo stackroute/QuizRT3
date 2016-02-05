@@ -15,40 +15,39 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var express = require('express');
-var app = express();
-var path = require('path');
-var http = require('http');
-var mongoose = require('mongoose');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var passport = require('passport');
-var redis = require('redis');
-var redisClient = redis.createClient();
+var express = require('express'),
+    app = express(),
+    path = require('path');
+    http = require('http'),
+    mongoose = require('mongoose'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    passport = require('passport'),
+    redis = require('redis'),
+    redisClient = redis.createClient(),
+    RedisStore = require("connect-redis")(session),
+    server = http.createServer(app),
+    bodyParser = require('body-parser'),
+    topicsHandler = require('./routes/topicsHandler'),
+    profileHandler = require('./routes/profileHandler'),
+    tournamentHandler = require('./routes/tournamentHandler'),
+    index = require('./routes/index'),
+    quizPlayerHandler = require('./routes/quizPlayerHandler'),
+    authenticationHandler = require('./routes/authenticationHandler')(passport),
+    redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient}),
+    Quiz = require("./models/quiz"),
+      sessionMiddleware = session({
+      store: redis_store,
+      secret: 'keyboard cat'
+    });
 
-var RedisStore = require("connect-redis")(session);
-
-var server = http.createServer(app);
-
-var bodyParser = require('body-parser');
-var topicsHandler = require('./routes/topicsHandler');
-var profileHandler = require('./routes/profileHandler');
-var tournamentHandler = require('./routes/tournamentHandler');
-var index = require('./routes/index');
-var quizPlayerHandler = require('./routes/quizPlayerHandler');
-var authenticationHandler = require('./routes/authenticationHandler')(passport);
-var redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient});
 mongoose.connect('mongodb://172.23.238.253/quizRT3');
-var db = mongoose.connection;
-
-var Quiz = require("./models/quiz");
-var sessionMiddleware = session({
-  store: redis_store,
-  secret: 'keyboard cat'
+mongoose.connection.on('error', console.error.bind(console, 'Faild to establish connection to MongoDB@StackRouteHost:PORT/quizRT3'));
+mongoose.connection.on('open', function() {
+  console.log('Connected to MongoDB@StackRouteHost:PORT/quizRT3');
 });
 
 require('./routes/socket.js')(server,sessionMiddleware);

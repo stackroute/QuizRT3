@@ -15,16 +15,14 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var express = require('express');
-var Reservoir = require('reservoir');
-var router = express.Router();
-var mongoose = require( 'mongoose' );
-var Quiz = require("../models/quiz");
-var Question=require("../models/question.js");
+var express = require('express'),
+    Reservoir = require('reservoir'),
+    router = express.Router(),
+    Quiz = require("../models/quiz"),
+    Question=require("../models/question.js");
 
 router.route('/quizData/:id')
 .post(function(req, res) {
-
   var topicInst = req.params.id;
   var temp=topicInst.split(",");
   var topicId1=temp[0];

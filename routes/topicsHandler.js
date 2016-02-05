@@ -11,21 +11,19 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 var express = require('express');
-var router = express.Router();
-var mongoose = require( 'mongoose' );
-var bodyParser = require('body-parser');
-var Category = require("../models/category");
-var Topic = require("../models/topic");
-var Profile =require("../models/profile");
-var topicInst;
-var topic1={};
-var points = 0;
-var level =1;
+    router = express.Router(),
+    Category = require("../models/category"),
+    Topic = require("../models/topic"),
+    Profile =require("../models/profile"),
+    topicInst,
+    topic1={},
+    points = 0,
+    level =1;
 
 findPercentage = function(points,level)
 {
@@ -37,15 +35,12 @@ levelScore = function(n)
   return ((35 * (n * n)) +(95*n)-130);
 }
 findLevel = function(points){
-
   i=1;
   while(points>=levelScore(i))
   {
     i++;
   }
-
   return i-1;
-
 }
  router.route('/categories')
   .get(function(req, res){
