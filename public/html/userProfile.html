@@ -12,12 +12,12 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
+//
 -->
 <link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
-	<div class="container fullHeight" id="main">
+	<div class="container" id="main">
 		<div class="row" id="Quizzer">
 			<div class="col-xs-offset-1 col-xs-9">
 				Quizart
@@ -62,7 +62,7 @@
 		</div>
 		</div>
 	</div>
-		<div class="row" id="topics">Favourite Topics
+		<div class="row sectionHeader">Favourite Topics
 		</div>
 		<div class="row topic-info" ng-hide="topicsFollowed.length > 0">
 			You have not followed any topics as yet. How about picking some topics from below.
@@ -99,6 +99,38 @@
 					<button class="play-now-button btn btn-success" ng-click="play()">More Topics</button>
 			</div>
 			</div>
+
+			<!--  Tournament Section -->
+			<section>
+				<div class="row sectionHeader">Tournaments</div>
+				<div class="row topic-info" ng-hide="tournaments.length > 0">
+					You have not part of any tournaments. How about participating right now!!
+				</div>
+				<div class="row topic-info" ng-show="tournaments.length > 0">
+					<div class="topicsholder"  ng-repeat="tournament in tournaments">
+						<div class="topic-panel panel panel-default">
+						  <div class="panel-body content">
+								<a><img ng-src="{{tournament.imageUrl}}" ng-click="showTournamentDetails(tournament._id)"></a>
+								<span class="badge">{{tournament.topics.length}}</span>
+						  </div>
+						  <div class="panel-footer">
+								<p>{{tournament.title}}</p>
+							</div>
+						</div>
+				</div><!-- end topicsholder-->
+				<!-- <div class="col-xs-3 topicsholder" ng-if="topicsFollowed.length>11">
+					<div>
+						<button ng-if="topicsFollowed.length>=8" ng-click="seeHide(topicsFollowed.length)"><img ng-src="{{btnImg}}" class="img-rounded"></button>
+					</div>
+		 	 	</div> -->
+			</div> <!-- end topicinfo row -->
+
+			<div id="foot" class="row">
+				<div col-xs-12 class="play-button-bar">
+						<button class="play-now-button btn btn-success" ng-click="play()">More Tournaments</button>
+				</div>
+			</div>
+		</section>
 </div>
 <!-- end container -->
 
