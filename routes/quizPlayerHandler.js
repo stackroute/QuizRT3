@@ -45,10 +45,10 @@ router.route('/quizData/:id')
         var quiz1=new Quiz();
         quiz1.topicId=topicId1;
         quiz1.gameId=groupId;
-        var myReservoir = Reservoir(5);
-        data.forEach(function(e) {
-          myReservoir.pushSome(e);
-        });
+        // var myReservoir = Reservoir(5);
+        // data.forEach(function(e) {
+        //   myReservoir.pushSome(e);
+        // });
         quiz1.questions=[];
         for(var i=0;i<5;++i)
         {
