@@ -34,9 +34,16 @@ router.route('/tournaments')
 	          });
 	 	});
 
-router.route('/tournaments/:tournamentID')
+router.route('/tournament/:tId')
 	  .get(function(req , res){
-
+			Tournament.findById(req.params.tId)
+	      .populate("leg.topics")
+	          .exec(function(err,tournaments){
+	            if(err){
+	                return res.send(err);
+	              }
+	            return res.json(tournaments);
+	          });
 
 	  });
 
