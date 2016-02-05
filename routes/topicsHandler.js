@@ -15,7 +15,7 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var express = require('express');
+var express = require('express'),
     router = express.Router(),
     Category = require("../models/category"),
     Topic = require("../models/topic"),
