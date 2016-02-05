@@ -98,7 +98,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
                'templateUrl': 'html/topic.html',
                'controller': 'topicController'
              })
-       .when('/quizPlayer',{
+          .when('/quizPlayer',{
             'templateUrl': 'html/quizPlayer.html',
             'controller': 'quizPlayerController',
             'reload':true
@@ -110,6 +110,10 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
           .when('/tournament/:tournamentID' , {
             'templateUrl': 'html/tournament.html',
             'controller': 'tournamentController'
+          })
+          .when('/tournament/tournamentPlayer' , {
+            'templateUrl': 'html/tournamentPlayer.html',
+            'controller': 'tournamentPlayerController'
           });
 
 

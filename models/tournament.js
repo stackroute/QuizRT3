@@ -21,13 +21,19 @@ var Topic = require('./topic');
 
 
 var tournamentSchema = mongoose.Schema({
+  _id: String,
   title:String,
   description:String,
   matches:Number,
   playersPerMatch:Number,
   imageUrl:String,
-  topics: [{ type: String, ref: 'Topic' }]
-    
+  topics: [
+    {
+      _id:String,
+      name:{type: String, ref: 'Topic'}
+     }
+  ]
+
 });
 
 var Tournament = mongoose.model('Tournament', tournamentSchema);
