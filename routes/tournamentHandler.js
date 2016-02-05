@@ -25,7 +25,7 @@ var express = require('express'),
 router.route('/tournaments')
 	  .get(function(req, res){
 	    Tournament.find()
-	      .populate("leg.topics")
+	      .populate("topics.name")
 	          .exec(function(err,tournaments){
 	            if(err){
 	                return res.send(err);
@@ -34,9 +34,16 @@ router.route('/tournaments')
 	          });
 	 	});
 
-router.route('/tournaments/:tournamentID')
+router.route('/tournament/:tId')
 	  .get(function(req , res){
-
+			Tournament.findById(req.params.tId)
+	      .populate("topics.name")
+	          .exec(function(err,tournaments){
+	            if(err){
+	                return res.send(err);
+	              }
+	            return res.json(tournaments);
+	          });
 
 	  });
 
