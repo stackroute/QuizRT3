@@ -31,31 +31,25 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
 			</div>
 		</div>
 
-  <div class="row topic-info" ng-repeat ="tournment in tournments">
-      <div class="row">
-        <h4 class ="topic-category-name col-xs-9 pull-left ">{{tournment.tournmentName}}</h4>
-      </div>
-
-			<div class="topicsholder"  ng-repeat ="topic in tournment.tournmentTopics|limitTo:5">
-
-			<div class="topic-panel panel panel-default">
-				<div class="panel-body content">
-					<div ng-click="showTopic(topic._id)" class="topic-icon">
-						<a href="" class="topicPlay"><img ng-src="{{topic.topicIcon}}" alt=""></a>
-					</div><!--end topic-icon-->
-				</div>
-			<div class="panel-footer">
-					<div ng-click="showTopic(topic._id)">
-						<p>{{topic.topicName}}</p>
-					</div>
-				</div>
-			</div>
+    <div class="row topic-info">
+        <div class="topic-panel panel panel-default col-xs-3" ng-repeat ="tournament in tournaments">
+  				<div class="panel-body content">
+  					<div ng-click="showTopic(topic._id)" class="topic-icon ii">
+  						<a href="" class="topicPlay" >
+                <img ng-src="{{tournament.imageUrl}}" alt="sadads">
+              </a>
+  					</div><!--end topic-icon-->
+  				</div>
+          <div class="panel-footer">
+    					<div ng-click="showTopic(topic._id)">
+    						<p>{{tournament.title}}</p>
+    					</div>
+    			</div>
+  			</div>
 		</div>
-
-	</div> <!--topic info ends every category row -->
- <!-- end topicinfo row -->
 		<div id="foot" class="row">
 			<div col-xs-12 class="play-button-bar">
+        <button class="play-now-button btn btn-success" ng-click="play()">More Tournaments</button>
 			</div>
 		</div>
 </div>
