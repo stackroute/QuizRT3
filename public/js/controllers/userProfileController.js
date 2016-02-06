@@ -16,17 +16,19 @@
 //
 
 angular.module('quizRT')
- .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies){
+    .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies){
+      if(!$cookies.get('isAuthenticated')){
+        $location.path('/login');
+      }
+      $rootScope.stylesheetName="userProfile";
+      $scope.a=7;
+      $scope.see = true;
+      $scope.btnImg = "images/userProfileImages/seeall.jpg";
 
-   if(!$cookies.get('isAuthenticated')){
-      $location.path('/login');
-    }
-     $rootScope.stylesheetName="userProfile";
-     $scope.a=7;
-     $scope.see = true;
-     $scope.btnImg = "images/userProfileImages/seeall.jpg";
-
-     $scope.seeHide=function(length){
+      $scope.redirectTo = function( location ) {
+        $location.path( "/" + location);
+      };
+      $scope.seeHide=function(length){
        if($scope.see){
          $scope.see = false;
          $scope.btnImg = "images/userProfileImages/hide.jpg";
@@ -37,26 +39,23 @@ angular.module('quizRT')
          $scope.btnImg = "images/userProfileImages/seeall.jpg";
          $scope.a=7;
        }
-     }
+      }
 
     $http({method : 'GET',url:'/userProfile/profileData'})
       .success(function(data){
         $scope.data = data;
         $scope.topicsFollowed = [];
-        var k = 0;
         if($scope.data.topicsPlayed!=null) {
           for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
             if($scope.data.topicsPlayed[i].isFollowed){
-              $scope.topicsFollowed[k] =$scope.data.topicsPlayed[i];
-              k++;
+              $scope.topicsFollowed.push( $scope.data.topicsPlayed[i] );
             }
           }
         }
-
-      $rootScope.myImage=$scope.data.imageLink;
-      $rootScope.fakeMyName=$scope.data.name;
-      $rootScope.topperImage=$scope.data.imageLink;
-      $rootScope.userIdnew=$scope.data.userId;
+        $rootScope.myImage=$scope.data.imageLink;
+        $rootScope.fakeMyName=$scope.data.name;
+        $rootScope.topperImage=$scope.data.imageLink;
+        $rootScope.userIdnew=$scope.data.userId;
         //console.log($scope.topicsFollowed);
         $scope.showFollowedTopic=function(topicID){
           var path = '/topic/'+topicID;
@@ -69,10 +68,72 @@ angular.module('quizRT')
         }
       });
 
-      $http({method : 'GET',url:'/tournamentHandler/tournaments'})
-        .success(function(data){
-          $scope.tournaments = data;
-          console.log('Toutnaments');
-          console.log(data );
-        });
-});
+    $http({method : 'GET',url:'/tournamentHandler/tournaments'})
+      .success(function(data){
+        $scope.tournaments = data;
+      });
+
+  })
+  .controller('userSettingsController', function($scope, $http) {
+    var $inputFile = $('#inputFile'),
+			  $profilePic = $('#profilePic');
+    $scope.passwordMessage = '';
+    $scope.errorMessage = '';
+    $scope.user = {
+      displayName : '',
+      country:'',
+      age:'',
+      emailID:'',
+      imageSrc:'',
+      oldPassword:'',
+      newPassword:'',
+      confirmPassword:''
+    };
+    $scope.removeIcon = function() {
+      $scope.user.imageSrc = '';
+      $profilePic.css('padding','12px 12px')
+    						 .css('border', '1px solid #aaa');
+    };
+    $scope.changePassword = function(user) {
+      if ( user.oldPassword ) {
+        if ( user.newPassword ) {
+          if ( user.newPassword === user.confirmPassword ) {
+            $scope.passwordMessage = '';
+            alert('Password Changed');
+          }else {
+            $scope.passwordMessage = 'Confirm password not same.'
+          }
+        } else {
+          $scope.passwordMessage = 'Enter new password.'
+        }
+      }else {
+        $scope.passwordMessage = 'Enter old password.';
+      }
+    };
+
+    // to pop-up the input dialog
+  	$profilePic.on('click',function() {
+  		$inputFile.click();
+  	});
+    // to handle the selected input file and upload it
+  	$inputFile.on('change',function() {
+  		var fileToUpload = this.files[0];
+  		var formData = new FormData();
+  		formData.append('userID', 'user1');
+  		formData.append('teamIcon', fileToUpload );
+      var reqObj = {
+        method: 'POST',
+        url: 'userProfile/userSettings/profilePic',
+        headers: { 'Content-Type': undefined},
+        data: formData
+      }
+      $http( reqObj ).then( function( successResponse ){
+        $profilePic.css('padding',0)
+  									.css('border', 'none');
+        $scope.user.imageSrc = successResponse.data.tempUrl;
+      }, function( errorResponse ){
+        console.log('Error in uploading user profile picture.');
+      });
+  	});
+
+  });

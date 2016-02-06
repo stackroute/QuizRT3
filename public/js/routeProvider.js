@@ -83,7 +83,19 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
           .when('/userProfile',{
                'templateUrl': 'html/userProfile.html',
                'controller': 'userProfileController'
-             })
+          })
+          .when('/userTeams',{
+               'templateUrl': 'html/userTeams.html',
+               'controller': 'userProfileController'
+          })
+          .when('/userTournaments',{
+               'templateUrl': 'html/userTournaments.html',
+               'controller': 'userProfileController'
+          })
+          .when('/userSettings',{
+               'templateUrl': 'html/userSettings.html',
+               'controller': 'userSettingsController'
+          })
          .when('/categories',{
                'templateUrl': 'html/categories.html',
                'controller': 'categoriesController'

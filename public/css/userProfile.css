@@ -14,8 +14,74 @@
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 */
-
-
+footer {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+footer .container{
+  background: #2F2D2D;
+  color: white;
+  min-height: 60px;
+}
+footer .nav {
+  padding: 10px 0;
+  text-align: center;
+}
+footer .nav img,
+footer .nav span,
+footer .nav p{
+  cursor: pointer;
+}
+footer .nav p{
+  margin-bottom: 0;
+}
+footer .nav img {
+  margin: auto;
+  margin-top: -2px;
+  width: 54px;
+  height: auto;
+}
+#settingsDiv h3{
+  border-bottom: 1px solid #999;
+  padding-bottom: 10px;
+  text-align: center;
+}
+#settingsDiv h5{
+  cursor: pointer;
+}
+#addProfilePic {
+  margin-bottom: 10px;
+}
+#settingsDiv #addProfilePic {
+  text-align: center;
+}
+#settingsDiv #addProfilePic img {
+  border: 1px solid #aaa;
+  border-radius: 80px;
+  color: #aaa;
+  cursor: pointer;
+  display: block;
+  height: 64px;
+  padding: 12px 12px;
+  margin-bottom: 7px;
+  text-align: center;
+  text-decoration: none;
+  width: 64px;
+}
+#settingsDiv #addProfilePic img:hover {
+  border: 1px solid white;
+}
+#settingsDiv span {
+  color: #aaa;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+#settingsDiv #addProfilePic img:hover,
+#settingsDiv span:hover {
+  color: white;
+}
 .badge{
   position: absolute;;
     top: 0px;
@@ -76,7 +142,10 @@
   padding:25px;
 }
 
-
+#main {
+  padding-bottom: 10px;
+  margin-bottom: 90px;
+}
   #GamesInfo{
     border-left: 2px red solid;
     padding-top:5px;
@@ -113,7 +182,12 @@ height:100%;
   font-size: 30px;
   padding-top: 2px;
 }
-#Quizzer a ,a:active, a:visited{
+#Quizzer a {
+  cursor: pointer;
+}
+#Quizzer a ,
+#Quizzer a:active,
+#Quizzer a:visited{
   text-decoration: none;
   color: white;
 }
@@ -219,7 +293,12 @@ text-align: center;
   .glyph {
     font-size: 2em;
   }
-
+  footer .nav img {
+    width: 30px;
+  }
+  #main {
+    margin-bottom: 66px;
+  }
   #GamesInfo {
     padding-top:5px;
     color:white;
@@ -290,6 +369,12 @@ text-align: center;
 
   .glyph {
     font-size: 2em;
+  }
+  footer .nav img {
+    width: 30px;
+  }
+  #main {
+    margin-bottom: 66px;
   }
 
   #GamesInfo {

@@ -17,7 +17,8 @@
 
 var express = require('express'),
     router = express.Router(),
-    Profile = require("../models/profile");
+    Profile = require("../models/profile"),
+    userSettingsHandler = require('./userSettingsHandler');
 
 router.get('/profileData', function(req, res, next) {
 
@@ -38,4 +39,6 @@ router.get('/profileData', function(req, res, next) {
                 res.json(profileData);
  });
  });
+
+router.use('/userSettings', userSettingsHandler );
 module.exports = router;

@@ -15,14 +15,14 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var mongoose = require('mongoose');
-var User = require('./models/user');
-var Profile=require('./models/profile');
-var LocalStrategy   = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var configAuth = require('./config/auth');
-var bCrypt = require('bcrypt-nodejs');
+var mongoose = require('mongoose'),
+		User = require('./models/user'),
+		Profile=require('./models/profile'),
+		LocalStrategy   = require('passport-local').Strategy,
+		FacebookStrategy = require('passport-facebook').Strategy,
+		GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+		configAuth = require('./config/auth'),
+		bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(passport){
 
