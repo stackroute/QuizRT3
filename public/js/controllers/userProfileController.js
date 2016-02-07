@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                       
 
 angular.module('quizRT')
     .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies){
@@ -25,7 +25,7 @@ angular.module('quizRT')
       $scope.see = true;
       $scope.btnImg = "images/userProfileImages/seeall.jpg";
 
-      $scope.redirectTo = function( location ) {
+      $rootScope.redirectTo = function( location ) {
         $location.path( "/" + location);
       };
       $scope.seeHide=function(length){

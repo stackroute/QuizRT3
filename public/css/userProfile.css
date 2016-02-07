@@ -14,6 +14,16 @@
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 */
+
+
+
+
+/*
+General styling
+*/
+.alert {
+  padding: 7px;
+}
 footer {
   bottom: 0;
   position: fixed;
@@ -73,13 +83,13 @@ footer .nav img {
   border: 1px solid white;
 }
 #settingsDiv span {
-  color: #aaa;
+  color: inherit;;
   cursor: pointer;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 #settingsDiv #addProfilePic img:hover,
-#settingsDiv span:hover {
+#settingsDiv span:hover,
+#settingsDiv h5:hover {
   color: white;
 }
 .badge{

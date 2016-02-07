@@ -13,7 +13,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  AS,AK,SM,PS,MM,CCKK
+//   Name of Contributors  AS,AK,SM,PS,MM,CCKK
 //
 -->
 <link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
@@ -51,10 +51,13 @@
 			<input type="submit" value="Update" class="btn btn-primary" />
 			<hr>
 			<h5 ng-click="changePasswordOpen?changePasswordOpen=false:changePasswordOpen=true">
-				<b>Change password</b>  <span class="glyphicon glyphicon-triangle-right" ng-hide="changePasswordOpen"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="changePasswordOpen"></span>
+				<b>Change password</b><span class="glyphicon glyphicon-triangle-right" ng-hide="changePasswordOpen"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="changePasswordOpen"></span>
 			</h5>
 			<div ng-show="changePasswordOpen">
-				<p class="text-warning">{{passwordMessage}}</p>
+				<div ng-show="passwordMessage" class="alert alert-danger fade in">
+					<button role="close" class='close' ng-click="passwordMessage=''" aria-label="close">&times;</button>
+					{{passwordMessage}}
+				</div>
 				<input type="password" ng-model="user.oldPassword" placeholder="Old Password" class="form-control" ><br>
 				<input type="password" ng-model="user.newPassword" placeholder="New Password" class="form-control"><br>
 				<input type="password" ng-model="user.confirmPassword" placeholder="Confirm Password" class="form-control"><br>
