@@ -89,14 +89,19 @@ angular.module('quizRT')
       newPassword:'',
       confirmPassword:''
     };
-    $scope.removeIcon = function() {
-      $scope.user.imageSrc = '';
-      $profilePic.css('padding','12px 12px')
-    						 .css('border', '1px solid #aaa');
-    };
-    $scope.slideToggle = function($event) {
-      $scope.isChangePasswordOpen ? $scope.isChangePasswordOpen = false : $scope.isChangePasswordOpen = true;
-      $('#changePasswordDiv').slideToggle();
+    $scope.updateUser = function() {
+      if ( !$scope.user.displayName) {
+        $scope.errorMessage = 'Enter your Name.';
+      }else if ( !$scope.user.country ) {
+        $scope.errorMessage = 'Enter your Country.';
+      }else if ( !$scope.user.age ) {
+        $scope.errorMessage = 'Enter your Age.';
+      }else if ( !$scope.user.emailID ) {
+        $scope.errorMessage = 'Enter your Email-ID.';
+      }else {
+        $scope.errorMessage = '';
+        alert('Profile updated successfully.');
+      }
     };
     $scope.changePassword = function(user) {
       if ( user.oldPassword ) {
@@ -104,6 +109,9 @@ angular.module('quizRT')
           if ( user.newPassword === user.confirmPassword ) {
             $scope.passwordMessage = '';
             alert('Password Changed');
+            user.oldPassword = '';
+            user.newPassword = '';
+            user.confirmPassword = '';
           }else {
             $scope.passwordMessage = 'Confirm password not same.'
           }
@@ -114,6 +122,30 @@ angular.module('quizRT')
         $scope.passwordMessage = 'Enter old password.';
       }
     };
+    $scope.removeIcon = function() {
+      $scope.user.imageSrc = '';
+      $profilePic.css('padding','12px 12px')
+    						 .css('border', '1px solid #aaa');
+    };
+    $scope.slideToggle = function() {
+      $scope.isChangePasswordOpen ? $scope.isChangePasswordOpen = false : $scope.isChangePasswordOpen = true;
+      $('#changePasswordDiv').slideToggle();
+    };
+    $scope.$watch('passwordMessage', function(nv,ov) {
+      if (nv) {
+        $('#changePasswordDiv .alert').slideDown();
+      }else {
+        $('#changePasswordDiv .alert').slideUp();
+      }
+    });
+    $scope.$watch('errorMessage', function(nv,ov) {
+      console.log(nv);
+      if (nv) {
+        $('#settingsDiv').children('.alert').slideDown();
+      }else {
+        $('#settingsDiv').children('.alert').slideUp();
+      }
+    });
 
     // to pop-up the input dialog
   	$profilePic.on('click',function() {

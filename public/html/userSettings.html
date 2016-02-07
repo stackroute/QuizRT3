@@ -29,42 +29,43 @@
 	</div>
 
 	<div id="settingsDiv">
-		<form class="form-auth" ng-submit="updateProfile()">
-			<h3>Profile</h3>
-			<p class="text-warning">{{errorMessage}}</p>
-			<div id="addProfilePic" class="row">
-				<div class="col-xs-3">
-					<img src="{{user.imageSrc}}" alt="add photo" id="profilePic"/>
-					<input type="file" class="hide" id="inputFile">
-					<span ng-show="user.imageSrc" ng-click="removeIcon()">remove</span>
-				</div>
-				<div class="col-xs-9">
-					<p>
-						Edit your display name and add your profile picture
-					</p>
-				</div>
+		<h3>Settings</h3>
+		<div id="addProfilePic" class="row">
+			<div class="col-md-3 col-xs-4">
+				<img src="{{user.imageSrc}}" alt="add photo" id="profilePic"/>
+				<input type="file" class="hide" id="inputFile">
+				<span ng-show="user.imageSrc" ng-click="removeIcon()">remove</span>
 			</div>
-			<input type="text" ng-model="user.displayName" placeholder="Name" class="form-control">
-			<input type="text" ng-model="user.country"  placeholder="Country" class="form-control">
-			<input type="text" ng-model="user.age"  placeholder="Age" class="form-control">
-			<input type="text" ng-model="user.imageLink"  placeholder="Email ID" class="form-control">
-			<input type="submit" value="Update" class="btn btn-primary" />
-			<hr>
-			<h5 ng-click="slideToggle($event)">
-				<b>Change password</b><span class="glyphicon glyphicon-triangle-right" ng-hide="isChangePasswordOpen"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="isChangePasswordOpen"></span>
-			</h5>
-			<div id='changePasswordDiv'>
-				<div ng-show="passwordMessage" class="alert alert-danger fade in">
-					<button role="close" class='close' ng-click="passwordMessage=''" aria-label="close">&times;</button>
-					{{passwordMessage}}
-				</div>
-				<input type="password" class="hide">
-				<input type="password" ng-model="user.oldPassword" placeholder="Old Password" class="form-control" >
-				<input type="password" ng-model="user.newPassword" placeholder="New Password" class="form-control">
-				<input type="password" ng-model="user.confirmPassword" placeholder="Confirm Password" class="form-control">
-				<button class="btn btn-primary pull-right" ng-click="changePassword(user)" >Change</button>
+			<div class="col-md-9 col-xs-8">
+				<p>
+					Add a profile picture
+				</p>
 			</div>
-		</form>
+		</div>
+		<div class="alert alert-danger fade in">
+			<button role="close" class='close' ng-click="errorMessage=''" aria-label="close">&times;</button>
+			{{errorMessage}}
+		</div>
+		<input type="text" ng-model="user.displayName" placeholder="Name" class="form-control">
+		<input type="text" ng-model="user.country"  placeholder="Country" class="form-control">
+		<input type="text" ng-model="user.age"  placeholder="Age" class="form-control">
+		<input type="text" ng-model="user.emailID"  placeholder="Email ID" class="form-control">
+		<button type="button" ng-click="updateUser()" class="btn btn-primary" >Update</button>
+
+		<h5 ng-click="slideToggle()">
+			<b>Change password</b><span class="glyphicon glyphicon-triangle-right" ng-hide="isChangePasswordOpen"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="isChangePasswordOpen"></span>
+		</h5>
+		<div id='changePasswordDiv'>
+			<div class="alert alert-danger fade in">
+				<button role="close" class='close' ng-click="passwordMessage=''" aria-label="close">&times;</button>
+				{{passwordMessage}}
+			</div>
+			<input type="password" class="hide"><!-- To hide the saved user password. The browser puts the saved password in the 1st password field. -->
+			<input type="password" ng-model="user.oldPassword" placeholder="Old Password" class="form-control" >
+			<input type="password" ng-model="user.newPassword" placeholder="New Password" class="form-control">
+			<input type="password" ng-model="user.confirmPassword" placeholder="Confirm Password" class="form-control">
+			<button class="btn btn-primary pull-right" ng-click="changePassword(user)" >Change</button>
+		</div>
 	</div>
 </div><!-- end #main -->
 <footer>

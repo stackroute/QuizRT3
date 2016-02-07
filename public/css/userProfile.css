@@ -24,7 +24,8 @@ user Settings styling
 .alert {
   padding: 7px;
 }
-#changePasswordDiv {
+#changePasswordDiv,
+#settingsDiv .alert {
   display: none;
 }
 footer {
@@ -55,18 +56,25 @@ footer .nav img {
   width: 54px;
   height: auto;
 }
+#settingsDiv {
+  max-width: 500px;
+	padding: 5px;
+	margin: 0 auto;
+}
 #settingsDiv h3{
   border-bottom: 1px solid #999;
+  margin-top: 10px;
   padding-bottom: 10px;
   text-align: center;
 }
 #settingsDiv h5{
+  border-top: 1px solid #999;
+  margin-top: 20px;
+  padding-top: 8px;
   cursor: pointer;
 }
 #addProfilePic {
   margin-bottom: 10px;
-}
-#settingsDiv #addProfilePic {
   text-align: center;
 }
 #settingsDiv #addProfilePic img {
@@ -77,8 +85,7 @@ footer .nav img {
   display: block;
   height: 64px;
   padding: 12px 12px;
-  margin-bottom: 7px;
-  text-align: center;
+  margin: 0 auto 7px;
   text-decoration: none;
   width: 64px;
 }
@@ -91,7 +98,6 @@ footer .nav img {
 #settingsDiv span {
   color: inherit;;
   cursor: pointer;
-  margin-left: 10px;
 }
 #settingsDiv #addProfilePic img:hover,
 #settingsDiv span:hover,

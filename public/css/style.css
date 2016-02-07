@@ -11,15 +11,15 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-*/  
- 
+*/
+
 html,.view-container {
 	height:100%;
 }
 body {
-	padding-top: 5px;
+	/*padding-top: 5px;*/
 	background-color: #524f4f;
 	color: #ccc;
 	font-size: 12px;
