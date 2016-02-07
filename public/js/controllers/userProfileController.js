@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//                       
+//
 
 angular.module('quizRT')
     .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies){
@@ -94,6 +94,10 @@ angular.module('quizRT')
       $profilePic.css('padding','12px 12px')
     						 .css('border', '1px solid #aaa');
     };
+    $scope.slideToggle = function($event) {
+      $scope.isChangePasswordOpen ? $scope.isChangePasswordOpen = false : $scope.isChangePasswordOpen = true;
+      $('#changePasswordDiv').slideToggle();
+    };
     $scope.changePassword = function(user) {
       if ( user.oldPassword ) {
         if ( user.newPassword ) {
@@ -124,7 +128,7 @@ angular.module('quizRT')
       var reqObj = {
         method: 'POST',
         url: 'userProfile/userSettings/profilePic',
-        headers: { 'Content-Type': undefined},
+        headers: { 'Content-Type': undefined}, // to reset to browser default Content-Type
         data: formData
       }
       $http( reqObj ).then( function( successResponse ){

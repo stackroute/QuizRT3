@@ -19,10 +19,13 @@
 
 
 /*
-General styling
+user Settings styling
 */
 .alert {
   padding: 7px;
+}
+#changePasswordDiv {
+  display: none;
 }
 footer {
   bottom: 0;
@@ -82,10 +85,13 @@ footer .nav img {
 #settingsDiv #addProfilePic img:hover {
   border: 1px solid white;
 }
+#settingsDiv .form-control {
+  margin-bottom: 10px;
+}
 #settingsDiv span {
   color: inherit;;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 #settingsDiv #addProfilePic img:hover,
 #settingsDiv span:hover,
