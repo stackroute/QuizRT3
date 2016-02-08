@@ -103,18 +103,18 @@
 			<!--  Invitations Section -->
 			<section>
 				<div class="row sectionHeader">Invitations</div>
-				<div class="row topic-info" ng-hide="tournaments.length > 0">
+				<div class="row topic-info" ng-hide="invitations.length > 0">
 					Inbox is empty.
 				</div>
-				<div class="row topic-info" ng-show="tournaments.length > 0">
-					<div class="topicsholder"  ng-repeat="tournament in tournaments">
+				<div class="row topic-info" ng-show="invitations.length > 0">
+					<div class="topicsholder"  ng-repeat="invitation in invitations">
 						<div class="topic-panel panel panel-default">
 							<div class="panel-body content">
-								<a><img ng-src="{{tournament.imageUrl}}" ng-click="showTournamentDetails(tournament._id)"></a>
-								<span class="badge">{{tournament.topics.length}}</span>
+								<a><img ng-src="{{invitation.imageUrl}}" ng-click="showInvitationDetails(invitation._id)"></a>
+								<span class="badge">{{invitation.length}}</span>
 							</div>
 							<div class="panel-footer">
-								<p>{{tournament.title}}</p>
+								<p>{{invitation.title}}</p>
 							</div>
 						</div>
 				</div><!-- end topicsholder-->
