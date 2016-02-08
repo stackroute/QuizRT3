@@ -172,4 +172,14 @@ angular.module('quizRT')
       });
   	});
 
+  })
+  .controller('userTournamentsController', function($scope,$location,$http) {
+    $http({method : 'GET',url:'/tournamentHandler/tournaments'})
+      .success(function(data){
+        $scope.tournaments = data;
+      });
+
+    $scope.showTournamentDetails = function( tournamentId ) {
+      $location.path( '/tournament/' + tournamentId );
+    };
   });
