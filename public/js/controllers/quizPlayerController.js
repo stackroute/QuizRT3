@@ -26,7 +26,7 @@ angular.module('quizRT')
 		$scope.myscore = 0;
 		$scope.correctAnswerers = 0;
 		$scope.wrongAnswerers = 0;
-		socket.emit('join',{tid:$rootScope.tId,name:$rootScope.fakeMyName,image:$rootScope.myImage});
+		socket.emit('join',{tid:$rootScope.tId,name:$rootScope.fakeMyName,image:$rootScope.myImage,playersPerMatch:2});
 
 		socket.on('startGame',function(startGameData){
 			$rootScope.freakgid = startGameData.gameId;

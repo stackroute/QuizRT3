@@ -21,9 +21,10 @@ var gameManager = require('./gameManager/gameManager.js'),
     uuid= require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
-    maxPlayers =4;
+    defaultMaxPlayers =4;
+    maxPlayers=2;
 
-
+console.log("initiating sockets!!!!");
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
   io.use(function(socket,next){
@@ -175,8 +176,10 @@ module.exports = function(server,sessionMiddleware) {
       console.log('session object -------------------------------------');
       console.log(client.request.session);
       console.log('session object -------------------------------------');
+      console.log("input data on join");
+      console.log(data);
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
-
+      maxPlayers=data.playersPerMatch || defaultMaxPlayers;
       if(gameManager.players.get(data.tid).size==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
         console.log("666666666666666666666666666666666");
@@ -187,6 +190,7 @@ module.exports = function(server,sessionMiddleware) {
 
         topicPlayers.forEach(function(player){
         leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
+        console.log("starting game");
         player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
         });
       }
@@ -198,33 +202,6 @@ module.exports = function(server,sessionMiddleware) {
       // console.log(data);
       if(gameManager.players.get(topicID)) gameManager.players.get(topicID).delete(client.request.session.passport.user);
     });
-
-
-// Tournament Logics Start Here
-
-client.on('joinTournament',function(data){
-  console.log('session object -------------------------------------');
-  console.log(client.request.session);
-  console.log('session object -------------------------------------');
-  tournamentManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
-  var tMaxPlayers=data.maxPlayers;
-  if(tournamentManager.players.get(data.tid).size==tMaxPlayers){
-    var topicPlayers= tournamentManager.popPlayers(data.tid);
-    console.log("666666666666666666666666666666666");
-    console.log(topicPlayers);
-    console.log("666666666666666666666666666666666");
-
-    var gameId= makeid();
-
-    topicPlayers.forEach(function(player){
-    leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-    player.clientData.client.emit('startTournament',{gameId:gameId,maxPlayers:tMaxPlayers});
-    });
-  }
-
-});
-
-
 
   });
 
