@@ -83,12 +83,13 @@
     color:white;
   }
 
-  #topics{
-    background-color:lightyellow;
-    font-size:23px;
-    color:black;
-    text-align: center;
-    }
+.sectionHeader{
+  background-color:lightyellow;
+  color:black;
+  font-size:23px;
+  margin-top: 10px;
+  text-align: center;
+}
 
 
 .wins{
@@ -122,10 +123,13 @@ height:100%;
   text-align: center;
 }
 
+<<<<<<< HEAD
 .play-now-button{
   width:200px;
 }
 
+=======
+>>>>>>> 33893da0d34e32a97b03acf840cb7427f1fb36bc
 .topicName{
   font-family: Bitter;
   font-size: 1.3em;

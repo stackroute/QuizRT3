@@ -14,19 +14,18 @@
 //
 //   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
 //
-var express = require('express');
-var Reservoir = require('reservoir');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Profile =require("../models/profile");
-var Tournament =require("../models/tournament");
+var express = require('express'),
+		Reservoir = require('reservoir'),
+		router = express.Router(),
+		Profile =require("../models/profile"),
+		Tournament =require("../models/tournament");
 
 
 
 router.route('/tournaments')
 	  .get(function(req, res){
 	    Tournament.find()
-	      .populate("leg.topics")
+	      .populate("topics.name")
 	          .exec(function(err,tournaments){
 	            if(err){
 	                return res.send(err);
@@ -35,9 +34,16 @@ router.route('/tournaments')
 	          });
 	 	});
 
-router.route('/tournaments/:tournamentID')
+router.route('/tournament/:tId')
 	  .get(function(req , res){
-	  	
+			Tournament.findById(req.params.tId)
+	      .populate("topics.name")
+	          .exec(function(err,tournaments){
+	            if(err){
+	                return res.send(err);
+	              }
+	            return res.json(tournaments);
+	          });
 
 	  });
 

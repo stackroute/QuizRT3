@@ -11,10 +11,10 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 angular.module('quizRT')
  .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies){
 
@@ -44,15 +44,15 @@ angular.module('quizRT')
         $scope.data = data;
         $scope.topicsFollowed = [];
         var k = 0;
-        if($scope.data.topicsPlayed!=null)
-        {
-        for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
-          if($scope.data.topicsPlayed[i].isFollowed){
-            $scope.topicsFollowed[k] =$scope.data.topicsPlayed[i];
-            k++;
+        if($scope.data.topicsPlayed!=null) {
+          for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
+            if($scope.data.topicsPlayed[i].isFollowed){
+              $scope.topicsFollowed[k] =$scope.data.topicsPlayed[i];
+              k++;
+            }
           }
         }
-      }
+
       $rootScope.myImage=$scope.data.imageLink;
       $rootScope.fakeMyName=$scope.data.name;
       $rootScope.topperImage=$scope.data.imageLink;
@@ -68,4 +68,11 @@ angular.module('quizRT')
           $location.path(path);
         }
       });
+
+      $http({method : 'GET',url:'/tournamentHandler/tournaments'})
+        .success(function(data){
+          $scope.tournaments = data;
+          console.log('Toutnaments');
+          console.log(data );
+        });
 });

@@ -98,13 +98,11 @@ module.exports = function(passport){
 					newProfile.name=req.body.DisplayName;
 					newProfile.topicsPlayed=[];
 					newProfile.badge="Beginner";
-          if(req.body.imageLink.length==0)
-          {
-					newProfile.imageLink="/images/userProfileImages/user.png";
-        }
-        else {
-          newProfile.imageLink=req.body.imageLink;
-        }
+          if(req.body.imageLink.length === 0) {
+						newProfile.imageLink="/images/userProfileImages/user.png";
+        	} else {
+          	newProfile.imageLink=req.body.imageLink;
+        	}
 					newProfile.wins=0;
 					newProfile.totalGames=0;
            console.log("**********************");

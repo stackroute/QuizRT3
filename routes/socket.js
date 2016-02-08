@@ -15,13 +15,13 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var gameManager = require('./gameManager/gameManager.js');
-var tournamentManager = require('./tournamentManager/tournamentManager.js');
-var leaderBoard = require('./gameManager/leaderboard.js');
-var uuid= require('node-uuid');
-var Game = require("./../models/game");
-var Profile = require("./../models/profile");
-var maxPlayers =4;
+var gameManager = require('./gameManager/gameManager.js'),
+    tournamentManager = require('./tournamentManager/tournamentManager.js'),
+    leaderBoard = require('./gameManager/leaderboard.js'),
+    uuid= require('node-uuid'),
+    Game = require("./../models/game"),
+    Profile = require("./../models/profile"),
+    maxPlayers =4;
 
 
 module.exports = function(server,sessionMiddleware) {
@@ -218,7 +218,7 @@ client.on('joinTournament',function(data){
 
     topicPlayers.forEach(function(player){
     leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-    player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:tMaxPlayers});
+    player.clientData.client.emit('startTournament',{gameId:gameId,maxPlayers:tMaxPlayers});
     });
   }
 
@@ -231,14 +231,11 @@ client.on('joinTournament',function(data){
 }
 
 function renderThegame(matches){
-  if(matches.Players.size < maxPlayers){
-
-    }
-    else{
-      matches.Players.forEach(function(item,key,value){
-        matches.Players.get(key).emit('startGame',matches.gameId);
-      });
-    }
+  if( matches.Players.size >= maxPlayers ){
+    matches.Players.forEach(function(item,key,value){
+      matches.Players.get(key).emit('startGame',matches.gameId);
+    });
+  }
 };
 
 
@@ -292,13 +289,10 @@ levelScore = function(n)
 };
 
 findLevel = function(points){
-
   var i=1;
   while(points>=levelScore(i))
   {
     i++;
   }
-
   return i-1;
-
 };
