@@ -1,0 +1,54 @@
+<!--
+Copyright {2016} {NIIT Limited, Wipro Limited}
+
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+//   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil Savant, Chandu, Pratik Sinha, Mukesh Mishra.
+-->
+<div class="container">
+  <div class="row" id="Quizzer">
+    <a href="#/userProfile" class="col-xs-offset-1 col-xs-9">
+      Quizart
+    </a>
+    <div class="col-xs-2">
+      <a ng-click="logout()" class="glyphicon glyphicon-off"></a>
+    </div>
+  </div>
+  <div class="heading col-xs-12 col-sm-12 col-lg-12">
+    <h1 class="statement">Rounds</h1>
+  </div>
+<div class="topic-panel panel panel-default col-xs-12 col-sm-12 col-lg-12" ng-repeat="stages in tournament.topics">
+  				<div class="panel-body content">
+  					<div class="topic-icon">
+  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="" width="100px" height="100px"></a>
+  					</div><!--end topic-icon-->
+            <div class="topic-description">
+              <div class="level-name">
+  						<p>{{stages.name.topicName}}</p>
+              <h4>{{stages.name.topicDescription}}</h4>
+            </div>
+              <!-- <h4>{{stages.Description}}</h4> -->
+          </div>
+        </div>
+  			<!-- <div class="panel-footer"> -->
+  					<!-- <div class="level-name" ng-click="showTopic(stages._id)"> -->
+         <div class="row pull-right" id="foot">
+                  <div col-xs-12 class="col-xs-12 play-button-bar">
+                    <button class="play-now-button btn btn-success" ng-click="play(stages.name._id)">Play Now!</button>
+                  </div>
+                </div>
+  					<!-- </div> -->
+  				</div>
+  			</div>
+    </div>

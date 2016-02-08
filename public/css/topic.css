@@ -11,10 +11,24 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-*/  
- 
+*/
+.statement{
+  text-align: center;
+}
+.topic-description{
+  text-align: left;
+  font-family: sans-serif;
+}
+.topic-header{
+ text-align: center;
+}
+.level-name{
+ text-align: center;
+ font-size: 20px;
+}
+
 .topic-header{
   text-align: center;
 }
