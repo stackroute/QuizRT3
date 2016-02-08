@@ -28,6 +28,9 @@ angular.module('quizRT')
       $rootScope.redirectTo = function( location ) {
         $location.path( "/" + location);
       };
+      $scope.showTournamentDetails = function( tournamentId ) {
+        $location.path( '/tournament/' + tournamentId );
+      };
       $scope.seeHide=function(length){
        if($scope.see){
          $scope.see = false;

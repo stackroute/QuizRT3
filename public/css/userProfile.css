@@ -53,6 +53,7 @@ footer .nav img {
   margin-top: -2px;
   width: 54px;
   height: auto;
+  cursor: pointer;
 }
 #settingsDiv {
   max-width: 500px;
