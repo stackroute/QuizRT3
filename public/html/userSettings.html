@@ -1,0 +1,100 @@
+<!--
+//Copyright {2016} {NIIT Limited, Wipro Limited}
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+//   Name of Contributors  AS,AK,SM,PS,MM,CCKK
+//
+-->
+<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+<div class="container" id="main">
+	<div class="row" id="Quizzer">
+		<div class="col-xs-offset-1 col-xs-9">
+			QuizRT
+		</div>
+		<div class="col-xs-2">
+			<a ng-click="logout()" class="glyphicon glyphicon-off">
+			</a>
+		</div>
+	</div>
+
+	<div id="settingsDiv">
+		<h3>Settings</h3>
+		<div id="addProfilePic" class="row">
+			<div class="col-md-3 col-xs-4">
+				<img src="{{user.imageSrc}}" alt="add photo" id="profilePic"/>
+				<input type="file" class="hide" id="inputFile">
+				<span ng-show="user.imageSrc" ng-click="removeIcon()">remove</span>
+			</div>
+			<div class="col-md-9 col-xs-8">
+				<p>
+					Add a profile picture
+				</p>
+			</div>
+		</div>
+		<div class="alert alert-danger fade in">
+			<button role="close" class='close' ng-click="errorMessage=''" aria-label="close">&times;</button>
+			{{errorMessage}}
+		</div>
+		<input type="text" ng-model="user.displayName" placeholder="Name" class="form-control">
+		<input type="text" ng-model="user.country"  placeholder="Country" class="form-control">
+		<input type="text" ng-model="user.age"  placeholder="Age" class="form-control">
+		<input type="text" ng-model="user.emailID"  placeholder="Email ID" class="form-control">
+		<button type="button" ng-click="updateUser()" class="btn btn-primary" >Update</button>
+
+		<h5 ng-click="slideToggle()">
+			<b>Change password</b><span class="glyphicon glyphicon-triangle-right" ng-hide="isChangePasswordOpen"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="isChangePasswordOpen"></span>
+		</h5>
+		<div id='changePasswordDiv'>
+			<div class="alert alert-danger fade in">
+				<button role="close" class='close' ng-click="passwordMessage=''" aria-label="close">&times;</button>
+				{{passwordMessage}}
+			</div>
+			<input type="password" class="hide"><!-- To hide the saved user password. The browser puts the saved password in the 1st password field. -->
+			<input type="password" ng-model="user.oldPassword" placeholder="Old Password" class="form-control" >
+			<input type="password" ng-model="user.newPassword" placeholder="New Password" class="form-control">
+			<input type="password" ng-model="user.confirmPassword" placeholder="Confirm Password" class="form-control">
+			<button class="btn btn-primary pull-right" ng-click="changePassword(user)" >Change</button>
+		</div>
+	</div>
+</div><!-- end #main -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userProfile')">
+					<span class="glyph glyphicon glyphicon-user"></span>
+					<p>Profile</p>
+				</div>
+			</div>
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userTeams')">
+      		<img class="img-responsive" src='images/team_default_64x64.png' alt='Teams Img'>
+					<p>Teams</p>
+				</div>
+			</div>
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userTournaments')">
+					<span class="glyph glyphicon glyphicon-globe"></span>
+					<p>Tournaments</p>
+				</div>
+			</div>
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userSettings')">
+					<span class="glyph glyphicon glyphicon-cog"></span>
+					<p>Settings</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>

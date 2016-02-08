@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--
 //Copyright {2016} {NIIT Limited, Wipro Limited}
 //
@@ -145,3 +146,214 @@
 
 	<!-- Custom JS -->
 	<!-- <script src="/js/userprofile.js"></script> -->
+=======
+<!--
+//Copyright {2016} {NIIT Limited, Wipro Limited}
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
+//
+-->
+<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+	<div class="container" id="main">
+		<div class="row" id="Quizzer">
+			<div class="col-xs-offset-1 col-xs-9">
+				QuizRT
+			</div>
+			<div class="col-xs-2">
+				<a ng-click="logout()" class="glyphicon glyphicon-off">
+				</a>
+			</div>
+		</div>
+
+		<div class="row user">
+			<div class="col-xs-offset-1 col-xs-5 col-sm-offset-0	col-sm-2">
+				<img ng-src="{{data.imageLink}}"  width="120px" height="120px"  class="img-circle img-responsive pull-left">
+			</div>
+			<div class="col-xs-6 col-sm-4 usermiddle">
+				<h4>{{data.name}},
+			{{data.age}}</h4>
+				<h5>{{data.badge}}</h5>
+			<!--	<span id="flag"><img ng-src="{{data.flagLink}}" alt="user image" width="30px" height="30px" class="img-rounded">
+			</span> -->
+				<h6 id="country">{{data.country}}</h6>
+
+			</div>
+
+			<div class="col-xs-12 col-sm-6" id="GamesInfo">
+				<div class="row info">
+				<div class=" col-xs-4" id="games">
+					<span class="glyphicon glyphicon-tower glyph"></span>
+					<p>Games</br>{{data.totalGames}}
+					</p>
+				</div>
+				<div class="col-xs-4" id="win">
+					<span class="glyphicon glyphicon-thumbs-up glyph"></span>
+					<p>Wins</br>{{data.wins}}
+					</p>
+				</div>
+				<div class="col-xs-4" id="winpercentage">
+					<span class="glyphicon glyphicon-stats glyph"></span>
+					<p>Win%<br>{{data.wins/data.totalGames*100 | number : 2}}%
+					</p>
+				</div>
+		</div>
+		</div>
+	</div>
+		<div class="row sectionHeader">Favourite Topics
+		</div>
+		<div class="row topic-info" ng-hide="topicsFollowed.length > 0">
+			You have not followed any topics as yet. How about picking some topics from below.
+		</div>
+		<div class="row topic-info" ng-show="topicsFollowed.length > 0">
+			<div class="topicsholder"  ng-repeat="topic in topicsFollowed|limitTo:a|orderBy:'-level'">
+
+			<div class="topic-panel panel panel-default">
+			  <div class="panel-body content">
+
+					<a><img ng-src="{{topic.topicId.topicIcon}}" ng-click="showFollowedTopic(topic.topicId._id)"></a>
+					<span class="badge">{{topic.level}}</span>
+
+			  </div>
+
+			  <div class="panel-footer">
+					<p>{{topic.topicId.topicName}}</p>
+					<span class="win-loss">
+					<span class="wins">{{topic.gamesWon}}</span> /<span class= "played"> {{topic.gamesPlayed}} </span>
+				</span>
+								  </div>
+			</div>
+		</div><!-- end topicsholder-->
+
+				<div class="col-xs-3 topicsholder" ng-if="topicsFollowed.length>11">
+					<div>
+						<button ng-if="topicsFollowed.length>=8" ng-click="seeHide(topicsFollowed.length)"><img ng-src="{{btnImg}}" class="img-rounded"></button>
+					</div>
+	 	 </div>
+
+		</div> <!-- end topicinfo row -->
+		<div id="foot" class="row">
+			<div col-xs-12 class="play-button-bar">
+					<button class="play-now-button btn btn-success" ng-click="play()">More Topics</button>
+			</div>
+			</div>
+
+			<!--  Invitations Section -->
+			<section>
+				<div class="row sectionHeader">Invitations</div>
+				<div class="row topic-info" ng-hide="tournaments.length > 0">
+					Inbox is empty.
+				</div>
+				<div class="row topic-info" ng-show="tournaments.length > 0">
+					<div class="topicsholder"  ng-repeat="tournament in tournaments">
+						<div class="topic-panel panel panel-default">
+							<div class="panel-body content">
+								<a><img ng-src="{{tournament.imageUrl}}" ng-click="showTournamentDetails(tournament._id)"></a>
+								<span class="badge">{{tournament.topics.length}}</span>
+							</div>
+							<div class="panel-footer">
+								<p>{{tournament.title}}</p>
+							</div>
+						</div>
+				</div><!-- end topicsholder-->
+				<!-- <div class="col-xs-3 topicsholder" ng-if="topicsFollowed.length>11">
+					<div>
+						<button ng-if="topicsFollowed.length>=8" ng-click="seeHide(topicsFollowed.length)"><img ng-src="{{btnImg}}" class="img-rounded"></button>
+					</div>
+				</div> -->
+			</div> <!-- end topicinfo row -->
+
+			<div id="foot" class="row">
+				<div col-xs-12 class="play-button-bar">
+						<button class="play-now-button btn btn-success" ng-click="redirectTo('userTeams')">Show All</button>
+				</div>
+			</div>
+		</section><!--  End invitations Section -->
+
+
+			<!--  Tournament Section -->
+			<section>
+				<div class="row sectionHeader">Live Tournaments</div>
+				<div class="row topic-info" ng-hide="tournaments.length > 0">
+					You are not part of any tournaments. How about participating right now!!
+				</div>
+				<div class="row topic-info" ng-show="tournaments.length > 0">
+					<div class="topicsholder"  ng-repeat="tournament in tournaments">
+						<div class="topic-panel panel panel-default">
+						  <div class="panel-body content">
+								<a><img ng-src="{{tournament.imageUrl}}" ng-click="showTournamentDetails(tournament._id)"></a>
+								<span class="badge">{{tournament.topics.length}}</span>
+						  </div>
+						  <div class="panel-footer">
+								<p>{{tournament.title}}</p>
+							</div>
+						</div>
+				</div><!-- end topicsholder-->
+				<!-- <div class="col-xs-3 topicsholder" ng-if="topicsFollowed.length>11">
+					<div>
+						<button ng-if="topicsFollowed.length>=8" ng-click="seeHide(topicsFollowed.length)"><img ng-src="{{btnImg}}" class="img-rounded"></button>
+					</div>
+		 	 	</div> -->
+			</div> <!-- end topicinfo row -->
+
+			<div id="foot" class="row">
+				<div col-xs-12 class="play-button-bar">
+						<button class="play-now-button btn btn-success" ng-click="play()">More Tournaments</button>
+				</div>
+			</div>
+		</section>
+</div><!-- end container -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userProfile')">
+					<span class="glyph glyphicon glyphicon-user"></span>
+					<p>Profile</p>
+				</div>
+			</div>
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userTeams')">
+      		<img class="img-responsive" src='images/team_default_64x64.png' alt='Teams Img'>
+					<p>Teams</p>
+				</div>
+			</div>
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userTournaments')">
+					<span class="glyph glyphicon glyphicon-globe"></span>
+					<p>Tournaments</p>
+				</div>
+			</div>
+			<div class="col-xs-3 nav">
+				<div ng-click="redirectTo('userSettings')">
+					<span class="glyph glyphicon glyphicon-cog"></span>
+					<p>Settings</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+	<!-- All Javascript at the bottom of the page for faster page loading -->
+
+	<!-- First try for the online version of jQuery-->
+
+
+	<!-- If no online access, fallback to our hardcoded version of jQuery -->
+
+
+
+	<!-- Custom JS -->
+	<!-- <script src="/js/userprofile.js"></script> -->
+>>>>>>> 3604555a22dc6efb5147438ebae5dd633662e49e
