@@ -71,14 +71,15 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
        .when('/login', {
       			'templateUrl': 'html/login.html',
             'controller':'authController'
-      		})
+       })
       .when('/locallogin', {
          			'templateUrl': 'html/locallogin.html',
          			'controller': 'authController'
-         		})
+      })
       .when('/register', {
       			'templateUrl': 'html/register.html',
       			'controller': 'authController'
+
       		})
           .when('/userProfile',{
                'templateUrl': 'html/userProfile.html',
@@ -124,12 +125,58 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
             'controller': 'tournamentController'
           })
           .when('/tournament/:tournamentID' , {
-            'templateUrl': 'html/tournament.html',
-            'controller': 'tournamentController'
+            'templateUrl': 'html/rounds.html',
+            'controller': 'roundsController'
           })
           .when('/tournament/tournamentPlayer' , {
             'templateUrl': 'html/tournamentPlayer.html',
             'controller': 'tournamentPlayerController'
-          });
+          })
+      .when('/userProfile',{
+           'templateUrl': 'html/userProfile.html',
+           'controller': 'userProfileController'
+      })
+      .when('/userTeams',{
+           'templateUrl': 'html/userTeams.html',
+           'controller': 'userProfileController'
+      })
+      .when('/userTournaments',{
+           'templateUrl': 'html/userTournaments.html',
+           'controller': 'userTournamentsController'
+      })
+      .when('/userSettings',{
+           'templateUrl': 'html/userSettings.html',
+           'controller': 'userSettingsController'
+      })
+     .when('/categories',{
+           'templateUrl': 'html/categories.html',
+           'controller': 'categoriesController'
+      })
+     .when('/category/:categoryID',{
+           'templateUrl': 'html/category.html',
+           'controller': 'categoryController'
+      })
+     .when('/topic/:topicID',{
+           'templateUrl': 'html/topic.html',
+           'controller': 'topicController'
+      })
+      .when('/quizPlayer',{
+        'templateUrl': 'html/quizPlayer.html',
+        'controller': 'quizPlayerController',
+        'reload':true
+      })
+      .when('/quizResult',{
+           'templateUrl': 'html/result.html',
+           'controller': 'resultController'
+      })
+      .when('/tournament/:tournamentID' , {
+        'templateUrl': 'html/rounds.html',
+        'controller': 'roundsController'
+      })
+      .when('/tournament/tournamentPlayer' , {
+        'templateUrl': 'html/tournamentPlayer.html',
+        'controller': 'tournamentPlayerController'
+      });
+
 
 });

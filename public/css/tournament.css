@@ -14,106 +14,54 @@
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 */
-
-@media (min-width: 900px) {
-  body{
-    background-color: black;
-  }
-
-.container{
-  border-style: solid;
-  border-width: medium;
-  border-color: #AAA;
-  background-color: #DDD;
-  width: 62%;
-  margin-left: 19%;
-  margin-right: 19%;
-  border-radius: 20px;
-  padding: 20px;
+#all-tournaments-wrap {
+  margin-top: 10px;
 }
-}
-.content{
-  margin-top: 60px;
-}
-
-.navbar{
-  background: grey;
+.badge{
+  position: absolute;;
+  top: 0px;
+  right: 0px;
+  width: 30px;
+  border-radius: 5px;
+  background-color: #337ab7;
   color: white;
-  text-align: center;
 }
-
-.heading{
-  margin: 10px;
-  margin-left: 50px;
-}
-
-#heading-name-category{
-  font-size: 20px;
-  margin: 10px;
-  margin-top: 50px;
-}
-
-.search-topic{
-  margin: 10px;
-}
-
-.topic-icon img{
-  padding: 8px;
+#all-tournaments-wrap .panel{
+  background: #777;
   width: 100%;
-  height: 100%;
-  border-radius: 20px;
+  display: inline-block;
+  margin: 0px 3px;
 }
-
-.topic-div{
-  border:2px solid black;
-  height:110px;
-  padding: 0;
+#all-tournaments-wrap .tournament-tile {
+  padding: 0 5px;
 }
-
-.topic-icon{
-  padding: 0;
+.panel-body {
+  padding: 10%;
+}
+.panel-body img {
   height:100%;
+  width:100%;
 }
-.topic-data{
-  padding:5px;
-  height:100%;
+.panel-footer {
+  position:relative;
+  padding:10px 5px;
+  font-size: 1.1em;
+  color: slategrey;
+  word-wrap: break-word;
 }
-
-.topic-data .topic-name-category{
-  display: block;
-  max-width: 200px;
-  margin-top: 15px;
+.panel-footer p {
+  overflow: hidden;
   margin-bottom: 0;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1em;
-  color: #ff5454;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.topic-data .topic.desc{
-  display: block;
-  margin-top: 3px;
-  margin-bottom: 5px;
-  margin-left: 1px;
-  color: #666;
-  font-size: 12px;
-  line-height: 1em;
-}
-
-.topic-category{
-  margin-top: 30px;
-}
-
-.topic-category small{
-  display: block;
-  margin-left: 1px;
-  color: #666;
-  font-size: 11px;
-  font-weight: 500;
-  text-decoration: none;
-    /*width:180px;
-    white-space: nowrap;
-    overflow:hidden !important;
-    text-overflow: ellipsis;*/
+/*.............................................................................
+        Media Queries
+..............................................................................*/
+@media(max-width:768px){
+  #all-tournaments-wrap .panel-body {
+    padding: 0;
+  }
 }
