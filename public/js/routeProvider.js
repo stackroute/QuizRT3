@@ -118,7 +118,11 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
           .when('/quizResult',{
                'templateUrl': 'html/result.html',
                'controller': 'resultController'
-             })
+          })
+          .when('/tournament',{
+            'templateUrl': 'html/tournamentLists.html',
+            'controller': 'tournamentController'
+          })
           .when('/tournament/:tournamentID' , {
             'templateUrl': 'html/tournament.html',
             'controller': 'tournamentController'
