@@ -129,7 +129,8 @@ module.exports = function(server,sessionMiddleware) {
                 tournamentData.topics.forEach(function(topic){
                     if(topic._id==levelId)
                     {
-                      topic.games.push(gameId);
+                      console.log("game Id :::::::::::::::::::::::::"+data._id);
+                      topic.games.push(data._id);
 
                     }
 
@@ -243,10 +244,11 @@ module.exports = function(server,sessionMiddleware) {
     client.on('join',function(data){
 
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
+        maxPlayers=1;
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
-      //maxPlayers=1;
 
-      if(gameManager.players.get(data.tid).size==maxPlayers){
+      var usersJoined=gameManager.players.get(data.tid).size;
+      if(usersJoined==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
         var gameId= makeid();
         topicPlayers.forEach(function(player){
@@ -254,6 +256,9 @@ module.exports = function(server,sessionMiddleware) {
           console.log("starting game");
           player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
         });
+      }
+      else {
+        player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
       }
 
     });
