@@ -20,21 +20,19 @@ var topScore = 0,
 		temp;
 angular.module('quizRT')
 	.controller('quizPlayerController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
-		
+
 		$rootScope.stylesheetName="quizPlayer";
-		
+
 		$scope.question = "WAITING FOR OTHER PLAYERS";
 		$scope.myscore = 0;
 		$scope.correctAnswerers = 0;
 		$scope.wrongAnswerers = 0;
 		$scope.quizTitle = $rootScope.title;
-
-		//levelId , playersPerMatch are defined only for Tournament based quizResult
+		//playersPerMatch are defined only for Tournament based quiz
 		socket.emit('join',{
 			tid : $rootScope.tId,
 			name : $rootScope.fakeMyName,
 			image : $rootScope.myImage,
-			levelId : $rootScope.levelId ,
 			playersPerMatch : $rootScope.playersPerMatch
 		});
 
@@ -50,7 +48,7 @@ angular.module('quizRT')
 			  		var timeInterval= $interval(function(){
 			  			$scope.time--;
 						if($scope.time == 0){
-							
+
 							$scope.isDisabled = false;
 							$scope.wrongAnswerers=0;
 							$scope.correctAnswerers=0;

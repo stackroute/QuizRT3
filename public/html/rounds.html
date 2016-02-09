@@ -81,7 +81,7 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
 
   				<div class="panel-body content">
   					<div class="topic-icon">
-  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="" width="100px" height="100px"></a>
+  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}" ></a>
   					</div><!--end topic-icon-->
             <div class="topic-description">
               <div class="level-name">
@@ -95,7 +95,7 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
   					<!-- <div class="level-name" ng-click="showTopic(stages._id)"> -->
          <div class="row pull-right" id="foot">
                   <div col-xs-12 class="col-xs-12 play-button-bar">
-                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title)">Play Now!</button>
+                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, tournament.title)">Play Now!</button>
                   </div>
                 </div>
   					<!-- </div> -->
