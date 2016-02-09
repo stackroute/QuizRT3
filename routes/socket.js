@@ -24,7 +24,6 @@ var gameManager = require('./gameManager/gameManager.js'),
     defaultMaxPlayers =4;
     maxPlayers=2;
 
-console.log("initiating sockets!!!!");
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
   io.use(function(socket,next){
@@ -37,9 +36,6 @@ module.exports = function(server,sessionMiddleware) {
 
   io.on('connection', function(client) {
     client.on('updateProfile',function(data){
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      console.log(data);
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
       Profile.findOne({userId:data.userID},function(err,profileData){
         profileData.totalGames++;
         if(data.rank == 1){
@@ -75,9 +71,7 @@ module.exports = function(server,sessionMiddleware) {
       game1.save(function (err, data) {
       if (err) console.log(err);
       else {
-        console.log('$&$&$&$&$&$&$&$&$&$&$&$&$&$&$&&$&$$&$&$&$&$&$&$&$&$&$&$&$&$');
-        console.log('Saved ');
-        console.log('$&$&$&$&$&$&$&$&$&$&$&$&$&$&$&&$&$$&$&$&$&$&$&$&$&$&$&$&$&$');
+        console.log('Saved');
       }
       });
 
@@ -91,13 +85,8 @@ module.exports = function(server,sessionMiddleware) {
           'imageUrl': player.imageUrl,
           'score': player.score
         };
-        console.log("----------------------------------------");
-        console.log(player);
-        console.log("----------------------------------------");
         tempLeaderBoard.push(temp);
-        console.log("++++++++++++++++++++++++++++++++++++++++");
-        console.log(tempLeaderBoard);
-        console.log("++++++++++++++++++++++++++++++++++++++++");
+
     //     //  Players.get(data1.players[1]).join(gameID,function(){
     //     //    io.in(gameID).emit('startGame',"this is game id "+gameID);
     //     //  });
@@ -127,23 +116,11 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on('updateStatus',function(data){
       // leaderBoard.addPlayer(data.gameID,client.request.session.passport.user,client,data.name,data.score,data.image);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-      console.log(data);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
       leaderBoard.updateScore(data.gameID, client.request.session.passport.user, data.score);
-      //
+
       // arrayofPlayers=leaderBoard.getGamePlayers(data.gameID);
-
       var topperDat=leaderBoard.leaderBoard.get(data.gameID)[0];
-      console.log("******************************************************************");
-      console.log(topperDat);
-      console.log("*******************************************************************");
-
       var len = leaderBoard.leaderBoard.get(data.gameID).length;
-      console.log("99999999999999999999999999999999999999999999999999");
-      console.log(len);
-      console.log("99999999999999999999999999999999999999999999999999");
-
       // for (var i = 0; i <leaderBoard.leaderBoard.get(data.gameID).length; i++) {
       //   if (leaderBoard.leaderBoard.get(data.gameID)[i].sid == client.request.session.passport.user){
       //     myRan= i+1;
@@ -165,27 +142,15 @@ module.exports = function(server,sessionMiddleware) {
       // });
 
       leaderBoard.leaderBoard.get(data.gameID).forEach(function(player, index){
-        console.log('my rank');
-        console.log(index+1);
-        console.log('my rank');
         player.client.emit('takeScore', {myRank: index+1, topperScore:leaderBoard.leaderBoard.get(data.gameID)[0].score, topperImage:leaderBoard.leaderBoard.get(data.gameID)[0].imageUrl});
       });
     });
 
     client.on('join',function(data){
-      console.log('session object -------------------------------------');
-      console.log(client.request.session);
-      console.log('session object -------------------------------------');
-      console.log("input data on join");
-      console.log(data);
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
       if(gameManager.players.get(data.tid).size==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
-        console.log("666666666666666666666666666666666");
-        console.log(topicPlayers);
-        console.log("666666666666666666666666666666666");
-
         var gameId= makeid();
 
         topicPlayers.forEach(function(player){
@@ -218,13 +183,6 @@ function renderThegame(matches){
 
 function makeid()
 {
-    // var text = "";
-    // var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    //
-    // for( var i=0; i < 10; i++ )
-    //     text += possible.charAt(Math.floor(Math.random() * possible.length));
-    //
-    // return text;
     return uuid.v1();
 };
 

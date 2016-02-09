@@ -11,22 +11,19 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
-var mongoose = require('mongoose');
+//
 
-var gameSchema = mongoose.Schema({
-
-  gId: {type:String, unique:true},
-  players:[{
-    userId: String,
-    score: Number,
-    rank:Number
-  }]
-});
-
-Game = mongoose.model('Game', gameSchema,'game_collection');
+var mongoose = require('mongoose'),
+    gameSchema = mongoose.Schema({
+      gId: {type:String, unique:true},
+      players:[{
+        userId: String,
+        score: Number,
+        rank:Number
+      }]
+    }),
+    Game = mongoose.model('Game', gameSchema,'game_collection');
 
 module.exports = Game;

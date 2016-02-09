@@ -32,11 +32,6 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
             $rootScope.current_user = '';
             $location.path('/login');
           });
-          // $rootScope.authenticated = false;
-          // $rootScope.current_user = '';
-          // delete req.session.user;
-          // $location.path('/login');
-          // delete req.session.user;
       };
 })
   .factory('socket', function ($rootScope) {

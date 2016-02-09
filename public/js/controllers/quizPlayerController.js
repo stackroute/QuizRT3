@@ -15,9 +15,9 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var topScore = 0;
-var questionCounter = 0;
-var temp;
+var topScore = 0,
+		questionCounter = 0,
+		temp;
 angular.module('quizRT')
 	.controller('quizPlayerController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
 		$rootScope.stylesheetName="quizPlayer";

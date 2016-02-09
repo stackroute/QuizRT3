@@ -39,13 +39,13 @@ var express = require('express'),
     authenticationHandler = require('./routes/authenticationHandler')(passport),
     redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient}),
     Quiz = require("./models/quiz"),
-      sessionMiddleware = session({
+    sessionMiddleware = session({
       store: redis_store,
       secret: 'keyboard cat'
     });
 
 mongoose.connect('mongodb://172.23.238.253/quizRT3');
-mongoose.connection.on('error', console.error.bind(console, 'Faild to establish connection to MongoDB@StackRouteHost:PORT/quizRT3'));
+mongoose.connection.on('error', console.error.bind(console, 'Failed to establish connection to MongoDB@StackRouteHost:PORT/quizRT3'));
 mongoose.connection.on('open', function() {
   console.log('Connected to MongoDB@StackRouteHost:PORT/quizRT3');
 });

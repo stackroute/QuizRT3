@@ -11,22 +11,18 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
-
-var mongoose = require('mongoose');
-var Topic = require('./topic');
+//
 
 
-var categorySchema = mongoose.Schema({
-
-  _id: String,
-  categoryName:String,
-  categoryTopics: [{ type: String, ref: 'Topic' }]
-});
-
-Category = mongoose.model('category', categorySchema, "category_collection");
+var mongoose = require('mongoose'),
+    Topic = require('./topic'),
+    categorySchema = mongoose.Schema({
+      _id: String,
+      categoryName:String,
+      categoryTopics: [{ type: String, ref: 'Topic' }]
+    }),
+    Category = mongoose.model('category', categorySchema, "category_collection");
 
 module.exports = Category;

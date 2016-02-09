@@ -64,10 +64,8 @@ angular.module('quizRT')
           var path = '/topic/'+topicID;
           $location.path(path);
         };
-        $scope.play=function()
-        {
-          var path="/categories";
-          $location.path(path);
+        $scope.play=function() {
+          $location.path( "/categories" );
         }
       });
 

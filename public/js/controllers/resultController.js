@@ -17,7 +17,6 @@
 
 angular.module('quizRT')
 	.controller('resultController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
-		console.log("calledResult");
     $scope.topicName = "compiling results..please wait";
 		setTimeout(function(){
       socket.emit('getResult',$rootScope.freakgid);
@@ -28,11 +27,9 @@ angular.module('quizRT')
         $scope.topicName = $rootScope.tId;
   			$scope.players = data;
   			socket.emit('storeResult',$rootScope.freakgid);
-  			console.log($rootScope.userIdnew);
   			socket.emit('updateProfile',{score:$rootScope.finalScore,rank:$rootScope.finalRank,topicid:$rootScope.tId,userID:$rootScope.userIdnew});//score and rank
       });
-      $scope.home=function()
-      {
+      $scope.home=function() {
         location.replace("/");
       }
 		},3000);

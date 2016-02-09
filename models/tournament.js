@@ -16,26 +16,22 @@
 //
 
 
-var mongoose = require('mongoose');
-var Topic = require('./topic');
-
-
-var tournamentSchema = mongoose.Schema({
-  _id: String,
-  title:String,
-  description:String,
-  matches:Number,
-  playersPerMatch:Number,
-  imageUrl:String,
-  topics: [
-    {
-      _id:String,
-      name:{type: String, ref: 'Topic'}
-     }
-  ]
-
-});
-
-var Tournament = mongoose.model('Tournament', tournamentSchema);
+var mongoose = require('mongoose'),
+    Topic = require('./topic'),
+    tournamentSchema = mongoose.Schema({
+      _id: String,
+      title:String,
+      description:String,
+      matches:Number,
+      playersPerMatch:Number,
+      imageUrl:String,
+      topics: [
+        {
+          _id:String,
+          name:{type: String, ref: 'Topic'}
+         }
+      ]
+    }),
+    Tournament = mongoose.model('Tournament', tournamentSchema);
 
 module.exports = Tournament;

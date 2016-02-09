@@ -11,22 +11,18 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
-var mongoose = require('mongoose');
-var Question = require('./question')
+//
 
-var quizSchema = mongoose.Schema({
-
-  topicId: String,
-  multiplier: Number,
-  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
-  gameId: {type:String, unique:true}
-
-});
-
-Quiz = mongoose.model('Quiz', quizSchema,'quiz_collection');
+var mongoose = require('mongoose'),
+    Question = require('./question'),
+    quizSchema = mongoose.Schema({
+      topicId: String,
+      multiplier: Number,
+      questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
+      gameId: {type:String, unique:true}
+    }),
+    Quiz = mongoose.model('Quiz', quizSchema,'quiz_collection');
 
 module.exports = Quiz;

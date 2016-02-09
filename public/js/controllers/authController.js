@@ -11,10 +11,10 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 angular.module('quizRT')
   .controller('authController',function($scope,$http,$rootScope,$location,$cookies){
     $rootScope.stylesheetName="style";
@@ -36,8 +36,6 @@ angular.module('quizRT')
       });
     };
 
-  
-
     $scope.register = function(){
     $http.post('/auth/register', $scope.user).success(function(data){
       if(data.state == 'success'){
@@ -54,9 +52,7 @@ angular.module('quizRT')
   };
 
    $rootScope.logout= function(){
-    //console.log('+++++++++++++++++logout called');
     $cookies.put('isAuthenticated',false);
     $location.path('/login');
   }
-
-  });
+});
