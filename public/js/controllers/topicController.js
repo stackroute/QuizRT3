@@ -24,10 +24,12 @@ angular.module('quizRT')
      socket.emit('leaveGame', $scope.topicID);
      var path = '/topicsHandler/topic/'+$scope.topicID;
      $rootScope.tId=$scope.topicID;
+
      socket.emit('disjoin',"leaving page topic play");
      $http.get(path)
           .success(function(data, status, headers, config) {
                $scope.topic = data;
+               $rootScope.title = data.topicName;
            })
           .error(function(data, status, headers, config) {
              console.log(error);
