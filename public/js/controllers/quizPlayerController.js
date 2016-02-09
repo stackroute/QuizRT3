@@ -19,7 +19,7 @@ var questionCounter = 0;
 var temp;
 angular.module('quizRT')
     .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
-        
+
         $rootScope.stylesheetName = "quizPlayer";
         $scope.question = "WAITING FOR OTHER PLAYERS";
         $scope.myscore = 0;
@@ -33,18 +33,22 @@ angular.module('quizRT')
         }else{
             $scope.levelDetails = "";
         }
-       
-        
+
+
         socket.emit('join', {
             tid: $rootScope.levelId || $rootScope.tId,
             name: $rootScope.fakeMyName,
             image: $rootScope.myImage,
-            playersPerMatch: $rootScope.playersPerMatch
+            playersPerMatch: $rootScope.playersPerMatch,
+
+            /* Alert ****** Alert ****** Alert ****** */
+            // need userId to save tournament details in profile
+            userID: $rootScope.userIdnew
         });
 
         socket.on('startGame', function(startGameData) {
             $rootScope.freakgid = startGameData.gameId;
-            
+
             var tId = $rootScope.tId;
             var gId2 = startGameData.gameId;
             var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
@@ -59,7 +63,7 @@ angular.module('quizRT')
                             $scope.wrongAnswerers = 0;
                             $scope.correctAnswerers = 0;
                             $scope.unattempted = startGameData.maxPlayers; //this is hardcoded..get this data from the first socket
-                            
+
                             if (questionCounter == data.questions.length) {
                                 $interval.cancel(timeInterval);
                                 $rootScope.finalScore = $scope.myscore;
