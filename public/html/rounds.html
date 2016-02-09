@@ -27,7 +27,7 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
   </div>
   <div class="content">
     <div class="">
-      <div class="topic-header">
+      <div class="rounds-header">
         <h1>{{tournament.title}}<br><small>{{tournament.description}}</small></h1>
       </div><!--end topic-header-->
 
@@ -46,18 +46,18 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
         <div class="col-xs-6 topic-user">
           <div class="wins row">
             <div class="col-xs-8">
-              <h4>#Wins</h4>
+              <h4>#Players/Match</h4>
             </div>
             <div class="col-xs-4" id="numwins">
-              <h4>{{topic.topicWins}}</h4>
+              <h4>{{tournament.playersPerMatch}}</h4>
             </div>
           </div> <!--end wins-->
           <div class="losses row">
             <div class="col-xs-8">
-              <h4>#Losses</h4>
+              <h4>#Rounds</h4>
             </div>
             <div class="col-xs-4" id="numloss">
-              <h4>{{topic.topicLosses}}</h4>
+              <h4>{{tournament.matches}}</h4>
             </div>
           </div> <!--end losses-->
           <div class=" losses row">
@@ -81,7 +81,7 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
 
   				<div class="panel-body content">
   					<div class="topic-icon">
-  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}" ></a>
+  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}"></a>
   					</div><!--end topic-icon-->
             <div class="topic-description">
               <div class="level-name">
@@ -95,7 +95,7 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
   					<!-- <div class="level-name" ng-click="showTopic(stages._id)"> -->
          <div class="row pull-right" id="foot">
                   <div col-xs-12 class="col-xs-12 play-button-bar">
-                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, tournament.title)">Play Now!</button>
+                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title)">Play Now!</button>
                   </div>
                 </div>
   					<!-- </div> -->
