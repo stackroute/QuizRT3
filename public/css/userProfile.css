@@ -16,16 +16,6 @@
 */
 
 
-/*
-user Settings styling
-*/
-.alert {
-  padding: 7px;
-}
-#changePasswordDiv,
-#settingsDiv .alert {
-  display: none;
-}
 footer {
   bottom: 0;
   position: fixed;
@@ -37,7 +27,7 @@ footer .container{
   min-height: 60px;
 }
 footer .nav {
-  padding: 10px 0;
+  padding: 5px 0 0;
   text-align: center;
 }
 footer .nav img,
@@ -51,58 +41,11 @@ footer .nav p{
 footer .nav img {
   margin: auto;
   margin-top: -2px;
-  width: 54px;
+  width: 60px;
   height: auto;
   cursor: pointer;
 }
-#settingsDiv {
-  max-width: 500px;
-	padding: 5px;
-	margin: 0 auto;
-}
-#settingsDiv h3{
-  border-bottom: 1px solid #999;
-  margin-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
-}
-#settingsDiv h5{
-  border-top: 1px solid #999;
-  margin-top: 20px;
-  padding-top: 8px;
-  cursor: pointer;
-}
-#addProfilePic {
-  margin-bottom: 10px;
-  text-align: center;
-}
-#settingsDiv #addProfilePic img {
-  border: 1px solid #aaa;
-  border-radius: 80px;
-  color: #aaa;
-  cursor: pointer;
-  display: block;
-  height: 64px;
-  padding: 12px 12px;
-  margin: 0 auto 7px;
-  text-decoration: none;
-  width: 64px;
-}
-#settingsDiv #addProfilePic img:hover {
-  border: 1px solid white;
-}
-#settingsDiv .form-control {
-  margin-bottom: 10px;
-}
-#settingsDiv span {
-  color: inherit;;
-  cursor: pointer;
-}
-#settingsDiv #addProfilePic img:hover,
-#settingsDiv span:hover,
-#settingsDiv h5:hover {
-  color: white;
-}
+
 .badge{
   position: absolute;;
     top: 0px;
@@ -165,7 +108,7 @@ footer .nav img {
 
 #main {
   padding-bottom: 10px;
-  margin-bottom: 90px;
+  margin-bottom: 130px;
 }
   #GamesInfo{
     border-left: 2px red solid;

@@ -140,7 +140,6 @@ angular.module('quizRT')
       }
     });
     $scope.$watch('errorMessage', function(nv,ov) {
-      console.log(nv);
       if (nv) {
         $('#settingsDiv').children('.alert').slideDown();
       }else {

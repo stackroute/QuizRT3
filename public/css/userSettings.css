@@ -1,0 +1,58 @@
+.alert {
+  padding: 7px;
+}
+#changePasswordDiv,
+#settingsDiv .alert {
+  display: none;
+}
+#settingsDiv {
+  max-width: 500px;
+	padding: 5px;
+	margin: 0 auto;
+}
+#settingsDiv .alert button{
+  margin-top: -3px;
+}
+#settingsDiv h3{
+  border-bottom: 1px solid #999;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+#settingsDiv h5{
+  border-top: 1px solid #999;
+  margin-top: 20px;
+  padding-top: 8px;
+  cursor: pointer;
+}
+#addProfilePic {
+  margin-bottom: 10px;
+  text-align: center;
+}
+#settingsDiv #addProfilePic img {
+  border: 1px solid #aaa;
+  border-radius: 80px;
+  color: #aaa;
+  cursor: pointer;
+  display: block;
+  height: 64px;
+  padding: 12px 12px;
+  margin: 0 auto 7px;
+  text-decoration: none;
+  width: 64px;
+}
+#settingsDiv #addProfilePic img:hover {
+  border: 1px solid white;
+}
+#settingsDiv .form-control {
+  margin-bottom: 10px;
+}
+#settingsDiv span {
+  color: inherit;;
+  cursor: pointer;
+}
+#settingsDiv #addProfilePic img:hover,
+#settingsDiv span:hover,
+#settingsDiv h5:hover {
+  color: white;
+}
