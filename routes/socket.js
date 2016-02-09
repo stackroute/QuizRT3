@@ -22,7 +22,7 @@ var gameManager = require('./gameManager/gameManager.js'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
     defaultMaxPlayers =4;
-    maxPlayers=2;
+    maxPlayers=0;
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
@@ -152,7 +152,6 @@ module.exports = function(server,sessionMiddleware) {
       if(gameManager.players.get(data.tid).size==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
         var gameId= makeid();
-
         topicPlayers.forEach(function(player){
         leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
         console.log("starting game");
