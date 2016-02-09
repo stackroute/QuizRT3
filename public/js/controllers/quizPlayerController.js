@@ -29,12 +29,11 @@ angular.module('quizRT')
 		$scope.wrongAnswerers = 0;
 		$scope.quizTitle = $rootScope.title;
 
-		//levelId , playersPerMatch are defined only for Tournament based quizResult
+		//playersPerMatch are defined only for Tournament based quiz
 		socket.emit('join',{
 			tid : $rootScope.tId,
 			name : $rootScope.fakeMyName,
 			image : $rootScope.myImage,
-			levelId : $rootScope.levelId ,
 			playersPerMatch : $rootScope.playersPerMatch
 		});
 
