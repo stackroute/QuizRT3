@@ -13,11 +13,12 @@ angular.module("quizRT")
              console.log(error);
            });
 
-      $scope.play=function(levelId, topicId, title)
+      $scope.play=function(levelId, topicId, title, topic_name)
       {
         $rootScope.levelId=levelId;
         $rootScope.title=title;
         $rootScope.tId=topicId;
+        $rootScope.topicName=topic_name;
         $location.path('/quizPlayer');
       };
    });

@@ -26,21 +26,20 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
     </div>
   </div>
   <div class="content">
-    <div class="">
       <div class="rounds-header">
         <h1>{{tournament.title}}<br><small>{{tournament.description}}</small></h1>
       </div><!--end topic-header-->
 
 
       <div class="row">
-        <div class="col-xs-6 topic-icon">
-          <img ng-src="{{tournament.imageUrl}}"  class="img-responsive" alt="">
+        <div class="col-xs-6 rounds-icon">
+          <img ng-src="{{tournament.imageUrl}}"  class="img-responsive" alt="tournament_image">
           <div class="follow">
             <h3>
             <span class="glyphicon glyphicon-heart" ng-show="topic.isFollowed" ng-click="followUnfollow()"></span>
             <span class="glyphicon glyphicon-heart-empty" ng-hide="topic.isFollowed" ng-click="followUnfollow()"></span>
             <span>{{tournament.topicFollowers}}</span>
-          </h3>
+            </h3>
           </div>
         </div><!--end topic-icon-->
         <div class="col-xs-6 topic-user">
@@ -72,7 +71,6 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
         </div> <!--end topic-user-->
       </div><!--end row-->
       <hr>
-    </div><!--end topic-info-->
 
   <div class="heading col-xs-12 col-sm-12 col-lg-12">
     <h1 class="statement pull-left">Rounds</h1>
@@ -81,7 +79,7 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
 
   				<div class="panel-body content">
   					<div class="topic-icon">
-  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}"></a>
+  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}" height="100" width="100"></a>
   					</div><!--end topic-icon-->
             <div class="topic-description">
               <div class="level-name">
@@ -90,14 +88,15 @@ Copyright {2016} {NIIT Limited, Wipro Limited}
             </div>
               <!-- <h4>{{stages.Description}}</h4> -->
           </div>
-        </div>
+
   			<!-- <div class="panel-footer"> -->
   					<!-- <div class="level-name" ng-click="showTopic(stages._id)"> -->
          <div class="row pull-right" id="foot">
-                  <div col-xs-12 class="col-xs-12 play-button-bar">
-                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title)">Play Now!</button>
+                  <div class="col-xs-12 play-button-bar">
+                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title, stages.name.topicName)">Play Now!</button>
                   </div>
                 </div>
+              </div>
   					<!-- </div> -->
   				</div>
   			</div>
