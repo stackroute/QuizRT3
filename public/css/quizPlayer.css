@@ -25,6 +25,11 @@
   padding: 20px;*/
 
 }
+
+#quizTitle {
+  text-align: center;
+  margin: -15px 0;
+}
 #questionInfoPanel h4{
   border-color: #AAA;
   border-width: medium;
@@ -124,6 +129,7 @@ body{
 
 #main{
   height: 100%;
+  margin-bottom: 0;
 }
 
 #timer{
@@ -149,7 +155,7 @@ body{
 .navbar{
   height: 8%;
   margin-top: 2%;
-  margin-bottom: 4%;
+  margin-bottom: 2%;
 }
 
 .myStatus{

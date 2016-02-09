@@ -27,12 +27,13 @@ angular.module('quizRT')
     //  console.log($rootScope.tId);
      var path = '/topicsHandler/topic/'+$scope.topicID;
      $rootScope.tId=$scope.topicID;
-     console.log($rootScope.tId);
+     
      socket.emit('disjoin',"leaving page topic play");
      $http.get(path)
           .success(function(data, status, headers, config) {
-               console.log(data);
+               
                $scope.topic = data;
+               $rootScope.title = data.topicName;
            })
           .error(function(data, status, headers, config) {
              console.log(error);
