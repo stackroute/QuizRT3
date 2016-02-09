@@ -59,8 +59,7 @@ module.exports = function(server,sessionMiddleware) {
           }
         });
         if ( tournamentID ) { // update coming from a tournament
-          var tournamentFinalLevel = data.maxlevel,
-              levelCleared = levelId.substr( levelId.indexOf('_') + 1 );
+          var levelCleared = levelId.substr( levelId.indexOf('_') + 1 );
 
           if ( profileData.tournaments ) {
             profileData.tournaments.forEach( function(tournament) {
@@ -73,19 +72,22 @@ module.exports = function(server,sessionMiddleware) {
                 break;
               }
             });
+            profileData.save();
           } else {
-            var newTournamentObj = {
-              id: tournamentID,
-              status: 'PLAYING',
-              levelCleared:1,
-              finalLevel: tournamentFinalLevel,
-              levelPoints:[data.score]
-            };
-            profileData.tournaments.push( newTournamentObj )
+            Tournament.findOne({_id: tournamentID }, function(err, tournament ) {
+              var newTournamentObj = {
+                id: tournamentID,
+                status: 'PLAYING',
+                levelCleared:1,
+                finalLevel: tournament.matches,
+                levelPoints:[data.score]
+              };
+              profileData.tournaments.push( newTournamentObj );
+              profileData.save();
+            });
           }
         }
 
-        profileData.save();
       });
     });
     client.on('storeResult',function(gameData){
