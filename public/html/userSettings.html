@@ -33,7 +33,10 @@
 		<h3>Settings</h3>
 		<div id="addProfilePic" class="row">
 			<div class="col-md-3 col-xs-4">
-				<img src="{{user.imageSrc}}" alt="add photo" id="profilePic"/>
+				<div id="profilePic">
+					<img ng-show="user.imageSrc" src="{{user.imageSrc}}" alt="" />
+					<span ng-hide="user.imageSrc" ng-click="removeIcon()">add photo</span>
+				</div>
 				<input type="file" class="hide" id="inputFile">
 				<span ng-show="user.imageSrc" ng-click="removeIcon()">remove</span>
 			</div>

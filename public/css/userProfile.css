@@ -15,19 +15,22 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 */
 
-
+body {
+  padding-bottom: 72px; /* to counter fixed-footer height*/
+}
 footer {
   bottom: 0;
   position: fixed;
   width: 100%;
 }
 footer .container{
+  border-top:1px solid #555;
   background: #2F2D2D;
+  padding-top: 2px;
   color: white;
-  min-height: 60px;
 }
 footer .nav {
-  padding: 5px 0 0;
+  padding: 2px 0 0;
   text-align: center;
 }
 footer .nav img,
@@ -39,8 +42,7 @@ footer .nav p{
   margin-bottom: 0;
 }
 footer .nav img {
-  margin: auto;
-  margin-top: -2px;
+  margin: -7px auto -1px;
   width: 60px;
   height: auto;
   cursor: pointer;
@@ -105,10 +107,8 @@ footer .nav img {
 .content{
   padding:25px;
 }
-
 #main {
   padding-bottom: 10px;
-  margin-bottom: 130px;
 }
   #GamesInfo{
     border-left: 2px red solid;
@@ -258,10 +258,11 @@ text-align: center;
     font-size: 2em;
   }
   footer .nav img {
-    width: 30px;
+    margin: -4px auto -1px;
+    width: 33px;
   }
-  #main {
-    margin-bottom: 66px;
+  body {
+    padding-bottom: 51px;/* to counter fixed-footer height*/
   }
   #GamesInfo {
     padding-top:5px;
@@ -335,10 +336,11 @@ text-align: center;
     font-size: 2em;
   }
   footer .nav img {
-    width: 30px;
+    margin: -4px auto -1px;
+    width: 33px;
   }
-  #main {
-    margin-bottom: 66px;
+  body {
+    padding-bottom: 51px;/* to counter fixed-footer height and mobile's browser nav*/
   }
 
   #GamesInfo {

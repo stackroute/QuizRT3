@@ -15,17 +15,12 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 */
 
-html,.view-container {
-	height:100%;
-}
 body {
 	/*padding-top: 5px;*/
 	background-color: #524f4f;
 	color: #ccc;
 	font-size: 12px;
 	font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
-	height: 100%;
-
 }
 
  a ,a:active, a:visited{

@@ -165,7 +165,7 @@ angular.module('quizRT')
       }
       $http( reqObj ).then( function( successResponse ){
         $profilePic.css('padding',0)
-  									.css('border', 'none');
+  									.css('border', '1px solid transparent');
         $scope.user.imageSrc = successResponse.data.tempUrl;
       }, function( errorResponse ){
         console.log('Error in uploading user profile picture.');
