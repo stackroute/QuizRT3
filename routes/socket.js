@@ -216,7 +216,7 @@ module.exports = function(server,sessionMiddleware) {
 
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
         maxPlayers=1;
-      //maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+      maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
 
       if(gameManager.players.get(data.tid).size==maxPlayers){
