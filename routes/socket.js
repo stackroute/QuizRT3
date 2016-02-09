@@ -100,7 +100,8 @@ module.exports = function(server,sessionMiddleware) {
                 tournamentData.topics.forEach(function(topic){
                     if(topic._id==levelId)
                     {
-                      topic.games.push(gameId);
+                      console.log("game Id :::::::::::::::::::::::::"+data._id);
+                      topic.games.push(data._id);
 
                     }
 
@@ -214,8 +215,9 @@ module.exports = function(server,sessionMiddleware) {
     client.on('join',function(data){
 
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
-      maxPlayers=data.playersPerMatch || defaultMaxPlayers;
-      //maxPlayers=1;
+        maxPlayers=1;
+      //maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+
 
       if(gameManager.players.get(data.tid).size==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
