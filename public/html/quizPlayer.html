@@ -23,24 +23,26 @@
   <div class="navbar">
     <div id="quizTitle">
       <h2>{{quizTitle}}</h2>
-    </div>
-    <div class="row">
-      <div class="col-xs-5 pull-left myStatus">
-        <h4 class="pull-left">
-          <strong>#1</strong>
-        </h4>
-        <img src="{{topperImage}}" alt="" class="img-circle pull-left"/>
-        <h5 class="score pull-left" id="top-score">{{topperScore}}</h5>
-      </div>
-      <div   id="timer" class="col-xs-2 myStatus">{{time}}
-      </div>
-      <div class="pull-right col-xs-5 myStatus">
-        <h5 class="score pull-right" id="myScore">{{myscore}}</h5>
-        <img src="{{myImage}}" alt="" class="img-circle pull-right"/>
-        <h4 class="pull-right" id="myRank"><strong>{{myrank}}</strong></h4>
-      </div>
+      <p>{{levelDetails}}<p>
     </div>
   </div><!--end navigation bar -->
+  <div class="row">
+    <div class="col-xs-5 pull-left myStatus">
+      <h4 class="pull-left">
+        <strong>#1</strong>
+      </h4>
+      <img src="{{topperImage}}" alt="" class="img-circle pull-left"/>
+      <h5 class="score pull-left" id="top-score">{{topperScore}}</h5>
+    </div>
+    <div   id="timer" class="col-xs-2 myStatus">{{time}}
+    </div>
+    <div class="pull-right col-xs-5 myStatus">
+      <h5 class="score pull-right" id="myScore">{{myscore}}</h5>
+      <img src="{{myImage}}" alt="" class="img-circle pull-right"/>
+      <h4 class="pull-right" id="myRank"><strong>{{myrank}}</strong></h4>
+    </div>
+  </div>
+  
 
   <div class="row" id="statusInfo">
     <h5 class="col-xs-12 center-align">

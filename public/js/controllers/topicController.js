@@ -30,9 +30,12 @@ angular.module('quizRT')
           .success(function(data, status, headers, config) {
                $scope.topic = data;
                $rootScope.title = data.topicName;
+
+               // levelId is defined for Tournaments only hence resetting it
+               $rootScope.levelId = null;
            })
           .error(function(data, status, headers, config) {
-             console.log(error);
+             console.log(data);
            });
 
      $scope.followUnfollow=function(){
@@ -41,7 +44,7 @@ angular.module('quizRT')
               $scope.topic = data;
             })
             .error(function(data, status, headers, config) {
-              console.log(error);
+              console.log(data);
             });
     };
 
@@ -50,7 +53,7 @@ angular.module('quizRT')
            .success(function(data, status, headers, config) {
            })
            .error(function(data, status, headers, config) {
-             console.log(error);
+             console.log(data);
            });
     }
 
