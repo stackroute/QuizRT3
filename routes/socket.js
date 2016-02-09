@@ -218,8 +218,8 @@ module.exports = function(server,sessionMiddleware) {
         maxPlayers=1;
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
-
-      if(gameManager.players.get(data.tid).size==maxPlayers){
+      var usersJoined=gameManager.players.get(data.tid).size;
+      if(usersJoined==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
         var gameId= makeid();
         topicPlayers.forEach(function(player){
@@ -227,6 +227,9 @@ module.exports = function(server,sessionMiddleware) {
           console.log("starting game");
           player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
         });
+      }
+      else {
+        player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
       }
 
     });
