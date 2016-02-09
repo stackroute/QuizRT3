@@ -26,10 +26,33 @@ router.post('/profilePic', function(req,res,next) {
   (function(callback) {
     var isImageType,
         tempUrl,
+        overwritePic = function(oldFilePath, tempFilePath) {
+          var fileName = path.basename(oldFilePath);
+          console.log('Overwriting the pic uploaded: ' + fileName);
+          fs.unlink(oldFilePath, function (err) {
+            if (err) {
+              console.log(err);
+              return callback( 'CANTDELETE', null );
+            } else {
+              // Rename the file to match the filename that the user uploaded
+              fs.rename(tempFilePath, fileName, function (err) {
+                if (err) {
+                  console.log(err);
+                  return callback( 'PERMISSIONERROR', null );
+                }else{
+                  console.log('No rename error');
+                  tempUrl = 'temp/' + fileName;
+                  callback( null, tempUrl );
+                }
+              });
+            }
+          });
+        },
         deleteTempFile = function(filePath) {
-          console.log('File exists on server. Deleting temp file...');
+          console.log('Deleting file...');
           fs.unlink(filePath, function (err) {
-            if (err) return console.log(err);
+            if (err)
+              return console.log(err);
           });
         };
     form.uploadDir = process.cwd() + '/public/temp';
@@ -39,25 +62,22 @@ router.post('/profilePic', function(req,res,next) {
         deleteTempFile(file.path); // Uploaded file is not an image, so delete it
         callback('NOTIMAGE',null);
       }else {
-        var destFile = path.dirname(file.path) + '\\' + 'user_' + file.name; // append username to the file to avoid name collisions
-        tempUrl = 'temp/' + path.basename(file.path);
-
+        var newName = 'user_' + file.name,// append username to the file to avoid name collisions
+            destFile = path.dirname(file.path) + '\\' + newName;
+            tempUrl = 'temp/' + 'user_' + file.name;
         try {
           var stats = fs.statSync(destFile);
           if ( stats.isFile() ) {
-            deleteTempFile(file.path);
-            tempUrl = 'temp/' + 'user_' + file.name;
-            return callback( null, tempUrl );
+            return overwritePic(destFile, file.path);// delete the previous file
           }
         }catch(e) {
           // Rename the file to match the filename that the user uploaded
-          fs.rename(file.path, destFile, function (err) {
+          fs.rename(file.path, 'public/' + tempUrl, function (err) {
             if (err) {
               console.log(err);
               return callback( 'PERMISSIONERROR', null );
             }else{
               console.log('No rename error');
-              tempUrl = 'temp/' + 'user_' + file.name;
               callback( null, tempUrl );
             }
           });

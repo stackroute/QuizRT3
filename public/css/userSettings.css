@@ -29,7 +29,7 @@
   margin-bottom: 10px;
   text-align: center;
 }
-#settingsDiv #addProfilePic img {
+#settingsDiv #profilePic {
   border: 1px solid #aaa;
   border-radius: 80px;
   color: #aaa;
@@ -41,8 +41,18 @@
   text-decoration: none;
   width: 64px;
 }
-#settingsDiv #addProfilePic img:hover {
+#settingsDiv #profilePic:hover,
+#settingsDiv #profilePic:active {
   border: 1px solid white;
+  color: white;
+}
+#settingsDiv #profilePic img{
+  border-radius: 80px;
+  height: 64px;
+  width: 64px;
+}
+#settingsDiv #profilePic span{
+  color: inherit;
 }
 #settingsDiv .form-control {
   margin-bottom: 10px;
@@ -51,7 +61,6 @@
   color: inherit;;
   cursor: pointer;
 }
-#settingsDiv #addProfilePic img:hover,
 #settingsDiv span:hover,
 #settingsDiv h5:hover {
   color: white;
