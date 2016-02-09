@@ -35,7 +35,7 @@ router.post('/profilePic', function(req,res,next) {
               return callback( 'CANTDELETE', null );
             } else {
               // Rename the file to match the filename that the user uploaded
-              fs.rename(tempFilePath, fileName, function (err) {
+              fs.rename(tempFilePath, oldFilePath, function (err) {
                 if (err) {
                   console.log(err);
                   return callback( 'PERMISSIONERROR', null );
