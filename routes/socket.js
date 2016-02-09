@@ -22,7 +22,7 @@ var gameManager = require('./gameManager/gameManager.js'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
     defaultMaxPlayers =4;
-    maxPlayers=2;
+    maxPlayers=0;
 
 console.log("initiating sockets!!!!");
 module.exports = function(server,sessionMiddleware) {
@@ -173,21 +173,11 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('join',function(data){
-      console.log('session object -------------------------------------');
-      console.log(client.request.session);
-      console.log('session object -------------------------------------');
-      console.log("input data on join");
-      console.log(data);
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
       if(gameManager.players.get(data.tid).size==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
-        console.log("666666666666666666666666666666666");
-        console.log(topicPlayers);
-        console.log("666666666666666666666666666666666");
-
         var gameId= makeid();
-
         topicPlayers.forEach(function(player){
         leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
         console.log("starting game");
