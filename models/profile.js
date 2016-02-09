@@ -33,7 +33,16 @@ var mongoose = require('mongoose'),
         level:Number,
         isFollowed:Boolean,
         points:Number,
-        topicId: {type:String, ref: 'Topic'}}]
+        topicId: {type:String, ref: 'Topic'}
+      }],
+      tournaments: [{
+        id:{ type: String, ref: 'Tournament'},
+        isFollowed:Boolean,
+        status:String, //can be amongst "FOLLOWED","PLAYING", or "COMPLETED"
+        levelCleared:Number,
+        finalLevel:Number,
+        levelPoints:Array
+      }]
     },
     {strict:false}),
     Profile = mongoose.model('Profile', profileSchema, "profile_collection");

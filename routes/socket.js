@@ -38,9 +38,11 @@ module.exports = function(server,sessionMiddleware) {
 
   io.on('connection', function(client) {
     client.on('updateProfile',function(data){
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      console.log(data);
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      var levelId = data.levelId,
+          tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
+
+      console.log('LevelId = ' + levelId + ", T ID = " + tournamentId);
+
       Profile.findOne({userId:data.userID},function(err,profileData){
         profileData.totalGames++;
         if(data.rank == 1){
@@ -56,7 +58,38 @@ module.exports = function(server,sessionMiddleware) {
             topic.level = findLevel(topic.points);
           }
         });
-        profileData.save();
+        if ( tournamentID ) { // update coming from a tournament
+          var levelCleared = levelId.substr( levelId.indexOf('_') + 1 );
+
+          if ( profileData.tournaments ) {
+            profileData.tournaments.forEach( function(tournament) {
+              if ( (tournament.id == tournamentID) && (tournament.status == 'PLAYING') ) {
+                tournament.levelCleared = levelCleared;
+                tournament.levelPoints.push( data.score );
+                if ( levelCleared === tournament.finalLevel ) {
+                  tournament.status = 'COMPLETED';
+                }
+                break;
+              }
+            });
+            profileData.save();
+          } else {
+            Tournament.findOne({_id: tournamentID }, function(err, tournament ) {
+              var newTournamentObj = {
+                id: tournamentID,
+                status: 'PLAYING',
+                levelCleared:1,
+                finalLevel: tournament.matches,
+                levelPoints:[data.score]
+              };
+              profileData.tournaments.push( newTournamentObj );
+              profileData.save();
+            });
+          }
+        }
+
+
+        console.log( profileData );
       });
     });
     client.on('storeResult',function(gameData){
@@ -100,7 +133,8 @@ module.exports = function(server,sessionMiddleware) {
                 tournamentData.topics.forEach(function(topic){
                     if(topic._id==levelId)
                     {
-                      topic.games.push(gameId);
+                      console.log("game Id :::::::::::::::::::::::::"+data._id);
+                      topic.games.push(data._id);
 
                     }
 
@@ -214,10 +248,11 @@ module.exports = function(server,sessionMiddleware) {
     client.on('join',function(data){
 
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
+        maxPlayers=1;
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
-      //maxPlayers=1;
 
-      if(gameManager.players.get(data.tid).size==maxPlayers){
+      var usersJoined=gameManager.players.get(data.tid).size;
+      if(usersJoined==maxPlayers){
         var topicPlayers= gameManager.popPlayers(data.tid);
         var gameId= makeid();
         topicPlayers.forEach(function(player){
@@ -225,6 +260,9 @@ module.exports = function(server,sessionMiddleware) {
           console.log("starting game");
           player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
         });
+      }
+      else {
+        player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
       }
 
     });

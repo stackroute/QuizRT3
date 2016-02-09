@@ -26,9 +26,16 @@ angular.module('quizRT')
   			});
         $scope.topicName = $rootScope.tId;
   			$scope.players = data;
-
-  			socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:$rootScope.levelId||false});
-  			socket.emit('updateProfile',{score:$rootScope.finalScore,rank:$rootScope.finalRank,topicid:$rootScope.tId,userID:$rootScope.userIdnew});//score and rank
+				var levelId=$rootScope.levelId||false;
+  			socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
+				var updateProfileObj = {
+					score: $rootScope.finalScore,
+					rank: $rootScope.finalRank,
+					topicid: $rootScope.tId,
+					userID: $rootScope.userIdnew,
+					levelId: levelId
+				};
+  			socket.emit('updateProfile', updateProfileObj );//score and rank
       });
       $scope.home=function() {
         location.replace("/");

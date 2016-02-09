@@ -25,6 +25,13 @@ var mongoose = require('mongoose'),
       matches:Number,
       playersPerMatch:Number,
       imageUrl:String,
+      leaderBoard:
+      [
+        {
+          userId:{type: String, ref: 'Profile'},
+          totalScore:Number
+        }
+      ],
       totalGamesPlayed:{type:Number,default:0},
       topics: [
         {

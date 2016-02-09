@@ -46,6 +46,18 @@ router.route('/tournament/:tId')
 	          });
 
 	  });
+		router.route('/results/:tId')
+			  .get(function(req , res){
+					Tournament.findById(req.params.tId)
+			      .populate("topics.games")
+			          .exec(function(err,tournaments){
+			            if(err){
+			                return res.send(err);
+			              }
+			            return res.json(tournaments);
+			          });
+
+			  });
 
 
 module.exports= router;
