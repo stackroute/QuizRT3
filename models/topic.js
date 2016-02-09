@@ -22,7 +22,9 @@ var mongoose = require('mongoose'),
       topicIcon: String,
       topicCategory: Array,
       topicDescription: String,
-      topicFollowers: Number
+      topicFollowers: Number,
+      games:{type: String, ref: 'Game'}
+
     }),
     Topic = mongoose.model('Topic', topicSchema, "topics_collection");
 

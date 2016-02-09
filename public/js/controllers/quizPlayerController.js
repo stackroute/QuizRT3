@@ -21,7 +21,8 @@ var temp;
 angular.module('quizRT')
 	.controller('quizPlayerController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
 		$rootScope.stylesheetName="quizPlayer";
-		console.log($rootScope.tId);
+
+	
 		$scope.question = "WAITING FOR OTHER PLAYERS";
 		$scope.myscore = 0;
 		$scope.correctAnswerers = 0;
@@ -35,6 +36,8 @@ angular.module('quizRT')
 
 		socket.on('startGame',function(startGameData){
 			$rootScope.freakgid = startGameData.gameId;
+			console.log("--------------------------------");
+
 			var tId=$rootScope.tId;
 			var gId2=startGameData.gameId;
 		  var path ='/quizPlayer/quizData/'+ tId + ',' + gId2;

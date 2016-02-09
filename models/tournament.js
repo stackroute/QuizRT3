@@ -25,10 +25,12 @@ var mongoose = require('mongoose'),
       matches:Number,
       playersPerMatch:Number,
       imageUrl:String,
+      totalGamesPlayed:{type:Number,default:0},
       topics: [
         {
-          _id:String,
-          name:{type: String, ref: 'Topic'}
+           _id:String,
+          name:{type: String, ref: 'Topic'},
+          games:[{type: String, ref: 'Game'}]
          }
       ]
     }),

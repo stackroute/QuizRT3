@@ -24,6 +24,7 @@ var express = require('express'),
 router.route('/quizData/:id')
 .post(function(req, res) {
   var topicInst = req.params.id;
+  console.log("fetching questions for :"+topicInst );
   var temp=topicInst.split(",");
   var topicId1=temp[0];
   var groupId=temp[1];
