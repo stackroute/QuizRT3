@@ -21,6 +21,45 @@ var topScore = 0,
 angular.module('quizRT')
 	.controller('quizPlayerController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
 
+		
+	$rootScope.stylesheetName="quizPlayer";
+	
+	$scope.question = "WAITING FOR OTHER PLAYERS";
+	$scope.myscore = 0;
+	$scope.correctAnswerers = 0;
+	$scope.wrongAnswerers = 0;
+	$scope.quizTitle = $rootScope.title;
+
+	//levelId ,playersPerMatch are defined only for Tournament based quiz
+	socket.emit('join',{
+		tid : $rootScope.levelId || $rootScope.tId,
+		name : $rootScope.fakeMyName,
+		image : $rootScope.myImage,
+		playersPerMatch : $rootScope.playersPerMatch
+	});
+
+	socket.on('startGame',function(startGameData){
+		
+		$rootScope.freakgid = startGameData.gameId;
+		var tId=$rootScope.tId;
+		var gId2=startGameData.gameId;
+	    var path ='/quizPlayer/quizData/'+ tId + ',' + gId2;
+		$http.get(path)
+			.success(function(data, status, headers, config) {
+				$scope.time=5;
+				console.log(data);
+		  		var timeInterval= $interval(function(){
+		  			$scope.time--;
+					if($scope.time == 0){
+						
+						$scope.isDisabled = false;
+						$scope.wrongAnswerers=0;
+						$scope.correctAnswerers=0;
+						$scope.unattempted = startGameData.maxPlayers; //this is hardcoded..get this data from the first socket
+						if(questionCounter == data.questions.length){
+							$interval.cancel(timeInterval);
+
+
 		$rootScope.stylesheetName="quizPlayer";
 
 		$scope.question = "WAITING FOR OTHER PLAYERS";
@@ -56,64 +95,65 @@ angular.module('quizRT')
 							if(questionCounter == data.questions.length){
 								$interval.cancel(timeInterval);
 
-								$rootScope.finalScore = $scope.myscore;
-								$rootScope.finalRank = $scope.myrank;
-								location.replace('/#quizResult');
-							}
-							else{
-								temp = loadNextQuestion(data,questionCounter);
-								$scope.changeColor = function(id,element){
-										if(id == "option"+(temp.correctIndex)){
-			                $(element.target).addClass('btn-success');
-											$scope.myscore = $scope.myscore + $scope.time + 10;
-											socket.emit('confirmAnswer',{ans:"correct",gameID:startGameData.gameId});
-			              }
-			              else{
-			                $(element.target).addClass('btn-danger');
-			                angular.element('#option'+temp.correctIndex).addClass('btn-success');
-											$scope.myscore = $scope.myscore - 5;
-											socket.emit('confirmAnswer',{ans:"wrong",gameID:startGameData.gameId});
-			              }
-			              $scope.isDisabled = true;
-										socket.emit('updateStatus',{score:$scope.myscore,gameID:startGameData.gameId,name:$rootScope.fakeMyName,image:$rootScope.myImage});
-			            };
 
-						$scope.question = temp.question;
-						$scope.options = temp.options;
-
-						if(temp.image != "null")
-						$scope.questionImage = temp.image;
-
+							$rootScope.finalScore = $scope.myscore;
+							$rootScope.finalRank = $scope.myrank;
+							location.replace('/#quizResult');
+						}
 						else{
-							$scope.questionImage = null;
-						}
-						$scope.time = 15;
-							}
-						}
+							temp = loadNextQuestion(data,questionCounter);
+							$scope.changeColor = function(id,element){
+									if(id == "option"+(temp.correctIndex)){
+		                $(element.target).addClass('btn-success');
+										$scope.myscore = $scope.myscore + $scope.time + 10;
+										socket.emit('confirmAnswer',{ans:"correct",gameID:startGameData.gameId});
+		              }
+		              else{
+		                $(element.target).addClass('btn-danger');
+		                angular.element('#option'+temp.correctIndex).addClass('btn-success');
+										$scope.myscore = $scope.myscore - 5;
+										socket.emit('confirmAnswer',{ans:"wrong",gameID:startGameData.gameId});
+		              }
+		              $scope.isDisabled = true;
+									socket.emit('updateStatus',{score:$scope.myscore,gameID:startGameData.gameId,name:$rootScope.fakeMyName,image:$rootScope.myImage});
+		            };
 
-			  		},1000);
+					$scope.question = temp.question;
+					$scope.options = temp.options;
 
-				})
-				.error(function(data, status, headers, config) {
-					console.log(error);
-				});
-		});
-		socket.on('takeScore', function(data){
-			console.log("takeScore log emitted");
-			console.log("rank= "+data.myRank);
-			$scope.myrank= data.myRank;
-			$scope.topperScore = data.topperScore;
-			$scope.topperImage=data.topperImage;
-			console.log(data.topperImage);
-		});
-		socket.on('isCorrect',function(data){
-			$scope.correctAnswerers++;
-			$scope.unattempted--;
-		});
-		socket.on('isWrong',function(data){
-			$scope.wrongAnswerers++;
-			$scope.unattempted--;
-		})
+					if(temp.image != "null")
+					$scope.questionImage = temp.image;
+
+					else{
+						$scope.questionImage = null;
+					}
+					$scope.time = 15;
+						}
+					}
+
+		  		},1000);
+
+			})
+			.error(function(data, status, headers, config) {
+				console.log(data);
+			});
+	});
+	socket.on('takeScore', function(data){
+		console.log("takeScore log emitted");
+		console.log("rank= "+data.myRank);
+		$scope.myrank= data.myRank;
+		$scope.topperScore = data.topperScore;
+		$scope.topperImage=data.topperImage;
+		console.log(data.topperImage);
+	});
+	socket.on('isCorrect',function(data){
+		$scope.correctAnswerers++;
+		$scope.unattempted--;
+	});
+	socket.on('isWrong',function(data){
+		$scope.wrongAnswerers++;
+		$scope.unattempted--;
+	})
  });
 
 function loadNextQuestion(data,questionNumber){
