@@ -38,9 +38,11 @@ module.exports = function(server,sessionMiddleware) {
 
   io.on('connection', function(client) {
     client.on('updateProfile',function(data){
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      console.log(data);
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      var levelId = data.levelId,
+          tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
+
+      console.log('LevelId = ' + levelId + ", T ID = " + tournamentId);
+
       Profile.findOne({userId:data.userID},function(err,profileData){
         profileData.totalGames++;
         if(data.rank == 1){
@@ -56,6 +58,33 @@ module.exports = function(server,sessionMiddleware) {
             topic.level = findLevel(topic.points);
           }
         });
+        if ( tournamentID ) { // update coming from a tournament
+          var tournamentFinalLevel = data.maxlevel,
+              levelCleared = levelId.substr( levelId.indexOf('_') + 1 );
+
+          if ( profileData.tournaments ) {
+            profileData.tournaments.forEach( function(tournament) {
+              if ( (tournament.id == tournamentID) && (tournament.status == 'PLAYING') ) {
+                tournament.levelCleared = levelCleared;
+                tournament.levelPoints.push( data.score );
+                if ( levelCleared === tournament.finalLevel ) {
+                  tournament.status = 'COMPLETED';
+                }
+                break;
+              }
+            });
+          } else {
+            var newTournamentObj = {
+              id: tournamentID,
+              status: 'PLAYING',
+              levelCleared:1,
+              finalLevel: tournamentFinalLevel,
+              levelPoints:[data.score]
+            };
+            profileData.tournaments.push( newTournamentObj )
+          }
+        }
+
         profileData.save();
       });
     });
