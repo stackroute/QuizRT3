@@ -88,6 +88,8 @@ module.exports = function(server,sessionMiddleware) {
           }
         }
 
+
+        console.log( profileData );
       });
     });
     client.on('storeResult',function(gameData){
