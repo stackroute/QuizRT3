@@ -19,6 +19,7 @@ angular.module("quizRT")
         $rootScope.title=title;
         $rootScope.tId=topicId;
         $rootScope.topicName=topic_name;
+        $rootScope.roundCount = levelId.substring(str.lastIndexOf("_") + 1);
         $location.path('/quizPlayer');
       };
    });
