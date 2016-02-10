@@ -46,5 +46,16 @@ module.exports={
 		});
 		play.delete(topicId);
 		return topicPlayers;
+	},
+	getAllPlayers: function(topicId){
+		var topicPlayers=[];
+		play.get(topicId).forEach(function(item, key, value){
+			topicPlayers.push({
+				sid: key,
+				clientData: item
+			});
+		});
+		return topicPlayers;
+
 	}
 };

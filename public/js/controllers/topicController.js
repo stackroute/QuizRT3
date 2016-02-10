@@ -28,8 +28,10 @@ angular.module('quizRT')
      socket.emit('disjoin',"leaving page topic play");
      $http.get(path)
           .success(function(data, status, headers, config) {
+              console.log(data);
                $scope.topic = data;
                $rootScope.title = data.topicName;
+               $rootScope.playersPerMatch = data.playersPerMatch;
 
                // levelId is defined for Tournaments only hence resetting it
                $rootScope.levelId = null;

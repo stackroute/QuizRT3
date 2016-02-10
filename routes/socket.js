@@ -60,6 +60,45 @@ module.exports = function(server,sessionMiddleware) {
         });
 
         if ( tournamentId ) { // update coming from a tournament
+
+
+            // Save tournament details if the game is from a tournament
+          if ( tournamentId ) {
+            Profile.findOne({userId:data.userID},function(err,profileData){
+              if ( err ) {
+                console.log('Tournament Player not found!!');
+              }else {
+                Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
+                  if ( err ) {
+                    console.log('Cannot find the tournament : ' + tournamentId);
+                  }else {
+                    var newTournamentObj = {
+                      id: tournamentId,
+                      status: 'PLAYING',
+                      levelCleared: 0,
+                      finalLevel: tournament.matches
+                    };
+                    profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
+                    profileData.save( function(err, savedProfile ) {
+                      if ( err ) {
+                        console.log('Could not save the updated user profile to MongoDB!');
+                      }else {
+                        console.log("Starting Tournament game");
+                        player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
+                      }
+                    }); //end save
+                  }
+                }); //end Tournament.findOne
+              }
+            }); //end Profile.findOne
+          } else {
+
+
+          }
+
+
+
+
           var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
           len = profileData.tournaments ? profileData.tournaments.length : 0;
 
@@ -185,52 +224,25 @@ module.exports = function(server,sessionMiddleware) {
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
       var usersJoined=gameManager.players.get(data.tid).size;
-      var topicPlayers= gameManager.popPlayers(data.tid);
+      var topicPlayers=[];
       if( usersJoined == maxPlayers ) {
-
+        
+        topicPlayers= gameManager.popPlayers(data.tid);
+    
         var gameId= makeid();
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
 
-          // Save tournament details if the game is from a tournament
-          if ( tournamentId ) {
-            Profile.findOne({userId:data.userID},function(err,profileData){
-              if ( err ) {
-                console.log('Tournament Player not found!!');
-              }else {
-                Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
-                  if ( err ) {
-                    console.log('Cannot find the tournament : ' + tournamentId);
-                  }else {
-                    var newTournamentObj = {
-                      id: tournamentId,
-                      status: 'PLAYING',
-                      levelCleared: 0,
-                      finalLevel: tournament.matches
-                    };
-                    profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
-                    profileData.save( function(err, savedProfile ) {
-                      if ( err ) {
-                        console.log('Could not save the updated user profile to MongoDB!');
-                      }else {
-                        console.log("Starting Tournament game");
-                        player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-                      }
-                    }); //end save
-                  }
-                }); //end Tournament.findOne
-              }
-            }); //end Profile.findOne
-          } else {
             console.log("Starting Normal game");
             player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-          }
+          
         }); //end topicPlayers.forEach
       }
       else
       {
+        topicPlayers= gameManager.getAllPlayers(data.tid);
         topicPlayers.forEach(function(player){
-          player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
+        player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
         });
       }
 
