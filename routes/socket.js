@@ -215,7 +215,7 @@ module.exports = function(server,sessionMiddleware) {
     client.on('join',function(data){
 
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
-        maxPlayers=1;
+      maxPlayers=1;
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
       var usersJoined=gameManager.players.get(data.tid).size;

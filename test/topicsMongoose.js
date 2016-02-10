@@ -11,10 +11,10 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 fs = require('fs');
 var slugify = require('slugify');
 var Topic = require('../models/topic.js');
@@ -27,7 +27,7 @@ var Topic = require('../models/topic.js');
   var json=JSON.parse(data);
 
   var mongoose = require('mongoose');
-  mongoose.connect('mongodb://172.23.238.253/quizRT');
+  mongoose.connect('mongodb://172.23.238.253/quizRT3');
 
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));

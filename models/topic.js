@@ -23,6 +23,7 @@ var mongoose = require('mongoose'),
       topicCategory: Array,
       topicDescription: String,
       topicFollowers: Number,
+      playersPerMatch:{type:Number,default:3},
       games:{type: String, ref: 'Game'}
 
     }),
