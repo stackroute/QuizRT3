@@ -2,7 +2,7 @@ angular.module("quizRT")
     .controller('roundsController', function($scope, $http, $routeParams, $rootScope, $location){
       $scope.tournamentID=$routeParams.tournamentID;
       $rootScope.stylesheetName="rounds";
-      $rootScope.roundScore="NO";
+      
       var path = '/tournamentHandler/tournament/'+$scope.tournamentID;
 
  $http.get(path)
@@ -13,10 +13,7 @@ angular.module("quizRT")
         }).error(function(data, status, headers, config) {
              console.log(error);
            });
-  $http.get("/userProfile/profileData")
-                    .success(function(data, status, headers, config){
-                     $rootScope.roundScore=
-                    })
+
 
       $scope.play=function(levelId, topicId, title, topic_name)
       {
