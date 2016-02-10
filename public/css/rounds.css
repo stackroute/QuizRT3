@@ -45,6 +45,18 @@
   margin: auto;
   border-radius: 20px;
 }
+.round-name h4{
+  text-align: center;
+  font-size: 18px;
+}
+.round-name p{
+  text-align: center;
+  font-size: 16px;
+}
+.play-now-button {
+  padding: 3px 6px;
+  margin-top: -1%;
+}
 
 #level-bar{
   color:red;
@@ -55,4 +67,16 @@
 }
 #levelnum{
   color:white;
+}
+
+@media (max-width: 500px) {
+
+  .round-name h4{
+    text-align: center;
+    font-size: 14px;
+  }
+  .round-name p{
+    text-align: center;
+    font-size: 12px;
+  }
 }
