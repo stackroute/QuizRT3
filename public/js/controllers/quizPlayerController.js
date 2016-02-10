@@ -19,7 +19,7 @@ var questionCounter = 0;
 var temp;
 angular.module('quizRT')
     .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
-        
+
         $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;
@@ -35,8 +35,8 @@ angular.module('quizRT')
         }else{
             $scope.levelDetails = "";
         }
-       
-        
+
+
         socket.emit('join', {
             tId: $rootScope.levelId || $rootScope.tId,
             name: $rootScope.fakeMyName,
@@ -61,7 +61,7 @@ angular.module('quizRT')
                             $scope.wrongAnswerers = 0;
                             $scope.correctAnswerers = 0;
                             $scope.unattempted = startGameData.maxPlayers; //this is hardcoded..get this data from the first socket
-                            
+
                             if (questionCounter == data.questions.length) {
                                 $interval.cancel(timeInterval);
                                 $rootScope.finalScore = $scope.myscore;
@@ -136,6 +136,7 @@ angular.module('quizRT')
         socket.on('pendingUsers', function(data) {
             $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
         });
+
     });
 
 function loadNextQuestion(data, questionNumber) {

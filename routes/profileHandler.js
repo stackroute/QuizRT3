@@ -22,24 +22,20 @@ var express = require('express'),
     userSettingsHandler = require('./userSettingsHandler');
 
 router.get('/profileData', function(req, res, next) {
-
-   console.log(req.session.user);
-   if(req.session.user == null){
-     var usr = "qqqq";
+   console.log('Logged in user: ' + req.session.user.local.username);
+   if( !(req.session.user == null) ){
+     var usr = req.session.user.local.username;
+     Profile.findOne({userId: usr})
+       .populate("topicsPlayed.topicId")
+           .exec(function(err,data){
+             profileData = data;
+              res.json(profileData);
+           });
    }
-   else{
-      var usr = req.session.user.local.username;
-   }
 
-  // console.log(usr + " ##########################################");
-  // console.log("this is from profile controller\n"+req.session.isLoggedIn);
-       Profile.findOne({userId: usr})
-         .populate("topicsPlayed.topicId")
-             .exec(function(err,data){
-               profileData = data;
-                res.json(profileData);
- });
  });
 
+// add user profile sub-hadlers here
 router.use('/userSettings', userSettingsHandler );
+
 module.exports = router;

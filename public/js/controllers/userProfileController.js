@@ -16,7 +16,7 @@
 //
 
 angular.module('quizRT')
-    .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies){
+    .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies,socket){
       if(!$cookies.get('isAuthenticated')){
         $location.path('/login');
       }
@@ -44,9 +44,16 @@ angular.module('quizRT')
        }
       }
 
+
+    socket.on('refreshUser', function(data) {
+      // refresh the user profile
+      console.log('Refresh user received');
+    });
+
     $http({method : 'GET',url:'/userProfile/profileData'})
-      .success(function(data){
-        $scope.data = data;
+      .success( function( user ){
+        $scope.data = user;
+        $rootScope.loggedInUser = user;
         $scope.topicsFollowed = [];
         if($scope.data.topicsPlayed!=null) {
           for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
@@ -67,6 +74,9 @@ angular.module('quizRT')
         $scope.play=function() {
           $location.path( "/categories" );
         }
+      })
+      .error( function( err ) {
+        console.log('User profile could not be loaded!');
       });
 
     $http({method : 'GET',url:'/tournamentHandler/tournaments'})
