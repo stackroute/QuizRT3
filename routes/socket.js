@@ -94,7 +94,7 @@ module.exports = function(server,sessionMiddleware) {
         else {
           if(gameData.levelId)
           {
-            updateTournamentAfterEveryGame(tournamentID,levelId,data._id,playerlist);
+            ournamentAfterEveryGame(tournamentID,levelId,data._id,playerlist);
           }
         }
       });
@@ -165,19 +165,31 @@ module.exports = function(server,sessionMiddleware) {
       var topicPlayers=[];
       if( usersJoined == maxPlayers ) {
 
+
+        topicPlayers= gameManager.popPlayers(data.tid);
+
         topicPlayers= gameManager.popPlayers(data.tId);
+
 
         // var gameId= makeid();
         var gameId = 1234567;
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
+
+
+            console.log("Starting Normal game");
+            player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
+
+
           player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
+
         }); //end topicPlayers.forEach
       }
       else
       {
         topicPlayers= gameManager.getAllPlayers(data.tId);
         topicPlayers.forEach(function(player){
+          //console.log(maxPlayers+"-"+usersJoined);
         player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
         });
       }
@@ -337,6 +349,27 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
         }
 
       });
+
+        playerList.forEach(player)
+        {
+          var temp=tournamentData.leaderBoard.filter(function(item){
+          return (item._id==player.userId)
+        });
+
+        if(temp.length==0)
+        {
+          tournamentData.leaderBoard.push({userId:player.userId,totalScore:player.score});
+        }
+        else {
+          var tempVar=temp[0];
+          var ind=tournamentData.leaderBoard.indexOf(tempVar);
+          tournamentData.leaderBoard[ind].totalScore+=player.score;
+        }
+
+
+
+    }
+
       tournamentData.save();
       console.log("updated tournament space");
     }
