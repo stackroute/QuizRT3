@@ -27,7 +27,7 @@ angular.module('quizRT')
         $scope.quizTitle = $rootScope.title;
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
-        $scope.question = "WAITING FOR " + playersPerMatch +" OTHER PLAYERS";
+        //$scope.question = "WAITING FOR " + playersPerMatch +" OTHER PLAYERS";
 
         // levelId is defined for Tournaments only
         if($rootScope.levelId){
@@ -46,7 +46,7 @@ angular.module('quizRT')
 
         socket.on('startGame', function(startGameData) {
             $rootScope.freakgid = startGameData.gameId;
-            
+            $scope.question = "Starting Game ..."
             var tId = $rootScope.tId;
             var gId2 = startGameData.gameId;
             var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
