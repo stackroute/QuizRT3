@@ -28,7 +28,14 @@ angular.module('quizRT')
   			$scope.players = data;
 				var levelId=$rootScope.levelId||false;
   			socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
-  			socket.emit('updateProfile',{score:$rootScope.finalScore,rank:$rootScope.finalRank,topicid:$rootScope.tId,userID:$rootScope.userIdnew,levelId:levelId});//score and rank
+				var updateProfileObj = {
+					score: $rootScope.finalScore,
+					rank: $rootScope.finalRank,
+					topicid: $rootScope.tId,
+					userID: $rootScope.userIdnew,
+					levelId: levelId
+				};
+  			socket.emit('updateProfile', updateProfileObj );//score and rank
       });
       $scope.home=function() {
         location.replace("/");

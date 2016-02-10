@@ -16,16 +16,15 @@
 //
 
 var gameManager = require('./gameManager/gameManager.js'),
-tournamentManager = require('./tournamentManager/tournamentManager.js'),
-leaderBoard = require('./gameManager/leaderboard.js'),
-uuid= require('node-uuid'),
-Game = require("./../models/game"),
-Profile = require("./../models/profile"),
-Tournament=require("./../models/tournament"),
-defaultMaxPlayers =4;
-maxPlayers=0;
+    tournamentManager = require('./tournamentManager/tournamentManager.js'),
+    leaderBoard = require('./gameManager/leaderboard.js'),
+    uuid= require('node-uuid'),
+    Game = require("./../models/game"),
+    Profile = require("./../models/profile"),
+    Tournament=require("./../models/tournament"),
+    defaultMaxPlayers =4;
+    maxPlayers=0;
 
-console.log("initiating sockets!!!!");
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
   io.use(function(socket,next){
@@ -38,10 +37,13 @@ module.exports = function(server,sessionMiddleware) {
 
   io.on('connection', function(client) {
     client.on('updateProfile',function(data){
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      console.log(data);
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      var levelId = data.levelId,
+          tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
+
       Profile.findOne({userId:data.userID},function(err,profileData){
+        console.log( 'Before tournament game');
+        console.log( profileData );
+
         profileData.totalGames++;
         if(data.rank == 1){
           profileData.wins++;
@@ -56,7 +58,27 @@ module.exports = function(server,sessionMiddleware) {
             topic.level = findLevel(topic.points);
           }
         });
-        profileData.save();
+
+        if ( tournamentId ) { // update coming from a tournament
+          var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
+              len = profileData.tournaments ? profileData.tournaments.length : 0;
+
+          for (var i = 0; i < len; i++) {
+            if ( profileData.tournaments[i].id == tournamentId ){
+              if (profileData.tournaments[i].status == 'PLAYING') {
+                profileData.tournaments[i].levelCleared = levelCleared;
+                profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
+                if ( levelCleared === profileData.tournaments[i].finalLevel ) {
+                  profileData.tournaments[i].status = 'COMPLETED';
+                }
+                profileData.save();
+              }
+              break;
+            }
+          } //end for
+        }
+        console.log( 'After tournament game');
+        console.log( profileData );
       });
     });
     client.on('storeResult',function(gameData){
@@ -131,20 +153,7 @@ module.exports = function(server,sessionMiddleware) {
           'imageUrl': player.imageUrl,
           'score': player.score
         };
-        // console.log("----------------------------------------");
-        // console.log(player);
-        // console.log("----------------------------------------");
         tempLeaderBoard.push(temp);
-        // console.log("++++++++++++++++++++++++++++++++++++++++");
-        // console.log(tempLeaderBoard);
-        // console.log("++++++++++++++++++++++++++++++++++++++++");
-        //     //  Players.get(data1.players[1]).join(gameID,function(){
-        //     //    io.in(gameID).emit('startGame',"this is game id "+gameID);
-        //     //  });
-        //      data1.players.forEach(function(player,index){
-        //         Players.get(player).join(gameID);
-        //         if(index == data1.players.length - 1){
-        //         }
       });
       client.emit('takeResult',tempLeaderBoard);
     });
@@ -166,33 +175,15 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('updateStatus',function(data){
-      // leaderBoard.addPlayer(data.gameID,client.request.session.passport.user,client,data.name,data.score,data.image);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-      console.log(data);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
       leaderBoard.updateScore(data.gameID, client.request.session.passport.user, data.score);
-      //
-      // arrayofPlayers=leaderBoard.getGamePlayers(data.gameID);
-
       var topperDat=leaderBoard.leaderBoard.get(data.gameID)[0];
-      console.log("******************************************************************");
-      console.log(topperDat);
-      console.log("*******************************************************************");
-
       var len = leaderBoard.leaderBoard.get(data.gameID).length;
-      console.log("99999999999999999999999999999999999999999999999999");
-      console.log(len);
-      console.log("99999999999999999999999999999999999999999999999999");
 
       // for (var i = 0; i <leaderBoard.leaderBoard.get(data.gameID).length; i++) {
       //   if (leaderBoard.leaderBoard.get(data.gameID)[i].sid == client.request.session.passport.user){
       //     myRan= i+1;
       //   }
       // }
-      // console.log("******************************************************************");
-      // console.log(myRan);
-      // console.log("*******************************************************************");
-
       // client.emit('takeScore', {myRank:myRan});
       // leaderBoard.leaderBoard.get(data.gameID).forEach(function(player){
       //   var myRan=0;
@@ -205,34 +196,72 @@ module.exports = function(server,sessionMiddleware) {
       // });
 
       leaderBoard.leaderBoard.get(data.gameID).forEach(function(player, index){
-        console.log('my rank');
-        console.log(index+1);
-        console.log('my rank');
         player.client.emit('takeScore', {myRank: index+1, topperScore:leaderBoard.leaderBoard.get(data.gameID)[0].score, topperImage:leaderBoard.leaderBoard.get(data.gameID)[0].imageUrl});
       });
     });
 
     client.on('join',function(data){
+      var levelId = data.tId,
+          tournamentId = levelId && (levelId.indexOf('_')>=0) ? levelId.substring(0, levelId.indexOf('_')) : null;
+          // above logic entirely depends on levelId having underscore('_')
 
+      console.log('\n\nOn Join : levelId = ' + levelId + " , tournamentId = " + tournamentId + "\n\n");
+      
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
+<<<<<<< HEAD
       maxPlayers=1;
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+=======
+        maxPlayers=1;
+      //maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+>>>>>>> 90191d9cfc0eee579699e29c7457cc17c381eb64
 
       var usersJoined=gameManager.players.get(data.tid).size;
-      if(usersJoined==maxPlayers){
+      if( usersJoined == maxPlayers ) {
         var topicPlayers= gameManager.popPlayers(data.tid);
         var gameId= makeid();
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-          console.log("starting game");
-          player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-        });
-      }
-      else {
+
+          // Save tournament details if the game is from a tournament
+          if ( tournamentId ) {
+            Profile.findOne({userId:data.userID},function(err,profileData){
+              if ( err ) {
+                console.log('Tournament Player not found!!');
+              }else {
+                Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
+                  if ( err ) {
+                    console.log('Cannot find the tournament : ' + tournamentId);
+                  }else {
+                    var newTournamentObj = {
+                      id: tournamentId,
+                      status: 'PLAYING',
+                      levelCleared: 0,
+                      finalLevel: tournament.matches
+                    };
+                    profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
+                    profileData.save( function(err, savedProfile ) {
+                      if ( err ) {
+                        console.log('Could not save the updated user profile to MongoDB!');
+                      }else {
+                        console.log("Starting Tournament game");
+                        player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
+                      }
+                    }); //end save
+                  }
+                }); //end Tournament.findOne
+              }
+            }); //end Profile.findOne
+          } else {
+            console.log("Starting Normal game");
+            player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
+          }
+        }); //end topicPlayers.forEach
+      } else {
         player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
       }
 
-    });
+    }); // end client.on('join')
 
 
     client.on('leaveGame',function(topicID){
@@ -244,24 +273,19 @@ module.exports = function(server,sessionMiddleware) {
 
 }
 
-function renderThegame(matches){
-  if( matches.Players.size >= maxPlayers ){
-    matches.Players.forEach(function(item,key,value){
-      matches.Players.get(key).emit('startGame',matches.gameId);
-    });
-  }
-};
+/*   ***** ALERT  ****** ALERT  */
+
+// Delete this method if it's not used
+// function renderThegame(matches){
+//   if( matches.Players.size >= maxPlayers ){
+//     matches.Players.forEach(function(item,key,value){
+//       matches.Players.get(key).emit('startGame',matches.gameId);
+//     });
+//   }
+// };
 
 
-function makeid()
-{
-  // var text = "";
-  // var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  //
-  // for( var i=0; i < 10; i++ )
-  //     text += possible.charAt(Math.floor(Math.random() * possible.length));
-  //
-  // return text;
+function makeid() {
   return uuid.v1();
 };
 
@@ -297,15 +321,13 @@ function getMatch(gameId){
   return null;
 };
 
-levelScore = function(n)
-{
+levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);
 };
 
-findLevel = function(points){
+findLevel = function(points) {
   var i=1;
-  while(points>=levelScore(i))
-  {
+  while(points>=levelScore(i)) {
     i++;
   }
   return i-1;

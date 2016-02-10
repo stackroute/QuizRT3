@@ -106,6 +106,7 @@ findLevel = function(points){
         topic1.topicDescription=topic.topicDescription;
         topic1.topicIcon = topic.topicIcon;
         topic1.topicFollowers=topic.topicFollowers;
+        topic1.playersPerMatch=topic.playersPerMatch;
         console.log("######");
         console.log(topic1);
         res.json(topic1);
