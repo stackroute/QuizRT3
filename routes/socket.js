@@ -16,14 +16,14 @@
 //
 
 var gameManager = require('./gameManager/gameManager.js'),
-tournamentManager = require('./tournamentManager/tournamentManager.js'),
-leaderBoard = require('./gameManager/leaderboard.js'),
-uuid= require('node-uuid'),
-Game = require("./../models/game"),
-Profile = require("./../models/profile"),
-Tournament=require("./../models/tournament"),
-defaultMaxPlayers =4;
-maxPlayers=0;
+    tournamentManager = require('./tournamentManager/tournamentManager.js'),
+    leaderBoard = require('./gameManager/leaderboard.js'),
+    uuid= require('node-uuid'),
+    Game = require("./../models/game"),
+    Profile = require("./../models/profile"),
+    Tournament=require("./../models/tournament"),
+    defaultMaxPlayers =4;
+    maxPlayers=0;
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
@@ -41,9 +41,6 @@ module.exports = function(server,sessionMiddleware) {
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
 
       Profile.findOne({userId:data.userID},function(err,profileData){
-        console.log( 'Before tournament game');
-        console.log( profileData );
-
         profileData.totalGames++;
         if(data.rank == 1){
           profileData.wins++;
@@ -60,65 +57,79 @@ module.exports = function(server,sessionMiddleware) {
         });
 
         if ( tournamentId ) { // update coming from a tournament
-
-
-            // Save tournament details if the game is from a tournament
-          if ( tournamentId ) {
-            Profile.findOne({userId:data.userID},function(err,profileData){
-              if ( err ) {
-                console.log('Tournament Player not found!!');
-              }else {
-                Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
-                  if ( err ) {
-                    console.log('Cannot find the tournament : ' + tournamentId);
-                  }else {
-                    var newTournamentObj = {
-                      id: tournamentId,
-                      status: 'PLAYING',
-                      levelCleared: 0,
-                      finalLevel: tournament.matches
-                    };
-                    profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
-                    profileData.save( function(err, savedProfile ) {
-                      if ( err ) {
-                        console.log('Could not save the updated user profile to MongoDB!');
-                      }else {
-                        console.log("Starting Tournament game");
-                        player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-                      }
-                    }); //end save
-                  }
-                }); //end Tournament.findOne
-              }
-            }); //end Profile.findOne
-          } else {
-
-
-          }
-
-
-
-
           var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
           len = profileData.tournaments ? profileData.tournaments.length : 0;
 
-          for (var i = 0; i < len; i++) {
-            if ( profileData.tournaments[i].id == tournamentId ){
-              if (profileData.tournaments[i].status == 'PLAYING') {
-                profileData.tournaments[i].levelCleared = levelCleared;
-                profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
-                if ( levelCleared === profileData.tournaments[i].finalLevel ) {
-                  profileData.tournaments[i].status = 'COMPLETED';
+          if ( len ) {// if userProfile has tournaments array
+            for (var i = 0; i < len; i++) {
+              if ( profileData.tournaments[i].id == tournamentId ){
+                if ( profileData.tournaments[i].status == 'COMPLETED' ) {
+                  console.log('ERROR: User has already completed '+ profileData.tournaments[i].finalLevel + ' levels of ' + tournamentId );
+                } else {
+                  profileData.tournaments[i].levelCleared = levelCleared;
+                  profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
+                  if ( levelCleared == profileData.tournaments[i].finalLevel ) {
+                    profileData.tournaments[i].status = 'COMPLETED';
+                  }
+                  var validationError = profileData.validateSync();
+                  if ( validationError ) {
+                    console.log('Mongoose validaton error of user profile.');
+                    return console.error(validationError);
+                  } else {
+                    profileData.save( function(err, savedProfile ) {
+                      if ( err ) {
+                        console.log('Could not save the updated user profile to MongoDB!');
+                        console.error(err);
+                      }else {
+                        console.log("\n\nUser profile persisted sucessfully!!");
+                        console.log(savedProfile);
+                      }
+                    }); //end save
+                  }
                 }
-                profileData.save();
+                break;
               }
-              break;
-            }
-          } //end for
-        }
-        console.log( 'After tournament game');
-        console.log( profileData );
-      });
+            } //end for
+          }else {
+            Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
+              if ( err ) {
+                console.log('Cannot find the tournament : ' + tournamentId);
+                console.error(err);
+              }else {
+                var newTournamentObj = {
+                  "tournamentId": tournamentId,
+                  "status": 'PLAYING',
+                  "levelCleared": levelCleared,
+                  "levelPoints":[data.score],
+                  "finalLevel": tournament.matches
+                };
+                // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
+                profileData.tournaments.push(newTournamentObj);
+
+                console.log('\n\n User profile to be saved');
+                console.log(profileData);
+                console.log('\n\n');
+
+                var validationError = profileData.validateSync();
+                if ( validationError ) {
+                  console.log('Mongoose validaton error of user profile.');
+                  return console.error(validationError);
+                } else {
+                  profileData.save( function(err, savedProfile ) {
+                    if ( err ) {
+                      console.log('Could not save the updated user profile to MongoDB!');
+                      console.error(err);
+                    }else {
+                      console.log("\n\nUser profile persisted sucessfully!!");
+                      console.log(savedProfile);
+                    }
+                  }); //end save
+                }
+              }
+            }); //end Tournament.findOne()
+          }
+        } //end if tournament
+      });// end Profile.findOne()
     });
     client.on('storeResult',function(gameData){
       var playerlist = [];
@@ -218,29 +229,30 @@ module.exports = function(server,sessionMiddleware) {
 
       console.log('\n\nOn Join : levelId = ' + levelId + " , tournamentId = " + tournamentId + "\n\n");
 
-      gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
+      gameManager.addPlayer(data.tId, client.request.session.passport.user, client,data.name,data.image);
 
       maxPlayers=1;
-      maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+      // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
-      var usersJoined=gameManager.players.get(data.tid).size;
+      var usersJoined=gameManager.players.get(data.tId).size;
       var topicPlayers=[];
+      console.log('usersJoined = ' + usersJoined);
       if( usersJoined == maxPlayers ) {
-        
-        topicPlayers= gameManager.popPlayers(data.tid);
-    
+
+        topicPlayers= gameManager.popPlayers(data.tId);
+
         var gameId= makeid();
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
 
             console.log("Starting Normal game");
             player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-          
+
         }); //end topicPlayers.forEach
       }
       else
       {
-        topicPlayers= gameManager.getAllPlayers(data.tid);
+        topicPlayers= gameManager.getAllPlayers(data.tId);
         topicPlayers.forEach(function(player){
         player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
         });
