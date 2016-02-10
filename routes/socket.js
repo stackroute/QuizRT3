@@ -57,78 +57,11 @@ module.exports = function(server,sessionMiddleware) {
         });
 
         if ( tournamentId ) { // update coming from a tournament
-          var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
-          len = profileData.tournaments ? profileData.tournaments.length : 0;
+          console.log('\n\nAdding tour');
+          addTournamentToProfile( profileData, levelId, tournamentId, data );
+          console.log('Adding tour done!!');
+        }
 
-          if ( len ) {// if userProfile has tournaments array
-            for (var i = 0; i < len; i++) {
-              if ( profileData.tournaments[i].id == tournamentId ){
-                if ( profileData.tournaments[i].status == 'COMPLETED' ) {
-                  console.log('ERROR: User has already completed '+ profileData.tournaments[i].finalLevel + ' levels of ' + tournamentId );
-                } else {
-                  profileData.tournaments[i].levelCleared = levelCleared;
-                  profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
-                  if ( levelCleared == profileData.tournaments[i].finalLevel ) {
-                    profileData.tournaments[i].status = 'COMPLETED';
-                  }
-                  var validationError = profileData.validateSync();
-                  if ( validationError ) {
-                    console.log('Mongoose validaton error of user profile.');
-                    return console.error(validationError);
-                  } else {
-                    profileData.save( function(err, savedProfile ) {
-                      if ( err ) {
-                        console.log('Could not save the updated user profile to MongoDB!');
-                        console.error(err);
-                      }else {
-                        console.log("\n\nUser profile persisted sucessfully!!");
-                        console.log(savedProfile);
-                      }
-                    }); //end save
-                  }
-                }
-                break;
-              }
-            } //end for
-          }else {
-            Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
-              if ( err ) {
-                console.log('Cannot find the tournament : ' + tournamentId);
-                console.error(err);
-              }else {
-                var newTournamentObj = {
-                  "tournamentId": tournamentId,
-                  "status": 'PLAYING',
-                  "levelCleared": levelCleared,
-                  "levelPoints":[data.score],
-                  "finalLevel": tournament.matches
-                };
-                // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
-                profileData.tournaments.push(newTournamentObj);
-
-                console.log('\n\n User profile to be saved');
-                console.log(profileData);
-                console.log('\n\n');
-
-                var validationError = profileData.validateSync();
-                if ( validationError ) {
-                  console.log('Mongoose validaton error of user profile.');
-                  return console.error(validationError);
-                } else {
-                  profileData.save( function(err, savedProfile ) {
-                    if ( err ) {
-                      console.log('Could not save the updated user profile to MongoDB!');
-                      console.error(err);
-                    }else {
-                      console.log("\n\nUser profile persisted sucessfully!!");
-                      console.log(savedProfile);
-                    }
-                  }); //end save
-                }
-              }
-            }); //end Tournament.findOne()
-          }
-        } //end if tournament
       });// end Profile.findOne()
     });
     client.on('storeResult',function(gameData){
@@ -227,8 +160,6 @@ module.exports = function(server,sessionMiddleware) {
       tournamentId = levelId && (levelId.indexOf('_')>=0) ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
 
-      console.log('\n\nOn Join : levelId = ' + levelId + " , tournamentId = " + tournamentId + "\n\n");
-
       gameManager.addPlayer(data.tId, client.request.session.passport.user, client,data.name,data.image);
 
       maxPlayers=1;
@@ -236,7 +167,6 @@ module.exports = function(server,sessionMiddleware) {
 
       var usersJoined=gameManager.players.get(data.tId).size;
       var topicPlayers=[];
-      console.log('usersJoined = ' + usersJoined);
       if( usersJoined == maxPlayers ) {
 
         topicPlayers= gameManager.popPlayers(data.tId);
@@ -244,10 +174,7 @@ module.exports = function(server,sessionMiddleware) {
         var gameId= makeid();
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-
-            console.log("Starting Normal game");
-            player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-
+          player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
         }); //end topicPlayers.forEach
       }
       else
@@ -281,6 +208,112 @@ module.exports = function(server,sessionMiddleware) {
 //   }
 // };
 
+
+
+// add played tournament to user profile
+function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
+  var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
+  len = profileData.tournaments ? profileData.tournaments.length : 0;
+  console.log('User has played tournaments = ' + len);
+  if ( len ) {// if userProfile has tournaments array
+    for (var i = 0; i < len; i++) {
+      if ( profileData.tournaments[i].id == tournamentId ){
+        console.log('Tournament exists: ' + tournamentId );
+        console.log(profileData.tournaments[i]);
+        if ( profileData.tournaments[i].status == 'COMPLETED' ) {
+          console.log('ERROR: User has already completed '+ profileData.tournaments[i].finalLevel + ' levels of ' + tournamentId );
+        } else {
+          profileData.tournaments[i].levelCleared = levelCleared;
+          profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
+          if ( levelCleared == profileData.tournaments[i].finalLevel ) {
+            profileData.tournaments[i].status = 'COMPLETED';
+          }
+          var validationError = profileData.validateSync();
+          if ( validationError ) {
+            console.log('Mongoose validaton error of user profile.');
+            return console.error(validationError);
+          } else {
+            profileData.save( function(err, savedProfile ) {
+              if ( err ) {
+                console.log('Could not save the updated user profile to MongoDB!');
+                console.error(err);
+              }else {
+                console.log("\nUser profile persisted sucessfully!!");
+              }
+            }); //end save
+          }
+        }
+        break;
+      }else {
+        console.log('New insert');
+        Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
+          if ( err ) {
+            console.log('Cannot find the tournament : ' + tournamentId);
+            console.error(err);
+          }else {
+            var newTournamentObj = {
+              "tournamentId": tournamentId,
+              "status": 'PLAYING',
+              "levelCleared": levelCleared,
+              "levelPoints":[data.score],
+              "finalLevel": tournament.matches
+            };
+            // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
+            profileData.tournaments.push(newTournamentObj);
+
+            var validationError = profileData.validateSync();
+            if ( validationError ) {
+              console.log('Mongoose validaton error of user profile.');
+              return console.error(validationError);
+            } else {
+              profileData.save( function(err, savedProfile ) {
+                if ( err ) {
+                  console.log('Could not save the updated user profile to MongoDB!');
+                  console.error(err);
+                }else {
+                  console.log("\nUser profile persisted sucessfully!!");
+                }
+              }); //end save
+            }
+          }
+        }); //end Tournament.findOne()
+      }
+    } //end for
+  }else {
+    console.log('First insert');
+    Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
+      if ( err ) {
+        console.log('Cannot find the tournament : ' + tournamentId);
+        console.error(err);
+      }else {
+        var newTournamentObj = {
+          "tournamentId": tournamentId,
+          "status": 'PLAYING',
+          "levelCleared": levelCleared,
+          "levelPoints":[data.score],
+          "finalLevel": tournament.matches
+        };
+        // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
+        profileData.tournaments.push(newTournamentObj);
+
+        var validationError = profileData.validateSync();
+        if ( validationError ) {
+          console.log('Mongoose validaton error of user profile.');
+          return console.error(validationError);
+        } else {
+          profileData.save( function(err, savedProfile ) {
+            if ( err ) {
+              console.log('Could not save the updated user profile to MongoDB!');
+              console.error(err);
+            }else {
+              console.log("\nUser profile persisted sucessfully!!");
+            }
+          }); //end save
+        }
+      }
+    }); //end Tournament.findOne()
+  }
+}
 
 //Updateing tournament after each game played
 function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
