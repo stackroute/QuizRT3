@@ -14,9 +14,7 @@
 //
 //   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil Savant, Chandu, Pratik Sinha, Mukesh Mishra.
 */
-.statement{
-  text-align: center;
-}
+
 .topic-description{
   text-align: left;
   font-family: sans-serif;
@@ -29,9 +27,12 @@
 
 .rounds-header{
   text-align: center;
-  padding-bottom: 10px;
+  
 }
-
+.heading{
+  margin-top: -30px;
+  font-size: 20px;
+}
 .progress {
   margin-top: 15px;
   padding: 0;

@@ -27,17 +27,17 @@
   </div>
 
       <div class="rounds-header">
-        <h1>{{tournament.title}}<br><small>{{tournament.description}}</small></h1>
+        <h3>{{tournament.title}}<br><small>{{tournament.description}}</small></h3>
       </div><!--end topic-header-->
 <div class="row">
-    
+
       <!-- <div class="row"> -->
         <div class="col-xs-6 rounds-icon">
           <img ng-src="{{tournament.imageUrl}}"  class="img-responsive" alt="tournament_image">
           <div class="follow">
             <h3>
-            <span class="glyphicon glyphicon-heart" ng-show="topic.isFollowed" ng-click="followUnfollow()"></span>
-            <span class="glyphicon glyphicon-heart-empty" ng-hide="topic.isFollowed" ng-click="followUnfollow()"></span>
+            <span class="glyphicon glyphicon-heart" ng-show="tournament.isFollowed" ng-click="followUnfollow()"></span>
+            <span class="glyphicon glyphicon-heart-empty" ng-hide="tournament.isFollowed" ng-click="followUnfollow()"></span>
             <span>{{tournament.topicFollowers}}</span>
             </h3>
           </div>
@@ -67,20 +67,20 @@
               <h4>{{tournament.totalGamesPlayed}}</h4>
             </div>
           </div> <!--end losses-->
-          <div class=" losses row">
-            <div class="progress col-xs-10 col-sm-10 col-md-10 col-lg-10">
-              <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="level-bar" style="width:{{topic.levelPercentage}}%">
-                     <span id="levelperc">{{topic.levelPercentage}}%</span>
-                </div>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-lg-2">  <button class="btn btn-info">Level <span id="levelnum">{{topic.topicLevel}}</span></button><button class="btn btn-success">EXP: <span id="exp">{{topic.points}}</span></button></div>
+          <div class="losses row">
+           <div class="col-xs-6 col-sm-6 col-lg-6">
+              <button class="btn btn-info">Level <span id="levelnum">{{tournament.topicLevel}}</span></button>
           </div>
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+             <button class="btn btn-primary" ng-click="leaders(tournament._id)">Leaderboard</button>
+          </div>
+        </div>
         </div> <!--end topic-user-->
 
     </div>
     <hr>
   <div class="heading col-xs-12 col-sm-12 col-lg-12">
-    <h1 class="statement pull-left">Rounds</h1>
+    <h3 class="statement pull-left">Rounds</h3>
   </div>
 <div class="topic-panel panel panel-default col-xs-12 col-sm-12 col-lg-12" ng-repeat="stages in tournament.topics">
 
@@ -93,12 +93,12 @@
   						<h4>{{stages.name.topicName}}</h4>
               <p>{{stages.name.topicDescription}}</p>
             </div>
-
           </div>
 
 
          <div class="play-now pull-right" id="foot">
                   <div class="col-xs-12 play-button-bar">
+                    <!-- <span class="no-play" ng-show="show == 'NO'">{{profile.roundScore}}</span> -->
                     <button class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title, stages.name.topicName)">Play Now!</button>
                   </div>
                 </div>
