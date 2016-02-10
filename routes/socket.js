@@ -206,15 +206,11 @@ module.exports = function(server,sessionMiddleware) {
           // above logic entirely depends on levelId having underscore('_')
 
       console.log('\n\nOn Join : levelId = ' + levelId + " , tournamentId = " + tournamentId + "\n\n");
-      
+
       gameManager.addPlayer(data.tid, client.request.session.passport.user, client,data.name,data.image);
-<<<<<<< HEAD
+
       maxPlayers=1;
       maxPlayers=data.playersPerMatch || defaultMaxPlayers;
-=======
-        maxPlayers=1;
-      //maxPlayers=data.playersPerMatch || defaultMaxPlayers;
->>>>>>> 90191d9cfc0eee579699e29c7457cc17c381eb64
 
       var usersJoined=gameManager.players.get(data.tid).size;
       if( usersJoined == maxPlayers ) {
