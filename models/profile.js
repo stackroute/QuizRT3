@@ -17,6 +17,7 @@
 
 var mongoose = require('mongoose'),
     Topic=require('./topic'),
+    Tournament = require('./tournament'),
     profileSchema = mongoose.Schema({
       userId: {type:String, unique:true},
       name:String,
@@ -36,8 +37,7 @@ var mongoose = require('mongoose'),
         topicId: {type:String, ref: 'Topic'}
       }],
       tournaments: [{
-        id:{ type: String, ref: 'Tournament'},
-        isFollowed:Boolean,
+        tournamentId:{ type: String, ref: 'Tournament'},
         status:String, //can be amongst "FOLLOWED","PLAYING", or "COMPLETED"
         levelCleared:Number,
         finalLevel:Number,
