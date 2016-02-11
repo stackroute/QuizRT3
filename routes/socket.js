@@ -16,14 +16,14 @@
 //
 
 var gameManager = require('./gameManager/gameManager.js'),
-tournamentManager = require('./tournamentManager/tournamentManager.js'),
-leaderBoard = require('./gameManager/leaderboard.js'),
-uuid= require('node-uuid'),
-Game = require("./../models/game"),
-Profile = require("./../models/profile"),
-Tournament=require("./../models/tournament"),
-defaultMaxPlayers =4;
-maxPlayers=0;
+    tournamentManager = require('./tournamentManager/tournamentManager.js'),
+    leaderBoard = require('./gameManager/leaderboard.js'),
+    uuid= require('node-uuid'),
+    Game = require("./../models/game"),
+    Profile = require("./../models/profile"),
+    Tournament=require("./../models/tournament"),
+    defaultMaxPlayers =4;
+    maxPlayers=0;
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
@@ -176,7 +176,7 @@ module.exports = function(server,sessionMiddleware) {
         var gameId= makeid();
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-          console.log("Starting Normal game");
+          console.log("Starting game");
           player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
         }); //end topicPlayers.forEach
       }
@@ -216,55 +216,33 @@ function renderThegame(matches){
 // add played tournament to user profile
 function addTournamentToProfile( client, profileData, levelId, tournamentId ,data ) {
   var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
-  len = profileData.tournaments ? profileData.tournaments.length : 0;
+      len = profileData.tournaments ? profileData.tournaments.length : 0,
+      tournamentFound = false;
 
-  if ( len ) {// if userProfile has tournaments array
-    var tournamentFound = false;
-
-    for (var i = 0; i < len; i++) {
-      if ( profileData.tournaments[i].tournamentId == tournamentId ) {
-        tournamentFound = true;
-        console.log( tournamentId + ' tournament updated in user profile');
-        if ( profileData.tournaments[i].status == 'COMPLETED' ) {
-          console.log('ERROR: User has already COMPLETED the ' + tournamentId + ' tournament.');
+  for (var i = 0; i < len; i++) {
+    if ( profileData.tournaments[i].tournamentId == tournamentId ) {
+      tournamentFound = true;
+      console.log( tournamentId + ' tournament updated in user profile');
+      if ( profileData.tournaments[i].status == 'COMPLETED' ) {
+        console.log('ERROR: User has already COMPLETED the ' + tournamentId + ' tournament.');
+      } else {
+        if ( profileData.tournaments[i].levelCleared === levelCleared ) {
+          console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
         } else {
-          if ( profileData.tournaments[i].levelCleared === levelCleared ) {
-            console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
-          } else {
-            profileData.tournaments[i].levelCleared = levelCleared;
-            profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
-            if ( levelCleared == profileData.tournaments[i].finalLevel ) {
-              profileData.tournaments[i].status = 'COMPLETED';
-            }
-            validateAndSaveProfile( profileData, client );
+          profileData.tournaments[i].levelCleared = levelCleared;
+          profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
+          if ( levelCleared == profileData.tournaments[i].finalLevel ) {
+            profileData.tournaments[i].status = 'COMPLETED';
           }
-        }
-        break;// break if a Tournament was found
-      }
-    }// end for
-
-    if( !tournamentFound ) {
-      console.log('New tournament insert in user profile');
-      Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
-        if ( err ) {
-          console.log('Cannot find the tournament : ' + tournamentId);
-          console.error(err);
-        }else {
-          var newTournamentObj = {
-            "tournamentId": tournamentId,
-            "status": 'PLAYING',
-            "levelCleared": levelCleared,
-            "levelPoints":[data.score],
-            "finalLevel": tournament.matches
-          };
-          // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
-          profileData.tournaments.push( newTournamentObj );
           validateAndSaveProfile( profileData, client );
         }
-      }); //end Tournament.findOne()
-    }// end if tournament not Found
-  }else {
-    console.log('First tournament insert in user profile');
+      }
+      break;// break if a Tournament was found
+    }
+  }// end for
+
+  if( !tournamentFound ) {
+    console.log('New tournament insert in user profile');
     Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
       if ( err ) {
         console.log('Cannot find the tournament : ' + tournamentId);
@@ -282,7 +260,7 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
         validateAndSaveProfile( profileData, client );
       }
     }); //end Tournament.findOne()
-  }
+  }// end if tournament not Found
 }
 
 // persist user profile to MongoDB
@@ -297,7 +275,7 @@ function validateAndSaveProfile( profileData, client ) {
         console.log('Could not save the updated user profile to MongoDB!');
         console.error(err);
       }else {
-        console.log("\nUser profile persisted sucessfully!!");
+        console.log("User profile persisted sucessfully!!\n");
         client.emit('refreshUser', updatedUserProfile );
       }
     }); //end save

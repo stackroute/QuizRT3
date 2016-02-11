@@ -4,6 +4,7 @@ var router = require('express').Router(),
     formidable = require('formidable'),
     Profile = require("./../models/profile");
 
+// to handle profile pic upload
 router.post('/profilePic', function(req,res,next) {
   var form = new formidable.IncomingForm(),
       userId = null,
@@ -32,7 +33,7 @@ router.post('/profilePic', function(req,res,next) {
   (function(callback) {
     var isImageType,
         tempUrl,
-        overwritePic = function(oldFilePath, tempFilePath) {
+        overwritePic = function(oldFilePath, tempFilePath, renamePath) {
           var fileName = path.basename(oldFilePath);
           console.log('Overwriting the pic uploaded: ' + fileName);
           fs.unlink(oldFilePath, function (err) {
@@ -41,13 +42,13 @@ router.post('/profilePic', function(req,res,next) {
               return callback( 'CANTDELETE', null );
             } else {
               // Rename the file to match the filename that the user uploaded
-              fs.rename(tempFilePath, oldFilePath, function (err) {
+              fs.rename(tempFilePath, 'public/' + renamePath, function (err) {
                 if (err) {
                   console.log(err);
                   return callback( 'PERMISSIONERROR', null );
                 }else{
                   console.log('No rename error');
-                  tempUrl = 'temp/' + fileName;
+                  tempUrl = renamePath;
                   callback( null, tempUrl );
                 }
               });
@@ -73,11 +74,11 @@ router.post('/profilePic', function(req,res,next) {
       }else {
         var newName = userId + '_' + file.name,// append username to the file to avoid name collisions
             destFile = path.dirname(file.path) + '/' + newName;
-            tempUrl = 'temp/' + newName;
+            tempUrl = 'images/userProfileImages/' + newName;
         try {
           var stats = fs.statSync(destFile);
           if ( stats.isFile() ) {
-            return overwritePic(destFile, file.path);// delete the previous file
+            return overwritePic(destFile, file.path, tempUrl);// overwrite the previous file
           }
         }catch(e) {
           // Rename the file to match the filename that the user uploaded
@@ -106,5 +107,45 @@ router.post('/profilePic', function(req,res,next) {
     form.parse(req); // parse the incoming request to get form-data
   })(sendResponse);
 });
+
+router.post('/updateProfile', function(req,res,next) {
+  var updatedUser = req.body.user;
+  Profile.findOne({userId:updatedUser.userId}, function(err,profileData){
+    if ( err || !profileData ) {
+      console.error(err);
+      res.writeHead(500,{'Content-Type':'application/json'});
+      res.end( JSON.stringify({ error:'MongoDB error while reading the user profile.'}) );
+    }else {
+      profileData.name = updatedUser.name;
+      profileData.age = updatedUser.age;
+      profileData.country = updatedUser.country;
+      profileData.imageLink = updatedUser.imageLink;
+      validateAndSaveProfile( profileData, res );
+    }
+  });
+});
+
+// persist user profile to MongoDB
+function validateAndSaveProfile( profileData, res ) {
+  var validationError = profileData.validateSync();
+  if ( validationError ) {
+    console.log('Mongoose validaton error of user profile.');
+    console.error(validationError);
+    res.writeHead(500,{'Content-Type':'application/json'});
+    res.end( JSON.stringify({ error:'Mongoose validaton error of user profile.'}) );
+  } else {
+    profileData.save( function(err, updatedUserProfile ) {
+      if ( err ) {
+        console.log('Could not save the updated user profile to MongoDB!');
+        console.error(err);
+        res.writeHead(500,{'Content-Type':'application/json'});
+        res.end( JSON.stringify({ error:'Could not save the updated user profile to MongoDB!'}) );
+      }else {
+        console.log("User profile updated sucessfully!!\n");
+        res.end( JSON.stringify({ error:null, updatedUserProfile: updatedUserProfile }) );
+      }
+    }); //end save
+  }
+}
 
 module.exports = router;

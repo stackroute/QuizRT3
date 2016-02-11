@@ -35,5 +35,4 @@ angular.module('quizRT')
      .error(function(data, status, headers, config) {
        console.log(error);
       });
-
   });

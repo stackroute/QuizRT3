@@ -48,6 +48,20 @@ angular.module('quizRT')
     // socket.on('refreshUser', function( user ) {
     //   $rootScope.loggedInUser = user;
     // });
+    $rootScope.loggedInUser = {
+      "_id":{"$oid":"56a613d504eb49492b745f3f"},
+      "totalGames":0,
+      "wins":0,
+      "imageLink":"/images/userProfileImages/akshayk.jpg",
+      "badge":"Beginner",
+      "name":"Raghav",
+      "age":24,
+      "country":"India",
+      "userId":"test1",
+      "topicsPlayed":[],
+      "__v":0,
+      "tournaments":[{id:'Bigest-Hollywood-Fan'},{id:'Lord-Of-Series'}]
+    };
 
     $http({method : 'GET',url:'/userProfile/profileData'})
       .success( function( user ){
@@ -101,7 +115,7 @@ angular.module('quizRT')
       }
     }
     $scope.updateUserProfile = function() {
-      console.log('clicked');
+
       if ( !$scope.tempLoggedInUser.name) {
         $scope.errorMessage = 'Enter your Name.';
       }else if ( !$scope.tempLoggedInUser.country ) {
@@ -112,7 +126,24 @@ angular.module('quizRT')
         $scope.errorMessage = 'Enter your Email-ID.';
       }else {
         $scope.errorMessage = '';
-        alert('Profile updated successfully.');
+        var reqObj = {
+          method: 'POST', // since no. of tournamentIds can get large
+          url: 'userProfile/userSettings/updateProfile',
+          data: { user:$scope.tempLoggedInUser },
+          headers:{'Content-Type':'application/json'}
+        };
+        $http( reqObj )
+          .success( function(data){
+            if ( data.error ) {
+              console.log(data.error);
+            }else {
+              alert('Profile updated successfully.');
+              $rootScope.loggedInUser = data.updatedUserProfile;
+            }
+          })
+          .error( function(err) {
+            console.log('Could not save updated user profile to MongoDB');
+          });
       }
     };
     $scope.changePassword = function( tempLoggedInUser ) {
@@ -174,7 +205,7 @@ angular.module('quizRT')
       var reqObj = {
         method: 'POST',
         url: 'userProfile/userSettings/profilePic',
-        headers: { 'Content-Type': undefined}, // to reset to browser default Content-Type
+        headers: { 'Content-Type': undefined }, // to reset to browser default Content-Type
         data: formData
       }
       $http( reqObj ).then( function( successResponse ){
@@ -189,11 +220,47 @@ angular.module('quizRT')
   	});
 
   })
-  .controller('userTournamentsController', function($scope,$location,$http) {
-    $http({method : 'GET',url:'/tournamentHandler/tournaments'})
-      .success(function(data){
-        $scope.tournaments = data;
+  .controller('userTournamentsController', function($rootScope,$scope,$location,$http) {
+    // get all the user tournaments
+    if ( $rootScope.loggedInUser && $rootScope.loggedInUser.tournaments && $rootScope.loggedInUser.tournaments.length) {
+      var reqObj = {
+        method: 'POST', // since no. of tournamentIds can get large
+        url: '/tournamentHandler/tournaments',
+        data: { tournamentIds:[] },
+        headers:{'Content-Type':'application/json'}
+      };
+      $rootScope.loggedInUser.tournaments.forEach( function( tournament ) {
+        reqObj.data.tournamentIds.push( tournament.id );
       });
+      $http( reqObj )
+        .success( function(data){
+          if ( data.error ) {
+            console.log(data.error);
+          }
+          $scope.userTournaments = data.userTournaments;
+        })
+        .error( function(err) {
+          console.log('Could not retrieve user tournaments from MongoDB');
+        });
+    }
+
+    // GET all the tournaments
+    if( !($scope.tournaments && $scope.tournaments.length) ) {
+      var reqObj = {
+        method: 'GET',
+        url: '/tournamentHandler/tournaments'
+      };
+      $http( reqObj )
+        .success(function(data){
+          $scope.tournaments = data;
+        })
+        .error( function(err) {
+          console.log('Could not retrieve tournaments from MongoDB');
+        });
+    } else {
+      // $scope.$apply();
+    }
+
 
     $scope.showTournamentDetails = function( tournamentId ) {
       $location.path( '/tournament/' + tournamentId );

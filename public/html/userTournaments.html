@@ -29,17 +29,36 @@
 		</div>
 	</div>
 
-	<div class="row sectionHeader">User Tournaments</div>
-	<p>
-		Tournaments Played, Live, and Upcoming.
-	</p>
-	<!--  Tournament Section -->
+	<!--  User Tournament Section -->
+	<section>
+		<div class="row sectionHeader">User Tournaments</div>
+		<div class="row topic-info" ng-hide="userTournaments.length > 0">
+			You have not participated in any tournaments.
+		</div>
+		<div class="row tournaments-wrap" ng-show="userTournaments.length > 0">
+			<div class="col-xs-3 tournament-tile" ng-repeat ="tournament in userTournaments">
+	      <div class="panel panel-default">
+					<div class="panel-body content">
+						<a><img ng-src="{{tournament.imageUrl}}" ng-click="showTournamentDetails(tournament._id)"></a>
+						<span class="badge">{{tournament.topics.length}}</span>
+					</div>
+	        <div class="panel-footer">
+	  					<div ng-click="showTournamentDetails(tournament._id)">
+	  						<p>{{tournament.title}}</p>
+	  					</div>
+	  			</div>
+				</div><!-- end panel -->
+			</div> <!-- end ng-repeat -->
+		</div>
+	</section><!--  end user Tournament Section -->
+
+	<!--  All Tournament Section -->
 	<section>
 		<div class="row sectionHeader">All Tournaments</div>
 		<div class="row topic-info" ng-hide="tournaments.length > 0">
 			No tournaments to show.
 		</div>
-		<div id="all-tournaments-wrap" class="row" ng-show="tournaments.length > 0">
+		<div class="row tournaments-wrap"  ng-show="tournaments.length > 0">
 			<div class="col-xs-3 tournament-tile" ng-repeat ="tournament in tournaments">
 	      <div class="panel panel-default">
 					<div class="panel-body content">

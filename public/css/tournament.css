@@ -14,7 +14,7 @@
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 */
-#all-tournaments-wrap {
+.tournaments-wrap {
   margin-top: 10px;
 }
 .badge{
@@ -26,13 +26,13 @@
   background-color: #337ab7;
   color: white;
 }
-#all-tournaments-wrap .panel{
+.tournaments-wrap .panel{
   background: #777;
   width: 100%;
   display: inline-block;
   margin: 0px 3px;
 }
-#all-tournaments-wrap .tournament-tile {
+.tournaments-wrap .tournament-tile {
   padding: 0 5px;
 }
 .panel-body {
@@ -62,7 +62,7 @@
         Media Queries
 ..............................................................................*/
 @media(max-width:768px){
-  #all-tournaments-wrap .panel-body {
+  .tournaments-wrap .panel-body {
     padding: 0;
   }
 }
