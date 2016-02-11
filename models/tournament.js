@@ -25,6 +25,7 @@ var mongoose = require('mongoose'),
       matches:Number,
       playersPerMatch:Number,
       imageUrl:String,
+      tournamentFollowers: Number,
       leaderBoard:
       [
         {

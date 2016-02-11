@@ -57,27 +57,41 @@ router.route('/tournament/:tId')
 			                return res.send(err);
 			              }else {
 
-											tournaments.leaderBoard.sort(function(a, b) {
-												return b.totalScore - a.totalScore;
-											});
 
 
+												var usr=req.session.user.local.username;
 
 											cntr=0;
 											tempLeaderBoard=[];
-												tournaments.leaderBoard.forEach(function(tempUser)
+											var tempFlag=false;
+												tournaments.leaderBoard.forEach(function(tempUser,index)
 												{
-													if(++cntr<=10)
-													{
 
 											 Profile.findOne({userId: tempUser.userId.local.username})
 							         .exec(function(err,data){
-												 	tempLeaderBoard.push({name:data.name,score:tempUser.totalScore});
-													if(tempLeaderBoard.length==tournaments.leaderBoard.length || tempLeaderBoard.length==10)
+												 cntr++;
+
+												 if(cntr<=10 && cntr<=tournaments.leaderBoard.length)
 												 {
-														return res.json({leaderBoard:tempLeaderBoard});
+												 	tempLeaderBoard.push({name:data.name,score:tempUser.totalScore,rank:index+1});
+													}
+														if(usr==data.userId)
+														{
+															tempFlag=true;
+															currUserStat={
+																name:data.name,
+																rank:index+1,
+															score:tempUser.totalScore,
+															imgLink:data.imageLink
+																						};
+														}
+
+													if((tempLeaderBoard.length==tournaments.leaderBoard.length || tempLeaderBoard.length==10) && tempFlag)
+												 {
+														return res.json({leaderBoard:tempLeaderBoard,myStat:currUserStat});
 												 }
-											 });}
+											 });
+
 
 
 										 	});

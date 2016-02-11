@@ -39,9 +39,10 @@ var mongoose = require('mongoose'),
       tournaments: [{
         tournamentId:{ type: String, ref: 'Tournament'},
         status:String, //can be amongst "FOLLOWED","PLAYING", or "COMPLETED"
-        levelCleared:Number,
+        levelCleared:{type:Number,default:0},
         finalLevel:Number,
-        levelPoints:Array
+        levelPoints:Array,
+        isFollowed:Boolean,
       }]
     },
     {strict:false}),
