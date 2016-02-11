@@ -71,9 +71,9 @@ router.post('/profilePic', function(req,res,next) {
         deleteTempFile(file.path); // Uploaded file is not an image, so delete it
         callback('NOTIMAGE',null);
       }else {
-        var newName = 'user_' + file.name,// append username to the file to avoid name collisions
-            destFile = path.dirname(file.path) + '\\' + newName;
-            tempUrl = 'temp/' + 'user_' + file.name;
+        var newName = userId + '_' + file.name,// append username to the file to avoid name collisions
+            destFile = path.dirname(file.path) + '/' + newName;
+            tempUrl = 'temp/' + newName;
         try {
           var stats = fs.statSync(destFile);
           if ( stats.isFile() ) {

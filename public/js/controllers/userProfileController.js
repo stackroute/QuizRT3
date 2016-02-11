@@ -45,9 +45,9 @@ angular.module('quizRT')
       }
 
     // refresh the user profile
-    socket.on('refreshUser', function( user ) {
-      $rootScope.loggedInUser = user;
-    });
+    // socket.on('refreshUser', function( user ) {
+    //   $rootScope.loggedInUser = user;
+    // });
 
     $http({method : 'GET',url:'/userProfile/profileData'})
       .success( function( user ){
@@ -89,35 +89,41 @@ angular.module('quizRT')
 			  $profilePic = $('#profilePic');
     $scope.passwordMessage = '';
     $scope.errorMessage = '';
-    $scope.changePasswordObj = {
-      oldPassword:'',
-      newPassword:'',
-      confirmPassword:''
-    };
-    console.log($rootScope.loggedInUser);
+    $scope.tempLoggedInUser = $rootScope.loggedInUser;
+    $scope.tempLoggedInUser.oldPassword = '';
+    $scope.tempLoggedInUser.newPassword = '';
+    $scope.tempLoggedInUser.confirmPassword = '';
+
+    $scope.onlineImageLink = '';
+    $scope.loadOnlineImage = function() {
+      if ( $scope.onlineImageLink ) {
+        $scope.tempLoggedInUser.imageLink = $scope.onlineImageLink;
+      }
+    }
     $scope.updateUserProfile = function() {
-      if ( !$scope.user.displayName) {
+      console.log('clicked');
+      if ( !$scope.tempLoggedInUser.name) {
         $scope.errorMessage = 'Enter your Name.';
-      }else if ( !$scope.user.country ) {
+      }else if ( !$scope.tempLoggedInUser.country ) {
         $scope.errorMessage = 'Enter your Country.';
-      }else if ( !$scope.user.age ) {
+      }else if ( !$scope.tempLoggedInUser.age ) {
         $scope.errorMessage = 'Enter your Age.';
-      }else if ( !$scope.user.emailID ) {
+      }else if ( !$scope.tempLoggedInUser.emailID ) {
         $scope.errorMessage = 'Enter your Email-ID.';
       }else {
         $scope.errorMessage = '';
         alert('Profile updated successfully.');
       }
     };
-    $scope.changePassword = function( changePasswordObj ) {
-      if ( changePasswordObj.oldPassword ) {
-        if ( changePasswordObj.newPassword ) {
-          if ( changePasswordObj.newPassword === changePasswordObj.confirmPassword ) {
+    $scope.changePassword = function( tempLoggedInUser ) {
+      if ( tempLoggedInUser.oldPassword ) {
+        if ( tempLoggedInUser.newPassword ) {
+          if ( tempLoggedInUser.newPassword === tempLoggedInUser.confirmPassword ) {
             $scope.passwordMessage = '';
             alert('Password Changed');
-            changePasswordObj.oldPassword = '';
-            changePasswordObj.newPassword = '';
-            changePasswordObj.confirmPassword = '';
+            tempLoggedInUser.oldPassword = '';
+            tempLoggedInUser.newPassword = '';
+            tempLoggedInUser.confirmPassword = '';
           }else {
             $scope.passwordMessage = 'Confirm password not same.'
           }
@@ -129,12 +135,16 @@ angular.module('quizRT')
       }
     };
     $scope.removeIcon = function() {
-      $rootScope.loggedInUser.imageLink = '';
+      $scope.tempLoggedInUser.imageLink = '';
       $profilePic.css('border', '1px solid #aaa');
     };
-    $scope.slideToggle = function() {
-      $scope.isChangePasswordOpen ? $scope.isChangePasswordOpen = false : $scope.isChangePasswordOpen = true;
-      $('#changePasswordDiv').slideToggle();
+    $scope.slideToggle = function( id ) {
+      if( id.indexOf('Password') >=0 ) {
+        $scope.toggleVarPassword ? $scope.toggleVarPassword = false : $scope.toggleVarPassword = true;
+      }else if ( id.indexOf('Image') >=0 ) {
+        $scope.toggleVarOnlineImageLink ? $scope.toggleVarOnlineImageLink = false : $scope.toggleVarOnlineImageLink = true;
+      }
+      $( id ).slideToggle();
     };
     $scope.$watch('passwordMessage', function(nv,ov) {
       if (nv) {
@@ -145,9 +155,9 @@ angular.module('quizRT')
     });
     $scope.$watch('errorMessage', function(nv,ov) {
       if (nv) {
-        $('#settingsDiv').children('.alert').slideDown();
+        $('#userProfileForm').children('.alert').slideDown();
       }else {
-        $('#settingsDiv').children('.alert').slideUp();
+        $('#userProfileForm').children('.alert').slideUp();
       }
     });
 
@@ -171,6 +181,7 @@ angular.module('quizRT')
         $profilePic.css('padding',0)
   									.css('border', '1px solid transparent');
         $rootScope.loggedInUser.imageLink = successResponse.data.tempUrl;
+        $scope.tempLoggedInUser.imageLink = successResponse.data.tempUrl;
       }, function( errorResponse ){
         console.log('Error in uploading user profile picture.');
         alert('Error in uploading user profile picture.')

@@ -2,8 +2,12 @@
   padding: 7px;
 }
 #changePasswordDiv,
+#onlineImageLinkDiv,
 #settingsDiv .alert {
   display: none;
+}
+#onlineImageLinkDiv {
+  margin-bottom: 5px;
 }
 #settingsDiv {
   max-width: 500px;
@@ -23,6 +27,9 @@
   border-top: 1px solid #999;
   margin-top: 20px;
   padding-top: 8px;
+  cursor: pointer;
+}
+#settingsDiv h6{
   cursor: pointer;
 }
 #addProfilePic {
@@ -65,4 +72,8 @@
 #settingsDiv span:hover,
 #settingsDiv h5:hover {
   color: white;
+}
+#userProfileForm {
+  padding-top: 5px;
+  border-top: 1px solid #999;
 }

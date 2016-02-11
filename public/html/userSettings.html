@@ -34,11 +34,11 @@
 		<div id="addProfilePic" class="row">
 			<div class="col-md-3 col-xs-4">
 				<div id="profilePic">
-					<img ng-show="loggedInUser.imageLink" src="{{loggedInUser.imageLink}}" alt="" />
-					<span ng-hide="loggedInUser.imageLink" ng-click="removeIcon()">add photo</span>
+					<img ng-show="tempLoggedInUser.imageLink" src="{{tempLoggedInUser.imageLink}}" alt="" />
+					<span ng-hide="tempLoggedInUser.imageLink" ng-click="removeIcon()">add photo</span>
 				</div>
 				<input type="file" class="hide" id="inputFile">
-				<span ng-show="loggedInUser.imageLink" ng-click="removeIcon()">remove</span>
+				<span ng-show="tempLoggedInUser.imageLink" ng-click="removeIcon()">remove</span>
 			</div>
 			<div class="col-md-9 col-xs-8">
 				<p>
@@ -46,18 +46,27 @@
 				</p>
 			</div>
 		</div>
-		<div class="alert alert-danger fade in">
-			<button role="close" class='close' ng-click="errorMessage=''" aria-label="close">&times;</button>
-			{{errorMessage}}
+		<h6 ng-click="slideToggle('#onlineImageLinkDiv')">
+			<b>Give online image link</b><span class="glyphicon glyphicon-triangle-right" ng-hide="toggleVarOnlineImageLink"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="toggleVarOnlineImageLink"></span>
+		</h6>
+		<div id='onlineImageLinkDiv'>
+			<input type="text" ng-model="onlineImageLink" placeholder="Online Link" class="form-control">
+			<button type="button" ng-click="loadOnlineImage()" class="btn btn-primary" >Load</button>
 		</div>
-		<input type="text" ng-model="loggedInUser.name" placeholder="Name" class="form-control">
-		<input type="text" ng-model="loggedInUser.country"  placeholder="Country" class="form-control">
-		<input type="text" ng-model="loggedInUser.age"  placeholder="Age" class="form-control">
-		<input type="text" ng-model="loggedInUser.emailID"  placeholder="Email ID" class="form-control">
-		<button type="button" ng-click="updateUserProfile()" class="btn btn-primary" >Update</button>
+		<div id="userProfileForm">
+			<div class="alert alert-danger fade in">
+				<button role="close" class='close' ng-click="errorMessage=''" aria-label="close">&times;</button>
+				{{errorMessage}}
+			</div>
+			<input type="text" ng-model="tempLoggedInUser.name" placeholder="Name" class="form-control">
+			<input type="text" ng-model="tempLoggedInUser.country"  placeholder="Country" class="form-control">
+			<input type="text" ng-model="tempLoggedInUser.age"  placeholder="Age" class="form-control">
+			<input type="text" ng-model="tempLoggedInUser.emailID"  placeholder="Email ID" class="form-control">
+			<button type="button" ng-click="updateUserProfile()" class="btn btn-primary" >Update</button>
+		</div>
 
-		<h5 ng-click="slideToggle()">
-			<b>Change password</b><span class="glyphicon glyphicon-triangle-right" ng-hide="isChangePasswordOpen"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="isChangePasswordOpen"></span>
+		<h5 ng-click="slideToggle('#changePasswordDiv')">
+			<b>Change password</b><span class="glyphicon glyphicon-triangle-right" ng-hide="toggleVarPassword"></span><span class="glyphicon glyphicon-triangle-bottom" ng-show="toggleVarPassword"></span>
 		</h5>
 		<div id='changePasswordDiv'>
 			<div class="alert alert-danger fade in">
@@ -65,10 +74,10 @@
 				{{passwordMessage}}
 			</div>
 			<input type="password" class="hide"><!-- To hide the saved user password. The browser puts the saved password in the 1st password field. -->
-			<input type="password" ng-model="changePasswordObj.oldPassword" placeholder="Old Password" class="form-control" >
-			<input type="password" ng-model="changePasswordObj.newPassword" placeholder="New Password" class="form-control">
-			<input type="password" ng-model="changePasswordObj.confirmPassword" placeholder="Confirm Password" class="form-control">
-			<button class="btn btn-primary pull-right" ng-click="changePassword(changePasswordObj)" >Change</button>
+			<input type="password" ng-model="tempLoggedInUser.oldPassword" placeholder="Old Password" class="form-control" >
+			<input type="password" ng-model="tempLoggedInUser.newPassword" placeholder="New Password" class="form-control">
+			<input type="password" ng-model="tempLoggedInUser.confirmPassword" placeholder="Confirm Password" class="form-control">
+			<button class="btn btn-primary pull-right" ng-click="changePassword(tempLoggedInUser)" >Change</button>
 		</div>
 	</div>
 </div><!-- end #main -->
