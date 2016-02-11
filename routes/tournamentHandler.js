@@ -46,10 +46,10 @@ router.route('/tournament/:tId')
 	          });
 
 	  });
-		router.route('/results/:tId')
+		router.route('/leaderBoard/:tId')
 			  .get(function(req , res){
 					Tournament.findById(req.params.tId)
-			      .populate("topics.games")
+			      .populate("topics.leaderBoard")
 			          .exec(function(err,tournaments){
 			            if(err){
 			                return res.send(err);
