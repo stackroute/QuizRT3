@@ -19,7 +19,7 @@ var questionCounter = 0;
 var temp;
 angular.module('quizRT')
     .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
-        
+
         $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;
@@ -36,8 +36,8 @@ angular.module('quizRT')
         }else{
             $scope.levelDetails = "";
         }
-       
-        
+
+
         socket.emit('join', {
             tId: $rootScope.levelId || $rootScope.tId,
             name: $rootScope.fakeMyName,
@@ -52,14 +52,14 @@ angular.module('quizRT')
             var tId = $rootScope.tId;
             var gId2 = startGameData.gameId;
             var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
-            
+
             $http.get(path)
                 .success(function(data, status, headers, config) {
                     //counter to start the Quiz
                     $scope.time = 3;
-                    
+
                     var timeInterval = $interval(function() {
-                        
+
                         $scope.time--;
 
                         //waiting for counter to end to start the Quiz
@@ -68,7 +68,7 @@ angular.module('quizRT')
                             $scope.wrongAnswerers = 0;
                             $scope.correctAnswerers = 0;
                             $scope.unattempted = startGameData.maxPlayers;
-                            
+
                             if (questionCounter == data.questions.length) {
                                 $interval.cancel(timeInterval);
                                 $rootScope.finalScore = $scope.myscore;
@@ -113,7 +113,7 @@ angular.module('quizRT')
                                 else {
                                     $scope.questionImage = null;
                                 }
-                                $scope.time = 10;
+                                $scope.time = 2;
                             }
                         }
 

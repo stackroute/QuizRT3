@@ -38,6 +38,7 @@ router.route('/tournament/:tId')
 	  .get(function(req , res){
 			Tournament.findById(req.params.tId)
 	      .populate("topics.name")
+				.populate("leaderBoard.userId")
 	          .exec(function(err,tournaments){
 	            if(err){
 	                return res.send(err);
@@ -48,13 +49,45 @@ router.route('/tournament/:tId')
 	  });
 		router.route('/leaderBoard/:tId')
 			  .get(function(req , res){
+
 					Tournament.findById(req.params.tId)
-			      .populate("topics.leaderBoard")
+						.populate("leaderBoard.userId")
 			          .exec(function(err,tournaments){
 			            if(err){
 			                return res.send(err);
+			              }else {
+
+											tournaments.leaderBoard.sort(function(a, b) {
+												return b.totalScore - a.totalScore;
+											});
+
+
+
+											cntr=0;
+											tempLeaderBoard=[];
+												tournaments.leaderBoard.forEach(function(tempUser)
+												{
+													if(++cntr<=10)
+													{
+
+											 Profile.findOne({userId: tempUser.userId.local.username})
+							         .exec(function(err,data){
+												 	tempLeaderBoard.push({name:data.name,score:tempUser.totalScore});
+													if(tempLeaderBoard.length==tournaments.leaderBoard.length || tempLeaderBoard.length==10)
+												 {
+														return res.json({leaderBoard:tempLeaderBoard});
+												 }
+											 });}
+
+
+										 	});
+
+
+
+
+
 			              }
-			            return res.json(tournaments);
+
 			          });
 
 			  });
