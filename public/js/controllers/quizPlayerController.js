@@ -53,11 +53,10 @@ angular.module('quizRT')
             var gId2 = startGameData.gameId;
             var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
             
-            $http.post(path)
+            $http.get(path)
                 .success(function(data, status, headers, config) {
                     //counter to start the Quiz
                     $scope.time = 3;
-                    var total
                     
                     var timeInterval = $interval(function() {
                         
