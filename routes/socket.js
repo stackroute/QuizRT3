@@ -60,7 +60,7 @@ module.exports = function(server,sessionMiddleware) {
         });
 
         if ( tournamentId ) { // update coming from a tournament
-          addTournamentToProfile( profileData, levelId, tournamentId, data );
+          addTournamentToProfile( client, profileData, levelId, tournamentId, data );
         }
 
       });// end Profile.findOne()
@@ -171,7 +171,8 @@ module.exports = function(server,sessionMiddleware) {
         topicPlayers= gameManager.popPlayers(data.tId);
 
 
-        var gameId= makeid();
+        // var gameId= makeid();
+        var gameId = 1234567;
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
 
@@ -218,16 +219,17 @@ function renderThegame(matches){
 
 
 // add played tournament to user profile
-function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
+function addTournamentToProfile( client, profileData, levelId, tournamentId ,data ) {
   var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
   len = profileData.tournaments ? profileData.tournaments.length : 0;
-  console.log('User has played tournaments = ' + len);
+
   if ( len ) {// if userProfile has tournaments array
     var tournamentFound = false;
 
     for (var i = 0; i < len; i++) {
-      if ( profileData.tournaments[i].id == tournamentId ) {
+      if ( profileData.tournaments[i].tournamentId == tournamentId ) {
         tournamentFound = true;
+        console.log( tournamentId + ' tournament updated in user profile');
 
         if ( profileData.tournaments[i].status == 'COMPLETED' ) {
           console.log('ERROR: User has already completed '+ profileData.tournaments[i].finalLevel + ' levels of ' + tournamentId );
@@ -242,12 +244,13 @@ function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
             console.log('Mongoose validaton error of user profile.');
             return console.error(validationError);
           } else {
-            profileData.save( function(err, savedProfile ) {
+            profileData.save( function(err, updatedUserProfile ) {
               if ( err ) {
                 console.log('Could not save the updated user profile to MongoDB!');
                 console.error(err);
               }else {
                 console.log("\nUser profile persisted sucessfully!!");
+                client.emit('refreshUser', updatedUserProfile );
               }
             }); //end save
           }
@@ -257,7 +260,7 @@ function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
     }// end for
 
     if( !tournamentFound ) {
-      console.log('New insert');
+      console.log('New tournament insert in user profile');
       Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
         if ( err ) {
           console.log('Cannot find the tournament : ' + tournamentId);
@@ -278,12 +281,13 @@ function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
             console.log('Mongoose validaton error of user profile.');
             return console.error(validationError);
           } else {
-            profileData.save( function(err, savedProfile ) {
+            profileData.save( function(err, updatedUserProfile ) {
               if ( err ) {
                 console.log('Could not save the updated user profile to MongoDB!');
                 console.error(err);
               }else {
                 console.log("\nUser profile persisted sucessfully!!");
+                client.emit('refreshUser', updatedUserProfile );
               }
             }); //end save
           }
@@ -291,7 +295,7 @@ function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
       }); //end Tournament.findOne()
     }// end if tournament not Found
   }else {
-    console.log('First insert');
+    console.log('First tournament insert in user profile');
     Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
       if ( err ) {
         console.log('Cannot find the tournament : ' + tournamentId);
@@ -312,12 +316,13 @@ function addTournamentToProfile( profileData, levelId, tournamentId ,data ) {
           console.log('Mongoose validaton error of user profile.');
           return console.error(validationError);
         } else {
-          profileData.save( function(err, savedProfile ) {
+          profileData.save( function(err, updatedUserProfile ) {
             if ( err ) {
               console.log('Could not save the updated user profile to MongoDB!');
               console.error(err);
             }else {
               console.log("\nUser profile persisted sucessfully!!");
+              client.emit('refreshUser', updatedUserProfile );
             }
           }); //end save
         }
