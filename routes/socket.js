@@ -36,7 +36,7 @@ module.exports = function(server,sessionMiddleware) {
   })
 
   io.on('connection', function(client) {
-    client.on('ofile',function(data){
+    client.on('updateProfile',function(data){
       var levelId = data.levelId,
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
