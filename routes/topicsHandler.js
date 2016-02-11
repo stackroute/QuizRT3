@@ -66,6 +66,7 @@ findLevel = function(points){
   router.route('/topic/:id')
     .get(function(req,res){
       var usr = req.session.user.local.username;
+      console.log(req.session.user);
       topicInst = req.params.id;
       req.session.tid = topicInst;
         Profile.findOne({userId: usr})

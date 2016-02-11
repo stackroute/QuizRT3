@@ -22,7 +22,7 @@ var express = require('express'),
     Question=require("../models/question.js");
 
 router.route('/quizData/:id')
-.post(function(req, res) {
+.get(function(req, res) {
   var topicInst = req.params.id;
   console.log("fetching questions for :"+topicInst );
   var temp=topicInst.split(",");
