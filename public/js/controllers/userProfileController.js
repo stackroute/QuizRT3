@@ -44,10 +44,8 @@ angular.module('quizRT')
        }
       }
 
-
+    // refresh the user profile
     socket.on('refreshUser', function( user ) {
-      // refresh the user profile
-      console.log('Refresh user received');
       $rootScope.loggedInUser = user;
     });
 
@@ -86,22 +84,18 @@ angular.module('quizRT')
       });
 
   })
-  .controller('userSettingsController', function($scope, $http) {
+  .controller('userSettingsController', function($rootScope, $scope, $http) {
     var $inputFile = $('#inputFile'),
 			  $profilePic = $('#profilePic');
     $scope.passwordMessage = '';
     $scope.errorMessage = '';
-    $scope.user = {
-      displayName : '',
-      country:'',
-      age:'',
-      emailID:'',
-      imageSrc:'',
+    $scope.changePasswordObj = {
       oldPassword:'',
       newPassword:'',
       confirmPassword:''
     };
-    $scope.updateUser = function() {
+    console.log($rootScope.loggedInUser);
+    $scope.updateUserProfile = function() {
       if ( !$scope.user.displayName) {
         $scope.errorMessage = 'Enter your Name.';
       }else if ( !$scope.user.country ) {
@@ -115,15 +109,15 @@ angular.module('quizRT')
         alert('Profile updated successfully.');
       }
     };
-    $scope.changePassword = function(user) {
-      if ( user.oldPassword ) {
-        if ( user.newPassword ) {
-          if ( user.newPassword === user.confirmPassword ) {
+    $scope.changePassword = function( changePasswordObj ) {
+      if ( changePasswordObj.oldPassword ) {
+        if ( changePasswordObj.newPassword ) {
+          if ( changePasswordObj.newPassword === changePasswordObj.confirmPassword ) {
             $scope.passwordMessage = '';
             alert('Password Changed');
-            user.oldPassword = '';
-            user.newPassword = '';
-            user.confirmPassword = '';
+            changePasswordObj.oldPassword = '';
+            changePasswordObj.newPassword = '';
+            changePasswordObj.confirmPassword = '';
           }else {
             $scope.passwordMessage = 'Confirm password not same.'
           }
@@ -135,9 +129,8 @@ angular.module('quizRT')
       }
     };
     $scope.removeIcon = function() {
-      $scope.user.imageSrc = '';
-      $profilePic.css('padding','12px 12px')
-    						 .css('border', '1px solid #aaa');
+      $rootScope.loggedInUser.imageLink = '';
+      $profilePic.css('border', '1px solid #aaa');
     };
     $scope.slideToggle = function() {
       $scope.isChangePasswordOpen ? $scope.isChangePasswordOpen = false : $scope.isChangePasswordOpen = true;
@@ -166,7 +159,7 @@ angular.module('quizRT')
   	$inputFile.on('change',function() {
   		var fileToUpload = this.files[0];
   		var formData = new FormData();
-  		formData.append('userID', 'user1');
+  		formData.append('userID', $rootScope.loggedInUser.userId );
   		formData.append('teamIcon', fileToUpload );
       var reqObj = {
         method: 'POST',
@@ -177,9 +170,10 @@ angular.module('quizRT')
       $http( reqObj ).then( function( successResponse ){
         $profilePic.css('padding',0)
   									.css('border', '1px solid transparent');
-        $scope.user.imageSrc = successResponse.data.tempUrl;
+        $rootScope.loggedInUser.imageLink = successResponse.data.tempUrl;
       }, function( errorResponse ){
         console.log('Error in uploading user profile picture.');
+        alert('Error in uploading user profile picture.')
       });
   	});
 

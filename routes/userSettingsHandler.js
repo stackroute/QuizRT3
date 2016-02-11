@@ -1,16 +1,22 @@
 var router = require('express').Router(),
     fs = require('fs'),
     path = require('path'),
-    formidable = require('formidable');
+    formidable = require('formidable'),
+    Profile = require("./../models/profile");
 
 router.post('/profilePic', function(req,res,next) {
-
   var form = new formidable.IncomingForm(),
+      userId = null,
       sendResponse = function(err,tempUrl) {
         if ( err ) {
           res.send( JSON.stringify( {error:err}) );
         }else{
-          res.send( JSON.stringify( {error:null, tempUrl: tempUrl}) );
+          // updating user-profile in MogoDB
+          Profile.findOneAndUpdate( {'userId': userId}, {imageLink:tempUrl}, {upsert:false}, function(err, doc){
+            if (err)
+              return res.send(500, { error: 'MONGOERROR' });
+            res.send( JSON.stringify( {error:null, tempUrl: tempUrl}) );
+          });
         }
       };
 
@@ -56,6 +62,9 @@ router.post('/profilePic', function(req,res,next) {
           });
         };
     form.uploadDir = process.cwd() + '/public/temp';
+    form.on( 'field', function( name, value ) {
+      userId = value;
+    });
     form.on('file', function(field, file) {
       isImageType = /image\/(jpeg|gif|png)/.test(file.type);
       if ( !isImageType ) {
@@ -78,9 +87,18 @@ router.post('/profilePic', function(req,res,next) {
               return callback( 'PERMISSIONERROR', null );
             }else{
               console.log('No rename error');
-              callback( null, tempUrl );
+              if ( userId == null ) {
+                while( userId == null ) {
+                  if ( userId ) {
+                    callback( null, tempUrl );
+                    break;
+                  }
+                }
+              } else {
+                callback( null, tempUrl );
+              }
             }
-          });
+          }); //end rename
         }
       }
 
@@ -88,4 +106,5 @@ router.post('/profilePic', function(req,res,next) {
     form.parse(req); // parse the incoming request to get form-data
   })(sendResponse);
 });
+
 module.exports = router;

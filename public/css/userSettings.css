@@ -36,7 +36,6 @@
   cursor: pointer;
   display: block;
   height: 64px;
-  padding: 12px 12px;
   margin: 0 auto 7px;
   text-decoration: none;
   width: 64px;
@@ -53,6 +52,8 @@
 }
 #settingsDiv #profilePic span{
   color: inherit;
+  display: block;
+  margin: 12px;
 }
 #settingsDiv .form-control {
   margin-bottom: 10px;
