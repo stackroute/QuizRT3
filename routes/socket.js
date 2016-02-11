@@ -94,7 +94,7 @@ module.exports = function(server,sessionMiddleware) {
         else {
           if(gameData.levelId)
           {
-            ournamentAfterEveryGame(tournamentID,levelId,data._id,playerlist);
+            updateTournamentAfterEveryGame(tournamentID,levelId,data._id,playerlist);
           }
         }
       });
@@ -164,25 +164,13 @@ module.exports = function(server,sessionMiddleware) {
       var usersJoined=gameManager.players.get(data.tId).size;
       var topicPlayers=[];
       if( usersJoined == maxPlayers ) {
-
-
         topicPlayers= gameManager.popPlayers(data.tId);
 
-        topicPlayers= gameManager.popPlayers(data.tId);
-
-
-        // var gameId= makeid();
-        var gameId = 1234567;
+        var gameId= makeid();
         topicPlayers.forEach(function(player){
           leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-
-
-            console.log("Starting Normal game");
-            player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-
-
+          console.log("Starting Normal game");
           player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-
         }); //end topicPlayers.forEach
       }
       else
@@ -350,11 +338,10 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
 
       });
 
-        playerList.forEach(player)
-        {
+        playerList.forEach( function(player) {
           var temp=tournamentData.leaderBoard.filter(function(item){
-          return (item._id==player.userId)
-        });
+            return (item._id==player.userId)
+          });
 
         if(temp.length==0)
         {
@@ -365,10 +352,7 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
           var ind=tournamentData.leaderBoard.indexOf(tempVar);
           tournamentData.leaderBoard[ind].totalScore+=player.score;
         }
-
-
-
-    }
+    });
 
       tournamentData.save();
       console.log("updated tournament space");
