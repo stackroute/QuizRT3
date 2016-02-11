@@ -28,6 +28,7 @@ angular.module('quizRT')
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
         //$scope.question = "WAITING FOR " + playersPerMatch +" OTHER PLAYERS";
+        console.log("WAITING FOR " + playersPerMatch +" OTHER PLAYERS");
 
         // levelId is defined for Tournaments only
         if($rootScope.levelId){
@@ -45,22 +46,29 @@ angular.module('quizRT')
         });
 
         socket.on('startGame', function(startGameData) {
+
             $rootScope.freakgid = startGameData.gameId;
-            $scope.question = "Starting Game ..."
+            $scope.question = "Starting Game ...";
             var tId = $rootScope.tId;
             var gId2 = startGameData.gameId;
             var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
+            
             $http.post(path)
                 .success(function(data, status, headers, config) {
-                    $scope.time = 5;
+                    //counter to start the Quiz
+                    $scope.time = 3;
+                    var total
+                    
                     var timeInterval = $interval(function() {
+                        
                         $scope.time--;
 
+                        //waiting for counter to end to start the Quiz
                         if ($scope.time == 0) {
                             $scope.isDisabled = false;
                             $scope.wrongAnswerers = 0;
                             $scope.correctAnswerers = 0;
-                            $scope.unattempted = startGameData.maxPlayers; //this is hardcoded..get this data from the first socket
+                            $scope.unattempted = startGameData.maxPlayers;
                             
                             if (questionCounter == data.questions.length) {
                                 $interval.cancel(timeInterval);
@@ -97,7 +105,7 @@ angular.module('quizRT')
                                     });
                                 };
 
-                                $scope.question = temp.question;
+                                $scope.question = questionCounter + ". " +temp.question;
                                 $scope.options = temp.options;
 
                                 if (temp.image != "null")
@@ -106,7 +114,7 @@ angular.module('quizRT')
                                 else {
                                     $scope.questionImage = null;
                                 }
-                                $scope.time = 15;
+                                $scope.time = 10;
                             }
                         }
 
@@ -139,16 +147,16 @@ angular.module('quizRT')
     });
 
 function loadNextQuestion(data, questionNumber) {
-    var optionCoutner = 0;
+    var optionCounter = 0;
     var obj;
     var options = [];
-    while (data.questions[questionNumber].options[optionCoutner]) {
+    while (data.questions[questionNumber].options[optionCounter]) {
         opt = {
-            name: data.questions[questionNumber].options[optionCoutner],
-            id: "option" + (optionCoutner + 1)
+            name: data.questions[questionNumber].options[optionCounter],
+            id: "option" + (optionCounter + 1)
         };
         options.push(opt);
-        optionCoutner++;
+        optionCounter++;
     }
     obj = {
         "options": options,
