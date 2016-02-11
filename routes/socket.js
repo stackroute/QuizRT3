@@ -68,7 +68,7 @@ module.exports = function(server,sessionMiddleware) {
     client.on('storeResult',function(gameData){
       var playerlist = [];
       var gameId=gameData.gameId;
-      var tid=gameData.topicId;
+      var tId=gameData.topicId;
       var tournamentID="";
       var levelId="";
       if(gameData.levelId)
@@ -166,7 +166,7 @@ module.exports = function(server,sessionMiddleware) {
       if( usersJoined == maxPlayers ) {
 
 
-        topicPlayers= gameManager.popPlayers(data.tid);
+        topicPlayers= gameManager.popPlayers(data.tId);
 
         topicPlayers= gameManager.popPlayers(data.tId);
 
