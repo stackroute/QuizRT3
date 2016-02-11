@@ -63,7 +63,7 @@ module.exports = function(server,sessionMiddleware) {
               topic.level = findLevel(topic.points);
             }
           });
-          validateAndSaveProfile( profileData );
+          validateAndSaveProfile( profileData, client );
         });// end Profile.findOne()
       }
     });
@@ -230,7 +230,7 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
           if ( levelCleared == profileData.tournaments[i].finalLevel ) {
             profileData.tournaments[i].status = 'COMPLETED';
           }
-          validateAndSaveProfile( profileData );
+          validateAndSaveProfile( profileData, client );
         }
         break;// break if a Tournament was found
       }
@@ -252,7 +252,7 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
           };
           // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
           profileData.tournaments.push( newTournamentObj );
-          validateAndSaveProfile( profileData );
+          validateAndSaveProfile( profileData, client );
         }
       }); //end Tournament.findOne()
     }// end if tournament not Found
@@ -272,14 +272,14 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
         };
         // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
         profileData.tournaments.push( newTournamentObj );
-        validateAndSaveProfile( profileData );
+        validateAndSaveProfile( profileData, client );
       }
     }); //end Tournament.findOne()
   }
 }
 
 // persist user profile to MongoDB
-function validateAndSaveProfile( profileData ) {
+function validateAndSaveProfile( profileData, client ) {
   var validationError = profileData.validateSync();
   if ( validationError ) {
     console.log('Mongoose validaton error of user profile.');
@@ -291,7 +291,7 @@ function validateAndSaveProfile( profileData ) {
         console.error(err);
       }else {
         console.log("\nUser profile persisted sucessfully!!");
-        // client.emit('refreshUser', updatedUserProfile );
+        client.emit('refreshUser', updatedUserProfile );
       }
     }); //end save
   }

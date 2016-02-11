@@ -45,9 +45,10 @@ angular.module('quizRT')
       }
 
 
-    socket.on('refreshUser', function(data) {
+    socket.on('refreshUser', function( user ) {
       // refresh the user profile
       console.log('Refresh user received');
+      $rootScope.loggedInUser = user;
     });
 
     $http({method : 'GET',url:'/userProfile/profileData'})
