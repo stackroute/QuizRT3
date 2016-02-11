@@ -221,8 +221,8 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
         tournamentFound = true;
         console.log( tournamentId + ' tournament updated in user profile');
 
-        if ( profileData.tournaments[i].status == 'COMPLETED' ) {
-          console.log('ERROR: User has already completed '+ profileData.tournaments[i].finalLevel + ' levels of ' + tournamentId );
+        if ( profileData.tournaments[i].levelCleared === levelCleared ) {
+          console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
         } else {
           profileData.tournaments[i].levelCleared = levelCleared;
           profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
