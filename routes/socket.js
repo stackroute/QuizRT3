@@ -221,16 +221,19 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
       if ( profileData.tournaments[i].tournamentId == tournamentId ) {
         tournamentFound = true;
         console.log( tournamentId + ' tournament updated in user profile');
-
-        if ( profileData.tournaments[i].levelCleared === levelCleared ) {
-          console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
+        if ( profileData.tournaments[i].status == 'COMPLETED' ) {
+          console.log('ERROR: User has already COMPLETED the ' + tournamentId + ' tournament.');
         } else {
-          profileData.tournaments[i].levelCleared = levelCleared;
-          profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
-          if ( levelCleared == profileData.tournaments[i].finalLevel ) {
-            profileData.tournaments[i].status = 'COMPLETED';
+          if ( profileData.tournaments[i].levelCleared === levelCleared ) {
+            console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
+          } else {
+            profileData.tournaments[i].levelCleared = levelCleared;
+            profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
+            if ( levelCleared == profileData.tournaments[i].finalLevel ) {
+              profileData.tournaments[i].status = 'COMPLETED';
+            }
+            validateAndSaveProfile( profileData, client );
           }
-          validateAndSaveProfile( profileData, client );
         }
         break;// break if a Tournament was found
       }
