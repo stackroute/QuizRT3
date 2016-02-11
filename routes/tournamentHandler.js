@@ -59,7 +59,7 @@ router.route('/tournament/:tId')
 
 
 
-												var usr=req.session.user.local.username
+												var usr=req.session.user.local.username;
 
 											cntr=0;
 											tempLeaderBoard=[];
@@ -70,8 +70,8 @@ router.route('/tournament/:tId')
 											 Profile.findOne({userId: tempUser.userId.local.username})
 							         .exec(function(err,data){
 												 cntr++;
-												
-												 if(cntr<=10 || cntr==tournaments.leaderBoard.length)
+
+												 if(cntr<=10 && cntr<=tournaments.leaderBoard.length)
 												 {
 												 	tempLeaderBoard.push({name:data.name,score:tempUser.totalScore,rank:index+1});
 													}
