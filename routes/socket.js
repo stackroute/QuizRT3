@@ -16,14 +16,14 @@
 //
 
 var gameManager = require('./gameManager/gameManager.js'),
-    tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    leaderBoard = require('./gameManager/leaderboard.js'),
-    uuid= require('node-uuid'),
-    Game = require("./../models/game"),
-    Profile = require("./../models/profile"),
-    Tournament=require("./../models/tournament"),
-    defaultMaxPlayers =4;
-    maxPlayers=0;
+tournamentManager = require('./tournamentManager/tournamentManager.js'),
+leaderBoard = require('./gameManager/leaderboard.js'),
+uuid= require('node-uuid'),
+Game = require("./../models/game"),
+Profile = require("./../models/profile"),
+Tournament=require("./../models/tournament"),
+defaultMaxPlayers =4;
+maxPlayers=0;
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
@@ -181,7 +181,7 @@ module.exports = function(server,sessionMiddleware) {
         topicPlayers= gameManager.getAllPlayers(data.tId);
         topicPlayers.forEach(function(player){
           //console.log(maxPlayers+"-"+usersJoined);
-        player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
+          player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
         });
       }
 
@@ -291,7 +291,7 @@ function validateAndSaveProfile( profileData ) {
         console.error(err);
       }else {
         console.log("\nUser profile persisted sucessfully!!");
-        client.emit('refreshUser', updatedUserProfile );
+        // client.emit('refreshUser', updatedUserProfile );
       }
     }); //end save
   }
@@ -310,17 +310,17 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
     else {
       tournamentData.totalGamesPlayed++;
       tournamentData.topics.forEach(function(topic){
-        if(topic._id==levelId)
+        if(topic.userId==levelId)
         {
           topic.games.push(gameID);
         }
 
       });
 
-        playerList.forEach( function(player) {
-          var temp=tournamentData.leaderBoard.filter(function(item){
-            return (item._id==player.userId)
-          });
+      playerList.forEach( function(player) {
+        var temp=tournamentData.leaderBoard.filter(function(item){
+          return (item.userId==player.userId)
+        });
 
         if(temp.length==0)
         {
@@ -331,7 +331,10 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
           var ind=tournamentData.leaderBoard.indexOf(tempVar);
           tournamentData.leaderBoard[ind].totalScore+=player.score;
         }
-    });
+      });
+      tournamentData.leaderBoard.sort(function(a, b) {
+        return a.totalScore - b.totalScore;
+      });
 
       tournamentData.save();
       console.log("updated tournament space");
