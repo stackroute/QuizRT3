@@ -28,7 +28,7 @@ var mongoose = require('mongoose'),
       leaderBoard:
       [
         {
-          userId:{type: String, ref: 'Profile'},
+          userId:{type: String, ref: 'User'},
           totalScore:Number
         }
       ],

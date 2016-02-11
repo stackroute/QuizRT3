@@ -34,13 +34,6 @@
       <!-- <div class="row"> -->
         <div class="col-xs-6 rounds-icon">
           <img ng-src="{{tournament.imageUrl}}"  class="img-responsive" alt="tournament_image">
-          <div class="follow">
-            <h3>
-            <span class="glyphicon glyphicon-heart" ng-show="tournament.isFollowed" ng-click="followUnfollow()"></span>
-            <span class="glyphicon glyphicon-heart-empty" ng-hide="tournament.isFollowed" ng-click="followUnfollow()"></span>
-            <span>{{tournament.topicFollowers}}</span>
-            </h3>
-          </div>
         </div><!--end topic-icon-->
         <div class="col-xs-6 topic-user">
           <div class="wins row">
@@ -69,7 +62,7 @@
           </div> <!--end losses-->
           <div class="losses row">
            <div class="col-xs-6 col-sm-6 col-lg-6">
-              <button class="btn btn-info">Level <span id="levelnum">{{tournament.topicLevel}}</span></button>
+              <button class="btn btn-info">Level Cleared: <span id="levelnum">{{levelCleared}}</span></button>
           </div>
           <div class="col-xs-6 col-sm-6 col-lg-6">
              <button class="btn btn-primary" ng-click="leaders(tournament._id)">Leaderboard</button>
@@ -82,7 +75,7 @@
   <div class="heading col-xs-12 col-sm-12 col-lg-12">
     <h3 class="statement pull-left">Rounds</h3>
   </div>
-<div class="topic-panel panel panel-default col-xs-12 col-sm-12 col-lg-12" ng-repeat="stages in tournament.topics">
+<div class="topic-panel panel panel-default col-xs-12 col-sm-12 col-lg-12"  ng-repeat="stages in tournament.topics track by $index">
 
   				<div class="panel-body">
   					<div class="topic-icon">
@@ -94,16 +87,14 @@
               <p>{{stages.name.topicDescription}}</p>
             </div>
           </div>
-
-
-         <div class="play-now pull-right" id="foot">
+   <div class="play-now pull-right" id="foot">
                   <div class="col-xs-12 play-button-bar">
-                    <!-- <span class="no-play" ng-show="show == 'NO'">{{profile.roundScore}}</span> -->
-                    <button class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title, stages.name.topicName)">Play Now!</button>
+                     <button class="levelScoreBtn btn btn-warning" ng-show="$index < levelCleared">{{playedTournament.levelPoints[$index]}}</button>
+                     <button ng-show="$index == levelCleared" class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title, stages.name.topicName)">Play Now!</button>
                   </div>
                 </div>
               </div>
 
-  				</div>
+</div>
   			<!-- </div> -->
     </div>

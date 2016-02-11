@@ -27,7 +27,7 @@
 
 .rounds-header{
   text-align: center;
-  
+
 }
 .heading{
   margin-top: -30px;
@@ -53,6 +53,11 @@
 .round-name p{
   text-align: center;
   font-size: 16px;
+}
+.levelScoreBtn {
+  padding : 3px 15px;
+  margin-top: -1%;
+  text-align: center;
 }
 .play-now-button {
   padding: 3px 6px;

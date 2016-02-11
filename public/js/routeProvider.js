@@ -39,7 +39,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
           var socket = io.connect('http://172.23.238.183:8080');
 
     // var socket = io.connect('http://172.23.238.159:8080');
-    var socket = io.connect('http://localhost:8080');
+  //  var socket = io.connect('http://localhost:8080');
 
 
     return {

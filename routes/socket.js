@@ -36,7 +36,7 @@ module.exports = function(server,sessionMiddleware) {
   })
 
   io.on('connection', function(client) {
-    client.on('updateProfile',function(data){
+    client.on('ofile',function(data){
       var levelId = data.levelId,
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
@@ -80,6 +80,7 @@ module.exports = function(server,sessionMiddleware) {
 
       }
       leaderBoard.leaderBoard.get(gameId).forEach(function(player,index){
+        console.log(player);
         var temp = {
           'userId': player.sid,
           'rank':index+1,
@@ -159,7 +160,10 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('join',function(data){
-      gameManager.addPlayer(data.tId, client.request.session.passport.user, client,data.name,data.image);
+      console.log("--------------------------------------");
+      console.log( client.request.session);
+      console.log("---------------------------------------");
+     gameManager.addPlayer(data.tId, client.request.session.passport.user, client,data.name,data.image);
       maxPlayers=1;
       // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
@@ -336,7 +340,7 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
         }
       });
       tournamentData.leaderBoard.sort(function(a, b) {
-        return a.totalScore - b.totalScore;
+        return b.totalScore - a.totalScore;
       });
 
       tournamentData.save();
