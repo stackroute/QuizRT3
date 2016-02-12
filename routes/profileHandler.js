@@ -22,7 +22,6 @@ var express = require('express'),
     userSettingsHandler = require('./userSettingsHandler');
 
 router.get('/profileData', function(req, res, next) {
-  console.log(req.session);
   if ( req.session && req.session.user ) {
     console.log('Authenticated user: ' + req.session.user.local.username);
     if( !(req.session.user == null) ){
