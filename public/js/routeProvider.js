@@ -39,7 +39,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
           var socket = io.connect('http://172.23.238.167:8080');
 
     // var socket = io.connect('http://172.23.238.159:8080');
-  //  var socket = io.connect('http://localhost:8080');
+    var socket = io.connect('http://localhost:8080');
 
 
     return {
@@ -173,5 +173,9 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
       .when('/tournament/tournamentPlayer' , {
         'templateUrl': 'html/tournamentPlayer.html',
         'controller': 'tournamentPlayerController'
+      })
+      .when('/leaderBoard/hallOfFame' , {
+        'templateUrl': 'html/hallOfFame.html',
+        'controller': 'halloffameController'
       });
 });
