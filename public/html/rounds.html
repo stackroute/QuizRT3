@@ -65,7 +65,7 @@
 
 
           <div class="col-xs-6 col-sm-6 col-lg-6">
-            <button href="#myModal" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
+            <button ng-click="refreshLeaderBoard(tournament._id)" href="#myModal" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
           </div>
 
 
@@ -80,21 +80,30 @@
                   <div class="row">
                     <div align="center" class="col-xs-8" >
                       <h4>Top 10</h4>
-                      <table  class="tabular">
+                      <table  class="topTenTable">
                         <thead>
                           <th>Rank</th>
                           <th>Name</th>
                           <th>Score</th>
                         </thead>
                         <tbody >
-                            <tr ng-repeat="obj in leaders.leaderBoard"> <th scope="new">{{obj.rank}}</th> <td>{{obj.name}}</td> <td>{{obj.score}}</td> </tr>
+                            <tr ng-repeat="player in tournament.leaderBoard">
+                              <td>{{$index+1}}</td>
+                              <td>{{player.userId.local.username}}</td>
+                              <td>{{player.totalScore}}</td>
+                            </tr>
+                            <tr id="myRow">
+                              <td>N.</td>
+                              <td>{{loggedInUser.name}}</td>
+                              <td>34</td>
+                            </tr>
                         </tbody>
                       </table>
                     </div>
                     <div align="center" class="col-xs-4">
                        <h4>My Position</h4>
-                       <img ng-src="{{imageLink}}" width="100px" height="100px" alt="No Image" class="img-thumbnail">
-                       <h4>{{name}}</h4>
+                       <img ng-src="{{loggedInUser.imageLink}}" width="100px" height="100px" alt="No Image" class="img-thumbnail">
+                       <h4>{{loggedInUser.name}}</h4>
                        <h4>Your Score: {{leaders.myStat.score}}</h4>
                        <h4>Your Rank: {{leaders.myStat.rank}}</h4>
                     </div>

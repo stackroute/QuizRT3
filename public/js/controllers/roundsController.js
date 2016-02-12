@@ -6,20 +6,37 @@ angular.module("quizRT")
       $scope.playedTournament = [];
       var path = '/tournamentHandler/tournament/'+$scope.tournamentID;
 
+      $scope.refreshLeaderBoard = function( tournamentId ) {
+        $http.get( '/tournamentHandler/tournament/' + tournamentId )
+           .success(function(data, status, headers, config) {
+                data.leaderBoard.sort( function(a,b) {
+                  return -(a-b);
+                });
+                $scope.tournament = data;
+                $rootScope.playersPerMatch=data.playersPerMatch;
+                console.log(data);
+                $rootScope.loggedInUser.tournaments.forEach(function(tournament){
+                  if(tournament.tournamentId == data._id){
+                    $scope.playedTournament = tournament;
+                    $scope.levelCleared = tournament.levelCleared;
+                  }
+                });
+          })
+          .error(function(data, status, headers, config) {
+               console.log(error);
+          });
+      }
 
- $http.get(path)
+      $http.get(path)
          .success(function(data, status, headers, config) {
               $scope.tournament = data;
               $rootScope.playersPerMatch=data.playersPerMatch;
               var tournamentId = data._id;
-
-
               $rootScope.loggedInUser.tournaments.forEach(function(tournament){
                 //console.log(tournament);
                 if(tournament.tournamentId == tournamentId){
                   $scope.playedTournament = tournament;
                   $scope.levelCleared = tournament.levelCleared;
-
                 }
 
               });

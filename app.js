@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                       + Anil Sawant
 
 var express = require('express'),
     app = express(),
@@ -37,14 +37,15 @@ var express = require('express'),
     index = require('./routes/index'),
     quizPlayerHandler = require('./routes/quizPlayerHandler'),
     authenticationHandler = require('./routes/authenticationHandler')(passport),
-    redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient}),
+    redis_store = new RedisStore({ host: 'localhost', port: 6379, client: redisClient}),
     Quiz = require("./models/quiz"),
     sessionMiddleware = session({
       store: redis_store,
       secret: 'keyboard cat'
     });
 
-mongoose.connect('mongodb://172.23.238.253/quizRT3');
+// mongoose.connect('mongodb://172.23.238.253/quizRT3');
+mongoose.connect('mongodb://localhost/quizRT3');
 mongoose.connection.on('error', console.error.bind(console, 'Failed to establish connection to MongoDB@StackRouteHost:PORT/quizRT3'));
 mongoose.connection.on('open', function() {
   console.log('Connected to MongoDB@StackRouteHost:PORT/quizRT3');

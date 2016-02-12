@@ -22,33 +22,32 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       if($cookies.get('isAuthenticated'))
         $location.path('/userProfile');
 
-      $rootScope.stylesheetName = "index";
+      $rootScope.stylesheetName = "index"; // name of the css stylesheet to be used while loading the app
       $rootScope.isAuthenticatedCookie = $cookies.get('isAuthenticated');
-      $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) {
+      $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) { // watch that puts/removes cookie based on $rootScope.isAuthenticatedCookie
         if ( nv ) {
           $cookies.put('isAuthenticated',true);
         } else {
           $cookies.remove('isAuthenticated');
         }
       });
-      $rootScope.logInLogOutSuccessMsg = '';
+      $rootScope.logInLogOutSuccessMsg = ''; // used on login.html page to display login/logout status msgs
       $rootScope.logInLogOutErrorMsg = '';
-      $rootScope.isPlayingAGame = false;
+      $rootScope.isPlayingAGame = false; // used to identify if the user is playing a game. This is used to hide the footer nav if true
+      $rootScope.serverErrorMsg = 'Error'; // used in eror.html to display Error message received from the server
 
       $rootScope.$on('login', function(event) {
         $location.path('/login');
       });
       $rootScope.$on('logout', function(event,user) {
         console.log('Hey ' + user.name + "!, you will be logged out.");
-        $http.post('auth/logout')
-          .success(function(){
+        $http.post('auth/logout').then( function( successResopnse ){
             $cookies.remove('isAuthenticated');
             $rootScope.loggedInUser = null;
             $rootScope.isAuthenticatedCookie = false;
             $rootScope.logInLogOutSuccessMsg = 'Logged out successfully!'
             $location.path('/login');
-          })
-          .error( function() {
+          }, function( errorResponse ) {
             $rootScope.loggedInUser = null;
             $rootScope.logInLogOutErrorMsg = 'Something went wrong!  Kindly do a fresh login-logout.'
             $location.path('/login');
@@ -84,6 +83,12 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       })
      .config(function($routeProvider){
        $routeProvider
+        .when('/404',{
+          'templateUrl' : 'html/404.html'
+        })
+        .when('/error',{
+          'templateUrl' : 'html/error.html'
+        })
         .when('/',{
           'templateUrl' : 'html/login.html',
           'controller':'authController'
@@ -201,5 +206,8 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
         .when('/createTournament' , {
           'templateUrl': 'html/createTournament.html',
           'controller': 'createTournamentController'
+        })
+        .otherwise({
+          redirectTo : '/404'
         });
     });

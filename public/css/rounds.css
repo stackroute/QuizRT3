@@ -41,13 +41,21 @@
 .modal-title{
   text-align: center;
 }
-.tabular{
+
+.topTenTable {
   width:100%;
 }
-
+.topTenTable thead {
+  border: 1px solid #777;
+  border-radius: 4px;
+  color: #333;
+}
+.topTenTable #myRow {
+  font-size: 16px;
+  color: #777;
+}
 .rounds-icon{
   text-align: center;
-
 }
 
 .rounds-icon img {

@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                       + Anil Sawant
 
 var express = require('express'),
     router = express.Router(),
@@ -30,16 +30,22 @@ router.get('/profileData', function(req, res, next) {
         .populate("topicsPlayed.topicId")
             .exec(function(err,profileData){
               if (err) {
+                console.log('Database error. Could not load user profile.');
                 res.writeHead(500, {'Content-type': 'application/json'});
-                res.json({ error:'MongoDB error. Could not load user profile.'} );
+                res.end(JSON.stringify({ error:'We could not load your profile properly. Try again later.'}) );
+              }else if( !profileData ){
+                console.log('User not found in database.');
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error: 'We could not find you in our database. Try again later.'}) );
               }else {
-                res.json({ error:null, user: profileData} );
+                res.json({ error: null, user:profileData });
               }
             });
     }
   } else {
-    console.log('User not authenticated.Returning.');
-    res.json({ error: 'User not authenticated' } );
+    console.log('User not authenticated. Returning.');
+    res.writeHead(401);
+    res.end(JSON.stringify({ error: 'Failed to create user session. Kindly do a fresh Login.' }) );
   }
  });
 

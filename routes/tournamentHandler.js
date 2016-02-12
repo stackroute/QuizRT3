@@ -122,16 +122,15 @@ router.route('/leaderBoard/:tId')
                 }
 
                 if(tournaments.leaderBoard.length == 0){
-                    return res.json({
-                            leaderBoard: [],
-                            myStat: []
-                        });
+                  return res.json({
+                          leaderBoard: [],
+                          myStat: []
+                      });
                 }
 
                 var cnt = (tournaments.leaderBoard.length > 10) ? 10 : tournaments.leaderBoard.length;
-
+                console.log(tournaments.leaderBoard);
                 tournaments.leaderBoard.forEach(function(leader, index) {
-
                     if (cnt >0) {
                         leaderBoard.push({
                             name: leader.name,

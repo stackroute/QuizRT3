@@ -1,0 +1,53 @@
+<style>
+  ::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+  }
+
+  ::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+  }
+
+  .errorPage h1 {
+    margin: 0 10px;
+    font-size: 50px;
+    text-align: center;
+  }
+  .errorPage h1 span {
+    color: #bbb;
+  }
+  .errorPage p {
+    margin: 1em 0;
+  }
+  .errorPage ul {
+    padding: 0 0 0 40px;
+    margin: 1em 0;
+  }
+  .errorPage .jumbotron {
+    font-size: 20px;
+    line-height: 1.4;
+    color: #737373;
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media (max-width:768px) {
+    .errorPage .jumbotron {
+      width: 92%;
+    }
+  }
+</style>
+
+<div class="errorPage">
+  <div class="container" style="padding-bottom: 30px;">
+  	<div class="jumbotron text-center">
+  		<h1>Not found <span>:(</span></h1>
+      <p>Sorry, but the page you were trying to view does not exist.</p>
+      <p>It looks like this was the result of either:</p>
+      <ul>
+        <li>a mistyped address</li>
+        <li>an out-of-date link</li>
+      </ul>
+  	</div>
+  </div>
+</div>
