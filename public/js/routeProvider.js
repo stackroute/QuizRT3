@@ -54,8 +54,6 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .factory('socket', function ($rootScope) {
       // var socket = io.connect('http://172.23.238.159:8080');
      var socket = io.connect('http://localhost:8080');
-
-
       return {
         on: function (eventName, callback) {
          socket.on(eventName, function () {
@@ -80,7 +78,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
      .config(function($routeProvider){
        $routeProvider
         .when('/',{
-          'templateUrl' : 'html/loginregister.html',
+          'templateUrl' : 'html/login.html',
           'controller':'authController'
         })
         .when('/login', {
@@ -188,5 +186,9 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
         .when('/tournament/tournamentPlayer' , {
           'templateUrl': 'html/tournamentPlayer.html',
           'controller': 'tournamentPlayerController'
+        })
+        .when('/leaderBoard/hallOfFame/:tournamentID' , {
+          'templateUrl': 'html/hallOfFame.html',
+          'controller': 'halloffameController'
         });
     });
