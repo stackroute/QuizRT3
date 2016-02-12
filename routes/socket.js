@@ -80,9 +80,11 @@ module.exports = function(server,sessionMiddleware) {
 
       }
       leaderBoard.leaderBoard.get(gameId).forEach(function(player,index){
-        console.log(player);
+        //console.log(player);
         var temp = {
           'userId': player.sid,
+          'name' : player.name,
+          'imageUrl': player.imageUrl,
           'rank':index+1,
           'score': player.score
         }
@@ -309,7 +311,8 @@ function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
 
         if(temp.length==0)
         {
-          tournamentData.leaderBoard.push({userId:player.userId,totalScore:player.score});
+          //tournamentData.leaderBoard.push({userId:player.userId,totalScore:player.score});
+          tournamentData.leaderBoard.push(player);
         }
         else {
           var tempVar=temp[0];

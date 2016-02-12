@@ -1,0 +1,119 @@
+<!--
+//Copyright {2016} {NIIT Limited, Wipro Limited}
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+//   Name of Developers  CCKK
+-->
+<style type="text/css">
+    h1{
+        margin: 30px 0;
+        padding: 0 200px 15px 0;
+        border-bottom: 1px solid #E5E5E5;
+    }
+	.bs-example{
+    	margin: 20px;
+    }
+</style>
+
+<div class="container" id="main">
+  <div class="bs-example">
+    <h3>Create new tournament</h3>
+    <hr>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="Name"><h4>Name</h4></label>
+            <div class="col-xs-9">
+                <input type="Name" class="form-control" id="Name" placeholder="Give your tournament name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="inputImage"><h4>Image</h4></label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="inputImage" placeholder="Tournament Picture">
+                <div ng-controller="createTournamentController">
+                  <input type="file" id="file" name="file"/>
+                  <br>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="levels"><h4>Levels</h4></label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" placeholder="Select the Levels">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Subject
+                    <span class="caret"></span>
+                  </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+            </ul>
+        </div>
+    </div>
+
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="Players"><h4>Number of Players</h4></label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="Players" placeholder="Number of Players">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="Rules"><h5>Specific Rules</h5></label>
+            <div class="col-xs-9">
+                <textarea readonly rows="3" class="form-control" id="Rules" placeholder="Rules for the Game">Rules for the game, You have to select the maximum number of player, and level of the tournament in order to start the tournament. You have to play the game with in the tournament and you can see the result on the go, you can play each level only one time and you have to play all the levels.
+                  </textarea>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="news"> Send me latest news and updates of Tournaments
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="agree">  I agree to the <a href="#">Terms and Conditions</a>.
+                </label>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-9">
+                <input type="submit" class="btn btn-primary" value="create">
+                <input type="reset" class="btn btn-default" value="Reset">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+</form>
+
+
+</div><!-- end container -->

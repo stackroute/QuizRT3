@@ -15,116 +15,152 @@
 //   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
 //
 var express = require('express'),
-		Reservoir = require('reservoir'),
-		router = express.Router(),
-		Profile =require("../models/profile"),
-		Tournament =require("../models/tournament");
+    Reservoir = require('reservoir'),
+    router = express.Router(),
+    Profile = require("../models/profile"),
+    Tournament = require("../models/tournament");
 
 
 
 router.route('/tournaments')
-	  .get(function(req, res){
-	    Tournament.find()
-	      .populate("topics.name")
-	          .exec(function(err,tournaments){
-	            if(err){
-	                return res.send(err);
-	              }
-	            return res.json(tournaments);
-	          });
-	 	})
-		.post( function(req,res) {
-			var tournamentIds = req.body.tournamentIds,
-					matchObj = [];
-			if ( tournamentIds && tournamentIds.length ) {
-				tournamentIds.forEach( function(id){
-						matchObj.push({'_id':id});
-				});
-				console.log('\n\nMatchobj');
-				console.log(matchObj);
-				Tournament.find( {$or: matchObj} ).exec( function(err, userTournaments ) {
-					if ( err ) {
-						console.log(err);
-						res.end(JSON.stringify( {error: 'Failed to retrieve tournaments from MongoDB'} ));
-					}else {
-						res.end(JSON.stringify( {error: null, userTournaments : userTournaments} ));
-					}
-				});
-			}else {
-				res.end(JSON.stringify( {error:'Tournament Ids not found in request body'} ));
-			}
-		});
+    .get(function(req, res) {
+        Tournament.find()
+            .populate("topics.name")
+            .exec(function(err, tournaments) {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.json(tournaments);
+            });
+    });
 
 router.route('/tournament/:tId')
-	  .get(function(req , res){
-			Tournament.findById(req.params.tId)
-	      .populate("topics.name")
-				.populate("leaderBoard.userId")
-	          .exec(function(err,tournaments){
-	            if(err){
-	                return res.send(err);
-	              }
-	            return res.json(tournaments);
-	          });
-	  });
+    .get(function(req, res) {
+        Tournament.findById(req.params.tId)
+            .populate("topics.name")
+            .populate("leaderBoard.userId")
+            .exec(function(err, tournaments) {
+                if (err) {
+                    return res.send(err);
+                }
+                return res.json(tournaments);
+            });
+
+    });
+/*    
 router.route('/leaderBoard/:tId')
-.get(function(req , res){
+    .get(function(req, res) {
 
-	Tournament.findById(req.params.tId)
-		.populate("leaderBoard.userId")
-        .exec(function(err,tournaments){
-          if(err){
-              return res.send(err);
-            }else {
+        Tournament.findById(req.params.tId)
+            .populate("leaderBoard.userId")
+            .exec(function(err, tournaments) {
+                if (err) {
+                    return res.send(err);
+                }
 
+                var usr = req.session.user.local.username;
 
+                cntr = 0;
+                tempLeaderBoard = [];
+                var tempFlag = false;
+                tournaments.leaderBoard.forEach(function(tempUser, index) {
 
-								var usr=req.session.user.local.username;
+                    Profile.findOne({
+                        userId: tempUser.userId.local.username
+                    })
+                        .exec(function(err, profile) {
+                            if (err) {
+                                return res.send(err);
+                            }
+                            cntr++;
 
-							cntr=0;
-							tempLeaderBoard=[];
-							var tempFlag=false;
-								tournaments.leaderBoard.forEach(function(tempUser,index)
-								{
+                            if (cntr <= 10 && cntr <= tournaments.leaderBoard.length) {
+                                tempLeaderBoard.push({
+                                    name: profile.name,
+                                    score: tempUser.totalScore,
+                                    rank: index + 1
+                                });
+                            }
+                            if (usr == profile.userId) {
+                                tempFlag = true;
+                                currUserStat = {
+                                    name: profile.name,
+                                    rank: index + 1,
+                                    score: tempUser.totalScore,
+                                    imgLink: profile.imageLink
+                                };
+                            }
 
-							 Profile.findOne({userId: tempUser.userId.local.username})
-			         .exec(function(err,data){
-								 cntr++;
-
-								 if(cntr<=10 && cntr<=tournaments.leaderBoard.length)
-								 {
-								 	tempLeaderBoard.push({name:data.name,score:tempUser.totalScore,rank:index+1});
-									}
-										if(usr==data.userId)
-										{
-											tempFlag=true;
-											currUserStat={
-												name:data.name,
-												rank:index+1,
-											score:tempUser.totalScore,
-											imgLink:data.imageLink
-																		};
-										}
-
-									if((tempLeaderBoard.length==tournaments.leaderBoard.length || tempLeaderBoard.length==10) && tempFlag)
-								 {
-										return res.json({leaderBoard:tempLeaderBoard,myStat:currUserStat});
-								 }
-							 });
-
-
-
-						 	});
-
-
-
-
-
-            }
-
-        });
-
-});
+                            if ((tempLeaderBoard.length == tournaments.leaderBoard.length || tempLeaderBoard.length == 10) && tempFlag) {
+                                return res.json({
+                                    leaderBoard: tempLeaderBoard,
+                                    myStat: currUserStat
+                                });
+                            }
+                        });
+                });
 
 
-module.exports= router;
+            });
+
+    });
+*/
+router.route('/leaderBoard/:tId')
+    .get(function(req, res) {
+        //get current loggedIn username
+        var usr = req.session.user.local.username,
+            leaderBoard = [],
+            myStats = {},
+            myStatsFound = false;
+
+        Tournament.findById(req.params.tId)
+            .populate("leaderBoard.userId")
+            .exec(function(err, tournaments) {
+                if (err) {
+                    return res.send(err);
+                }
+
+                if(tournaments.leaderBoard.length == 0){
+                    return res.json({
+                            leaderBoard: [],
+                            myStat: []
+                        });
+                }
+
+                var cnt = (tournaments.leaderBoard.length > 10) ? 10 : tournaments.leaderBoard.length;
+
+                tournaments.leaderBoard.forEach(function(leader, index) {
+
+                    if (cnt >0) {
+                        leaderBoard.push({
+                            name: leader.name,
+                            score: leader.totalScore,
+                            rank: index + 1,
+                            imgLink: leader.imageLink
+                        });
+                    }
+                    if (usr == leader.userId) {
+                        myStatsFound = true;
+                        currUserStat = {
+                            name: leader.name,
+                            rank: index + 1,
+                            score: leader.totalScore,
+                            imgLink: leader.imageLink
+                        };
+                    }
+
+                    cnt--;
+
+                    if ((cnt ==0) && myStatsFound) {
+                        return res.json({
+                            leaderBoard: leaderBoard,
+                            myStat: currUserStat
+                        });
+                    }
+                });
+            });
+
+    });
+
+
+module.exports = router;
