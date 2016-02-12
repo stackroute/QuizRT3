@@ -47,7 +47,7 @@ router.route('/tournament/:tId')
             });
 
     });
-/*    
+/*
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {
 
@@ -107,6 +107,7 @@ router.route('/leaderBoard/:tId')
 */
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {
+      console.log('Request received for leaderboard');
         //get current loggedIn username
         var usr = req.session.user.local.username,
             leaderBoard = [],

@@ -37,17 +37,12 @@
   margin-top: 15px;
   padding: 0;
 }
-.modal-content{
-  height: 500px;
-}
+
 .modal-title{
   text-align: center;
 }
-#footer{
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-
+.tabular{
+  width:100%;
 }
 
 .rounds-icon{
