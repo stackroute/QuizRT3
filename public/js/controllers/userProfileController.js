@@ -68,22 +68,24 @@ angular.module('quizRT')
           console.log( data.error );
           $rootScope.isAuthenticatedCookie = false
           $location.path('/login');
-        }
-        $scope.data = data.user;
-        $rootScope.loggedInUser = data.user;
-        $scope.topicsFollowed = [];
-        if($scope.data.topicsPlayed!=null) {
-          for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
-            if($scope.data.topicsPlayed[i].isFollowed){
-              $scope.topicsFollowed.push( $scope.data.topicsPlayed[i] );
+        } else {
+          $scope.data = data.user;
+          $rootScope.loggedInUser = data.user;
+          $scope.topicsFollowed = [];
+          if($scope.data.topicsPlayed!=null) {
+            for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
+              if($scope.data.topicsPlayed[i].isFollowed){
+                $scope.topicsFollowed.push( $scope.data.topicsPlayed[i] );
+              }
             }
           }
+          $rootScope.myImage=$scope.data.imageLink;
+          $rootScope.fakeMyName=$scope.data.name;
+          $rootScope.topperImage=$scope.data.imageLink;
+          $rootScope.userIdnew=$scope.data.userId;
+          //console.log($scope.topicsFollowed);
         }
-        $rootScope.myImage=$scope.data.imageLink;
-        $rootScope.fakeMyName=$scope.data.name;
-        $rootScope.topperImage=$scope.data.imageLink;
-        $rootScope.userIdnew=$scope.data.userId;
-        //console.log($scope.topicsFollowed);
+
       })
       .error( function( err ) {
         console.log('User profile could not be loaded!');

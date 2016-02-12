@@ -18,22 +18,34 @@
 angular.module('quizRT')
   .controller('authController',function($scope,$http,$rootScope,$location,$cookies){
     $rootScope.stylesheetName="style";
+    $scope.logInErrorMsg = '';
 
     $scope.dismissMsg = function() {
       $rootScope.logInLogOutErrorMsg = '';
       $rootScope.logInLogOutSuccessMsg = '';
+      $scope.logInErrorMsg = '';
     }
+    $scope.$watch('logInErrorMsg', function(nv,ov) {
+      if (nv) {
+        $('#errorDiv').slideDown();
+      }else {
+        $('#errorDiv').slideUp();
+      }
+    });
+    $scope.user = {
+      username:'',
+      password:''
+    };
     $scope.passportLogin = function(){
-      $http.post('/auth/login', $scope.user).success(function(data){
-        if(data.state == 'success'){
+      $http.post('/auth/login', $scope.user).success(function( loginData ){
+        if( loginData.error ){
+          $scope.logInErrorMsg = loginData.error;
+          $rootScope.isAuthenticatedCookie = false;
+          $cookies.remove('isAuthenticated');
+        } else{
           $location.path('/userProfile');
           $cookies.put('isAuthenticated',true);
           $rootScope.isAuthenticatedCookie = true;
-        }
-        else{
-          $scope.logInLogOutErrorMsg = data.message;
-          $rootScope.isAuthenticatedCookie = false;
-          $cookies.remove('isAuthenticated');
         }
       });
     };
