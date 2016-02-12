@@ -17,7 +17,15 @@
 //   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil Savant, Chandu, Pratik Sinha, Mukesh Mishra. -->
 
 <div class="container">
-  
+  <div class="row" id="Quizzer">
+    <a href="#/userProfile" class="col-xs-offset-1 col-xs-9">
+      QuizART
+    </a>
+    <div class="col-xs-2">
+      <a ng-click="logout()" class="glyphicon glyphicon-off"></a>
+    </div>
+  </div>
+
       <div class="rounds-header">
         <h3>{{tournament.title}}<br><small>{{tournament.description}}</small></h3>
       </div><!--end topic-header-->
@@ -64,8 +72,44 @@
               <button class="btn btn-info">Level Cleared: <span id="levelnum">{{levelCleared}}</span></button>
           </div>
           <div class="col-xs-6 col-sm-6 col-lg-6">
-             <button class="btn btn-primary" ng-click="leaders(tournament._id)">Leaderboard</button>
+            <button href="#myModal" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
           </div>
+          <div class="modal fade" id="myModal" >
+              <div class="modal-dialog">
+               <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">{{tournament.title}} - Hall of Fame</h4>
+                    </div>
+               <div class="modal-body">
+                   <div align="center" class="col-xs-8" >
+                     <h4>Top 10</h4>
+                      <table  class="Tabular">
+                        <thead>
+                          <th>Rank</th>
+                          <th>Name</th>
+                          <th>Score</th>
+                        </thead>
+                       <tbody ng-repeat="obj in leaders.leaderBoard">
+                          <tr> <th scope="new">{{obj.rank}}</th> <td>{{obj.name}}</td> <td>{{obj.score}}</td> </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                  <div align="center" class="col-xs-4">
+                     <h4>My Position</h4>
+                     <img ng-src="{{imageLink}}" width="100px" height="100px" alt="No Image" class="img-thumbnail">
+                     <h4>{{name}}</h4>
+                     <h4>Your Score: {{leaders.myStat.score}}</h4>
+                     <h4>Your Rank: {{leaders.myStat.rank}}</h4>
+                  </div>
+              </div>
+
+              <div class="modal-footer" id="footer">
+              <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+              </div>
+            </div>
+            </div>
+          </div><!--Modal ends---------->
+
         </div>
         </div> <!--end topic-user-->
 
@@ -94,6 +138,6 @@
                 </div>
               </div>
 
-</div>
+      </div>
   			<!-- </div> -->
     </div>

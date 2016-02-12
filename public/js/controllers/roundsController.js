@@ -42,9 +42,14 @@ angular.module("quizRT")
         $rootScope.roundCount = levelId.substring(levelId.lastIndexOf("_") + 1);
         $location.path('/quizPlayer');
       };
+
     $scope.leaders=function(tournamentID){
-
-      $location.path('/leaderBoard/hallOfFame/' + tournamentID);
-
-      }
-   });
+      var path1 = 'tournamentHandler/leaderBoard/' + tournamentID;
+      console.log(path1);
+      $http.get(path1)
+              .success(function(data, status, headers, config) {
+          $scope.leaders = data;
+          console.log($scope.viewLeader);
+      });
+   };
+ });
