@@ -34,6 +34,13 @@
       <!-- <div class="row"> -->
         <div class="col-xs-6 rounds-icon">
           <img ng-src="{{tournament.imageUrl}}"  class="img-responsive" alt="tournament_image">
+          <div class="follow">
+            <h3>
+            <span class="glyphicon glyphicon-heart" ng-show="tournament.isFollowed" ng-click="followUnfollow()"></span>
+            <span class="glyphicon glyphicon-heart-empty" ng-hide="tournament.isFollowed" ng-click="followUnfollow()"></span>
+            <span>{{tournament.tournamentFollowers}}</span>
+            </h3>
+          </div>
         </div><!--end topic-icon-->
         <div class="col-xs-6 topic-user">
           <div class="wins row">
