@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                        + Anil Sawant
 
 angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .run(function($cookies,$rootScope,$http,$location) {
@@ -24,6 +24,13 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
 
       $rootScope.stylesheetName = "index";
       $rootScope.isAuthenticatedCookie = $cookies.get('isAuthenticated');
+      $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) {
+        if ( nv ) {
+          $cookies.put('isAuthenticated',true);
+        } else {
+          $cookies.remove('isAuthenticated');
+        }
+      });
       $rootScope.logInLogOutSuccessMsg = '';
       $rootScope.logInLogOutErrorMsg = '';
       $rootScope.isPlayingAGame = false;

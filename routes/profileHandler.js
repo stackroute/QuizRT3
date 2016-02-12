@@ -22,17 +22,25 @@ var express = require('express'),
     userSettingsHandler = require('./userSettingsHandler');
 
 router.get('/profileData', function(req, res, next) {
-   console.log('Logged in user: ' + req.session.user.local.username);
-   if( !(req.session.user == null) ){
-     var usr = req.session.user.local.username;
-     Profile.findOne({userId: usr})
-       .populate("topicsPlayed.topicId")
-           .exec(function(err,data){
-             profileData = data;
-              res.json(profileData);
-           });
-   }
-
+  if ( req.session && req.session.user && req.session.user.local ) {
+    console.log('Authenticated user: ' + req.session.user.local.username);
+    if( !(req.session.user == null) ){
+      var usr = req.session.user.local.username;
+      Profile.findOne({userId: usr})
+        .populate("topicsPlayed.topicId")
+            .exec(function(err,profileData){
+              if (err) {
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.json({ error:'MongoDB error. Could not load user profile.'} );
+              }else {
+                res.json({ error:null, user: profileData} );
+              }
+            });
+    }
+  } else {
+    console.log('User not authenticated.Returning.');
+    res.json({ error: 'User not authenticated' } );
+  }
  });
 
 // add user profile sub-hadlers here
