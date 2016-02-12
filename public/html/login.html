@@ -12,32 +12,27 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
+//  										+ Anil Sawant
 -->
-<!-- views/index.ejs -->
-<!doctype html>
-<html>
-<head>
-	<title>Node Authentication</title>
- <!-- load fontawesome -->
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
-</head>
-<body>
 <div class="container">
-
 	<div class="jumbotron text-center">
-		<h1><span class="fa fa-lock"></span>QuizArt</h1>
-
-		<p>Login or Register with:</p>
+		<h1><span class="fa fa-lock"></span>QuizRT</h1>
+		<p style="margin-bottom:0;display:inline-block;">Register:</p>
+		<a ng-href="/#register" class="btn btn-default" style="margin-bottom:15px;"><span class="fa fa-user"></span> Register</a>
+		<p style="margin-bottom:0;">Or Login with:</p>
 		<a ng-href="/#locallogin" class="btn btn-default"><span class="fa fa-user"></span>Login</a>
     <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
 		<a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
-	</div>
+		<div ng-show="logInLogOutSuccessMsg" class="alert alert-success" role="alert" style="margin-top:10px;padding: 7px;">
+		  <button type="button" class="close" ng-click="dismissMsg()" aria-label="Close" style="margin-top: -3px;right:0;"><span aria-hidden="true">&times;</span></button>
+		  {{logInLogOutSuccessMsg}}
+		</div>
+		<div ng-show="logInLogOutErrorMsg" class="alert alert-danger" role="alert" style="margin-top:10px;padding: 7px;">
+		  <button type="button" class="close" ng-click="dismissMsg()" aria-label="Close" style="margin-top: -3px;right:0;"><span aria-hidden="true">&times;</span></button>
+		  {{logInLogOutErrorMsg}}
+		</div>
 
+	</div>
 </div>
-</body>
-</html>

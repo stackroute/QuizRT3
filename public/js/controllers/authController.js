@@ -18,41 +18,35 @@
 angular.module('quizRT')
   .controller('authController',function($scope,$http,$rootScope,$location,$cookies){
     $rootScope.stylesheetName="style";
-    $scope.user = {username: '', password: ''};
-    $scope.error_message = '';
-    $scope.login = function(){
+
+    $scope.dismissMsg = function() {
+      $rootScope.logInLogOutErrorMsg = '';
+      $rootScope.logInLogOutSuccessMsg = '';
+    }
+    $scope.passportLogin = function(){
       $http.post('/auth/login', $scope.user).success(function(data){
         if(data.state == 'success'){
-          $rootScope.authenticated = true;
-          $rootScope.current_user = data.user.local.username;
           $location.path('/userProfile');
           $cookies.put('isAuthenticated',true);
+          $rootScope.isAuthenticatedCookie = true;
         }
         else{
-          $scope.error_message = data.message;
-          $rootScope.authenticated = false;
+          $scope.logInLogOutErrorMsg = data.message;
+          $rootScope.isAuthenticatedCookie = false;
           $cookies.remove('isAuthenticated');
         }
       });
     };
 
     $scope.register = function(){
-    $http.post('/auth/register', $scope.user).success(function(data){
-      if(data.state == 'success'){
-        $rootScope.current_user = data.user.local.username;
-        console.log('Hello2');
-        $location.path('/locallogin');
-        console.log('Helo3');
-      }
-      else{
-        $scope.error_message = data.message;
-      }
-    });
-
+      $http.post('/auth/register', $scope.user).success(function(data){
+        if(data.state == 'success') {
+          $rootScope.logInLogOutSuccessMsg = 'Registered sucessfully! Login and enjoy!!';
+          $location.path('/login');
+        } else{
+          $rootScope.logInLogOutErrorMsg = 'Could not register you at the moment. Kindly come back again.';
+          $location.path('/login');
+        }
+      });
   };
-
-   $rootScope.logout= function(){
-    $cookies.put('isAuthenticated',false);
-    $location.path('/login');
-  }
 });

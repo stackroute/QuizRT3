@@ -16,18 +16,18 @@
 //
 
 angular.module('quizRT')
-    .controller('userProfileController',function($http,$scope,$rootScope,$location,$cookies,socket){
-      if(!$cookies.get('isAuthenticated')){
+    .controller('userProfileController',function($http,$scope,$rootScope,$location,socket){
+
+      // redirect to login page if the user's isAuthenticated cookie doesn't exist
+      if( !$rootScope.isAuthenticatedCookie ){
         $location.path('/login');
       }
+
       $rootScope.stylesheetName="userProfile";
       $scope.a=7;
       $scope.see = true;
       $scope.btnImg = "images/userProfileImages/seeall.jpg";
 
-      $rootScope.redirectTo = function( location ) {
-        $location.path( "/" + location);
-      };
       $scope.showTournamentDetails = function( tournamentId ) {
         $location.path( '/tournament/' + tournamentId );
       };
@@ -48,21 +48,20 @@ angular.module('quizRT')
     // socket.on('refreshUser', function( user ) {
     //   $rootScope.loggedInUser = user;
     // });
-    $rootScope.loggedInUser = {
-      "_id":{"$oid":"56a613d504eb49492b745f3f"},
-      "totalGames":0,
-      "wins":0,
-      "imageLink":"/images/userProfileImages/akshayk.jpg",
-      "badge":"Beginner",
-      "name":"Raghav",
-      "age":24,
-      "country":"India",
-      "userId":"test1",
-      "topicsPlayed":[],
-      "__v":0,
-      "tournaments":[{id:'Bigest-Hollywood-Fan'},{id:'Lord-Of-Series'}]
-    };
-
+    // $rootScope.loggedInUser = {
+    //   "_id":{"$oid":"56a613d504eb49492b745f3f"},
+    //   "totalGames":0,
+    //   "wins":0,
+    //   "imageLink":"/images/userProfileImages/akshayk.jpg",
+    //   "badge":"Beginner",
+    //   "name":"Raghav",
+    //   "age":24,
+    //   "country":"India",
+    //   "userId":"test1",
+    //   "topicsPlayed":[],
+    //   "__v":0,
+    //   "tournaments":[{id:'Bigest-Hollywood-Fan'},{id:'Lord-Of-Series'}]
+    // };
     $http({method : 'GET',url:'/userProfile/profileData'})
       .success( function( user ){
         $scope.data = user;
@@ -80,18 +79,18 @@ angular.module('quizRT')
         $rootScope.topperImage=$scope.data.imageLink;
         $rootScope.userIdnew=$scope.data.userId;
         //console.log($scope.topicsFollowed);
-        $scope.showFollowedTopic=function(topicID){
-          var path = '/topic/'+topicID;
-          $location.path(path);
-        };
-        $scope.play=function() {
-          $location.path( "/categories" );
-        }
       })
       .error( function( err ) {
         console.log('User profile could not be loaded!');
       });
 
+      $scope.showFollowedTopic = function(topicID){
+        var path = '/topic/'+topicID;
+        $location.path(path);
+      };
+      $scope.play = function() {
+        $location.path( "/categories" );
+      }
     $http({method : 'GET',url:'/tournamentHandler/tournaments'})
       .success(function(data){
         $scope.tournaments = data;

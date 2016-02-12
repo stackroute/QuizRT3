@@ -13,6 +13,7 @@
 <%#   limitations under the License. %>
 
 <%#   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher   %>
+<%#                       + Anil Sawant %>
 
 <!DOCTYPE html>
 <html lang="en" ng-app="quizRT">
@@ -33,17 +34,59 @@
 </head>
 
 <body >
-  <!--
-         <a class="navbar-brand" ng-show="authenticated" href="#">Welcome to QuizRT {{current_user}}</a>
-        <a class="navbar-brand pull-right" ng-show="authenticated" ng-click="logout()">Logout</a>
-        <a class="navbar-brand pull-right" ng-hide="authenticated" ng-href="/#/login">Login</a>
-        <a class="navbar-brand pull-right" ng-hide="authenticated" ng-href="/#/register">Register</a>
-       </div>
-  </nav>
--->
+    <header>
+      <div class="container">
+        <div class="row" id="Quizzer">
+    			<div class="col-xs-offset-1 col-xs-9">
+    				QuizRT
+    			</div>
+    			<div ng-if="loggedInUser" class="col-xs-2">
+    				<a ng-click="$emit('logout',loggedInUser)" class="glyphicon glyphicon-off">
+    				</a>
+    			</div>
+          <div ng-if="!loggedInUser" class="col-xs-2">
+    				<a ng-click="$emit('login')" class="glyphicon glyphicon-play-circle">
+    				</a>
+    			</div>
+    		</div>
+      </div>
+    </header>
 
     <div class="view-container" ng-view>
+
     </div>
+
+    <footer ng-if="loggedInUser" ng-hide="isPlayingAGame">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-xs-3 nav">
+    				<div ng-click="redirectTo('userProfile')">
+    					<span class="glyph glyphicon glyphicon-user"></span>
+    					<p>Profile</p>
+    				</div>
+    			</div>
+    			<div class="col-xs-3 nav">
+    				<div ng-click="redirectTo('userTeams')">
+          		<img class="img-responsive" src='images/team_64x64.png' alt='Teams Img'>
+    					<p>Teams</p>
+    				</div>
+    			</div>
+    			<div class="col-xs-3 nav">
+    				<div ng-click="redirectTo('userTournaments')">
+    					<span class="glyph glyphicon glyphicon-globe"></span>
+    					<p>Tournaments</p>
+    				</div>
+    			</div>
+    			<div class="col-xs-3 nav">
+    				<div ng-click="redirectTo('userSettings')">
+    					<span class="glyph glyphicon glyphicon-cog"></span>
+    					<p>Settings</p>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </footer>
+
 </body>
 <script type="text/javascript" src='js/lib/socket-io-1.3.7.js'></script>
 <script type="text/javascript" src='js/lib/jquery-2.1.4.js'></script>

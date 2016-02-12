@@ -28,7 +28,7 @@ module.exports = function(passport){
 
 	// Passport needs to be able to serialize and deserialize users to support persistent login sessions
 	passport.serializeUser(function(user, done) {
-		
+
 
 		done(null, user._id);
 	});
@@ -100,7 +100,7 @@ module.exports = function(passport){
 					newProfile.name=req.body.DisplayName;
 					newProfile.topicsPlayed=[];
 					newProfile.badge="Beginner";
-          if(req.body.imageLink || req.body.imageLink.length==0 ) {
+          if(!req.body.imageLink ) {
 						newProfile.imageLink="/images/userProfileImages/user.png";
         	} else {
           	newProfile.imageLink=req.body.imageLink;
