@@ -190,5 +190,9 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
         .when('/leaderBoard/hallOfFame/:tournamentID' , {
           'templateUrl': 'html/hallOfFame.html',
           'controller': 'halloffameController'
+        })
+        .when('/createTournament' , {
+          'templateUrl': 'html/createTournament.html',
+          'controller': 'createTournamentController'
         });
     });
