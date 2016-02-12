@@ -17,7 +17,7 @@
 
 angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .run(function($cookies,$rootScope,$http,$location) {
-
+      
       // redirect to user-profile page if the user's cookie exists
       if($cookies.get('isAuthenticated'))
         $location.path('/userProfile');
@@ -34,7 +34,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       $rootScope.logInLogOutSuccessMsg = ''; // used on login.html page to display login/logout status msgs
       $rootScope.logInLogOutErrorMsg = '';
       $rootScope.isPlayingAGame = false; // used to identify if the user is playing a game. This is used to hide the footer nav if true
-      $rootScope.serverErrorMsg = 'Error'; // used in eror.html to display Error message received from the server
+      $rootScope.serverErrorMsg = 'Error! Kindly login.'; // used in eror.html to display Error message received from the server
 
       $rootScope.$on('login', function(event) {
         $location.path('/login');
