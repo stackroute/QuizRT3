@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                        + Anil Sawant
 
 angular.module('quizRT')
     .controller('userProfileController',function($http,$scope,$rootScope,$location,socket){
@@ -63,9 +63,14 @@ angular.module('quizRT')
     //   "tournaments":[{id:'Bigest-Hollywood-Fan'},{id:'Lord-Of-Series'}]
     // };
     $http({method : 'GET',url:'/userProfile/profileData'})
-      .success( function( user ){
-        $scope.data = user;
-        $rootScope.loggedInUser = user;
+      .success( function( data ){
+        if ( data.error ) {
+          console.log( data.error );
+          $rootScope.isAuthenticatedCookie = false
+          $location.path('/login');
+        }
+        $scope.data = data.user;
+        $rootScope.loggedInUser = data.user;
         $scope.topicsFollowed = [];
         if($scope.data.topicsPlayed!=null) {
           for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
