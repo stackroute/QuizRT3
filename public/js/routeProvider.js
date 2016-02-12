@@ -174,7 +174,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies']).run(function($cookies, $rootS
         'templateUrl': 'html/tournamentPlayer.html',
         'controller': 'tournamentPlayerController'
       })
-      .when('/leaderBoard/hallOfFame' , {
+      .when('/leaderBoard/hallOfFame/:tournamentID' , {
         'templateUrl': 'html/hallOfFame.html',
         'controller': 'halloffameController'
       });

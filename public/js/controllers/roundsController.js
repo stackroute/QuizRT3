@@ -4,11 +4,8 @@ angular.module("quizRT")
       $rootScope.stylesheetName="rounds";
       $scope.levelCleared = 0;
       $scope.playedTournament = [];
-
       var path = '/tournamentHandler/tournament/'+$scope.tournamentID;
 
-
-      console.log($rootScope.loggedInUser);
 
  $http.get(path)
          .success(function(data, status, headers, config) {
@@ -45,7 +42,9 @@ angular.module("quizRT")
         $rootScope.roundCount = levelId.substring(levelId.lastIndexOf("_") + 1);
         $location.path('/quizPlayer');
       };
-       // $scope.leaders(id)=function(){
-      //   location.path('/leaderboard/id');
-      // }
+    $scope.leaders=function(tournamentID){
+
+      $location.path('/leaderBoard/hallOfFame/' + tournamentID);
+
+      }
    });

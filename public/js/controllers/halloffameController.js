@@ -1,14 +1,15 @@
 angular.module('quizRT')
-    .controller('halloffameController',function($http,$scope,$rootScope,$location,$cookies){
-
-
+    .controller('halloffameController',function($http,$scope,$rootScope,$routeParams , $location){
         $scope.imageLink=$rootScope.loggedInUser.imageLink;
         $scope.name=$rootScope.loggedInUser.name;
-        console.log($rootScope.loggedInUser);
+        var tournamentID = $routeParams.tournamentID
+        $scope.tournamentTitle = tournamentID;
 
-        $http({method : 'GET',url:'tournamentHandler/leaderBoard/hallOfFame:tId'})
+        var path = 'tournamentHandler/leaderBoard/' + tournamentID;
+        $http.get(path)
           .success( function( hallOfFame ){
             $scope.data = hallOfFame;
             console.log($scope.data);
+            console.log($scope.data.leaderBoard);
     });
   });
