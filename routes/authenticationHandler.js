@@ -17,27 +17,17 @@
 
 var express = require('express'),
   router = express.Router();
-  
+
 module.exports = function(passport){
 	//sends successful login state back to angular
 	router.get('/success', function(req, res){
-		console.log(req.user);
-		req.session.user = req.user;
-		req.session.isLoggedIn = true;
-		req.session.tid = "not assigned to game";
-		//console.log("this is session object");
-		 //console.log(req.user.username + "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-			//console.log(req.session);
-		 //console.log(req.user.username + "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		// console.log(req.user.username + "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		res.send({state: 'success',isLoggedIn: req.session.isLoggedIn, user: req.user ? req.user : null});
-
+		res.send({error:null});
 	});
 
 	//sends failure login state back to angular
 	router.get('/failure', function(req, res){
-		res.send({state: 'failure', user: null, message: "Invalid username or password"});
-		req.session.user=null;
+		res.send({ error: "Invalid username or password"});
+		// req.session.user=null;
 	});
 	//log in
 	router.post('/login', passport.authenticate('login', {
@@ -66,7 +56,7 @@ module.exports = function(passport){
 
 	//log out
 	router.post('/logout', function(req, res) {
-		req.session.user=null;
+		// req.session.user=null;
 		console.log('logout of passsport called');
 		req.logout();
 		res.send(null);

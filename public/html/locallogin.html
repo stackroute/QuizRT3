@@ -18,7 +18,10 @@
  -->
 <form class="form-auth" ng-submit="passportLogin()">
 	<h2>Log In</h2>
-	<p class="text-warning">{{error_message}}</p>
+	<div id="errorDiv" class="alert alert-danger" role="alert" style="margin-top:10px;padding: 7px; display:none;">
+		<button type="button" class="close" ng-click="logInErrorMsg=''" aria-label="Close" style="margin-top: -3px;right:0;"><span aria-hidden="true">&times;</span></button>
+		{{logInErrorMsg}}
+	</div>
 	<input type="username" ng-model="user.username" placeholder="Username" class="form-control"><br>
 	<input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
 	<input type="submit" value="Log in" class="btn btn-primary" />
