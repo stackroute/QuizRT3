@@ -32,15 +32,15 @@
     <hr>
     <form class="form-horizontal">
         <div class="form-group">
-            <label class="control-label col-xs-3" for="inputEmail"><h4>Name</h4></label>
+            <label class="control-label col-xs-3" for="Name"><h4>Name</h4></label>
             <div class="col-xs-9">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Give your tournament name">
+                <input type="Name" class="form-control" id="Name" placeholder="Give your tournament name">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-3" for="inputEmail"><h4>Image</h4></label>
+            <label class="control-label col-xs-3" for="inputImage"><h4>Image</h4></label>
             <div class="col-xs-9">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Tournament Picture">
+                <input type="text" class="form-control" id="inputImage" placeholder="Tournament Picture">
                 <div ng-controller="createTournamentController">
                   <input type="file" id="file" name="file"/>
                   <br>
@@ -50,7 +50,7 @@
 
 
         <div class="form-group">
-            <label class="control-label col-xs-3" for="inputEmail"><h4>Levels</h4></label>
+            <label class="control-label col-xs-3" for="levels"><h4>Levels</h4></label>
             <div class="col-xs-9">
                 <input type="text" class="form-control" placeholder="Select the Levels">
                 <div class="dropdown">
@@ -70,17 +70,17 @@
 
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-3" for="inputEmail"><h4>Number of Players</h4></label>
+            <label class="control-label col-xs-3" for="Players"><h4>Number of Players</h4></label>
             <div class="col-xs-9">
-                <input type="text" class="form-control" id="inputEmail" placeholder="Number of Players">
+                <input type="text" class="form-control" id="Players" placeholder="Number of Players">
             </div>
 
         </div>
 
         <div class="form-group">
-            <label class="control-label col-xs-3" for="postalAddress"><h5>Specific Rules</h5></label>
+            <label class="control-label col-xs-3" for="Rules"><h5>Specific Rules</h5></label>
             <div class="col-xs-9">
-                <textarea readonly rows="3" class="form-control" id="postalAddress" placeholder="Rules for the Game">                  Rules for the game, You have to select the maximum number of player, and level of the tournament in order to start the tournament. You have to play the game with in the tournament and you can see the result on the go, you can play each level only one time and you have to play all the levels.
+                <textarea readonly rows="3" class="form-control" id="Rules" placeholder="Rules for the Game">                  Rules for the game, You have to select the maximum number of player, and level of the tournament in order to start the tournament. You have to play the game with in the tournament and you can see the result on the go, you can play each level only one time and you have to play all the levels.
                   </textarea>
 
             </div>
