@@ -12,7 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
+//   Name of Developers  Abhinav Kareer,Sunil Mekala, Chandu
 //
 var express = require('express'),
     Reservoir = require('reservoir'),

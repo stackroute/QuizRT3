@@ -36,30 +36,30 @@ module.exports = function(server,sessionMiddleware) {
   })
 
   io.on('connection', function(client) {
-    client.on('updateProfile',function(data){
-      var levelId = data.levelId,
+    client.on('updateProfile',function(clientData){
+      var levelId = clientData.levelId,
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
 
       console.log('Update profile called');
       if ( tournamentId ) { // update coming from a tournament
-        Profile.findOne({userId:data.userID},function(err,profileData){
-          addTournamentToProfile( client, profileData, levelId, tournamentId, data );
+        Profile.findOne({userId:clientData.userID},function(err,profileData){
+          addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
         });
       } else {
         // update solo topic play
-        Profile.findOne({userId:data.userID},function(err,profileData){
+        Profile.findOne({userId:clientData.userID},function(err,profileData){
           profileData.totalGames++;
-          if(data.rank == 1){
+          if(clientData.rank == 1){
             profileData.wins++;
           }
           profileData.topicsPlayed.forEach(function(topic){
-            if(topic.topicId == data.topicid){
+            if(topic.topicId == clientData.topicid){
               topic.gamesPlayed++;
-              if(data.rank == 1){
+              if(clientData.rank == 1){
                 topic.gamesWon++;
               }
-              topic.points+=data.score;
+              topic.points+=clientData.score;
               topic.level = findLevel(topic.points);
             }
           });
@@ -278,7 +278,8 @@ function validateAndSaveProfile( profileData, client ) {
         console.error(err);
       }else {
         console.log("User profile persisted sucessfully!!\n");
-        client.emit('refreshUser', updatedUserProfile );
+        // use the refreshUser event on client side (in userProfileController) to refresh the user stats after every game
+        client.emit('refreshUser', { error: null, user: updatedUserProfile } );
       }
     }); //end save
   }

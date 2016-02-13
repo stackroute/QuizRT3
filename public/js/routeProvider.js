@@ -17,7 +17,7 @@
 
 angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .run(function($cookies,$rootScope,$http,$location) {
-      
+
       // redirect to user-profile page if the user's cookie exists
       if($cookies.get('isAuthenticated'))
         $location.path('/userProfile');
@@ -41,7 +41,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       });
       $rootScope.$on('logout', function(event,user) {
         console.log('Hey ' + user.name + "!, you will be logged out.");
-        $http.post('auth/logout').then( function( successResopnse ){
+        $http.post('auth/logout').then( function( successResponse ){
             $cookies.remove('isAuthenticated');
             $rootScope.loggedInUser = null;
             $rootScope.isAuthenticatedCookie = false;
