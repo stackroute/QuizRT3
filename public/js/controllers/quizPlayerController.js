@@ -36,8 +36,10 @@ angular.module('quizRT')
         }else{
             $scope.levelDetails = "";
         }
-
-
+        // watch when the user leaves the quiz-play page to show/hide footer nav
+        $scope.$on( '$routeChangeStart', function(args) {
+          $rootScope.isPlayingAGame = false;
+        });
         socket.emit('join', {
             tId: $rootScope.levelId || $rootScope.tId,
             name: $rootScope.fakeMyName,

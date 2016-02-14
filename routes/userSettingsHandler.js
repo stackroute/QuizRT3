@@ -119,6 +119,9 @@ router.post('/updateProfile', function(req,res,next) {
       profileData.name = updatedUser.name;
       profileData.age = updatedUser.age;
       profileData.country = updatedUser.country;
+      if ( !updatedUser.imageLink.trim() ) {
+        updatedUser.imageLink = 'images/userProfileImages/user.png';
+      }
       profileData.imageLink = updatedUser.imageLink;
       validateAndSaveProfile( profileData, res );
     }

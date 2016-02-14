@@ -6,6 +6,15 @@ angular.module("quizRT")
       $scope.playedTournament = {};
       var path = '/tournamentHandler/tournament/'+$scope.tournamentId;
 
+      /*
+      $scope.$on( '$routeChangeSuccess', function(args) {
+        // there's one watcher in quizPlayerController to show-hide the footer-nav
+        // if footer-nav doesn't show/hide properly
+        // use this watcher in every page where footer-nav should be visible
+        // $rootScope.isPlayingAGame = false;
+      });
+      */
+
       $rootScope.loggedInUser = {
         "_id":{"$oid":"56a613d504eb49492b745f3f"},
         "totalGames":0,
@@ -221,14 +230,14 @@ angular.module("quizRT")
       }
 
 
-      $scope.play=function(levelId, topicId, title, topic_name)
-      {
+      $scope.play = function(levelId, topicId, title, topic_name) {
         $rootScope.levelId=levelId;
         $rootScope.title=title;
         $rootScope.tId=topicId;
         $rootScope.topicName=topic_name;
         $rootScope.roundCount = levelId.substring(levelId.lastIndexOf("_") + 1);
         $location.path('/quizPlayer');
+        $rootScope.isPlayingAGame = true;
       };
 
     $scope.leaders=function(tournamentId){

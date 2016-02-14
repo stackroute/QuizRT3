@@ -21,10 +21,25 @@ body {
 	font-size: 12px;
 	font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
- a ,a:active, a:visited{
-  text-decoration: none;
-  color: #ccc;
+header .row {
+	background-color:#337ab7;
+	text-align:center;
+	color:white;
+	font-size: 30px;
+	padding-top: 2px;
+}
+header .row a {
+	cursor: pointer;
+}
+header .row a ,
+header .row a:active,
+header .row a:visited{
+	text-decoration: none;
+	color: white;
+}
+a ,a:active, a:visited{
+	text-decoration: none;
+	color: #ccc;
 }
 
 .row{

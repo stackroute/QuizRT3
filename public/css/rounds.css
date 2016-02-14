@@ -12,7 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil Savant, Chandu, Pratik Sinha, Mukesh Mishra.
+//   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil Sawant, Chandu, Pratik Sinha, Mukesh Mishra.
 */
 
 .topic-description{
@@ -63,6 +63,9 @@
 }
 #leaderBoard .bolt input{
   cursor: pointer;
+}
+#leaderBoard .tfoot .bolt input{
+  cursor: default;
 }
 #leaderBoard .bolt.bolt-left{
   margin-right: 5px;

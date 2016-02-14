@@ -139,24 +139,6 @@ footer .nav img {
 height:100%;
 }
 
-#Quizzer{
-  background-color:#337ab7;
-  text-align:center;
-  color:white;
-  font-size: 30px;
-  padding-top: 2px;
-}
-#Quizzer a {
-  cursor: pointer;
-}
-#Quizzer a ,
-#Quizzer a:active,
-#Quizzer a:visited{
-  text-decoration: none;
-  color: white;
-}
-
-
 .play-button-bar{
   text-align: center;
 }
