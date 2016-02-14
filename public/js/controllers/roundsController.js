@@ -59,7 +59,7 @@ angular.module("quizRT")
                "totalScore": 20,
                "userId": {
                  "_id":"56bc12dd35ef5e90193caba2",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"anilsawant"}
+                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"anilsawant2"}
                }
               },{
                "_id": "56bc786168352fb00fe9da91",
@@ -86,6 +86,7 @@ angular.module("quizRT")
                 $scope.userTournamentStats.rank = index+1;
               }
             });
+
             $scope.tournament = successResponse.data;
             $rootScope.playersPerMatch = successResponse.data.playersPerMatch;
             $rootScope.loggedInUser.tournaments.forEach(function(tournament){

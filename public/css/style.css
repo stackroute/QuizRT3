@@ -16,7 +16,6 @@
 */
 
 body {
-	/*padding-top: 5px;*/
 	background-color: #524f4f;
 	color: #ccc;
 	font-size: 12px;
@@ -33,51 +32,46 @@ body {
 	padding-right: 5px;
 }
 
-.container{
-background-color: #2f2d2d;
-width: 80%;
-margin:auto;
-border-radius: 5px;
-margin-top:5px;
-
+.container {
+	background-color: #2f2d2d;
+	width: 80%;
+	margin:auto;
+	border-radius: 5px;
+	margin-top:5px;
 }
-
 .topic-panel{
 background:grey;
 }
-
 .fullHeight{
   height:100%;
 }
-
 .topic-panel-name{
 }
-
 a {
 	color: #00B7FF;
 }
-
 .submit-btn {
 	background-color: #b1dbff;
 	margin: 10px 0 10px 0;
 }
-
 .post {
 	padding: 10px;
 	margin-bottom: 5px;
 	border-radius: 5px;
 }
-
 .odd {
 	background-color: #f2f9ff;
-
 }
 .even {
 	background-color: #eceff3;
 }
-
 .form-auth {
 	max-width: 330px;
 	padding: 5px;
 	margin: 0 auto;
+}
+@media (max-width:768px) {
+	.container {
+		width: 100%;
+	}
 }

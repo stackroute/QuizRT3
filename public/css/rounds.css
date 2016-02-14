@@ -61,6 +61,15 @@
   font-weight: bold;
   text-align: center;
 }
+#leaderBoard .bolt input{
+  cursor: pointer;
+}
+#leaderBoard .bolt.bolt-left{
+  margin-right: 5px;
+}
+#leaderBoard .bolt.bolt-right{
+  margin-left: 5px;
+}
 #leaderBoard .topTenTable .thead {
   color: #fff;
   background-color: #5cb85c;
@@ -70,6 +79,12 @@
 #leaderBoard .topTenTable .tbody .tr{
   cursor: pointer;
   display: flex;
+}
+#leaderBoard .topTenTable .thead .th:first-child {
+  padding-left: 15px;
+}
+#leaderBoard .topTenTable .thead .th:last-child {
+  margin-left: -10px;
 }
 #leaderBoard .topTenTable .tbody .tr-wrap{
   background: #ccc;
@@ -82,11 +97,9 @@
   background: #aaa;
   color: #111;
 }
-#leaderBoard .topTenTable .td {
-  padding: 5px 10px;
-}
+#leaderBoard .topTenTable .td,
 #leaderBoard .topTenTable .th {
-  padding: 6px 10px;
+  padding: 5px 10px;
 }
 #leaderBoard .topTenTable .thead,
 #leaderBoard .topTenTable .tfoot,
@@ -163,8 +176,9 @@
   #leaderBoard .modal-body {
     padding: 15px;
   }
-  #leaderBoard .topTenTable .playerRow .td {
-    padding: 5px;
+  #leaderBoard .topTenTable .th,
+  #leaderBoard .topTenTable .td {
+    padding: 5px 3px;
   }
   .round-name h4{
     text-align: center;

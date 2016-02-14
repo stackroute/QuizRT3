@@ -87,14 +87,14 @@
                     <div class="tbody">
                         <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
                           <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
-                            <div class="td col-xs-4">{{calculateRank(player.totalScore,$index)}}</div>
+                            <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio" disabled></span>{{calculateRank(player.totalScore,$index)}}</div>
                             <div class="td col-xs-6">{{player.userId.local.username}}</div>
-                            <div class="td col-xs-2">{{player.totalScore}}</div>
+                            <div class="td col-xs-2">{{player.totalScore}}<span class="bolt bolt-right pull-right"><input type="radio" disabled></span></div>
                           </div>
                           <div class="playerDetails" id="{{player.userId.local.username}}">
                             <div class="playerRow"> <!-- need this div to make display = flex -->
                               <div class="td col-xs-4">
-                                <img src="images/userProfileImages/user.png" alt="player img" class="img-responsive img-rounded"/>
+                                <img src="images/userProfileImages/user.png" alt="player img" class="img-responsive img-thumbnail"/>
                               </div>
                               <div class="td col-xs-6">
                                 {{player.userId.local.username}}  @({{player.totalScore}})
@@ -109,11 +109,12 @@
                         </div>
                     </div><!-- end tbody -->
 
-                    <h6>You are here:</h6>
-                    <div class="tfoot" ng-show="userTournamentStats">
-                      <div class="td col-xs-4">{{userTournamentStats.rank}}</div>
+                    <h6 ng-if="userTournamentStats">You are here:</h6>
+                    <h6 ng-if="!userTournamentStats">You have not played this tournament.</h6>
+                    <div class="tfoot" ng-if="userTournamentStats">
+                      <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio"  disabled></span>{{userTournamentStats.rank}}</div>
                       <div class="td col-xs-6">{{userTournamentStats.userId.local.username}}</div>
-                      <div class="td col-xs-2">{{userTournamentStats.totalScore}}</div>
+                      <div class="td col-xs-2">{{userTournamentStats.totalScore}}<span class="bolt bolt-right pull-right"><input type="radio" disabled></span></div>
                     </div>
                   </div><!-- end topTenTable -->
                 </div><!-- end modal-body -->
