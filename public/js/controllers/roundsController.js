@@ -39,7 +39,6 @@ angular.module("quizRT")
 
       // function to toggle the player details
       $scope.toggleLeaderBoardPlayerdetails = function( playerId ) {
-        console.log('Clicked ' + playerId);
         $('#' + playerId).slideToggle();
       };
       // function to calculate the rank of a player, also giving same rank to players with same score
@@ -64,7 +63,7 @@ angular.module("quizRT")
                }
               },{
                "_id": "56bc786168352fb00fe9da91",
-               "totalScore": -10,
+               "totalScore": 40,
                "userId": {
                  "_id":"56bc12dd35ef5e90193cab92",
                  "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
