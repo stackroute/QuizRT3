@@ -92,10 +92,15 @@
                             <div class="td col-xs-2">{{player.totalScore}}</div>
                           </div>
                           <div class="playerDetails" id="{{player.userId.local.username}}">
-                            <div class="playerRow">
-                              <div class="td col-xs-4">{{$index+1}}</div>
-                              <div class="td col-xs-6">{{player.userId.local.username}}</div>
-                              <div class="td col-xs-2">{{player.totalScore}}</div>
+                            <div class="playerRow"> <!-- need this div to make display = flex -->
+                              <div class="td col-xs-4">
+                                <img src="images/userProfileImages/user.png" alt="player img" class="img-responsive img-rounded"/>
+                              </div>
+                              <div class="td col-xs-6">
+                                {{player.userId.local.username}}  @({{player.totalScore}})
+                              </div>
+                              <div class="td col-xs-2">
+                              </div>
                             </div>
                           </div>
                         </div>

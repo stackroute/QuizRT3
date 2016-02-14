@@ -38,6 +38,11 @@
   padding: 0;
 }
 
+#leaderBoard .modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
 #leaderBoard .modal-header {
   color: #fff;
   background-color: #337ab7;
@@ -94,9 +99,7 @@
 }
 #leaderBoard .topTenTable .tfoot {
   border-top: 1px solid #CC770F;
-  /*background-color: #7cd87c;*/
   background-color: #EC971F;
-
   color: #fff;
   font-weight: bold;
 }
@@ -107,12 +110,17 @@
   margin: 15px 0 2px;
 }
 #leaderBoard .topTenTable .playerDetails {
-  border: 1px solid #aaa;
-  box-shadow: inset 0 0 2px #aaa;
+  border: 1px solid #888;
+  box-shadow: inset 0 -2px 4px #555;
   display: none;
 }
 #leaderBoard .topTenTable .playerRow {
   display: flex;
+}
+#leaderBoard .topTenTable .playerRow img{
+  border: 2px solid #888;
+  width: 160px;
+  height: auto;
 }
 .rounds-icon{
   text-align: center;
@@ -155,6 +163,9 @@
   #leaderBoard .modal-body {
     padding: 15px;
   }
+  #leaderBoard .topTenTable .playerRow .td {
+    padding: 5px;
+  }
   .round-name h4{
     text-align: center;
     font-size: 14px;
@@ -162,5 +173,11 @@
   .round-name p{
     text-align: center;
     font-size: 12px;
+  }
+}
+@media (min-width: 768px) {
+  #leaderBoard .modal-dialog {
+    width: 720px;
+    margin: 30px auto;
   }
 }
