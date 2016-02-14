@@ -146,7 +146,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           'templateUrl': 'html/tournamentLists.html',
           'controller': 'tournamentController'
         })
-        .when('/tournament/:tournamentID' , {
+        .when('/tournament/:tournamentId' , {
           'templateUrl': 'html/rounds.html',
           'controller': 'roundsController'
         })
@@ -191,15 +191,11 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           'templateUrl': 'html/result.html',
           'controller': 'resultController'
         })
-        .when('/tournament/:tournamentID' , {
-          'templateUrl': 'html/rounds.html',
-          'controller': 'roundsController'
-        })
         .when('/tournament/tournamentPlayer' , {
           'templateUrl': 'html/tournamentPlayer.html',
           'controller': 'tournamentPlayerController'
         })
-        .when('/leaderBoard/hallOfFame/:tournamentID' , {
+        .when('/leaderBoard/hallOfFame/:tournamentId' , {
           'templateUrl': 'html/hallOfFame.html',
           'controller': 'halloffameController'
         })

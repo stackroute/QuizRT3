@@ -23,10 +23,10 @@
 	<!--  User Tournament Section -->
 	<section>
 		<div class="row sectionHeader">User Tournaments</div>
-		<div class="row topic-info" ng-hide="userTournaments.length > 0">
+		<div class="row topic-info" ng-hide="userTournaments.length">
 			You have not participated in any tournaments.
 		</div>
-		<div class="row tournaments-wrap" ng-show="userTournaments.length > 0">
+		<div class="row tournaments-wrap" ng-show="userTournaments.length">
 			<div class="col-xs-3 tournament-tile" ng-repeat ="tournament in userTournaments">
 	      <div class="panel panel-default">
 					<div class="panel-body content">

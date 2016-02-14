@@ -42,6 +42,7 @@ var mongoose = require('mongoose'),
         levelCleared:{type:Number,default:0},
         finalLevel:Number,
         levelPoints:Array,
+        currentRank:Number,
         isFollowed:Boolean,
       }]
     },

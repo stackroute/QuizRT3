@@ -38,26 +38,80 @@
   padding: 0;
 }
 
-.modal-title{
+#leaderBoard .modal-header {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+#leaderBoard .modal-title{
   text-align: center;
 }
-
-.topTenTable {
-  width:100%;
+#leaderBoard .modal-body h4 {
+  color: #666;
+  font-weight: bold;
+  text-align: center;
 }
-.topTenTable thead {
-  border: 1px solid #777;
-  border-radius: 4px;
-  color: #333;
+#leaderBoard .topTenTable .thead {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  font-weight: bold;
 }
-.topTenTable #myRow {
-  font-size: 16px;
+#leaderBoard .topTenTable .tbody .tr{
+  display: flex;
+}
+#leaderBoard .topTenTable .tbody .tr-wrap{
+  background: #ccc;
+  color: #f2f2f2;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #bbb;
+  border-radius: 3px;
+}
+#leaderBoard .topTenTable .tbody .tr-wrap:nth-child(2n){
+  background: #eee;
+  color: #666;
+}
+#leaderBoard .topTenTable .td {
+  cursor: pointer;
+  padding: 5px 10px;
+}
+#leaderBoard .topTenTable .th {
+  padding: 6px 10px;
+}
+#leaderBoard .topTenTable .thead,
+#leaderBoard .topTenTable .tfoot,
+#leaderBoard .topTenTable .tbody {
+  display: block;
+  width: 100%;
+  float: left;
+  position: relative;
+  min-height: 1px;
+}
+#leaderBoard .topTenTable .tfoot {
+  border: 1px solid #4cae4c;
+  background-color: #6cc86c;
+  color: #fff;
+  font-weight: bold;
+}
+#leaderBoard .topTenTable h6 {
   color: #777;
+  float: left;
+  font-weight: bold;
+  margin: 15px 0 2px;
+}
+#leaderBoard .topTenTable .playerDetails {
+  border: 1px solid #aaa;
+  box-shadow: inset 0 0 2px #aaa;
+  display: none;
+}
+#leaderBoard .topTenTable .playerRow {
+  display: flex;
 }
 .rounds-icon{
   text-align: center;
 }
-
 .rounds-icon img {
   margin: auto;
   border-radius: 20px;

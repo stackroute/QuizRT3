@@ -32,6 +32,23 @@ router.route('/tournaments')
                 }
                 return res.json(tournaments);
             });
+    })
+    .post( function(req,res) {
+      if ( req.data && req.data.tournamentIds ) {
+        Tournament.find({'_id':{'$or': req.data.tournamentIds }})
+                  .exec( function(err, userTournaments){
+                    if ( err ) {
+                      console.log('Database error. Failed to retrieve user tournaments.');
+                      res.writeHead(500,{'Content-Type':'application/json'});
+                      res.end({error:'Database error. Failed to retrieve user tournaments.'})
+                    } else {
+                      res.json({error:null, userTournaments: userTournaments });
+                    }
+                  });
+      } else {
+        res.writeHead(204, {'Content-Type':'application/json'} );
+        res.end(JSON.stringify( { error:null, userTournaments: null } ));
+      }
     });
 
 router.route('/tournament/:tId')

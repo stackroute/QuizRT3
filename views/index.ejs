@@ -57,34 +57,36 @@
     </div>
 
     <footer ng-if="loggedInUser" ng-hide="isPlayingAGame">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-xs-3 nav">
-    				<div ng-click="redirectTo('userProfile')">
-    					<span class="glyph glyphicon glyphicon-user"></span>
-    					<p>Profile</p>
-    				</div>
-    			</div>
-    			<div class="col-xs-3 nav">
-    				<div ng-click="redirectTo('userTeams')">
-          		<img class="img-responsive" src='images/team_64x64.png' alt='Teams Img'>
-    					<p>Teams</p>
-    				</div>
-    			</div>
-    			<div class="col-xs-3 nav">
-    				<div ng-click="redirectTo('userTournaments')">
-    					<span class="glyph glyphicon glyphicon-globe"></span>
-    					<p>Tournaments</p>
-    				</div>
-    			</div>
-    			<div class="col-xs-3 nav">
-    				<div ng-click="redirectTo('userSettings')">
-    					<span class="glyph glyphicon glyphicon-cog"></span>
-    					<p>Settings</p>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
+      <nav>
+      	<div class="container">
+      		<div class="row">
+      			<div class="col-xs-3 nav">
+      				<div ng-click="redirectTo('userProfile')">
+      					<span class="glyph glyphicon glyphicon-user"></span>
+      					<p>Profile</p>
+      				</div>
+      			</div>
+      			<div class="col-xs-3 nav">
+      				<div ng-click="redirectTo('userTeams')">
+            		<img class="img-responsive" src='images/team_64x64.png' alt='Teams Img'>
+      					<p>Teams</p>
+      				</div>
+      			</div>
+      			<div class="col-xs-3 nav">
+      				<div ng-click="redirectTo('userTournaments')">
+      					<span class="glyph glyphicon glyphicon-globe"></span>
+      					<p>Tournaments</p>
+      				</div>
+      			</div>
+      			<div class="col-xs-3 nav">
+      				<div ng-click="redirectTo('userSettings')">
+      					<span class="glyph glyphicon glyphicon-cog"></span>
+      					<p>Settings</p>
+      				</div>
+      			</div>
+      		</div>
+      	</div>    
+      </nav>
     </footer>
 
 </body>
@@ -97,6 +99,8 @@
 <script type="text/javascript" src='js/routeProvider.js'></script>
 <script type="text/javascript" src='js/controllers/quizPlayerController.js'></script>
 <script type="text/javascript" src='js/controllers/userProfileController.js'></script>
+<script type="text/javascript" src='js/controllers/userTournamentsController.js'></script>
+<script type="text/javascript" src='js/controllers/userSettingsController.js'></script>
 <script type="text/javascript" src='js/controllers/categoriesController.js'></script>
 <script type="text/javascript" src='js/controllers/categoryController.js'></script>
 <script type="text/javascript" src='js/controllers/topicController.js'></script>

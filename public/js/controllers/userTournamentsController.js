@@ -31,10 +31,6 @@ angular.module('quizRT')
         .then( function( successResponse ){
           $scope.userTournaments = successResponse.data.userTournaments;
         }, function( errorResponse ) {
-          $rootScope.serverErrorStatus = errorResponse.status;
-          $rootScope.serverErrorStatusText = errorResponse.statusText;
-          $rootScope.serverErrorMsg = errorResponse.data.error;
-          $location.path('/error');
           console.log('Could not retrieve user tournaments from MongoDB');
         });
     }

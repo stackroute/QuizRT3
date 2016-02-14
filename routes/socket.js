@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                      + Anil Sawant
 
 var gameManager = require('./gameManager/gameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
@@ -71,12 +71,12 @@ module.exports = function(server,sessionMiddleware) {
       var playerlist = [];
       var gameId=gameData.gameId;
       var tid=gameData.topicId;
-      var tournamentID="";
+      var tournamentId="";
       var levelId="";
       if(gameData.levelId)
       {
         levelId=gameData.levelId;
-        tournamentID=levelId.substr(0,levelId.lastIndexOf("_"));
+        tournamentId=levelId.substr(0,levelId.lastIndexOf("_"));
 
       }
       leaderBoard.leaderBoard.get(gameId).forEach(function(player,index){
@@ -99,7 +99,7 @@ module.exports = function(server,sessionMiddleware) {
         else {
           if(gameData.levelId)
           {
-            updateTournamentAfterEveryGame(tournamentID,levelId,data._id,playerlist);
+            updateTournamentAfterEveryGame(tournamentId,levelId,data._id,playerlist);
           }
         }
       });
@@ -216,7 +216,7 @@ function renderThegame(matches){
 
 
 // add played tournament to user profile
-function addTournamentToProfile( client, profileData, levelId, tournamentId ,data ) {
+function addTournamentToProfile( client, profileData, levelId, tournamentId ,clientData ) {
   var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
       len = profileData.tournaments ? profileData.tournaments.length : 0,
       tournamentFound = false;
@@ -232,7 +232,8 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
           console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
         } else {
           profileData.tournaments[i].levelCleared = levelCleared;
-          profileData.tournaments[i].levelPoints[levelCleared-1] = data.score ;
+          profileData.tournaments[i].levelPoints[levelCleared-1] = clientData.score ;
+          profileData.tournaments[i].currentRank = clientData.rank;
           if ( levelCleared == profileData.tournaments[i].finalLevel ) {
             profileData.tournaments[i].status = 'COMPLETED';
           }
@@ -254,7 +255,8 @@ function addTournamentToProfile( client, profileData, levelId, tournamentId ,dat
           "tournamentId": tournamentId,
           "status": 'PLAYING',
           "levelCleared": levelCleared,
-          "levelPoints":[data.score],
+          "levelPoints":[clientData.score],
+          "currentRank":clientData.rank,
           "finalLevel": tournament.matches
         };
         // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
@@ -287,10 +289,10 @@ function validateAndSaveProfile( profileData, client ) {
 
 
 //Updateing tournament after each game played
-function updateTournamentAfterEveryGame(tournamentID,levelId,gameID,playerList)
+function updateTournamentAfterEveryGame(tournamentId,levelId,gameID,playerList)
 {
 
-  Tournament.findOne({_id:tournamentID},function(err,tournamentData){
+  Tournament.findOne({_id:tournamentId},function(err,tournamentData){
     if(err)
     {
       console.log(err);

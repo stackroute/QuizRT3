@@ -14,7 +14,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil Savant, Chandu, Pratik Sinha, Mukesh Mishra. -->
+//   Name of Developers  Sunil Mekal, Abhinav Kareer, Anil SaWant, Chandu, Pratik Sinha, Mukesh Mishra. -->
 
 <div class="container">
       <div class="rounds-header">
@@ -65,11 +65,11 @@
 
 
           <div class="col-xs-6 col-sm-6 col-lg-6">
-            <button ng-click="refreshLeaderBoard(tournament._id)" href="#myModal" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
+            <button href="#leaderBoard" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
           </div>
 
 
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal fade" id="leaderBoard" tabindex="-1" role="dialog">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -77,53 +77,45 @@
                   <h4 class="modal-title">{{tournament.title}} - Hall of Fame</h4>
                 </div>
                 <div class="modal-body">
-                  <div class="row">
-                    <div align="center" class="col-xs-8" >
-                      <h4>Top 10</h4>
-                      <table  class="topTenTable">
-                        <thead>
-                          <th>Rank</th>
-                          <th>Name</th>
-                          <th>Score</th>
-                        </thead>
-                        <tbody >
-                            <tr ng-repeat="player in tournament.leaderBoard">
-                              <td>{{$index+1}}</td>
-                              <td>{{player.userId.local.username}}</td>
-                              <td>{{player.totalScore}}</td>
-                            </tr>
-                            <tr id="myRow">
-                              <td>N.</td>
-                              <td>{{loggedInUser.name}}</td>
-                              <td>34</td>
-                            </tr>
-                        </tbody>
-                      </table>
+                  <h4>Top 10</h4>
+                  <div class="topTenTable row">
+                    <div class="thead">
+                      <div class="th col-xs-4">Rank</div>
+                      <div class="th col-xs-6">Name</div>
+                      <div class="th col-xs-2">Score</div>
                     </div>
-                    <div align="center" class="col-xs-4">
-                       <h4>My Position</h4>
-                       <img ng-src="{{loggedInUser.imageLink}}" width="100px" height="100px" alt="No Image" class="img-thumbnail">
-                       <h4>{{loggedInUser.name}}</h4>
-                       <h4>Your Score: {{leaders.myStat.score}}</h4>
-                       <h4>Your Rank: {{leaders.myStat.rank}}</h4>
+                    <div class="tbody">
+                        <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
+                          <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
+                            <div class="td col-xs-4">{{$index+1}}</div>
+                            <div class="td col-xs-6">{{player.userId.local.username}}</div>
+                            <div class="td col-xs-2">{{player.totalScore}}</div>
+                          </div>
+                          <div class="playerDetails" id="{{player.userId.local.username}}">
+                            <div class="playerRow">
+                              <div class="td col-xs-4">{{$index+1}}</div>
+                              <div class="td col-xs-6">{{player.userId.local.username}}</div>
+                              <div class="td col-xs-2">{{player.totalScore}}</div>
+                            </div>
+                          </div>
+                        </div>
+                    </div><!-- end tbody -->
+
+                    <h6>You are here:</h6>
+                    <div class="tfoot" ng-show="userTournamentStats">
+                      <div class="td col-xs-4">{{userTournamentStats.rank}}</div>
+                      <div class="td col-xs-6">{{userTournamentStats.userId.local.username}}</div>
+                      <div class="td col-xs-2">{{userTournamentStats.totalScore}}</div>
                     </div>
-                  </div>
-                </div>
+                  </div><!-- end topTenTable -->
+                </div><!-- end modal-body -->
                 <div class="modal-footer">
+                  <button type="button" class="btn btn-info" ng-click="refreshLeaderBoard2(tournamentId)">Refresh</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
-
-
-
-
-
-
-
-
-
 
         </div>
         </div> <!--end topic-user-->
@@ -133,26 +125,24 @@
   <div class="heading col-xs-12 col-sm-12 col-lg-12">
     <h3 class="statement pull-left">Rounds</h3>
   </div>
-<div class="topic-panel panel panel-default col-xs-12 col-sm-12 col-lg-12"  ng-repeat="stages in tournament.topics track by $index">
-
-  				<div class="panel-body">
-  					<div class="topic-icon">
-  						<a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}" height="100" width="100"></a>
-  					</div><!--end topic-icon-->
-            <div class="rounds-description">
-              <div class="round-name">
-  						<h4>{{stages.name.topicName}}</h4>
-              <p>{{stages.name.topicDescription}}</p>
-            </div>
-          </div>
-   <div class="play-now pull-right" id="foot">
-                  <div class="col-xs-12 play-button-bar">
-                     <button class="levelScoreBtn btn btn-warning" ng-show="$index < levelCleared">{{playedTournament.levelPoints[$index]}}</button>
-                     <button ng-show="$index == levelCleared" class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title, stages.name.topicName)">Play Now!</button>
-                  </div>
-                </div>
-              </div>
-
+  <div class="topic-panel panel panel-default col-xs-12 col-sm-12 col-lg-12"  ng-repeat="stages in tournament.topics track by $index">
+    <div class="panel-body">
+      <div class="topic-icon">
+        <a href="" class="topicPlay pull-left"><img ng-src="{{stages.name.topicIcon}}" alt="{{stages.name.topicName}}" height="100" width="100"></a>
+      </div><!--end topic-icon-->
+      <div class="rounds-description">
+        <div class="round-name">
+          <h4>{{stages.name.topicName}}</h4>
+          <p>{{stages.name.topicDescription}}</p>
+        </div>
       </div>
-  			<!-- </div> -->
+      <div class="play-now pull-right" id="foot">
+        <div class="col-xs-12 play-button-bar">
+          <button class="levelScoreBtn btn btn-warning" ng-show="$index < levelCleared">{{playedTournament.levelPoints[$index]}}</button>
+          <button ng-show="$index == levelCleared" class="play-now-button btn btn-success" ng-click="play(stages._id, stages.name._id, tournament.title, stages.name.topicName)">Play Now!</button>
+        </div>
+      </div>
     </div>
+  </div><!-- end topic-panel -->
+  <!-- </div> -->
+</div>

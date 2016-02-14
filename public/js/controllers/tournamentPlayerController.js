@@ -26,21 +26,21 @@ angular.module('quizRT')
 		$scope.myscore = 0;
 		$scope.correctAnswerers = 0;
 		$scope.wrongAnswerers = 0;
-		console.log($rootScope.tournamentID);
+		console.log($rootScope.tournamentId);
 
 		socket.emit('joinTournament',{
-			tournamentID:$rootScope.tournamentID,
+			tournamentId:$rootScope.tournamentId,
 			name:$rootScope.fakeMyName,
 			image:$rootScope.myImage
 		});
 
 		socket.on('startTournament',function(startGameData){
 			
-			var tournamentID = $rootScope.tournamentID;
+			var tournamentId = $rootScope.tournamentId;
 			var tournamentGameID = startGameData.tournamentGameID;
 			$rootScope.tournamentGameID = tournamentGameID;
 
-			var URL = '/tournamentHandler/tournamentPlayer/quizData' + tournamentID +', ' + tournamentGameID ;
+			var URL = '/tournamentHandler/tournamentPlayer/quizData' + tournamentId +', ' + tournamentGameID ;
 
 		});
 		

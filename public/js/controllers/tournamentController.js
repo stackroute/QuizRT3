@@ -12,7 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
+//   Name of Developers  Abhinav Kareer, Prateek Sinha, Sunil Mekla
 //
 
 angular.module('quizRT')
