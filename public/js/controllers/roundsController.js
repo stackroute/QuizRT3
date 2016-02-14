@@ -37,11 +37,21 @@ angular.module("quizRT")
         }]
       };
 
+      // function to toggle the player details
       $scope.toggleLeaderBoardPlayerdetails = function( playerId ) {
         console.log('Clicked ' + playerId);
         $('#' + playerId).slideToggle();
       };
-
+      // function to calculate the rank of a player, also giving same rank to players with same score
+      $scope.prevRank = 1;
+      $scope.prevScore = 0;
+      $scope.calculateRank = function( nextScore, runningIndex ) {
+        if ( $scope.prevScore != nextScore ) {
+          $scope.prevScore = nextScore;
+          $scope.prevRank = runningIndex+1;
+        }
+        return $scope.prevRank;
+      };
       $scope.refreshLeaderBoard = function( tournamentId ) {
         $http.get( '/tournamentHandler/tournament/' + tournamentId )
            .then(function( successResponse ) {

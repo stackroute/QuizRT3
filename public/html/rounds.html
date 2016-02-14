@@ -87,7 +87,7 @@
                     <div class="tbody">
                         <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
                           <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
-                            <div class="td col-xs-4">{{$index+1}}</div>
+                            <div class="td col-xs-4">{{calculateRank(player.totalScore,$index)}}</div>
                             <div class="td col-xs-6">{{player.userId.local.username}}</div>
                             <div class="td col-xs-2">{{player.totalScore}}</div>
                           </div>
@@ -98,6 +98,9 @@
                               </div>
                               <div class="td col-xs-6">
                                 {{player.userId.local.username}}  @({{player.totalScore}})
+                                <p ng-if="$index==0">
+                                  Let's see how long you can stay at the top
+                                </p>
                               </div>
                               <div class="td col-xs-2">
                               </div>
