@@ -13,7 +13,7 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                        + Anil Sawant
 
 var mongoose = require('mongoose'),
     Topic=require('./topic'),
@@ -22,6 +22,7 @@ var mongoose = require('mongoose'),
       userId: {type:String, unique:true},
       name:String,
       age:Number,
+      emailId:String,
       imageLink:String,
       country:String,
       flagLink:String,
@@ -42,8 +43,7 @@ var mongoose = require('mongoose'),
         levelCleared:{type:Number,default:0},
         finalLevel:Number,
         levelPoints:Array,
-        currentRank:Number,
-        isFollowed:Boolean,
+        isFollowed:Boolean
       }]
     },
     {strict:false}),

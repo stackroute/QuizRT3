@@ -18,6 +18,7 @@
 
 var mongoose = require('mongoose'),
     Topic = require('./topic'),
+    Profile = require('/profile'),
     tournamentSchema = mongoose.Schema({
       _id: String,
       title:String,
@@ -26,13 +27,12 @@ var mongoose = require('mongoose'),
       playersPerMatch:Number,
       imageUrl:String,
       tournamentFollowers: Number,
-      leaderBoard:
-      [
-        {
-          userId:{type: String, ref: 'User'},
-          totalScore:Number
-        }
-      ],
+      leaderBoard: [{
+        userId: { type: String, ref: 'Profile'},
+        name:String,
+        imageLink: String,
+        totalScore:Number
+      }],
       totalGamesPlayed:{type:Number,default:0},
       topics: [
         {
