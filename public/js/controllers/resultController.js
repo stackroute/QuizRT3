@@ -16,29 +16,37 @@
 //
 
 angular.module('quizRT')
-	.controller('resultController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
-    $scope.topicName = "compiling results..please wait";
-		setTimeout(function(){
-      socket.emit('getResult',$rootScope.freakgid);
-      socket.on('takeResult',function(data) {
-  			data.sort(function(a,b) {
+	.controller('resultController', function( $scope, $rootScope, socket, $routeParams, $location){
+    $scope.topicName = "Compiling results..please wait";
+		setTimeout( function(){ // wait for 3s to get the results from server
+      socket.emit('getResult', $routeParams.gameId );
+      socket.on('takeResult',function( leaderBoard ) {
+  			leaderBoard.sort(function(a,b) {
   				return b.score - a.score;
   			});
+				console.log('leaderBoard');
+				console.log(leaderBoard);
         $scope.topicName = $rootScope.tId;
-  			$scope.players = data;
+  			$scope.players = leaderBoard;
 				var levelId=$rootScope.levelId||false;
   			socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
 				var updateProfileObj = {
 					score: $rootScope.finalScore,
 					rank: $rootScope.finalRank,
 					topicid: $rootScope.tId,
-					userID: $rootScope.userIdnew,
+					userId: $rootScope.userIdnew,
 					levelId: levelId
 				};
   			socket.emit('updateProfile', updateProfileObj );//score and rank
       });
-      $scope.home=function() {
-        location.replace("/");
-      }
 		},3000);
+
+		$scope.home = function() {
+			$location.path("/");
+		}
+		$scope.nextLevel = function() {
+			// use this to redirect the player back to the tournament he is playing
+			// use levelId for the same
+			console.log('redirect to tournament page');
+		};
   });

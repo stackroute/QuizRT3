@@ -18,7 +18,7 @@
 
 var mongoose = require('mongoose'),
     Topic = require('./topic'),
-    Profile = require('/profile'),
+    Profile = require('./profile'),
     tournamentSchema = mongoose.Schema({
       _id: String,
       title:String,

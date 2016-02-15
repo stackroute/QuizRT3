@@ -85,32 +85,32 @@
                       <div class="th col-xs-2">Score</div>
                     </div>
                     <div class="tbody">
-                        <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
-                          <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
-                            <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio" disabled></span>{{calculateRank(player.totalScore,$index)}}</div>
-                            <div class="td col-xs-6">{{player.userId.local.username}}</div>
-                            <div class="td col-xs-2">{{player.totalScore}}<span class="bolt bolt-right pull-right"><input type="radio" disabled></span></div>
-                          </div>
-                          <div class="playerDetails" id="{{player.userId.local.username}}">
-                            <div class="playerRow"> <!-- need this div to make display = flex -->
-                              <div class="td col-xs-4">
-                                <img src="images/userProfileImages/user.png" alt="player img" class="img-responsive img-thumbnail"/>
-                              </div>
-                              <div class="td col-xs-6">
-                                {{player.userId.local.username}}  @({{player.totalScore}})
-                                <p ng-if="prevRank==1">
-                                  Let's see how long you can stay at the top
-                                </p>
-                              </div>
-                              <div class="td col-xs-2">
-                              </div>
+                      <h6 ng-if="!tournament.leaderBoard.length">Looks like this tournament is not attracting any birds.</h6>
+                      <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
+                        <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
+                          <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio" disabled></span>{{calculateRank(player.totalScore,$index)}}</div>
+                          <div class="td col-xs-6">{{player.userId.local.username}}</div>
+                          <div class="td col-xs-2">{{player.totalScore}}<span class="bolt bolt-right pull-right"><input type="radio" disabled></span></div>
+                        </div>
+                        <div class="playerDetails" id="{{player.userId.local.username}}">
+                          <div class="playerRow"> <!-- need this div to make display = flex -->
+                            <div class="td col-xs-4">
+                              <img src="images/userProfileImages/user.png" alt="player img" class="img-responsive img-thumbnail"/>
+                            </div>
+                            <div class="td col-xs-6">
+                              {{player.userId.local.username}}  @({{player.totalScore}})
+                              <p ng-if="prevRank==1">
+                                Let's see how long you can stay at the top
+                              </p>
+                            </div>
+                            <div class="td col-xs-2">
                             </div>
                           </div>
                         </div>
+                      </div>
                     </div><!-- end tbody -->
-
                     <h6 ng-if="userTournamentStats">You are here:</h6>
-                    <h6 ng-if="!userTournamentStats">You have not played this tournament.</h6>
+                    <h6 ng-if="!userTournamentStats" ng-show="tournament.leaderBoard.length" >You have not played this tournament.</h6>
                     <div class="tfoot" ng-if="userTournamentStats">
                       <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio"  disabled></span>{{userTournamentStats.rank}}</div>
                       <div class="td col-xs-6">{{userTournamentStats.userId.local.username}}</div>
@@ -119,7 +119,7 @@
                   </div><!-- end topTenTable -->
                 </div><!-- end modal-body -->
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-info" ng-click="refreshLeaderBoard(tournamentId)">Refresh</button>
+                  <button type="button" class="btn btn-info" ng-click="refreshTournament(tournamentId)">Refresh</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div><!-- /.modal-content -->

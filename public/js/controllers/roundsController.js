@@ -29,7 +29,7 @@ angular.module("quizRT")
         }
         return $scope.prevRank;
       };
-      $scope.refreshLeaderBoard = function( tournamentId ) {
+      $scope.refreshTournament = function( tournamentId ) {
         $http.get( '/tournamentHandler/tournament/' + tournamentId )
            .then(function( successResponse ) {
             successResponse.data.leaderBoard.sort( function(a,b) {
@@ -37,7 +37,7 @@ angular.module("quizRT")
             });
 
             successResponse.data.leaderBoard.forEach( function(player,index) {
-              if ( player.userId.local.username == $rootScope.loggedInUser.userId ) {
+              if ( player.userId && player.userId.local.username == $rootScope.loggedInUser.userId ) {
                 $scope.userTournamentStats = player;
                 $scope.userTournamentStats.rank = index+1;
               }
@@ -55,7 +55,7 @@ angular.module("quizRT")
                console.log('Failed to refresh the leader board. Showing old data.');
           });
       }
-      $scope.refreshLeaderBoard( $scope.tournamentId );// call for the first time
+      $scope.refreshTournament( $scope.tournamentId );// call for the first time
 
       $scope.play = function(levelId, topicId, title, topic_name) {
         $rootScope.levelId=levelId;
