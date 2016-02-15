@@ -69,13 +69,25 @@ app.use(express.static('./public'));
 //register routers to route paths
 
 app.use('/', index);
+app.use('/auth',authenticationHandler);
+var initPassport = require('./passport-init');
+initPassport(passport);
+
+// middleware to check if user session exists
+app.use( function( req, res, next ) {
+  if( req.session && req.session.user ) {
+    next();
+  } else{
+    console.log('User is logged out. User session doesnt exist.');
+    res.writeHead(401);
+    res.end( JSON.stringify( { error: 'User session does not exist. Kindly do a fresh login.'} ));
+  }
+});
 app.use('/userProfile', profileHandler);
 app.use('/topicsHandler', topicsHandler);
 app.use('/tournamentHandler', tournamentHandler);
 app.use('/quizPlayer',quizPlayerHandler);
-app.use('/auth',authenticationHandler);
-var initPassport = require('./passport-init');
-initPassport(passport);
+
 
 server.listen(8080, function() {
   console.log('App started for Quiz Play!! Please use ur IP e.g 123.23.123.23:8080');
