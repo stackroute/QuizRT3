@@ -35,7 +35,7 @@ angular.module("quizRT")
             successResponse.data.leaderBoard.sort( function(a,b) {
               return b.totalScore - a.totalScore;
             });
-
+            console.log(successResponse.data.leaderBoard);
             successResponse.data.leaderBoard.forEach( function(player,index) {
               if ( player.userId && player.userId.local.username == $rootScope.loggedInUser.userId ) {
                 $scope.userTournamentStats = player;

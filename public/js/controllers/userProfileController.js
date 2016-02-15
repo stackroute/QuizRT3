@@ -21,89 +21,76 @@ angular.module('quizRT')
       // redirect to login page if the user's isAuthenticated cookie doesn't exist
       if( !$rootScope.isAuthenticatedCookie ){
         $location.path('/login');
-      }
+      } else {
+        $rootScope.stylesheetName="userProfile";
+        $scope.a=7;
+        $scope.see = true;
+        $scope.btnImg = "images/userProfileImages/seeall.jpg";
 
-      $rootScope.stylesheetName="userProfile";
-      $scope.a=7;
-      $scope.see = true;
-      $scope.btnImg = "images/userProfileImages/seeall.jpg";
+        $scope.showTournamentDetails = function( tournamentId ) {
+          $location.path( '/tournament/' + tournamentId );
+        };
+        $scope.seeHide = function(length){
+         if($scope.see){
+           $scope.see = false;
+           $scope.btnImg = "images/userProfileImages/hide.jpg";
+           $scope.a=length;
+         }
+         else{
+           $scope.see = true;
+           $scope.btnImg = "images/userProfileImages/seeall.jpg";
+           $scope.a=7;
+         }
+        }
 
-      $scope.showTournamentDetails = function( tournamentId ) {
-        $location.path( '/tournament/' + tournamentId );
-      };
-      $scope.seeHide=function(length){
-       if($scope.see){
-         $scope.see = false;
-         $scope.btnImg = "images/userProfileImages/hide.jpg";
-         $scope.a=length;
-       }
-       else{
-         $scope.see = true;
-         $scope.btnImg = "images/userProfileImages/seeall.jpg";
-         $scope.a=7;
-       }
-      }
+      // refresh the user profile
+      // socket.on('refreshUser', function( user ) {
+      //   $rootScope.loggedInUser = user;
+      // });
 
-    // refresh the user profile
-    // socket.on('refreshUser', function( user ) {
-    //   $rootScope.loggedInUser = user;
-    // });
-    // $rootScope.loggedInUser = {
-    //   "_id":{"$oid":"56a613d504eb49492b745f3f"},
-    //   "totalGames":0,
-    //   "wins":0,
-    //   "imageLink":"/images/userProfileImages/akshayk.jpg",
-    //   "badge":"Beginner",
-    //   "name":"Raghav",
-    //   "age":24,
-    //   "country":"India",
-    //   "userId":"test1",
-    //   "topicsPlayed":[],
-    //   "__v":0,
-    //   "tournaments":[{id:'Bigest-Hollywood-Fan'},{id:'Lord-Of-Series'}]
-    // };
-    $http({method : 'GET',url:'/userProfile/profileData'})
-      .then( function( successResponse ){
-        $scope.data = successResponse.data.user;
-        $rootScope.loggedInUser = successResponse.data.user;
-        $scope.topicsFollowed = [];
-        if($scope.data.topicsPlayed!=null) {
-          for(var i = 0;i < $scope.data.topicsPlayed.length;i++){
-            if($scope.data.topicsPlayed[i].isFollowed){
-              $scope.topicsFollowed.push( $scope.data.topicsPlayed[i] );
+      $http({method : 'GET',url:'/userProfile/profileData'})
+        .then( function( successResponse ){
+          $scope.data = successResponse.data.user;
+          $rootScope.loggedInUser = successResponse.data.user;
+          $scope.topicsFollowed = [];
+          if($rootScope.loggedInUser.topicsPlayed != null) {
+            for(var i = 0;i < $rootScope.loggedInUser.topicsPlayed.length;i++){
+              if( $rootScope.loggedInUser.topicsPlayed[i].isFollowed){
+                $scope.topicsFollowed.push( $rootScope.loggedInUser.topicsPlayed[i] );
+              }
             }
           }
-        }
-        $rootScope.myImage=$scope.data.imageLink;
-        $rootScope.fakeMyName=$scope.data.name;
-        $rootScope.topperImage=$scope.data.imageLink;
-        $rootScope.userIdnew=$scope.data.userId;
-        //console.log($scope.topicsFollowed);
+          $rootScope.myImage = $rootScope.loggedInUser.imageLink;
+          $rootScope.fakeMyName = $rootScope.loggedInUser.name;
+          $rootScope.topperImage = $rootScope.loggedInUser.imageLink;
+          $rootScope.userIdnew = $rootScope.loggedInUser.userId;
+          //console.log($scope.topicsFollowed);
 
-      }, function( errorResponse ) {
-        if ( errorResponse.status === 401 ) {
-          $rootScope.isAuthenticatedCookie = false
-          $location.path('/login');
-          console.log('User not authenticated by Passport.');
-        }else {
-          $rootScope.serverErrorMsg = errorResponse.data.error;
-          $rootScope.serverErrorStatus = errorResponse.status;
-          $rootScope.serverErrorStatusText = errorResponse.statusText;
-          $location.path('/error');
-          console.log('User profile could not be loaded!');
-        }
-      });
+        }, function( errorResponse ) {
+          if ( errorResponse.status === 401 ) {
+            $rootScope.isAuthenticatedCookie = false
+            $location.path('/login');
+            console.log('User not authenticated by Passport.');
+          }else {
+            $rootScope.serverErrorMsg = errorResponse.data.error;
+            $rootScope.serverErrorStatus = errorResponse.status;
+            $rootScope.serverErrorStatusText = errorResponse.statusText;
+            $location.path('/error');
+            console.log('User profile could not be loaded!');
+          }
+        });
 
-      $scope.showFollowedTopic = function(topicID){
-        var path = '/topic/'+topicID;
-        $location.path(path);
-      };
-      $scope.play = function() {
-        $location.path( "/categories" );
+        $scope.showFollowedTopic = function(topicID){
+          var path = '/topic/'+topicID;
+          $location.path(path);
+        };
+        $scope.play = function() {
+          $location.path( "/categories" );
+        }
+
+        $http({method : 'GET',url:'/tournamentHandler/tournaments'})
+        .success(function(data){
+          $scope.tournaments = data;
+        });
       }
-    $http({method : 'GET',url:'/tournamentHandler/tournaments'})
-      .success(function(data){
-        $scope.tournaments = data;
-      });
-
   });

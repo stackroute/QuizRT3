@@ -20,15 +20,15 @@
 	<div ng-if="loggedInUser" class="container" id="main">
 		<div class="row user">
 			<div class="col-xs-offset-1 col-xs-5 col-sm-offset-0	col-sm-2">
-				<img ng-src="{{data.imageLink}}"  width="120px" height="120px"  class="img-circle img-responsive pull-left">
+				<img ng-src="{{loggedInUser.imageLink}}"  width="120px" height="120px"  class="img-circle img-responsive pull-left">
 			</div>
 			<div class="col-xs-6 col-sm-4 usermiddle">
-				<h4>{{data.name}},
-			{{data.age}}</h4>
-				<h5>{{data.badge}}</h5>
+				<h4>{{loggedInUser.name}},
+			{{loggedInUser.age}}</h4>
+				<h5>{{loggedInUser.badge}}</h5>
 			<!--	<span id="flag"><img ng-src="{{data.flagLink}}" alt="user image" width="30px" height="30px" class="img-rounded">
 			</span> -->
-				<h6 id="country">{{data.country}}</h6>
+				<h6 id="country">{{loggedInUser.country}}</h6>
 
 			</div>
 
@@ -36,17 +36,17 @@
 				<div class="row info">
 				<div class=" col-xs-4" id="games">
 					<span class="glyphicon glyphicon-tower glyph"></span>
-					<p>Games</br>{{data.totalGames}}
+					<p>Games</br>{{loggedInUser.totalGames}}
 					</p>
 				</div>
 				<div class="col-xs-4" id="win">
 					<span class="glyphicon glyphicon-thumbs-up glyph"></span>
-					<p>Wins</br>{{data.wins}}
+					<p>Wins</br>{{loggedInUser.wins}}
 					</p>
 				</div>
 				<div class="col-xs-4" id="winpercentage">
 					<span class="glyphicon glyphicon-stats glyph"></span>
-					<p>Win%<br>{{data.wins/data.totalGames*100 | number : 2}}%
+					<p>Win%<br>{{loggedInUser.wins/loggedInUser.totalGames*100 | number : 2}}%
 					</p>
 				</div>
 		</div>
