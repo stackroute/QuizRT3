@@ -65,7 +65,7 @@ module.exports = function(passport){
 					if( req.session ) {
 						req.session.user = user;
 					} else {
-						console.log('request doesnot have a session. Subsequent session validaions will fail.' );
+						console.log('Failed to create request session. Check if Redis is installed. Subsequent session validaions will fail.' );
 					}
 					return done(null, user);
 				}
