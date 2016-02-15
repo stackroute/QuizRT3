@@ -40,12 +40,12 @@ angular.module('quizRT')
         $scope.errorMessage = 'Enter your Country.';
       }else if ( !$scope.tempLoggedInUser.age ) {
         $scope.errorMessage = 'Enter your Age.';
-      }else if ( !$scope.tempLoggedInUser.emailID ) {
+      }else if ( !$scope.tempLoggedInUser.emailId ) {
         $scope.errorMessage = 'Enter your Email-ID.';
       }else {
         $scope.errorMessage = '';
         var reqObj = {
-          method: 'POST', // since no. of tournamentIds can get large
+          method: 'POST',
           url: 'userProfile/userSettings/updateProfile',
           data: { user:$scope.tempLoggedInUser },
           headers:{'Content-Type':'application/json'}
@@ -54,11 +54,11 @@ angular.module('quizRT')
             if ( successResponse.data.error ) {
               console.log(data.error);
             }else {
-              alert('Profile updated successfully.');
+              $scope.errorMessage = 'Profile updated successfully.';
               $rootScope.loggedInUser = successResponse.data.updatedUserProfile;
             }
           },function(errorResponse) {
-            console.log('Could not save updated user profile to MongoDB');
+            $scope.errorMessage = 'Could not save updated user profile to MongoDB';
           });
       }
     };
