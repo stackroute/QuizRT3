@@ -37,7 +37,7 @@ var express = require('express'),
     index = require('./routes/index'),
     quizPlayerHandler = require('./routes/quizPlayerHandler'),
     authenticationHandler = require('./routes/authenticationHandler')(passport),
-    redis_store = new RedisStore({ host: 'localhost', port: 6379, client: redisClient}),
+    redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient}),
     Quiz = require("./models/quiz"),
     sessionMiddleware = session({
       store: redis_store,

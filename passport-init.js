@@ -62,7 +62,11 @@ module.exports = function(passport){
 					}
 					// User and password both match, return user from done method
 					// which will be treated like success
-					req.session.user = user;
+					if( req.session ) {
+						req.session.user = user;
+					} else {
+						console.log('request doesnot have a session. Subsequent session validaions will fail.' );
+					}
 					return done(null, user);
 				}
 			);
