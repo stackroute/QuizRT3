@@ -15,36 +15,36 @@ angular.module("quizRT")
       });
       */
 
-      $rootScope.loggedInUser = {
-        "_id":{"$oid":"56a613d504eb49492b745f3f"},
-        "totalGames":0,
-        "wins":0,
-        "imageLink":"/images/userProfileImages/akshayk.jpg",
-        "badge":"Beginner",
-        "name":"Anil",
-        "age":24,
-        "country":"India",
-        "userId":"anilsawant",
-        "topicsPlayed":[],
-        "__v":0,
-        "tournaments":[{
-          "tournamentId":'Bigest-Hollywood-Fan',
-          status:"PLAYING",
-          levelCleared:1,
-          finalLevel:5,
-          levelPoints:[20],
-          currentRank:2,
-          isFollowed:true
-        },{
-          "tournamentId":'Lord-Of-Series',
-          status:"PLAYING",
-          levelCleared:1,
-          finalLevel:5,
-          levelPoints:[20],
-          currentRank:2,
-          isFollowed:true
-        }]
-      };
+      // $rootScope.loggedInUser = {
+      //   "_id":{"$oid":"56a613d504eb49492b745f3f"},
+      //   "totalGames":0,
+      //   "wins":0,
+      //   "imageLink":"/images/userProfileImages/akshayk.jpg",
+      //   "badge":"Beginner",
+      //   "name":"Anil",
+      //   "age":24,
+      //   "country":"India",
+      //   "userId":"anilsawant",
+      //   "topicsPlayed":[],
+      //   "__v":0,
+      //   "tournaments":[{
+      //     "tournamentId":'Bigest-Hollywood-Fan',
+      //     status:"PLAYING",
+      //     levelCleared:1,
+      //     finalLevel:5,
+      //     levelPoints:[20],
+      //     currentRank:2,
+      //     isFollowed:true
+      //   },{
+      //     "tournamentId":'Lord-Of-Series',
+      //     status:"PLAYING",
+      //     levelCleared:1,
+      //     finalLevel:5,
+      //     levelPoints:[20],
+      //     currentRank:2,
+      //     isFollowed:true
+      //   }]
+      // };
 
       // function to toggle the player details
       $scope.toggleLeaderBoardPlayerdetails = function( playerId ) {
@@ -63,28 +63,28 @@ angular.module("quizRT")
       $scope.refreshLeaderBoard = function( tournamentId ) {
         $http.get( '/tournamentHandler/tournament/' + tournamentId )
            .then(function( successResponse ) {
-              successResponse.data.leaderBoard = [{
-               "_id": "56bc786168352fb00fe9da8f",
-               "totalScore": 20,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193caba2",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"anilsawant2"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 40,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 40,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              }];
+              // successResponse.data.leaderBoard = [{
+              //  "_id": "56bc786168352fb00fe9da8f",
+              //  "totalScore": 20,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193caba2",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"anilsawant2"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 40,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 40,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // }];
             successResponse.data.leaderBoard.sort( function(a,b) {
               return b.totalScore - a.totalScore;
             });
@@ -114,98 +114,98 @@ angular.module("quizRT")
       $scope.refreshLeaderBoard2 = function( tournamentId ) {
         $http.get( '/tournamentHandler/tournament/' + tournamentId )
            .then(function( successResponse ) {
-              successResponse.data.leaderBoard = [{
-               "_id": "56bc786168352fb00fe9da8f",
-               "totalScore": 10,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193caba2",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"anilsawant"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 30,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 15,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 30,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 15,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 30,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 15,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 30,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 15,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 30,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 15,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da91",
-               "totalScore": 30,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab92",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
-               }
-              },{
-               "_id": "56bc786168352fb00fe9da93",
-               "totalScore": 15,
-               "userId": {
-                 "_id":"56bc12dd35ef5e90193cab94",
-                 "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
-               }
-              }];
+              // successResponse.data.leaderBoard = [{
+              //  "_id": "56bc786168352fb00fe9da8f",
+              //  "totalScore": 10,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193caba2",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"anilsawant"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 30,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 15,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 30,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 15,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 30,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 15,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 30,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 15,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 30,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 15,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da91",
+              //  "totalScore": 30,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab92",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"abhinavkareer"}
+              //  }
+              // },{
+              //  "_id": "56bc786168352fb00fe9da93",
+              //  "totalScore": 15,
+              //  "userId": {
+              //    "_id":"56bc12dd35ef5e90193cab94",
+              //    "local": { password:"$2a$10$fGvS3G/cgoDhfbzbm.../qwYtH4GRMMmCMpnUrMtZs.",  username:"sunilmekal"}
+              //  }
+              // }];
             successResponse.data.leaderBoard.sort( function(a,b) {
               return b.totalScore - a.totalScore;
             });
