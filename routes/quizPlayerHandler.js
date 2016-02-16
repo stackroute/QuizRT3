@@ -37,9 +37,9 @@ router.route('/quizData/:id')
       Question.find({'topicId':topicId1})
 
       .exec(function(err,data){
-        var myReservoir = Reservoir(5);
+        var myReservoir = Reservoir(5);// set the number of questions that the quiz will have
         data.forEach(function(e) {
-          myReservoir.pushSome(e);
+          myReservoir.pushSome(e); // iterates through all the questions and randomly pushes only 5 into the reservoir
         });
         var quiz1=new Quiz();
         quiz1.topicId=topicId1;
@@ -77,6 +77,8 @@ router.route('/quizData/:id')
     }
 
 else{
+  // when is this executed??
+  console.log('If part of loading questions into reserviour');
   Quiz.findOne({gameId:groupId})
   .populate('questions')
   .exec(function(err,data){

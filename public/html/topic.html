@@ -12,22 +12,11 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
+//
 -->
 <div class="container fullHeight">
-
-  <div class="row" id="Quizzer">
-    <a href="#/userProfile" class="col-xs-offset-1 col-xs-9">
-      Quizart
-    </a>
-    <div class="col-xs-2">
-      <a ng-click="logout()" class="glyphicon glyphicon-off">
-      </a>
-    </div>
-  </div>
-
   <div class="content">
     <div class="">
       <div class="topic-header">
@@ -40,9 +29,9 @@
           <img ng-src="{{topic.topicIcon}}"  class="img-responsive" alt="">
           <div class="follow">
             <h3>
-            <span class="glyphicon glyphicon-heart" ng-show="topic.isFollowed" ng-click="followUnfollow()"></span>
-            <span class="glyphicon glyphicon-heart-empty" ng-hide="topic.isFollowed" ng-click="followUnfollow()"></span>
-            <span>{{topic.topicFollowers}}</span>
+            <span title="Unfollow this topic" class="glyphicon glyphicon-heart" ng-show="userTopicFollowState" ng-click="followUnfollow()"></span>
+            <span title="Follow this topic" class="glyphicon glyphicon-heart-empty" ng-hide="userTopicFollowState" ng-click="followUnfollow()"></span>
+            <span>{{topicFollowers}}</span>
           </h3>
           </div>
         </div><!--end topic-icon-->
@@ -52,7 +41,7 @@
               <h4>#Wins</h4>
             </div>
             <div class="col-xs-4" id="numwins">
-              <h4>{{topic.topicWins}}</h4>
+              <h4>{{topic.userStats.topicWins}}</h4>
             </div>
           </div> <!--end wins-->
           <div class="losses row">
@@ -60,16 +49,16 @@
               <h4>#Losses</h4>
             </div>
             <div class="col-xs-4" id="numloss">
-              <h4>{{topic.topicLosses}}</h4>
+              <h4>{{topic.userStats.topicLosses}}</h4>
             </div>
           </div> <!--end losses-->
           <div class=" losses row">
             <div class="progress col-xs-10 col-sm-10 col-md-10 col-lg-10">
-              <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="level-bar" style="width:{{topic.levelPercentage}}%">
-                     <span id="levelperc">{{topic.levelPercentage}}%</span>
+              <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="level-bar" style="width:{{topic.userStats.levelPercentage}}%">
+                     <span id="levelperc">{{topic.userStats.levelPercentage}}%</span>
                 </div>
             </div>
-            <div class="col-xs-2 col-sm-2 col-lg-2">  <button class="btn btn-info">Level <span id="levelnum">{{topic.topicLevel}}</span></button><button class="btn btn-success">EXP: <span id="exp">{{topic.points}}</span></button></div>
+            <div class="col-xs-2 col-sm-2 col-lg-2">  <button class="btn btn-info">Level <span id="levelnum">{{topic.userStats.topicLevel}}</span></button><button class="btn btn-success">Points: <span id="exp">{{topic.userStats.points}}</span></button></div>
           </div>
 
         </div> <!--end topic-user-->
@@ -78,21 +67,8 @@
     </div><!--end topic-info-->
     <div id="foot" class="row">
 			<div  class="col-xs-12 play-button-bar">
-					<a ng-href="/#/quizPlayer" id="startGameButton" class="btn btn-success" ng-click="addToPlayedGames()">Play Now</a>
+					<a ng-href="/#/quizPlayer" id="startGameButton" class="btn btn-success" ng-click="playGame()">Play Now</a>
 			</div>
 		</div>
-
-
   </div><!--end content-->
-
 </div><!--end container-->
-<!--
-<script type="text/javascript">
-       var a=$('.topic-user').height();
-       var b=$('.topic-icon img').height(a);
-       var a=$('.leaderboard label').height();
-       var b=$('.leaderboard img').height(a);
-       var a=window.outerHeight;
-       var b=($('.topic-info').innerHeight());
-      $('.play-button button').outerHeight(0.5*(a-b));
-</script> -->

@@ -102,7 +102,9 @@
 .follow{
   text-align: left;
 }
-
+.follow .glyphicon {
+  cursor: pointer;
+}
 .followers button{
   width:100%;
 }

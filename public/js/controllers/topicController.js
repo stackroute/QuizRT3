@@ -16,9 +16,11 @@
 //
 
 angular.module('quizRT')
-  .controller('topicController', function(socket,$scope,$rootScope,$routeParams,$http){
+  .controller('topicController', function(socket,$scope,$rootScope,$routeParams,$http) {
      $scope.topicId = $routeParams.topicId;
      $scope.topic = {};
+     $scope.userTopicFollowState = false;
+     $scope.topicFollowers = 0;
      $rootScope.stylesheetName = "topic";
      $rootScope.tId = $scope.topicId;
     //  socket.emit('leaveGame', $scope.topicId);
@@ -36,6 +38,7 @@ angular.module('quizRT')
      $http.get(path)
          .then( function( successResponse) {
            $scope.topic = successResponse.data.topicWithUserStats;
+           $scope.topicFollowers = successResponse.data.topicWithUserStats.topicFollowers;
            $scope.userTopicFollowState = successResponse.data.topicWithUserStats.userStats.isFollowed;
            // levelId is defined for Tournaments only hence resetting it
            $rootScope.levelId = null;
@@ -55,6 +58,7 @@ angular.module('quizRT')
        $http.put( '/topicsHandler/topic/'+ $scope.topicId )
          .then( function( successResponse ) {
            $scope.userTopicFollowState = successResponse.data.userTopicFollowState;
+           successResponse.data.userTopicFollowState ? $scope.topicFollowers++ : $scope.topicFollowers--;
            console.log(successResponse.data);
          }, function( errorResponse ) {
            console.log('Topic could not be followed!');
@@ -71,14 +75,14 @@ angular.module('quizRT')
         });
     }
 
-    $scope.addToPlayedGames = function() {
-      $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
-      $http.post(path)
-           .success(function(data, status, headers, config) {
-           })
-           .error(function(data, status, headers, config) {
-             console.log(data);
-           });
-    }
+    // $scope.addToPlayedGames = function() {
+    //   $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
+    //   $http.post(path)
+    //        .success(function(data, status, headers, config) {
+    //        })
+    //        .error(function(data, status, headers, config) {
+    //          console.log(data);
+    //        });
+    // }
 
   });

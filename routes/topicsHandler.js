@@ -126,7 +126,7 @@ router.route('/topic/:topicId')
     req.session.tid = req.params.topicId;
 
   })
-  .put( function(req,res) { // set isFollowed for the topic in user's profile and increment no of followers in topic
+  .put( function(req,res) { // set isFollowed for the topic in user's profile and increment/decrement no of followers in topic
     if ( req.session && req.session.user ) {
       Profile.findOne( {userId: req.session.user.local.username} )
       .exec( function(err, userProfileData ) {
@@ -167,14 +167,18 @@ router.route('/topic/:topicId')
               res.writeHead(500, {'Content-type': 'application/json'} );
               res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
             }else {
-              // increment topicFollowers of a topic by 1
-              Topic.findOneAndUpdate( {'_id': req.params.topicId}, {'$inc': {'topicFollowers': 1} }, {upsert:false}, function(err, doc){
+              // increment/decrement topicFollowers of a topic by 1
+              var queryObj = {'$inc': {'topicFollowers': -1}};
+              if ( topicFollowState ) {
+                queryObj = {'$inc': {'topicFollowers': 1}};
+              }
+              Topic.findOneAndUpdate( {'_id': req.params.topicId}, queryObj, {upsert:false}, function(err, doc){
                 if(err) {
                   console.error('Failed to increment topicFollowers of a topic');
                   res.writeHead(500, {'Content-type': 'application/json'} );
                   res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
                 } else {
-                  res.json( { error: null, userTopicFollowState: topicFollowState, userUpdated: true } );
+                  res.json( { error: null, userTopicFollowState: topicFollowState } );
                 }
               });
             }
