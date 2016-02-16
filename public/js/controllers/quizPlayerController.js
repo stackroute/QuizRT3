@@ -13,13 +13,13 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                      + Anil Sawant
+
 var topScore = 0;
 var questionCounter = 0;
 var temp;
 angular.module('quizRT')
     .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
-
         $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;
@@ -40,15 +40,18 @@ angular.module('quizRT')
         $scope.$on( '$routeChangeStart', function(args) {
           $rootScope.isPlayingAGame = false;
         });
-        socket.emit('join', {
-            tId: $rootScope.levelId || $rootScope.tId,
-            name: $rootScope.fakeMyName,
-            image: $rootScope.myImage,
+
+        // create the playerData obj for the quiz gameManager to identify the player and his client
+        var playerData = {
+            topicId: $rootScope.levelId || $rootScope.tId,
+            userId: $rootScope.loggedInUser.userId,
+            playerName: $rootScope.loggedInUser.name,
+            playerPic: $rootScope.loggedInUser.imageLink,
             playersPerMatch: playersPerMatch
-        });
-
-        socket.on('startGame', function(startGameData) {
-
+        };
+        socket.emit('join', playerData); // enter the game and wait for other players to join
+        
+        socket.on('startGame', function( startGameData ) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.question = "Starting Game ...";
             var tId = $rootScope.tId;
@@ -56,12 +59,11 @@ angular.module('quizRT')
             var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
 
             $http.get(path)
-                .success(function(data, status, headers, config) {
+                .success(function(data, status, headers, config) { // this call retrieves the questions. Call is redundant
                     //counter to start the Quiz
                     $scope.time = 3;
 
                     var timeInterval = $interval(function() {
-
                         $scope.time--;
 
                         //waiting for counter to end to start the Quiz
@@ -70,13 +72,12 @@ angular.module('quizRT')
                             $scope.wrongAnswerers = 0;
                             $scope.correctAnswerers = 0;
                             $scope.unattempted = startGameData.maxPlayers;
-
-                            if (questionCounter == data.questions.length) {
+                            if ( questionCounter == data.questions.length ) {
                                 $interval.cancel(timeInterval);
                                 $rootScope.finalScore = $scope.myscore;
                                 $rootScope.finalRank = $scope.myrank;
-                                location.replace('/#quizResult');
-
+                                socket.emit( 'gameFinished', startGameData.gameId);
+                                // $location.path('/quizResult/' + startGameData.gameId );
                             } else {
                                 temp = loadNextQuestion(data, questionCounter);
 
@@ -99,10 +100,11 @@ angular.module('quizRT')
                                     }
                                     $scope.isDisabled = true;
                                     socket.emit('updateStatus', {
-                                        score: $scope.myscore,
-                                        gameID: startGameData.gameId,
-                                        name: $rootScope.fakeMyName,
-                                        image: $rootScope.myImage
+                                        gameId: startGameData.gameId,
+                                        userId: $rootScope.loggedInUser.userId,
+                                        playerScore: $scope.myscore,
+                                        playerName: $rootScope.loggedInUser.name,
+                                        playerPic: $rootScope.loggedInUser.imageLink
                                     });
                                 };
 
@@ -119,7 +121,7 @@ angular.module('quizRT')
                             }
                         }
 
-                    }, 1000);
+                    }, 1000);// to create 1s timer
 
                 })
                 .error(function(data, status, headers, config) {
@@ -144,6 +146,11 @@ angular.module('quizRT')
         });
         socket.on('pendingUsers', function(data) {
             $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
+        });
+        socket.on( 'takeResult', function( resultData ) {
+            $rootScope.recentGames[$rootScope.freakgid] = resultData;
+            $rootScope.recentGamesTopicNames[$rootScope.freakgid] = $rootScope.tId;
+            $location.path( '/quizResult/' + $rootScope.freakgid );
         });
     });
 
