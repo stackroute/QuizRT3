@@ -11,48 +11,38 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
-var leader= new Map();
+//                       + Anil Sawant
 
-module.exports={
-  leaderBoard: leader,
+var LeaderBoard = function() {
+  this.games = new Map();
+}
 
-  addPlayer: function(gameId, sid, client, name, score, imageUrl){
-    var clientData={
-      'sid': sid,
-      'name': name,
-      'imageUrl': imageUrl,
-      'score': score,
-      'client': client
-    };
-
-    if(leader.get(gameId)==null){
-			var temp= [];
-			temp.push(clientData);
-		 	leader.set(gameId, temp);
-		}
-		else{
-			leader.get(gameId).push(clientData);
-    }
-	},
-
-  getGamePlayers: function(gameId){
-    return leader.get(gameId);
-  },
-
-  updateScore: function(gameId, sid, score){
-    for(var i=0; i<leader.get(gameId).length; i++){
-      if(leader.get(gameId)[i].sid== sid){
-        leader.get(gameId)[i].score= score;
-        break;
-      }
-    }
-
-    leader.get(gameId).sort(function(a,b){
-      return b.score-a.score;
-    });
+LeaderBoard.prototype.addPlayer = function( gameId, player ) {
+  player.score = 0; // add score property to player and initialize it to zero
+  if( this.games.get( gameId ) && this.games.get( gameId ).length ) {
+    this.games.get( gameId ).push( player );
+  } else {
+    this.games.set( gameId, [player] );
   }
 };
+
+LeaderBoard.prototype.get = function(gameId) {
+  return this.games.get(gameId);
+};
+
+LeaderBoard.prototype.updateScore = function( gameId, userId, score) {
+  this.games.get( gameId ).some( function( player ) {
+    if( player.userId == userId ){
+      player.score = score;
+      return true;
+    }
+    return false;
+  });
+  this.games.get(gameId).sort( function(a,b) { // refresh the leaderBoard
+    return b.score-a.score;
+  });
+};
+
+module.exports = new LeaderBoard();

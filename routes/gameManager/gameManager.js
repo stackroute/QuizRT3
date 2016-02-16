@@ -15,47 +15,24 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //
 
-var play=new Map();
-module.exports={
-	players: play,
-	addPlayer: function(topicId, sid, client, name, imageUrl){
-		var clientData = {
-			client:client,
-			name:name,
-			imageUrl: imageUrl
-		};
-		if(play.get(topicId)==null){
-			var temp= new Map();
-			temp.set(sid, clientData);
-		 	play.set(topicId, temp);
+var gameManager = {},
+		topicsMap = new Map();
+
+gameManager = {
+	topicsMap: topicsMap,
+	addPlayerToGame: function( topicId, gamePlayer ) {
+		if ( topicsMap.get( topicId ) && topicsMap.get( topicId ).length ){
+			topicsMap.get( topicId ).push(gamePlayer);
+		} else {
+			topicsMap.set(topicId, [gamePlayer]);
 		}
-		else
-			play.get(topicId).set(sid, clientData);
 	},
-
-	popPlayers: function(topicId){
-		// play.get(topicId).delete(sid);
-		// if(play.get(topicId).size==0)
-		// 	play.delete(topicId);
-			var topicPlayers=[];
-		play.get(topicId).forEach(function(item, key, value){
-			topicPlayers.push({
-				sid: key,
-				clientData: item
-			});
-		});
-		play.delete(topicId);
-		return topicPlayers;
+	getGame: function( topicId ) {
+		return topicsMap.get( topicId );
 	},
-	getAllPlayers: function(topicId){
-		var topicPlayers=[];
-		play.get(topicId).forEach(function(item, key, value){
-			topicPlayers.push({
-				sid: key,
-				clientData: item
-			});
-		});
-		return topicPlayers;
-
+	popGame: function( topicId ) {
+		topicsMap.delete( topicId ); // pop the game from topicsMap and start the game
 	}
 };
+
+module.exports = gameManager;
