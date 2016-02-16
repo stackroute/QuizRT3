@@ -20,189 +20,230 @@ var express = require('express'),
     Category = require("../models/category"),
     Topic = require("../models/topic"),
     Profile =require("../models/profile"),
-    topicInst,
-    topic1={},
-    points = 0,
-    level =1;
+    findPercentage = function(points,level) {
+      return ((points-levelScore(level))/(levelScore(level+1)-levelScore(level)))*100;
+    },
+    levelScore = function(n) {
+      return ((35 * (n * n)) +(95*n)-130);
+    },
+    findLevel = function(points) {
+      i=1;
+      while(points>=levelScore(i)) {
+        i++;
+      }
+      return i-1;
+    };
 
-findPercentage = function(points,level)
-{
-  return ((points-levelScore(level))/(levelScore(level+1)-levelScore(level)))*100;
-}
-
-levelScore = function(n)
-{
-  return ((35 * (n * n)) +(95*n)-130);
-}
-findLevel = function(points){
-  i=1;
-  while(points>=levelScore(i))
-  {
-    i++;
-  }
-  return i-1;
-}
- router.route('/categories')
-  .get(function(req, res){
+router.route('/categories')
+  .get( function(req, res){
     Category.find()
       .populate("categoryTopics")
-          .exec(function(err,categories){
-            if(err){
-                return res.send(err);
-              }
-            return res.json(categories);
-          });
- 	});
-  router.route('/category/:id')
-	.get(function(req, res){
-		Category.findById(req.params.id)
+      .exec(function(err,categories){
+        if(err){
+            return res.send(err);
+          }
+        return res.json(categories);
+      });
+});
+
+router.route('/category/:categoryId')
+  .get(function(req, res){
+	   Category.findById(req.params.categoryId)
       .populate("categoryTopics")
         .exec(function(err, category){
-      			if(err)
-      				return res.send(err);
-      			return res.json(category);
-		});
-	});
-  router.route('/topic/:id')
-    .get(function(req,res){
-      var usr = req.session.user.local.username;
-      console.log(req.session.user);
-      topicInst = req.params.id;
-      req.session.tid = topicInst;
-        Profile.findOne({userId: usr})
-         .exec(function(err,data){
+    			if(err)
+    				return res.send(err);
+    			return res.json(category);
+	      });
+});
 
-        topic1.topicWins=0;
-        topic1.topicLosses=0;
-        topic1["topicLevel"]=1;
-        topic1["levelPercentage"]=0;
-        topic1["isFollowed"]= false;
-        topic1['points']=0;
 
-        var topicsPlayed=data["topicsPlayed"];
-         var l=topicsPlayed.length;
-         for(var i=0;i<l;++i)
-         {
-           if(topicsPlayed[i].topicId === req.params.id)
-            break;
-         }
-         if(i!=l)
-         {
-         var topic2=topicsPlayed[i];
-         topic1["topicWins"]=topic2["gamesWon"];
-         topic1["topicLosses"]=topic2["gamesPlayed"]-topic2["gamesWon"];
-         points =topic2["points"];
-         level= topic2["level"];
-         topic1["topicLevel"]=topic2["level"];
-         topic1["levelPercentage"]=findPercentage(points,level);
-         topic1["isFollowed"]=topic2["isFollowed"];
-         topic1["points"]=points;
-       }
-      Topic.findById(req.params.id)
-       .exec(function(err,topic){
-       if(err)
-        return res.send(err);
-        topic1.topicId=topic._id;
-        topic1.topicName=topic.topicName;
-        topic1.topicDescription=topic.topicDescription;
-        topic1.topicIcon = topic.topicIcon;
-        topic1.topicFollowers=topic.topicFollowers;
-        topic1.playersPerMatch=topic.playersPerMatch;
-        console.log("######");
-        console.log(topic1);
-        res.json(topic1);
+router.route('/topic/:topicId')
+  .get( function(req,res) { // retrieve a topic's details
+    var topicWithUserStats = {
+      topicId: '',
+      topicName: '',
+      topicDescription: '',
+      topicIcon: '',
+      topicFollowers: 0,
+      playersPerMatch: 2,
+      userStats : {
+        topicWins: 0,
+        topicLosses: 0,
+        topicLevel: 1,
+        levelPercentage: 0,
+        isFollowed: false,
+        points: 0
+      }
+    };
+
+    if ( req.session && req.session.user ) {
+      Profile.findOne( {userId: req.session.user.local.username} )
+      .exec( function(err, userProfileData ) {
+        if(err) {
+          res.writeHead(500, {'Content-type': 'application/json'} );
+          res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+        } else {
+          var topicsPlayed = userProfileData.topicsPlayed,
+              len = topicsPlayed.length;
+
+          for(var i = 0; i < len; ++i ) {
+            if( topicsPlayed[i].topicId === req.params.topicId ) {
+              topicWithUserStats.userStats.topicWins = topicsPlayed[i].gamesWon;
+              topicWithUserStats.userStats.topicLosses = topicsPlayed[i].gamesPlayed - topicsPlayed[i].gamesWon;
+              topicWithUserStats.userStats.topicLevel = topicsPlayed[i].level;
+              topicWithUserStats.userStats.isFollowed = topicsPlayed[i].isFollowed;
+              topicWithUserStats.userStats.points = topicsPlayed[i].points;
+              topicWithUserStats.userStats.levelPercentage = findPercentage( topicsPlayed[i].points, topicsPlayed[i].level );
+              break;
+            }
+          }
+
+          Topic.findById( req.params.topicId )
+            .exec(function(err,topic) {
+              if(err) {
+                res.writeHead(500, {'Content-type': 'application/json'} );
+                res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+              } else {
+                topicWithUserStats.topicId = topic._id;
+                topicWithUserStats.topicName = topic.topicName;
+                topicWithUserStats.topicDescription = topic.topicDescription;
+                topicWithUserStats.topicIcon = topic.topicIcon;
+                topicWithUserStats.topicFollowers = topic.topicFollowers;
+                topicWithUserStats.playersPerMatch = topic.playersPerMatch;
+                res.json( { error: null, topicWithUserStats: topicWithUserStats } );
+              }
+            });
+        }
       });
-      });
+    } else {
+      console.log('User not authenticated. Returning from topicsHandler.');
+      res.writeHead(401);
+      res.end( JSON.stringify({ error: 'User session does not exist. Kindly do a fresh Login.' }) );
+    }
+
+    // delete the follwing if it is not used
+    req.session.tid = req.params.topicId;
+
   })
-  .put(function(req,res){
-    var usr = req.session.user.local.username;
-      Profile.findOne({userId: usr})
-       .exec(function(err,data){
-      var topicsPlayed=data["topicsPlayed"];
-       var l=topicsPlayed.length;
-       var tid=req.params.id;
-       req.session.tid=tid;
-       for(var i=0;i<l;++i)
-       {
-         if(topicsPlayed[i].topicId === req.params.id)
-          break;
-       }
-       if(i==l)
-       {
-         var topic3={
-             "topicId":req.params.id,
-             "gamesPlayed":0,
-             "gamesWon":0,
-             "level":1,
-              "isFollowed":false,
-              "points":0
-         }
-         data.topicsPlayed.push(topic3);
-       }
-       data.topicsPlayed[i].isFollowed=!(data.topicsPlayed[i].isFollowed);
-       data.save(function(err){
-       if ( err ) console.log(err);
-       var topic2=topicsPlayed[i];
-       topic1["topicWins"]=topic2["gamesWon"];
-       topic1["topicLosses"]=topic2["gamesPlayed"]-topic2["gamesWon"];
-       topic1["topicLevel"]=topic2["level"];
-       topic1["levelPercentage"]=0;
-       topic1["points"]=topic2["points"];
-       topic1["isFollowed"]=topic2["isFollowed"];
+  .put( function(req,res) { // set isFollowed for the topic in user's profile and increment no of followers in topic
+    if ( req.session && req.session.user ) {
+      Profile.findOne( {userId: req.session.user.local.username} )
+      .exec( function(err, userProfileData ) {
+        if(err) {
+          res.writeHead(500, {'Content-type': 'application/json'} );
+          res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+        } else {
+          var topicsPlayed = userProfileData.topicsPlayed,
+              len = topicsPlayed.length,
+              topicFound = false,
+              topicFollowState = false;
 
-    Topic.findById(req.params.id)
-     .exec(function(err,topic){
-     if(err)
-      return res.send(err);
-      if(data.topicsPlayed[i].isFollowed==true)
-      {
-        topic.topicFollowers=topic.topicFollowers+1;
-      }
-      else {
-        topic.topicFollowers=topic.topicFollowers-1;
-      }
-      topic.save(function(err){
-      if ( err ) console.log(err);
-    topic1.topicId=topic._id;
-    topic1.topicName=topic.topicName;
-    topic1.topicDescription=topic.topicDescription;
-    topic1.topicIcon = topic.topicIcon;
-    topic1.topicFollowers=topic.topicFollowers;
-    res.json(topic1);
+          for(var i = 0; i < len; ++i ) {
+            if( topicsPlayed[i].topicId === req.params.topicId ) {
+              topicFound = true;
+              topicFollowState = !topicsPlayed[i].isFollowed;
+              topicsPlayed[i].isFollowed = topicFollowState;
+              break;
+            }
+          }
 
+          // user clicked on follow for the first time so add this new topic to topicsPlayed
+          if ( !topicFound ) {
+            var newTopic = {
+              'topicId': req.params.topicId,
+              'isFollowed': true,
+              'gamesWon': 0,
+              'gamesPlayed': 0,
+              'level': 1,
+              'points': 0
+            }
+            topicFollowState = true; // user clicked on follow for the first time so isFollowed = true
+            userProfileData.topicsPlayed.push( newTopic );
+          }
+          userProfileData.save( function(err, savedDoc) {
+            if ( err ) {
+              console.error(err);
+              res.writeHead(500, {'Content-type': 'application/json'} );
+              res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+            }else {
+              // increment topicFollowers of a topic by 1
+              Topic.findOneAndUpdate( {'_id': req.params.topicId}, {'$inc': {'topicFollowers': 1} }, {upsert:false}, function(err, doc){
+                if(err) {
+                  console.error('Failed to increment topicFollowers of a topic');
+                  res.writeHead(500, {'Content-type': 'application/json'} );
+                  res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+                } else {
+                  res.json( { error: null, userTopicFollowState: topicFollowState, userUpdated: true } );
+                }
+              });
+            }
+          });
+        }
+
+      });
+    } else {
+      console.log('User not authenticated. Returning from topicsHandler.');
+      res.writeHead(401);
+      res.end( JSON.stringify({ error: 'User session does not exist. Kindly do a fresh Login.' }) );
+    }
+
+    /*
+    ** Use the following mongo queries to optimize performance
+    ** db.collection.update( {'userId': 12345, 'topicsPlayed.topicId': req.params.topicId }
+                             ,{ '$set': { 'topicsPlayed.$.isFollowed':true}})
+
+      db.collection.update( {'userId': 12345, 'topicsPlayed.topicId': {'$ne':req.params.topicId} }
+                            ,{'$addToSet': {'topicsPlayed': {newTopic object}}})
+    */
+
+  })
+  .post( function(req,res) { // used to save updates to userProfile and Topic when user hits play now.
+    if ( req.session && req.session.user ) {
+      Profile.findOne( {userId: req.session.user.local.username} )
+      .exec( function(err, userProfileData ) {
+        if(err) {
+          res.writeHead(500, {'Content-type': 'application/json'} );
+          res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+        } else {
+          var topicsPlayed = userProfileData.topicsPlayed,
+              len = topicsPlayed.length,
+              topicFound = false;
+
+          for(var i = 0; i < len; ++i ) {
+            if( topicsPlayed[i].topicId === req.params.topicId ) {
+              topicFound = true;
+              topicsPlayed[i].gamesPlayed++;
+              break;
+            }
+          }
+
+          if ( !topicFound ) {
+            var newTopic = {
+              'topicId': req.params.topicId,
+              'isFollowed': false,
+              'gamesWon': 0,
+              'gamesPlayed': 1,
+              'level': 1,
+              'points': 0
+            }
+            userProfileData.topicsPlayed.push( newTopic );
+          }
+          userProfileData.save( function(err, savedDoc) {
+            if ( err ) {
+              console.error(err);
+              res.writeHead(500, {'Content-type': 'application/json'} );
+              res.end( JSON.stringify({ error: 'We are facing problem with our database. Try after some time.' }) );
+            }else {
+              res.json( { error: null, updatedUser:savedDoc} );
+            }
+          });
+        }
+      });
+    } else {
+        console.log('User not authenticated. Returning from topicsHandler.');
+        res.writeHead(401);
+        res.end( JSON.stringify({ error: 'User session does not exist. Kindly do a fresh Login.' }) );
+    }
   });
-    });
-    });
-});
-})
-.post(function(req,res){
-  var usr = req.session.user.local.username;
-    Profile.findOne({userId: usr})
-     .exec(function(err,data){
-    var topicsPlayed=data["topicsPlayed"];
-     var l=topicsPlayed.length;
-     var tid=req.params.id;
-     req.session.tid=tid;
-     for(var i=0;i<l;++i)
-     {
-       if(topicsPlayed[i].topicId === req.params.id)
-        break;
-     }
-     if(i==l)
-     {
-       var topic3={
-           "topicId":req.params.id,
-           "gamesPlayed":0,
-           "gamesWon":0,
-           "level":1,
-           "isFollowed":false,
-           "points":0
-       }
-       data.topicsPlayed.push(topic3);
-     }
-     data.save(function(err){
-     if ( err ) console.log(err)});
-
-  });
-});
-module.exports= router;
+  module.exports= router;

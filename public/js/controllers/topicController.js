@@ -17,40 +17,62 @@
 
 angular.module('quizRT')
   .controller('topicController', function(socket,$scope,$rootScope,$routeParams,$http){
-     $scope.topicID=$routeParams.topicID;
-     $scope.topic="";
-     $rootScope.stylesheetName="topic";
-     $rootScope.tId= $scope.topicID;
-     socket.emit('leaveGame', $scope.topicID);
-     var path = '/topicsHandler/topic/'+$scope.topicID;
-     $rootScope.tId=$scope.topicID;
+     $scope.topicId = $routeParams.topicId;
+     $scope.topic = {};
+     $rootScope.stylesheetName = "topic";
+     $rootScope.tId = $scope.topicId;
+    //  socket.emit('leaveGame', $scope.topicId);
+     var path = '/topicsHandler/topic/'+ $scope.topicId;
+     $rootScope.tId = $scope.topicId;
 
      socket.emit('disjoin',"leaving page topic play");
+
+     /*
+        HTTP methods are used as follows:
+        GET: to retrieve topic details along with userStats
+        PUT: to follow - unFollow a topic
+        POST: to update the topic and userStats when user hits Play Now!
+     */
      $http.get(path)
-          .success(function(data, status, headers, config) {
-              console.log(data);
-               $scope.topic = data;
-               $rootScope.title = data.topicName;
-               $rootScope.playersPerMatch = data.playersPerMatch;
+         .then( function( successResponse) {
+           $scope.topic = successResponse.data.topicWithUserStats;
+           $scope.userTopicFollowState = successResponse.data.topicWithUserStats.userStats.isFollowed;
+           // levelId is defined for Tournaments only hence resetting it
+           $rootScope.levelId = null;
+         }, function( errorResponse ) {
+           if ( errorResponse.status === 401 ) {
+             $rootScope.isAuthenticatedCookie = false;
+             console.log('User not authenticated by Passport.');
+           }
+           $rootScope.serverErrorMsg = errorResponse.data.error;
+           $rootScope.serverErrorStatus = errorResponse.status;
+           $rootScope.serverErrorStatusText = errorResponse.statusText;
+           $location.path('/error');
+           console.log('Topic with userStats could not be loaded!');
+         });
 
-               // levelId is defined for Tournaments only hence resetting it
-               $rootScope.levelId = null;
-           })
-          .error(function(data, status, headers, config) {
-             console.log(data);
-           });
-
-     $scope.followUnfollow=function(){
-       $http.put(path)
-            .success(function(data, status, headers, config) {
-              $scope.topic = data;
-            })
-            .error(function(data, status, headers, config) {
-              console.log(data);
-            });
+     $scope.followUnfollow = function() {
+       $http.put( '/topicsHandler/topic/'+ $scope.topicId )
+         .then( function( successResponse ) {
+           $scope.userTopicFollowState = successResponse.data.userTopicFollowState;
+           console.log(successResponse.data);
+         }, function( errorResponse ) {
+           console.log('Topic could not be followed!');
+         });
     };
 
-    $scope.addToPlayedGames=function(){
+    $scope.playGame = function() {
+      $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
+      $http.post( '/topicsHandler/topic/'+ $scope.topicId )
+        .then( function( successResponse ) {
+
+        }, function( errorResponse ) {
+
+        });
+    }
+
+    $scope.addToPlayedGames = function() {
+      $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
       $http.post(path)
            .success(function(data, status, headers, config) {
            })
