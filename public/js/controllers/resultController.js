@@ -16,20 +16,17 @@
 //
 
 angular.module('quizRT')
-	.controller('resultController', function( $scope, $rootScope, socket, $routeParams, $location){
+	.controller('resultController', function( $scope, $rootScope, socket, $route, $location, $timeout){
     $scope.msg = "Compiling the game result. Please wait...";
-		
-		setTimeout( function(){ // wait for 3s to get the results from server
-			console.log('Emitting getResult for ' + $routeParams.gameId);
-      socket.emit('getResult', $routeParams.gameId );
-      socket.on('takeResult',function( leaderBoard ) {
-  			leaderBoard.sort(function(a,b) {
-  				return b.score - a.score;
-  			});
-				console.log('leaderBoard');
-				console.log(leaderBoard);
-        $scope.msg = $rootScope.tId;
-  			$scope.players = leaderBoard;
+		$scope.gameId = $route.current.params.gameId;
+
+		$timeout( function() {
+			if ( $rootScope.recentGames[$scope.gameId].error ) {
+				$scope.msg = $rootScope.recentGames[$scope.gameId].error;
+			} else {
+				$scope.gameBoard = $rootScope.recentGames[$scope.gameId].finishedGameBoard; // show the results
+				$scope.msg = $rootScope.recentGamesTopicNames[$scope.gameId] + ' - Hall of Fame'; // display the name of the topic played
+
 				var levelId=$rootScope.levelId||false;
   			socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
 				var updateProfileObj = {
@@ -40,8 +37,8 @@ angular.module('quizRT')
 					levelId: levelId
 				};
   			socket.emit('updateProfile', updateProfileObj );//score and rank
-      });
-		},5000); // waits for 5s before asking for result. that doesn't make sense!!
+			}
+		}, 3000); // show the results after 3s. LOL!!!!
 
 		$scope.nextLevel = function() {
 			// use this to redirect the player back to the tournament he is playing
