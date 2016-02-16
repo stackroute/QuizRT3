@@ -20,6 +20,7 @@ angular.module('quizRT')
 
       // redirect to login page if the user's isAuthenticated cookie doesn't exist
       if( !$rootScope.isAuthenticatedCookie ){
+        $rootScope.logInLogOutErrorMsg = 'You are logged out. Kindly Login...';
         $location.path('/login');
       } else {
         $rootScope.stylesheetName="userProfile";
@@ -68,16 +69,14 @@ angular.module('quizRT')
 
         }, function( errorResponse ) {
           if ( errorResponse.status === 401 ) {
-            $rootScope.isAuthenticatedCookie = false
-            $location.path('/login');
+            $rootScope.isAuthenticatedCookie = false;
             console.log('User not authenticated by Passport.');
-          }else {
-            $rootScope.serverErrorMsg = errorResponse.data.error;
-            $rootScope.serverErrorStatus = errorResponse.status;
-            $rootScope.serverErrorStatusText = errorResponse.statusText;
-            $location.path('/error');
-            console.log('User profile could not be loaded!');
           }
+          $rootScope.serverErrorMsg = errorResponse.data.error;
+          $rootScope.serverErrorStatus = errorResponse.status;
+          $rootScope.serverErrorStatusText = errorResponse.statusText;
+          $location.path('/error');
+          console.log('User profile could not be loaded!');
         });
 
         $scope.showFollowedTopic = function(topicID){

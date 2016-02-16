@@ -59,7 +59,6 @@ angular.module('quizRT')
          .then( function( successResponse ) {
            $scope.userTopicFollowState = successResponse.data.userTopicFollowState;
            successResponse.data.userTopicFollowState ? $scope.topicFollowers++ : $scope.topicFollowers--;
-           console.log(successResponse.data);
          }, function( errorResponse ) {
            console.log('Topic could not be followed!');
          });
