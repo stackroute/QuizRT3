@@ -1,0 +1,131 @@
+questionId,image,question,correctIndex,option1,option2,option3,option4,topicId
+web301_q11,null,Which of the following is a valid property in a hibernate configuration?,All of the above,hibernate.dialect,hibernate.connection.url,show_sql,All of the above,T1
+web301_q14,null,<p>How are Associations between Hibernate entities realized in Database?</p>,<p>All of the Above</p>,<p>join queries</p>,<p>foreign keys</p>,<p>constraints</p>,<p>All of the Above</p>,T1
+web301_q16,null,<p>What is the example of one-to-one relation?</p>,Book - BookInfo,Book - Author,Series - Book,Book - BookInfo,Author - Publisher,T1
+web301_q17,null,<p>Why is cascade relationship applied between entities Book and Publication?</p>,"Publication is deleted, saved, when Book is deleted, saved respectively.",Publication is retrieved when Book is retrieved.,"Publication is deleted, saved, when Book is deleted, saved respectively.",Cascade is mandatory for one to one association.,All of the Above,T1
+web301_q18,null,<p>Book has _mandatory_ association an Author. Meaning Book must have author.</p><p>Which hibernate option is used to specify this?</p>,not-null,not-null,lazy-load,cascade,None of the Above,T1
+web301_q19,null,Following if the right convention of hibernate mapping file,<entity>.hbm.xml,hbm.<entity>.xml,<entity>.hbm.xml,hbm.<entity>.xls,<entity>.hbm.xls,T1
+web301_q20,null,Primary key is defined in mapping file using:,id,generator,primary,id,none of these,T1
+web301_q21,null,Non Nullable columns are defined in mapping file using following attribute,not-null,null,no-null,not-null,nullable,T1
+web301_q23,null,generator type is specified using folloiwng attrbute of generator tag,class,generator,class,type,category,T1
+web301_q26,null,"While creating SessionFactory in hibernate, which design pattern should be adopted?",Singleton,Singleton,Prototype,,,T1
+web301_q27,null,Which property is used to configure diver class in hibernate?,hibernate.connection.driver_class,hibernate.connection.driver_class,hibernate.connection.datasource,hibernate.connection.driver,None of the above,T2
+web301_q29,null,"If an entity (a class annotated with @Entity) is not annotated with @Table, what will happen?",No error and class name is mapped with table name,Throws error because no table name is assigned,No error and class name is mapped with table name,Hibernate ignores the class,None,T2
+web301_q30,null,Choose the correct statement,Both 1 & 2,Hibernate is an ORM library for java language,Hibernate provides a mapping for object-oriented domain model to a traditional relational database,Both 1 & 2,None of the above,T2
+web301_q31,null,HQL is used in,session.createQuery(),session.createQuery(),session.createCriteria(),session.createHQL(),session.createSQLQuery(),T2
+web301_q32,null,What does hibernate.show_sql=true mean?,show sql statements on console,show sql parameters on console,show sql statements on console,do not show sql statements,none of the above,T2
+web301_q33,null,What does session.load() return if there is no matching database row?,Throws an exception,NULL,Empty object,Throws an exception,None of the above,T2
+web301_q34,null,What happens when both hibernate.properties and hibernate.cfg.xml are in the classpath?,The settings of XML configuration file will override the settings used in the properties,The settings of properties file will override the settings used in the XML configuration,The settings of XML configuration file will override the settings used in the properties,Duplicate configuration exception,None of the above,T2
+web301_q35,null,What role does Session interface play in Hibernate?,"1,2,3",Wraps a JDBC connection,Factory for Transaction,"Holds a mandatory (first-level) cache of persistent objects, used when navigating the object graph or looking up objects by identifier","1,2",T2
+web301_q36,null,Hibernate is compliant with,JPA,JMS,JPA,JMX,JSP,T2
+web301_q37,null,What is the tool used to generate classes from hibernate configuration files,hbm2java,hbm2ddl,maven,hbm2java,ANT,T2
+web301_q38,null,Hibernate supports following databases,All of the above,MySQL,Oracle,SQL server,All of the above,T2
+web301_q39,null,Hibernate mappings can be specified in following ways,Annotations or XML,XML file,Annotation,Annotations or XML,None of these,T2
+web301_q40,null,Hibernates maps POJOs to,tables,tables,columns,Class fields,Objects,T2
+web301_q42,null,What does a hibernate mapping file contain?,All of the above,Class to table mapping,Primary Key mapping,Each field to column mapping,All of the above,T3
+web301_q43,null,Which of the following annotations is not a valid hibernate annotation?,@HibernateColumn,@Table,@Column,@HibernateColumn,@Id,T3
+web301_q47,null,Which driver is efficient and always preferable for using JDBC applications?,Type 4,Type 4,Type 3,Type 2,Type 1,T3
+web301_q48,null,Which driver is called as thin-driver in JDBC?,Type 4,Type 1,Type 2,Type 3,Type 4,T3
+web301_q49,null,Which is the pure Java driver?,Type 4,Type 1,Type 2,Type 3,Type 4,T3
+web301_q50,null,Which driver uses ODBC under the hood?,Type 1,Type 1,Type 2,Type 3,Type 4,T3
+web301_q51,null,"If you are accessing one type of database, such as Oracle, Sybase, or IBM, what is the preferred driver type?",Type 4,Type 1,Type 2,Type 3,Type 4,T3
+web301_q52,null,Which of the following is false as far as type 4 driver is concerned?,Type 4 drivers can not be used with Linux platform,Type 4 driver is pure java driver,Type 4 drivers are 100% Java compatible,Type 4 drivers can not be used with Linux platform,None of the above,T3
+web301_q53,null,What is the disadvantage of Type-4  Driver?,"At client side, a separate driver is needed for each database","At client side, a separate driver is needed for each database",Type-4 driver is entirely written in Java,The driver converts JDBC calls into vendor-specific database protocol,It does not support to read MySQL data,T3
+web301_q54,null,Which of the following steps should be avoided for every query to the database?,Both 2 & 3,Create Query,Open Connection,Close Connection,Both 2 & 3,T3
+web301_q55,null,What is a way to create a set of connections once for application and use them throughout the application?,Connection Pools,Type 1 Driver,Connection Pools,ORM Tools,None of the above,T3
+web301_q56,null,What is the pre-requisite step before connecting to the database using JDBC?,Load the Driver,Create Statement,Create ODBC bridge,Load the Driver,All of the above,T3
+web301_q57,null,Which object is required to execute a query using JDBC?,Statement,Statement,ResultSet,ConnectionPool,DriverConnection,T3
+web301_q58,null,What is the class of object that contain the results of query executed using JDBC?,ResultSet,Statement,ResultSet,Connection,None of the above,T3
+web301_q59,null,ORM eliminates the following,All of the above,Connecting to the database,Writing code to populate columns data into POJOs,Writing try/catch blocks,All of the above,T3
+web301_q60,null,In ORM - Table columns are mapped to:,Class fields,Class methods,Class fields,Class itself,None of the above,T3
+web301_q61,null,In ORM - A table is mapped to:,Class,Class,Object,Class fields,Class methods,T3
+web301_q62,null,In ORM - data row is mapped to,Object,Class,Load from external properties file,Object,None of these,T3
+web301_q63,null,ORM mappings are done in,XML File,Database table,XML File,Properties File,Hashmap,T3
+web301_q64,null,ORM frameworks provide following capabilities,All of the above,Mappings in configuration file,Storage and retrieval of objects,API to query data using objects,All of the above,T3
+web301_q66,null,Hibernate provides mappings in following format,XML file,XML file,Properties file,Hashmap,Database table,T3
+web301_q67,null,Hibernate API to query the database is called ,HQL,SQL,HQL,DBMS,NoSQL,T3
+web301_q68,null,JPA stands for,Java Persistence API,Java Parser API,Java Pragmatic API,Java Persistence API,Java Programmer API,T3
+web301_q69,null,JPA API to take object out of context of database connectivity,EntityManager.detach(),EntityManager.refresh(),EntityManager.merge(),EntityManager.detach(),None of these,T3
+web301_q70,null,What is the specification standard for all ORM tools?,JPA,JDBC,JMS,JPA,None of the above,T3
+web301_q72,null,Which of the following is not an ORM tool?,JTA,Toplink,JTA,JDO,Castor,T3
+web301_q75,null,Which of the following is a benefit of using ORM?,All of the above,Provides a simple query language for most of the operations,Provides an API that reduces the code significantly,Abstracts the underlying database,Easy to manage complex models,T3
+web301_q77,null,ORM frameworks provide following capabilities,All of the above,Mappings in configuration file,Storage and retrieval of objects,API to query data using objects,All of the above,T3
+web301_q79,null,Hibernate provides mappings in following format,XML file,XML file,Properties file,Hashmap,Database table,T4
+web301_q80,null,Hibernate API to query the database is called ,HQL,SQL,HQL,DBMS,NoSQL,T4
+web301_q81,null,JPA stands for,Java Persistence API,Java Parser API,Java Pragmatic API,Java Persistence API,Java Programmer API,T4
+web301_q82,null,JPA API to take object out of context of database connectivity,EntityManager.detach(),EntityManager.refresh(),EntityManager.merge(),EntityManager.detach(),None of these,T4
+web301_q83,null,What does JDBC DriverManager class do?,Both 1 and 2,Manages a list of database drivers,Matches connection requests from the java application with the proper database driver using communication subprotocol,Both 1 and 2,None of the above,T4
+web301_q84,null,What is a JDBC Driver?,Interface enabling a Java application to interact with a database,Class to execute SQL queries in the database,Interface enabling a Java application to interact with a database,Class to call stored procedures in the database,None of the above,T4
+web301_q85,null,Which of the following methods are needed for loading a database driver in JDBC?,Both A and B,registerDriver() method,Class.forName(),Both A and B,getConnection(),T4
+web301_q86,null,Which statement is static and synchronized in JDBC API?,getConnection(),executeQuery(),executeUpdate(),getConnection(),prepareCall(),T4
+web301_q87,null,Which of the following statements is false as far as different type of statements is concerned in JDBC?,InterimStatement,Statement,PreparedStatement,CallableStatement,InterimStatement,T4
+web301_q88,null,All raw data types (including binary documents or images) should be read and uploaded to the database as an array of,byte,byte,int,boolean,char,T4
+web301_q89,null,JDBC facilitates to store the java objects by using which of the methods of PreparedStatement 1. setObject () 2. setBlob() 3. setClob(),"1,2,3","1,2","1,2,3","1,3","2,3",T4
+web301_q90,null,Which method is used to perform DML statements in JDBC?,executeUpdate(),execute(),executeQuery(),executeUpdate(),executeResult(),T4
+web301_q91,null,When the message 'No Suitable Driver' occurs?,1 or 3,When failed to load the appropriate JDBC drivers,"When the user name, password and the database does not match",When the JDBC database URL passed is not constructed properly,1 or 3,T4
+web301_q92,null,Are prepared statements actually compiled?,"Yes, they are compiled","Yes, they are compiled","No, they are bound by the JDBC driver",,,T4
+web301_q94,null,<p>Which of the following is true about Lazy Loading option on Book inside Series:</p>,All of the above,"Book child objects are not queried for, when loading Series objects.",Book child objects are loaded only Series.getBooks() api is called.,Series.getBooks() if called should be under hibernate session.,All of the above,T4
+web301_q95,null,"<p>For one-to-many mapping, one should in general use 'set' instead of 'list', because:</p>",All of the above,'list' enforces ordering in database query, Ordering in database query is slower than otherwise.,"Ordering of children is, in general, not required.",All of the above,T4
+web301_q96,null,<p>When is Lazy Loading a suitable option?</p>,When many use cases in business logic only needs parent object's attributes.,When many use cases in business logic only needs parent object's attributes.,When business logic needs children every time parent object is accessed.,"When the Parent has many such relations. Like User to Roles, User to Settings etc.",All of the above,T4
+web301_q97,null,<p>Let us take example of Shopping Site with Customer being one of the main entity. A Customer is typically is associated to a Sales Region (containing information like State and Country).</p><p>What is the association between Customer and Region in the Relational Model?</p>,many-to-one,one-to-one,one-to-many,many-to-one,many-to-many,T4
+web301_q99,null,"<p>A Purchase Order can refer to many Products (like smart phone, smart phone case, screen guard etc.), and a Product can be referred to by many Purchase Orders (because many Customers buy the same Product).</p><p>What is the association between Purchase Order and Product?</p>",one-to-many,one-to-one,one-to-many,many-to-one,many-to-many,T4
+web301_q100,null,<p>Every Customer has his/her own set of Purchase  Orders made.</p><p>What is the association between Customer and Purchase Order?</p>,one-to-many,one-to-one,one-to-many,many-to-one,many-to-many,T4
+web301_q101,null,What API in java can be used to load the required JDBC driver?,Java Reflection,Java Collections,Java Reflection,Java IO,All of the above,T4
+web301_q102,null,What is the first step in fetching data using JDBC?,Load database driver,Open connection using Driver Manager,Load database driver,Fire Query,Create statement,T4
+web301_q103,null,What is the best place to write close opened database connection?,Inside finally block,Before statement.executeQuery(),Inside finally block,Inside Resultset iteration,Anywhere,T4
+web301_q104,null,Best practice to handle connection parameters is,Load from external properties file,specify as String in DriverManager.getConnection() API call,Load from external properties file,Inside Try/Catch block,None of the above,T4
+web301_q105,null,Query is executed using following component,Statement,Class.forName(),DriverManager,Resultset,Statement,T4
+web301_q106,null,What are the common problems with using JDBC?,All of the above,Excessive Repetition of Code,Error Prone,Brittle to Change,All of the above,T4
+web301_q107,null,What happens if you do not close database connections,Database connection exceptions at runtime,Results in Null pointer exception,Compilation errors,Database connection exceptions at runtime,None of the above,T5
+web301_q108,null,What is Impedance Mismatch?,Difficulties that are encountered when a RDBMS system is used by an Object Oriented program,Problems occurred because of not properly closing the database connections,Difficulties that are encountered when a RDBMS system is used by an Object Oriented program,Difficulties that are encountered because of invalid database connection parameters,All of the above,T5
+web301_q109,null,What are the common problems in Impedance Mismatch?,All of the above,Granularity,Inheritance,Associations,Identity,T5
+web301_q112,null,What are the cons of using JDBC?,Both 1 & 2,"Causes Code bloating, i.e. there is a large programming overhead",Queries are DBMS specific,Both 1 & 2,None,T5
+web301_q113,null,Which can be used to solve most of the problems with using JDBC?,ORM Tools,NoSQL databases,JDBC Type 1 Driver,ORM Tools,All of the above,T5
+web301_q114,null,Which of the below are benefits of Cloud Computing?,All of above,Shared Infrastructure,Pay as you go,Elastic Resource Cpacity,All of above,T5
+web301_q115,null,Which of the below is not a service model or not offerred as a service using Cloud Computing?,MaaS,IaaS,PaaS,MaaS,SaaS,T5
+web301_q116,null,Which of below is a IaaS offerring?,All of above,Microsoft Azure,Amazon S3 Service,Rackspace,All of above,T5
+web301_q117,null,Which of the below is an example of PaaS?,Both 2 and 3,Yahoo weather Service,Salesforce.com,Google App Engine,Both 2 and 3,T5
+web301_q118,null,Whic of the below is a example of SaaS?,All of above,Gmail,YouTube,Dropbox,All of above,T5
+web301_q119,null,Which of the below services are offerred by Google App Engine?,Both 1 and 2,Task Queue,Memcache,Both 1 and 2,Only 2,T5
+web301_q120,null,GAE Level of Service ensures which of below?,Fair usage of shared resources,Use of shared resources,Overuse of shared resources,Fair usage of shared resources,None of above,T5
+web301_q121,null,How Google App Engine ensures Fair Usage?,Limits and Quotas,Pricing the app,Limits and Quotas,Free app,None of Above,T5
+web301_q122,null,Which of below is not a characterstic of Cloud Computing?,All of above,Cost Optimization,Management & Maintenance,Scalability and elasticity,All of above,T5
+web301_q123,null,Which of below are enforced to ensure apps can run smoothly and with integrity of the cloud?,All of Above,Free Quota,Billable Quota,Safety Limits,All of Above,T5
+web301_q129,null,Scalability is increasing of capacity of which of the below computing resources?,All of the above,Memory,Network bandwidth,CPUs or the Processing units,All of the above,T5
+web301_q130,null,How can you increase the system's capacity?,Both 1 and 3,By adding more servers,By removing servers to reduce race condition,By replacing with a bigger server,Both 1 and 3,T5
+web301_q131,null,Which of below concerns addressed by Cloud Computing?,IT Cost,Managing of infrastructure,IT Cost,Scalability,All of above,T5
+web301_q132,null,What is horizontal scaling?,Adding more servers,Replacing with a bigger server,Replacing with a smaller server,Adding more servers,None of the above,T5
+web301_q133,null,Replacing existing server of 2 CPU with Server having 4 CPU is a example for?,Scale Up,Scale Out,Scale Down,Scale In,Scale Up,T5
+web301_q134,null,Session is equivalent of the following in JDBC API,Database connection,Database Driver,Database connection,Statement,Resultset,T5
+web301_q136,null,"if the POJO does not set primary key auto increment value, then hibernate does following",Sets the auto increment  value based on the mapping ,Throws SQLException,Inserts null value,Sets the auto increment  value based on the mapping ,Throws NullPointerException,T5
+web301_q138,null,session.save() does the following:,All of the above,Inserts new record into the database,Updates the record in database,Inserts or updates based on id,All of the above,T5
+web301_q139,null,What is the pre-requisite to build a SessionFactory,Load the hibernate configuration,Start a transaction,Load the hibernate configuration,Create Database connection,All of the above,T5
+web301_q144,null,"Which of the following frameworks when used along with Hibernate can further reduce a lot of code, like opening and closing sessions and transactions? ",Spring,JDBC,TopLink,Spring,JDO,T5
+web301_q145,null,"In Hibernate, a HQL query is executed using the following component",Query,Session,Query,SessionFactory,All of the above,T5
+web301_q147,null,What is the method in Hibernate that can be used to pass named parameters to a Query?,query.setParameter(),query.list(),query.set(),query.load(),query.setParameter(),T5
+web301_q148,null,Session is equivalent of the following in JDBC API,Database connection,Database Driver,Database connection,Statement,Resultset,T5
+web301_q150,null,"if the POJO does not set primary key auto increment value, then hibernate does following",Sets the auto increment  value based on the mapping ,Throws SQLException,Inserts null value,Sets the auto increment  value based on the mapping ,Throws NullPointerException,T5
+web301_q152,null,session.save() does the following:,None of the above,Inserts new record into the database,Updates the record in database,Inserts or updates based on id,None of the above,T5
+web301_q153,null,Hibernate is compliant with,JPA,JMS,JPA,JMX,JSP,T5
+web301_q154,null,What is the tool used to generate classes from hibernate configuration files,hbm2java,hbm2ddl,maven,hbm2java,ANT,T5
+web301_q155,null,Hibernate supports following databases,All of the above,MySQL,Oracle,SQL server,All of the above,T5
+web301_q156,null,Hibernate mappings can be specified in following ways,Annotations or XML,XML file,Annotation,Annotations or XML,None of these,T5
+web301_q157,null,Hibernates maps POJOs to,tables,tables,columns,Class fields,Objects,T5
+web301_q158,null,What is the first step in fetching data using JDBC?,Load database driver,Open connection using Driver Manager,Load database driver,Fire Query,Create statement,T6
+web301_q160,null,What happens if you do not close database connections,Database connection exceptions at runtime,Results in Null pointer exception,Compilation errors,Database connection exceptions at runtime,None of the above,T6
+web301_q161,null,Best practice to handle connection parameters is,Load from external properties file,specify as String in DriverManager.getConnection() API call,Load from external properties file,Inside Try/Catch block,None of the above,T6
+web301_q162,null,Query is executed using following component,Statement,Class.forName(),DriverManager,Resultset,Statement,T6
+web301_q163,null,What is the first step in fetching data using JDBC?,Load database driver,Open connection using Driver Manager,Load database driver,Fire Query,Create statement,T6
+web301_q164,null,What is the best place to write close opened database connection?,Inside finally block,Before statement.executeQuery(),Inside finally block,Inside Resultset iteration,Anywhere,T6
+web301_q165,null,What happens if you do not close database connections,Database connection exceptions at runtime,Results in Null pointer exception,Compilation errors,Database connection exceptions at runtime,None of the above,T6
+web301_q166,null,Best practice to handle connection parameters is,Load from external properties file,specify as String in DriverManager.getConnection() API call,Load from external properties file,Inside Try/Catch block,None of the above,T6
+web301_q167,null,Query is executed using following component,Statement,Class.forName(),DriverManager,Resultset,Statement,T6
+web301_q168,null,What was Apache Maven written in?,2: Java (programming language),1: PHP,2: Java (programming language),3: Python (programming language),4: Perl,T6
+web301_q169,null,What is Apache Maven's current status?,2: Actively developed,1: Active service with various airlines and Air Forces,2: Actively developed,3: Active in new format,4: Active,T6
+web301_q170,null,What license is Apache Maven distributed under?,4: Apache License 2.0,1: GNU General Public License version 2,2: Based on Apache License 2.0,3: Triple-license MPL,GPL and LGPL,T6
+web301_q171,null,Which of the following platforms does Apache Maven run on?,2: Cross-platform,1: Mac OS X,2: Cross-platform,3: Windows,4: Linux,T6
+web301_q172,null,Maven automates building the project and running the ________ associated with the project.,4: Unit testing,1: Mock object,2: Test-driven development,3: Software testing,4: Unit testing,T6
+web301_q173,null,It is similar in functionality to the ________ tool  but is based on different concepts.,4: Apache Ant,1: Apache Harmony,2: Apache Tomcat,3: Apache Maven,4: Apache Ant,T6
+web301_q174,null,Maven projects are configured using a Project Object Model  which is stored in a pom.________-file.,3: XML,1: Scalable Vector Graphics,2: HTML,3: XML,4: XHTML,T6
+web301_q175,null,Google Appengine is a __________ ?,2: PaaS,1: SaaS,2: PaaS,3: IaaS,4: MaaS,T6
+web301_q176,null,What are the programming languages supported by Google Appengine?,4: All of the above,1: Java,2: Go,3: Python,4: All of the above,T6

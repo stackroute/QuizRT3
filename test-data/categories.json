@@ -1,0 +1,109 @@
+[
+  {
+
+    "categoryName": "Trending",
+    "categoryTopics": [
+      "Game-of-Thrones",
+      "Lord-of-the-Rings",
+      "Bollywood-Movies",
+      "Indian-Celebrities",
+      "Cricket-World-Cup",
+      "Java",
+      "States-of-India"
+    ]
+  },
+
+    {
+
+      "categoryName": "Recently Added",
+      "categoryTopics": [
+        "Cricket-Players",
+        "Indian-Literature",
+        "Basketball-Players",
+        "Sherlock",
+        "Indian-Festivals",
+        "Web-Development"
+
+      ]
+    },
+  {
+
+    "categoryName": "Sports",
+    "categoryTopics": [
+      "Cricket-World-Cup",
+      "Football-Players",
+      "Basketball-Players",
+      "Cricket-Players",
+      "Hockey"
+    ]
+  },
+  {
+
+    "categoryName": "TV",
+    "categoryTopics": [
+      "Cartoons",
+      "Game-of-Thrones",
+      "Lord-of-the-Rings",
+      "Sherlock"
+    ]
+  },
+  {
+
+    "categoryName": "Movies",
+    "categoryTopics": [
+      "Bollywood-Movies",
+      "Harry-Potter-Movies",
+      "Sherlock",
+      "Lord-of-the-Rings",
+      "Disney-Movies"
+    ]
+  },
+  {
+    "categoryName": "India",
+    "categoryTopics": [
+      "Indian-Politics",
+      "Indian-Celebrities",
+      "Indian-Literature",
+      "States-of-India",
+      "Indian-Mythology",
+      "Indian-History",
+      "Indian-Festivals",
+      "Indian-Constitution"
+    ]
+  },
+
+  {
+
+    "categoryName": "Literature",
+    "categoryTopics": [
+      "Indian-Literature",
+      "Lord-of-the-Rings",
+      "Sherlock"
+    ]
+  },
+  {
+
+    "categoryName": "Computer Science",
+    "categoryTopics": [
+      "Java",
+      "C-C++",
+      "Web-Development"
+    ]
+  },
+  {
+
+    "categoryName": "Nature",
+    "categoryTopics": [
+      "Animals",
+      "Birds"
+    ]
+  },
+  {
+
+    "categoryName": "The World",
+    "categoryTopics": [
+      "States-of-India",
+      "World-Cities"
+    ]
+  }
+]

@@ -1,0 +1,89 @@
+[{
+    "_id": "Biggest-Hollywood-Fan",
+    "title": "Biggest Hollywood Fan",
+    "description": "Lets Test Your Hollywood IQ",
+    "matches": 4,
+    "playersPerMatch": 2,
+    "tournamentFollowers": 100,
+    "imageUrl": "https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png\u0026q=50\u0026h=128\u0026w=128",
+    "topics": [{
+        "_id": "Bigest-Hollywood-Fan_1",
+        "name": "Harry-Potter-Movies"
+    }, {
+        "_id": "Bigest-Hollywood-Fan_2",
+        "name": "Sherlock"
+    }, {
+        "_id": "Bigest-Hollywood-Fan_3",
+        "name": "Lord-of-the-Rings"
+    }, {
+        "_id": "Bigest-Hollywood-Fan_4",
+        "name": "Disney-Movies"
+    }],
+    "__v": 0
+}, {
+    "_id": "Lord-Of-Series",
+    "title": "Lord Of Series",
+    "description": "Tournament for the persons who think they know all about English TV Series",
+    "matches": 3,
+    "playersPerMatch": 3,
+    "tournamentFollowers": 100,
+    "imageUrl": "https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png\u0026q=50\u0026h=128\u0026w=128",
+    "topics": [{
+        "_id": "Lord-Of-Series_1",
+        "name": "Game-of-Thrones"
+    }, {
+        "_id": "Lord-Of-Series_2",
+        "name": "Lord-of-the-Rings"
+    }, {
+        "_id": "Lord-Of-Series_3",
+        "name": "Sherlock"
+    }],
+    "__v": 0
+}, {
+    "_id": "Sports-Champ",
+    "title": "Sports Champ",
+    "description": "Lets Test Your Sports IQ",
+    "matches": 5,
+    "playersPerMatch": 3,
+    "tournamentFollowers": 100,
+    "imageUrl": "https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png\u0026q=50\u0026h=128\u0026w=128",
+    "topics": [{
+        "_id": "Sports-Champ_1",
+        "name": "Football-Players"
+    }, {
+        "_id": "Sports-Champ_2",
+        "name": "Basketball-Players"
+    }, {
+        "_id": "Sports-Champ_3",
+        "name": "Cricket-Players"
+    }, {
+        "_id": "Sports-Champ_4",
+        "name": "Cricket-World-Cup"
+    }, {
+        "_id": "Sports-Champ_5",
+        "name": "Hockey"
+    }],
+    "__v": 0
+}, {
+    "_id": "TV-Maniac",
+    "title": "TV Maniac",
+    "description": "Lets Test Your TV IQ",
+    "matches": 4,
+    "tournamentFollowers": 100,
+    "playersPerMatch": 4,
+    "imageUrl": "https://quizup-questions.imgix.net/topic-icons/game-of-thrones-2014-10-30T15:00:25.551Z?fm=png\u0026q=50\u0026h=128\u0026w=128",
+    "topics": [{
+        "_id": "TV-Maniac_1",
+        "name": "Cartoons"
+    }, {
+        "_id": "TV-Maniac_2",
+        "name": "Game-of-Thrones"
+    }, {
+        "_id": "TV-Maniac_3",
+        "name": "Lord-of-the-Rings"
+    }, {
+        "_id": "TV-Maniac_4",
+        "name": "Sherlock"
+    }],
+    "__v": 0
+}]

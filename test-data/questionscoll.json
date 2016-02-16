@@ -1,0 +1,3734 @@
+[
+  {
+    "topicId": "Football-Players",
+    "question": "Who was Fifa Player of the year 2014?",
+    "options": [
+      "Lionel Messi",
+      "Cristiano Ronaldo",
+      "Kaka",
+      "Fabio Cannavaro"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "who score the maximum goals in football world cup",
+    "options": [
+      "Lionel Messi",
+      "Cristiano Ronaldo",
+      "Fabio Cannavaro",
+      "Fabio Cannavaro"
+    ],
+    "correctIndex": "2",
+    "image": "https://www.google.co.in/search?q=football+players+image+link&rlz=1C1DFOC_enIN667IN667&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjI8P62r73KAhXWCY4KHQr5DxcQ_AUIBygB&biw=1600&bih=799#imgrc=y3gDA_oEGeUqmM%3A"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which footballer holds two doctorates, one in medicine and in philosophy?",
+    "options": [
+      "The Brazilian Socrates",
+      "The French Franck Ribery",
+      "The Italian Dino Zoff",
+      "The Dutch Marco Van Basten"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which soccer player was voted “Greatest Manchester United Player of the 20th Century” in 2001?",
+    "options": [
+      "Ryan Giggs",
+      "David Beckham",
+      " Eric Cantona",
+      "George Best"
+    ],
+    "correctIndex": "3",
+    "image": "https://en.wikipedia.org/wiki/Eric_Cantona#/media/File:Eric_Cantona_Cannes_2009.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which football legend is born with several physical defects?",
+    "options": [
+      "The Nigerian Jay-Jay Okocha",
+      "The Mexican Jorge Campos",
+      " The Colombian Carlos Valderrama",
+      "The Brazilian Garrincha"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "For which Portuguese club the legendary center-forward Eusebio played?",
+    "options": [
+      "FC Porto",
+      "Sporting Clube de Portugal",
+      "Benfica",
+      "Belenenses"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which of these football superstars has never played a World Cup match?",
+    "options": [
+      "Lev Yashin",
+      "Alfredo Di Stefano",
+      "Raul",
+      "Luis Figo"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who is renowned as the greatest Polish player ever?",
+    "options": [
+      "Jerzy Dudek",
+      "Grzegorz Lato",
+      "Zbigniew Boniek",
+      "Roman Kosecki"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which player contracted to Norwich City appeared in an England World Cup Finals squad?",
+    "options": [
+      "Jerzy Dudek",
+      "David Beckham",
+      "Fabio Cannavaro",
+      "chris woods"
+    ],
+    "correctIndex": "4",
+    "image": "https://en.wikipedia.org/wiki/Chris_Woods#/media/File:Austria_vs._USA_2013-11-19_(064).jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who was the only player to score a Premier League hat-trick for Crystal Palace?",
+    "options": [
+      "FC Porto",
+      "Lionel Messi",
+      "Yannick Bolasie",
+      "Grzegorz Lato"
+    ],
+    "correctIndex": "3",
+    "image": "http://marriedwiki.com/uploads/bio/yannick-bolasie.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which player scored 15 or more Premier League goals with Wigan Athletic?",
+    "options": [
+      "Lev Yashin",
+      "Benfica",
+      "Henri Camara",
+      "Fabio Cannavaro"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "What nationality was Carlos Caszely who received the first ever World Cup red card in 1974?",
+    "options": [
+      "U.S.A",
+      "Chilean",
+      "U.k",
+      "South korea"
+    ],
+    "correctIndex": "2",
+    "image": "http://s.weltsport.net/bilder/spieler/gross/1245.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which English goalkeeper has kept 10 clean sheets in World Cup games?",
+    "options": [
+      "Geoff Hurst",
+      "Peter Shilton",
+      "David James",
+      "Grzegorz Lato"
+    ],
+    "correctIndex": "2",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Anton_and_Rio_Ferdinand_with_West_Ham_United.jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "How old was Pele when he won his first World Cup?",
+    "options": [
+      "17",
+      "23",
+      "28",
+      "18"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which German won the World Cup as both a player and a manager?",
+    "options": [
+      " Zinedine Zidane",
+      "Franz Beckenbauer",
+      "Roger Malia",
+      "Peter Shilton"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which Italian won the World Cup aged 40?",
+    "options": [
+      "Dino Zoff",
+      "Norman whiteside",
+      "graham poll",
+      "Roger Malia"
+    ],
+    "correctIndex": "1",
+    "image": "https://en.wikipedia.org/wiki/Dino_Zoff#/media/File:Dino_Zoff_(1974).jpg"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who was England captain in Spain in 1982?",
+    "options": [
+      "Ferreira Eusebio",
+      "Dino Zoff",
+      "Peter Shilton",
+      "Mick Mills"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Which player won the 2002 World Cup and also finished top scorer?",
+    "options": [
+      "Ronaldo ",
+      "Lionel Messi",
+      "David James",
+      "Mick Mills"
+    ],
+    "correctIndex": "1",
+    "image": "http://vignette1.wikia.nocookie.net/armchair-new/images/a/a3/Cristiano_Ronaldo_Real_Madrid_CF_v_RCD_Espanyol_4GbnBH1YpIel.jpeg/revision/latest?cb=20121204012325"
+  },
+  {
+    "topicId": "Football-Players",
+    "question": "Who scored the infamous 'Hand of God' goal?",
+    "options": [
+      "Ronaldo ",
+      "Diego Maradonna",
+      "David James",
+      "Paul Ince"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Who goes on the adventure with Merido in Brave?",
+    "options": [
+      "Her brothers",
+      "Her prince",
+      "Her mother",
+      "Her father"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In The Little Mermaid, who is NOT one of Triton’s daughter?",
+    "options": [
+      "Andrina",
+      "Adora",
+      "Attina",
+      "Alana"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/12/tmp/webdr01/05c4d0e1f2c99cb6cfbddfd50465ae65-20.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which phrase does the Evil Queen in Snow White actually say?",
+    "options": [
+      "Mirror,mirror,on the wall-who is the fairest of them all?",
+      "Magic mirror,on the wall-who is the fairest one of all?",
+      "Mirror,mirror,on the wall-who is the fairest one of all?",
+      "Magic mirror,on the wall-who is the fairest of them all?"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/13/tmp/webdr09/37b9a31efc8748f20aba303c0c3c2d3b-1.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In the movie Tangled, Flynn Rider is wanted dead or alive according to his wanted poster because he's a…",
+    "options": [
+      "Bandit",
+      "Thief",
+      "Treasonist",
+      "Robber"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/13/tmp/webdr02/2eb52ac096f0d8152a184f282f187ed2-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In Sleeping Beauty, what is the name of Maleficent’s pet raven?",
+    "options": [
+      "Diablo",
+      "Malum",
+      "Mauvais",
+      "Diable"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/14/tmp/webdr02/cc87334fc9e769fed292c7dcb4594be8-8.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Finish the lyrics: Wouldn't you think I'm the girl, the girl who has everything? Look at this trove, treasures untold…",
+    "options": [
+      "Its full of gizmos and gadgets galore",
+      "Wonders from all over the world",
+      "There so much to be known",
+      "How many wonders can one cavern hold?"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/14/tmp/webdr07/d567bc7bdfd09f430c9561fdccbf1b58-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Pocahontas, what did Pocahontas see in her dream that made her believe that a change was coming?",
+    "options": [
+      "A spinning arrow",
+      "A strange cloud formation",
+      "A hawk circling her village",
+      "A burning blue fire"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/14/tmp/webdr05/21d940e379b9a985a1ba124574ac9aed-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In Frozen, how many brothers does Hans have?",
+    "options": [
+      "7",
+      "9",
+      "12",
+      "15"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr02/9eb8797229845fef0d233ad61a330224-8.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Finish the lyrics: My soul is spiraling in frozen fractals all around…",
+    "options": [
+      "That wraps my heart in a cold and distant past.",
+      "And one thought crystallizes like an icy blast.",
+      "Somehow I’ve now been given a new chance.",
+      "And all my problems are far gone in the past."
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr02/22e240026d37610e15d91cededd986d7-13.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Sleeping Beauty, what do the fairies arm Prince Phillip with to fight Maleficent?",
+    "options": [
+      "Sword of Destiny and Shield of Bravery",
+      "Sword of Truth and Shield of Virtue",
+      "Sword of Righteousness and Shield of Honor",
+      "Sword of Valiantness and Shield of Triumph"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr07/7364275dfc063599bffff8bfd1128d9f-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Aladdin, what does Aladdin, and a reluctant Abu, give to the poor children to eat?",
+    "options": [
+      "Dates",
+      "Apples",
+      "Bread",
+      "Cheese"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr05/6ad7f077bd9d0239ad73d41c372d267d-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the organization Bernard and Miss Bianca work in The Rescuers?",
+    "options": [
+      "The Rescue Aid Society",
+      "The International Rescue Organization",
+      "The Rescuers",
+      "The Secret Helpers"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/15/tmp/webdr11/1610bfbcad07ad4d31119a2427aa9f8c-11.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Beauty and the Beast, how many eggs does Gaston say he eats in order to stay roughly the size of barge?",
+    "options": [
+      "Four dozen",
+      "Nine dozen",
+      "Seven dozen",
+      "Five dozen"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr11/c023138811914c742b2d3cf522005d45-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Princess and the Frog, what fictional country is Prince Naveen from?",
+    "options": [
+      "Maramorgos",
+      "Mypos",
+      "Mrac",
+      "Maldonia"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr07/2ea7952c37d567cb51a6ce61e3da06d8-11.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Hercules, Hades promised not to harm Megara if Hercules gave up his strength for how long?",
+    "options": [
+      "12 hours",
+      "24 hours",
+      "36 hours",
+      "48 hours"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr07/99c0e66fc7fe103fdeb101f07c28fb03-3.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "On whose shoulders does Dopey stand on in order to dance with Snow White during The Silly Song scene?",
+    "options": [
+      "Doc",
+      "Grumpy",
+      "Sneezy",
+      "Happy"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr05/2bfe921faefbbf9a778b4658793ad7ca-1.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Alice in Wonderland, aside from a pocket watch, what else is the White Rabbit holding when Alice encounters him?",
+    "options": [
+      "A cane",
+      "An umbrella",
+      "A top hat",
+      "All of the above"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/16/tmp/webdr05/a93b182845b280d3bcb88a8d5e8245dd-15.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "How many years does the Genie say he has been trapped in the lamp?",
+    "options": [
+      "100 years",
+      "500 years",
+      "1,000 years",
+      "10,000 years"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr11/e4ddea758685a1cf20dfcac130a0be72-13.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  The Sword in the Stone,  what is the name of Merlin’s pet owl?",
+    "options": [
+      "Aristotle",
+      "Socrates",
+      "Archimeded",
+      "Plato"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr10/1ba5b844b541ef06a69f4cdcae7465ab-2.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  Lady and the Tramp,  Jim Dear gives his wife Darling, Lady as a gift for…",
+    "options": [
+      "Valentines Day",
+      "Her Birthday",
+      "For their anniversary",
+      "Christmas"
+    ],
+    "correctIndex": "4",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr11/0ec0de936dd846d9e4f003fa8fa84681-5.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  The Little Mermaid,  what alias does Ursula use when she becomes human?",
+    "options": [
+      "Vanessa",
+      "Alexis",
+      "Sonia",
+      "Amber"
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr08/1bc875bcda5ebf22a707c52f02d1db29-0.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In  Peter Pan,  what happens after Wendy wakes up?",
+    "options": [
+      "She finds Peter Pan chasing his shadow around the bedroom.",
+      "She finds Peter Pan trying to attach his shadow with soap.",
+      "She finds Peter Pan trying to calm Tinkerbell down.",
+      "1. She finds Peter Pan and Tinkerbell looking through her stuff."
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr10/961d2e2017170b0fe407d3b3932d47a5-20.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " In  101 Dalmatians,  how many puppies does Perdita give birth to?",
+    "options": [
+      "12",
+      "15",
+      "18",
+      "21"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/17/tmp/webdr05/16b4185d0cf66da1b2cecda81c8703d6-1.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Why is the Horned King searching for the Black Cauldron?",
+    "options": [
+      "It has the power to create an army of undead warriors.",
+      "It has the power to bring him back to life.",
+      "It has the power to control the minds of humans.",
+      "It has the power to help him destroy the world."
+    ],
+    "correctIndex": "1",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/18/tmp/webdr07/8ee38675007e5569a2839d812de47999-22.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": " What does the matchmaker criticize Mulan for?",
+    "options": [
+      "Being too tall",
+      "Being too skinny",
+      "Having bad posture",
+      "Having big feet"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/18/tmp/webdr07/664bc2c8031e3994090e47c5d1d018de-14.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Gaston tells Belle they'll have about how many kids together?",
+    "options": [
+      "Four or five",
+      "Six or seven",
+      "Nine or 10",
+      "A dozen"
+    ],
+    "correctIndex": "2",
+    "image": "https://s3-ak.buzzfed.com/static/2014-10/8/18/tmp/webdr02/d2bae83b37d9181d0b20aab867c1af1b-4.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What do Aladdin and his monkey Abu steal from the marketplace when you’re first introduced to them in the movie?",
+    "options": [
+      "An Apple",
+      "Crackers",
+      "Cheese",
+      "A loaf of bread"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What popular Disney character makes an appearance as a stuffed animal in Frozen?",
+    "options": [
+      "Mickey Mouse",
+      "Winnie The Pooh",
+      "Mr. Potato Head",
+      "Tinker Bell"
+    ],
+    "correctIndex": "1",
+    "image": "https://en.wikipedia.org/wiki/File:Mickey_Mouse.png"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Who was the first Disney princess?",
+    "options": [
+      "Cinderella",
+      "Snow White",
+      "Aurora",
+      "Pocahontas"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Franz_J%C3%BCttner_Schneewittchen_5.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What were the names of Cinderella’s evil stepsisters?",
+    "options": [
+      "Beatrice and Daphine",
+      "Anastasia and Drizella",
+      "Mary and Prudence",
+      "Ana and Diana"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which one of these is NOT a Disney prince?",
+    "options": [
+      "Prince Naveen",
+      "Prince George",
+      "Prince Charming",
+      "Prince Eric"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What does the enchanted cake in Brave turn Merida’s mother into?",
+    "options": [
+      "A bear",
+      "A cat",
+      "A dog",
+      "A frog"
+    ],
+    "correctIndex": "1",
+    "image": "https://en.wikipedia.org/wiki/File:Ursus_arctos_-_Norway.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In The Little Mermaid, what name does Ursula go by when she disguises herself and uses Ariel’s voice to try and win over Eric?",
+    "options": [
+      "Vanessa",
+      "Caroline",
+      "Clarissa",
+      "Athena"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Who did Pocahontas’ father want her to marry?",
+    "options": [
+      "John Rolfe",
+      "Kocoum",
+      "John Smith",
+      "Percy"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the song that Cinderella and Prince Charming dance to at the ball?",
+    "options": [
+      "Perfectly Perfect",
+      "More Than A dream",
+      "So This Is Love",
+      "Sing, Sweet Niightingale"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which one of these is NOT a song from Sleeping Beauty?",
+    "options": [
+      "Once Upon A Dream",
+      "Part Of Your World",
+      "The Gifts of Beauty and Song",
+      "Keys to the Kingdom"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Movie_poster_mulan.JPG"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which of these official Disney Princesses is not actually a princess in the movie?",
+    "options": [
+      "Merida",
+      "Mulan",
+      "Pocahontas",
+      "Ariel"
+    ],
+    "correctIndex": "2",
+    "image": "http://cdn.playbuzz.com/cdn/abd0fa49-77fd-4eb6-97b1-26eefea9811e/b3a077f5-82d1-4979-8d6b-61110edc9468.gif"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "How many sisters does Ariel have?",
+    "options": [
+      "7",
+      "6",
+      "4",
+      "3"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which of these princesses is based on a real person?",
+    "options": [
+      "Cinderella",
+      "Pocahontas",
+      "Ariel",
+      "Jasmine"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Pocahontas_by_Simon_van_de_Passe_1616.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which famous princess attends Elsa’s coronation ceremony in Frozen?",
+    "options": [
+      "Cinderella",
+      "Aurora",
+      "Rapunzel",
+      "Merida"
+    ],
+    "correctIndex": "3",
+    "image": "https://en.wikipedia.org/wiki/File:Illustration_for_the_Brothers_Grimm_fairy_tale_Rapunzel..jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the pub that Flynn brings Rapunzel to in Tangled?",
+    "options": [
+      "O`Connors Pub",
+      "Ye Olde Pub",
+      "The Snuggly Duckling",
+      "Gothel`s Pub"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What U.S. city is the setting of The Princess and The Frog inspired by?",
+    "options": [
+      "New York",
+      "New Orleans",
+      "Nashville ",
+      "Atlanta"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:New_Orleans,_Louisiana_montage.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the tea cup from Beauty and the Beast?",
+    "options": [
+      "Monseiur Potts",
+      "Chippy Potts",
+      "Chip Potts",
+      "Mr. Potts"
+    ],
+    "correctIndex": "3",
+    "image": "https://en.wikipedia.org/wiki/File:BeautyBeastCharacters.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of Mulan’s pet dragon?",
+    "options": [
+      "Huns",
+      "Mushu",
+      "Li Shang",
+      "Fa Zhou"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:MulanCharacters.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which one of these princesses is NOT part of Disney’s official princess lineup?",
+    "options": [
+      "Pocahontas",
+      "Elsa",
+      "Merida",
+      "Rapunzel"
+    ],
+    "correctIndex": "2",
+    "image": "https://en.wikipedia.org/wiki/File:Elsa_from_Disney%27s_Frozen.png"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In the Lion King, where does Mufasa and his family live?",
+    "options": [
+      "The Gorge",
+      "Waterhole",
+      "Mount Kilimanjaro",
+      "Pride rock"
+    ],
+    "correctIndex": "4",
+    "image": "https://upload.wikimedia.org/wikipedia/en/2/23/LionKingCharacters.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Beauty and the Beast, how many egss does Gaston eat for breakfast?",
+    "options": [
+      "1 dozen",
+      "3 dozen",
+      "5 dozen",
+      "7 dozen"
+    ],
+    "correctIndex": "3",
+    "image": "http://vignette2.wikia.nocookie.net/disney/images/1/16/Beauty-and-the-beast-disneyscreencaps.com-541.jpg/revision/latest?cb=20130715181838"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "During the battle with Aladdin, what type of animal does Jafar transform himself into?",
+    "options": [
+      "Tiger",
+      "Cobra",
+      "Mongoose",
+      "Lion"
+    ],
+    "correctIndex": "2",
+    "image": "http://vignette2.wikia.nocookie.net/filmguide/images/d/d4/Jafar.gif/revision/latest?cb=20120414183741"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "Which full length animated feature did Walt Disney originally consider having as a Live Action Film with Mary Martin having the lead role?",
+    "options": [
+      "Peter Pan",
+      "Robin Hood",
+      "Cinderella",
+      "Snow White"
+    ],
+    "correctIndex": "1",
+    "image": "http://static.independent.co.uk/s3fs-public/thumbnails/image/2015/10/21/13/disney%20cartoon.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What actor provided the voice of Lumiere in Beauty & the Beast?",
+    "options": [
+      "Chris Sanders",
+      "Jerry Orbach",
+      "Jim Cummings",
+      "Brian Bedford"
+    ],
+    "correctIndex": "2",
+    "image": "http://i2.wp.com/bitcast-a-sm.bitgravity.com/slashfilm/wp/wp-content/images/Beauty-and-the-Beast.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Lady & the Tramp, by what name did Tony call Tramp?",
+    "options": [
+      "Butch",
+      "Witch",
+      "Groan",
+      "Cramp"
+    ],
+    "correctIndex": "1",
+    "image": "https://satinahall.files.wordpress.com/2015/06/lady-and-the-tramp-11.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is the name of the fictional city featured in Aladdin?",
+    "options": [
+      "Yanbu",
+      "Jubail",
+      "Qatif",
+      "Agrabah"
+    ],
+    "correctIndex": "4",
+    "image": "http://www.parisindiaconnections.com/wp-content/uploads/2013/04/aladin.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What nickname does Peter Pan give to Captain Hook?",
+    "options": [
+      "Seel",
+      "Eel",
+      "Codfish",
+      "Whale"
+    ],
+    "correctIndex": "3",
+    "image": "http://vignette4.wikia.nocookie.net/parody/images/a/af/Peterpan2-disneyscreencaps_com-1915.jpg/revision/latest?cb=20131014102022"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "In Peter Pan, what city does the story begin in?",
+    "options": [
+      "New York",
+      "London",
+      "Paris",
+      "Washington"
+    ],
+    "correctIndex": "2",
+    "image": "http://img2-2.timeinc.net/people/i/2014/news/140203/peter-pan-600.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What song was added to the special edition of Beauty and the Beast?",
+    "options": [
+      "Human Again",
+      "Belle",
+      "Gaston",
+      "Be our guest"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.toonbarn.com/wordpress/wp-content/uploads/2011/11/Disney-releases-Beauty-and-The-Beast-The-Enchanted-Christmas.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What movie did Walt Disney have dubbed in 7 different languages costing him an extra $65,000 but lost a major amount of the money because of WWII and the European Market having trouble because of the war?",
+    "options": [
+      "Peter Pan",
+      "Mickey mouse",
+      "Pinocchio",
+      "Cinderella"
+    ],
+    "correctIndex": "3",
+    "image": "http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-e6lzoj_4c65a315.jpeg?region=0,0,600,600&width=320"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "On what mountain was Hercules born?",
+    "options": [
+      "Mount Everest",
+      "Mound Eden",
+      "Mount Jade",
+      "Mount Olympus"
+    ],
+    "correctIndex": "4",
+    "image": "http://vignette1.wikia.nocookie.net/disney/images/c/cc/Disney_mount_olympus_4.jpg/revision/latest?cb=20110525062105"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What 2 colors make up the Queen of Hearts dress in Alice in Wonderland?",
+    "options": [
+      "Red and white",
+      "Red and black",
+      "Purple and Red",
+      "White and purple"
+    ],
+    "correctIndex": "2",
+    "image": "http://cdnvideo.dolimg.com/cdn_assets/fd5e5e0f847243c8ad67b72ed4c1b5705b404e25.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "When Hercules is a baby on Mount Olympus, what does he use as a crib to sleep in?",
+    "options": [
+      "Rock",
+      "Leaves",
+      "Cloud",
+      "Sword"
+    ],
+    "correctIndex": "3",
+    "image": "http://static1.squarespace.com/static/51b3dc8ee4b051b96ceb10de/t/5390b599e4b0b45f2a56e4de/1434444090963/Walt-Disney-Posters-Hercules-walt-disney-characters-32518673-3000-2250.jpg"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "This is a character from which Disney movie - Aurora?",
+    "options": [
+      "Sleeping Beauty",
+      "Pinnocchio",
+      "The Little Mermaid",
+      "The Lion king"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Disney-Movies",
+    "question": "What is Jafar's title?",
+    "options": [
+      "Premier of Agrabah",
+      "Royal Vizier of Agrabah",
+      "Royal Advisor of Agrabah",
+      "Chancellor Of Agrabah"
+    ],
+    "correctIndex": "2",
+    "image": "http://www3.pictures.zimbio.com/mp/Y2y6UMuTuTCl.jpg"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "In 1983 the cricket World Cup was held where?",
+    "options": [
+      "England",
+      "West Indies",
+      "Australia/NZ",
+      "South Africa"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Which player has maximum number of one day ducks?",
+    "options": [
+      "Wasim akram",
+      "Kaluwithernath",
+      "Inzamam-ul-haq",
+      "Sanath Jayasurya"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Which player has scored the fastest century?",
+    "options": [
+      "Shahid afridi",
+      "Mark boucher",
+      "Brain lara",
+      "Corey Anderson"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who is having the best one day bowling figures",
+    "options": [
+      "Muttiah murlidharan",
+      "Anil kumble",
+      "Chaminda vas",
+      "Glenn Mcgrath"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who was the first player to score a One Day International century?",
+    "options": [
+      "Dennis ammis",
+      "Derek randell",
+      "Don Bradman",
+      "Mike Denniss"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "When did South Africa made its One Day International debut?",
+    "options": [
+      "1971",
+      "1991",
+      "1994",
+      "1980"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "in which year india made its one day international debut?",
+    "options": [
+      "1971",
+      "1974",
+      "1973",
+      "1975"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "How many matches did it take for Sachin Tendulkar to score his first one day hundred?",
+    "options": [
+      "74",
+      "79",
+      "94",
+      "84"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Against which team did India win its first One Day International match?",
+    "options": [
+      "England",
+      "Pakistan",
+      "South africa",
+      "East africa"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who hit the winning runs in India’s famous NatWest final victory against England in 2002?",
+    "options": [
+      "Zaheer khan",
+      "Harbhajan singh",
+      "Mohammad kaif",
+      "Yuvraj singh"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who holds the record for most One Day International wickets?",
+    "options": [
+      "Wasim akram",
+      "Shane warne",
+      "kapil dev ",
+      "mutiah murlidharan"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who holds the record for most dismissals?",
+    "options": [
+      "Kumara sangakara",
+      "MS dhoni",
+      "adam gilchrist",
+      "AB devillers"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who holds the record for most nineties in career",
+    "options": [
+      "Mohammad Azharuddin",
+      " Sachin Tendulkar",
+      "Nathan Astle",
+      "Arvinda de silva"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who holds the record for most catches in career (non wicket keeper)?",
+    "options": [
+      "Suresh raina",
+      "Mahela jayaverdane",
+      "Rahul Dravid",
+      "Allan border"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who won “Man of the Tournament” award in the 1992 World Cup?",
+    "options": [
+      "Javed Miandad",
+      "Ian Botham",
+      "David Boon",
+      "Martin Crowe"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "By how many runs ind beat pak in 2007 worl cup?",
+    "options": [
+      "4 runs",
+      "6 runs",
+      "5 runs",
+      "7 runs"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Sachin Tendulkar has a record for highest One Day International Man of the Match awards. How many times he has won it?",
+    "options": [
+      "62",
+      "54",
+      "75",
+      "44"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who with 20 wickets was the top bowler of the 1999 World Cup?",
+    "options": [
+      "chris haris",
+      "Geoff allot",
+      "Shane warne",
+      "both b & c"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cricket-World-Cup",
+    "question": "Who was the first bowler to pick a one day hat-trick?",
+    "options": [
+      "chetan sharma",
+      "Jalal-ud-din",
+      "Bruce-reid",
+      "Wasim akram"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In The Jungle Book Baloo is which of the following?",
+    "options": [
+      "A bear",
+      "A shark",
+      "A tiger",
+      "A panther"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Peter Parker is the alter ego of which superhero?",
+    "options": [
+      "Superman",
+      "Spiderman",
+      "Batman",
+      "Shaktimaan"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Superman's Supercat is named what?",
+    "options": [
+      "Streaky",
+      "Snowy",
+      "Felix",
+      "Krazy Kat"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "The Porky Pig cartoon character has a girlfriend named what?",
+    "options": [
+      "Petunia",
+      "Zinia",
+      "Lily",
+      "Tulip"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What character first appeared in the film The Wise Little Hen?",
+    "options": [
+      "Minnie Mouse",
+      "Mickey Mouse",
+      "Goofy",
+      "Donald Duck"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Which cartoon characters were invented in 1957 in Belgium?",
+    "options": [
+      "Loony Toons",
+      "Peanuts",
+      "The Smurfs",
+      "Tom and Jerry"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Dik Browne is the author of which cartoon strip?",
+    "options": [
+      "Tintin",
+      "Minions",
+      "Hagar the Horrible",
+      "FlintStones"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the comic strip Garfield what is the teddy bear’s name?",
+    "options": [
+      "Bhalu",
+      "Pooky",
+      "Panda Bear",
+      "Grisley Bear"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What is the name of Donald Duck's father?",
+    "options": [
+      "Quackemore",
+      "Doodle Duck",
+      "Duckling",
+      "Quacky"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What was the first daily comic strip in the USA?",
+    "options": [
+      "Tom and Jerry",
+      "Mutt and Jeff",
+      "Harry Potter",
+      "Minions"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What was Mickey Mouse's Pluto named when he first appeared?",
+    "options": [
+      "Rover",
+      "Nemo",
+      "Plano",
+      "Duffy"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the Flintstones what order did Fred and Barney belong to?",
+    "options": [
+      "Jungle Lions",
+      "Mermaids",
+      "Sea horse",
+      "Water Buffalos"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the comic strip cartoon Dilbert, what is Dilbert's girlfriends name?",
+    "options": [
+      "Liz",
+      "Paula",
+      "April",
+      "Kate"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In TinTin Comics,what is the license plate number of Thompson and Thomson’s jeep in The Land of Black Gold?\n",
+    "options": [
+      "443",
+      "433",
+      "33",
+      "404"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In TinTin comics,what does Snowy say when he barks?",
+    "options": [
+      "Wooah!",
+      "Wow!!",
+      "Woho!!",
+      "Yahooooo!!"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What was Woody Woodpecker's hometown called?",
+    "options": [
+      "Puddleburg",
+      "Hamburg",
+      "Eidelburg",
+      "Snowberg"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the cartoon Peanuts, Schroeder is a big fan of whose music?",
+    "options": [
+      "Beethoven",
+      "Yanni",
+      "Mozart",
+      "Pink Floyd"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In the cartoon Casper -The Friendly Ghost, Casper had a horse-ghost friend named what?",
+    "options": [
+      "NightGhost",
+      "Nightmare",
+      "HalfHorse",
+      "HalfGhost"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "In Disney cartoons, what was Goofy's nephew's name?",
+    "options": [
+      "Gotham",
+      "Ghost",
+      "Gru",
+      "Gilbert"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What is the last name of the cartoon characters Marge, Bart, and Homer?",
+    "options": [
+      "Simpson",
+      "Emerson",
+      "Robson",
+      "Nelson"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "Who hosted the early series of The Pink Panther cartoons?",
+    "options": [
+      "Mike Tyson",
+      " Lenny Schulz",
+      "Oprah Winfrey",
+      "Johnny Depp"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What did Jeremy Boob, Ph.D., use to fix the sub's prop, enabling the Fab Four to escape the Blue Meanies in the 1968 cartoon fantasy Yellow Submarine?\n",
+    "options": [
+      " Bubble gum",
+      "Knife",
+      "Ropes",
+      "Ladder"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Cartoons",
+    "question": "What Nickelodeon cartoon series was named after the cartoonist's apartment manager?",
+    "options": [
+      "School of Rock",
+      "Ren & Stimpy",
+      "The Loud Hose",
+      "The Dunes Club"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "Indian-Constitution was Inaugurated on _______?",
+    "options": [
+      "Jan 26, 1947",
+      "Jan 26, 1949",
+      "Jan 26, 1950",
+      "Jan 27 1949"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "Main Standing Committee of Lok Sabha are _______ ?",
+    "options": [
+      "Committee on Public Accounts",
+      "Estimates Committee",
+      "Committee on Public Undertaking",
+      "All the Above"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The work of General Purpose Committee is to advise?",
+    "options": [
+      "The President",
+      "The Vice-President",
+      "The Speaker",
+      "The Prime Minister"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "Mr. P. V. Narashima Rao is the ______ Prime Minister of India?",
+    "options": [
+      "Seventh",
+      "Fifth",
+      "Sixth",
+      "Ninth"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "Full statehood was coffered to Arunachal Pradesh by the ________ amendment of the constitution?",
+    "options": [
+      "Fifth-Fifth",
+      "Sixtieth",
+      "Forty-Fourth",
+      "Sixth-Fifth"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "In India the Governor of the states are appointed by ______?",
+    "options": [
+      "The Prime Minister",
+      "The Parliament",
+      "The Chief Ministers",
+      "The President"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "How many Schedules are contained in the Constitution of India?",
+    "options": [
+      "12 Schedules",
+      "20 Schedules",
+      "10 Schedules",
+      "25 Schedules"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "How Many Union Territories in India?",
+    "options": [
+      "9",
+      "8",
+      "7",
+      "5"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "what's deal in Part III of the Indian-Constitution?",
+    "options": [
+      "Fundamental Rights",
+      "Education rights",
+      "Both of the Above",
+      "None of These"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "How many languages have recongnised by the Constitution?",
+    "options": [
+      "20",
+      "22",
+      "27",
+      "30"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "What can be the maximum gap between two sessions of Parliament ?",
+    "options": [
+      "Six Months",
+      "Three Months",
+      "One year",
+      "Not specified in constitution"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "As mandated by the ...... of the constitution, the government has constituted the 14th Finance commission.",
+    "options": [
+      "Article 180",
+      "Article 280",
+      "Article 380",
+      "Article 480"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The Constitution of India was adopted on .....",
+    "options": [
+      "26th November 1949",
+      "26th January 1949",
+      "26th November 1950",
+      "26th January 1950"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The Constituent Assembly of India started functioning from :",
+    "options": [
+      "9th December 1947",
+      "26th January 1946",
+      "26th January 1947",
+      "9th December 1946"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The Constituent Assembly took time to frame the Constitution of India..",
+    "options": [
+      "1 years 11 months 6 days",
+      "2 years 11 months 8 days",
+      "2 years 11 months 18 days",
+      "2 years 11 months 28 days"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The Concept of written constitution, first born was...",
+    "options": [
+      "UK",
+      "USA",
+      "ITLY",
+      "FRANCE"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The word 'Secularism' was inserted in the Preamble of the Indian-Constitution by...",
+    "options": [
+      "40nd Amendment",
+      "41nd Amendment",
+      "42nd Amendment",
+      "52nd Amendment"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "IF A QUESTION ASKED BY A MEMBER OF PARLIAMENT IS A STARRED ONE,HE WILL GET ---------",
+    "options": [
+      "NO ANSWER",
+      "A WRITTEN ANSWER",
+      "ANSWER IN ZERO HOUR",
+      "AN ORAL ANSWER"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The party \"Forward Block\" was formed by-------",
+    "options": [
+      "Bhagat singh",
+      "S.Patel",
+      "M.Gandhi",
+      "S.C.Bose"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "India has adopted its Parliament system of government from------------",
+    "options": [
+      "The USA",
+      "The UK",
+      "The UAE",
+      "The Netherlands"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Fundamental Rights ?",
+    "options": [
+      "America",
+      "Britain",
+      "Australia",
+      "Russia"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Fundamental Duties ?",
+    "options": [
+      "America",
+      " Russia",
+      "Australia",
+      "Britain"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Parliamentary Election ?",
+    "options": [
+      "Britain",
+      "America",
+      "Russia",
+      "Australia"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Union - State List ?",
+    "options": [
+      "canada",
+      "America",
+      "Russia",
+      "Britain"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Amendment of the Constitution ?",
+    "options": [
+      "Russia",
+      "South Africa",
+      "canada",
+      "America"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Concurrent list ?",
+    "options": [
+      "Australia",
+      "Russia",
+      "Britain",
+      "America"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed 'Suspension of Fundamental Rights during the Emergency' ?",
+    "options": [
+      "Australia",
+      "Britain",
+      "Germany",
+      "Canada"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country Indian Constitution Borrowed Speaker in Lok Sabha ?",
+    "options": [
+      "Britain",
+      "Germany",
+      "Russia",
+      "Australia"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "From Which country India Borrowed Written Constitution ?",
+    "options": [
+      "Australia",
+      "Britain",
+      "Germany",
+      "America"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "English is the official language of which of the following states?",
+    "options": [
+      "Manipur",
+      "Nagaland",
+      "Tripura",
+      "Sikkim"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "Which is at the apex of the three tier system of Panchayati Raj?",
+    "options": [
+      "gramma panchayat",
+      " panchayat samiti",
+      "zila parishad",
+      "gramma sabha"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "For the enforcement of Fundamental Rights, the supreme court may issue a/an",
+    "options": [
+      "writ",
+      "decree",
+      "notification",
+      "ordinance"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The concept of Welfare State is found in the Indian-Constitution in the",
+    "options": [
+      "Fundamental Duties",
+      "Preamble",
+      "Directive Principles",
+      "Fundamental Rights"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Constitution",
+    "question": "The authority to alter the boundaries of States in India rests with",
+    "options": [
+      "President",
+      "Prime Minister",
+      "State Government",
+      " Parliament"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of this concepts related to elephants?",
+    "options": [
+      "Probiotics",
+      "Pro bono",
+      "Proboscis",
+      "Probity"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the largest songbird in North America",
+    "options": [
+      "Cedar Waxwing",
+      "Nothern oriole",
+      "Common raven",
+      "indigo bunting"
+    ],
+    "correctIndex": "3",
+    "image": "http://images.nationalgeographic.com/wpf/media-live/photos/000/135/cache/cmn-raven-01_13588_600x450.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the most popular U.S state bird?",
+    "options": [
+      "Nothern Cardinal",
+      "American robin",
+      "Western meadowlark",
+      "Nothern mockingbird"
+    ],
+    "correctIndex": "1",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the best way to offer water to birds?",
+    "options": [
+      "In a fountain",
+      "In a deep bowl of pedestal",
+      "In a shallow plate on the ground",
+      "All of the above"
+    ],
+    "correctIndex": "1",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What bird makes a meeow call?",
+    "options": [
+      "White-throated vireo",
+      "Ovenbird",
+      "Gray catbird",
+      "Wilson's plover"
+    ],
+    "correctIndex": "3",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What makes up 90 percent of a hummingbird's diet?",
+    "options": [
+      "Insects",
+      "Grains",
+      "Nuts",
+      "Nectar"
+    ],
+    "correctIndex": "4",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What birds depends almost entirely on man-made nesting boxes in the eastern United States?",
+    "options": [
+      "Yellow-bellied sapsucker",
+      "purple martin",
+      "Blue Jay",
+      "Red-breasted nuthach"
+    ],
+    "correctIndex": "2",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of these birds is not usually seen at a bird feeder that has seeds? ",
+    "options": [
+      "Robins",
+      "Flickers",
+      "Woodpeeckers",
+      "All of the above"
+    ],
+    "correctIndex": "4",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of the following birds is mostly yellow?",
+    "options": [
+      "Ringed Kingfisher",
+      "Western meadowlark",
+      "Painted bunting",
+      "Tree swallow"
+    ],
+    "correctIndex": "2",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Females of which of the following species are showier than the males?",
+    "options": [
+      "Barn owl",
+      "Bluebird",
+      "Cardinal",
+      "Goldflinch"
+    ],
+    "correctIndex": "1",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of these birds roosts in huge numbers during the winter?",
+    "options": [
+      "Cooper's hawk",
+      "Red-headed woodpecker",
+      "American robin",
+      "All of the above"
+    ],
+    "correctIndex": "3",
+    "image": "https://purelyphotography.files.wordpress.com/2010/06/birdsproject-01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Researchers can estimate the age of a lion based on what?",
+    "options": [
+      "The color of its hair",
+      "The number of dark spots on its back",
+      "The color of its nose",
+      "The tuft of hair on its tail"
+    ],
+    "correctIndex": "3",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Lions are unique among cats for which of the following reasons?",
+    "options": [
+      "They are the only cats with manes",
+      "They are the only cats that live in group.",
+      "They are the only cats hunt in groups.",
+      "All of the above"
+    ],
+    "correctIndex": "4",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "In Asia,lions are now found in the wild in only one place. What is it?",
+    "options": [
+      "China",
+      "India",
+      "Borneo",
+      "Mongolia"
+    ],
+    "correctIndex": "2",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Male lions are more likely to attack which of the following invaders?",
+    "options": [
+      "A dark-maned male",
+      "A light-maned male",
+      "Both",
+      "None"
+    ],
+    "correctIndex": "2",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What noise serves as a summons for lions?",
+    "options": [
+      "Elephants trumpeting",
+      "Great egrets feeding",
+      "truck engines",
+      "Hyneas on a kill"
+    ],
+    "correctIndex": "4",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is unusual about the male lions of Kenya's Tsavo East national park?",
+    "options": [
+      "They do not have manes",
+      "they cannot roar",
+      "They are tame",
+      "There are none"
+    ],
+    "correctIndex": "1",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Typically, lions hunt rearly hunt which of the following animals?",
+    "options": [
+      "Elephants",
+      "Antelope",
+      "Buffalo",
+      "Zebras"
+    ],
+    "correctIndex": "1",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "How does a male lion know when a female is ready to mate?",
+    "options": [
+      "By sight",
+      "By smell",
+      "By Sound",
+      "All of the above"
+    ],
+    "correctIndex": "2",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "When do lions prefer to hunt?",
+    "options": [
+      "On dark nights ",
+      "On bright nights",
+      "on cloudy days",
+      "on suny days"
+    ],
+    "correctIndex": "1",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the most popular purebred cat breed?",
+    "options": [
+      "Persian",
+      "Russian blue",
+      "Siamese",
+      "maine coon"
+    ],
+    "correctIndex": "1",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of these pets communicates by chipring?",
+    "options": [
+      "Hermit crab",
+      "Goldfish",
+      "Corn snake",
+      "rabbit"
+    ],
+    "correctIndex": "1",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What does \"piebald fur\" means?",
+    "options": [
+      "All white",
+      "Tabby",
+      "Spotted",
+      "Solid color"
+    ],
+    "correctIndex": "3",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of these popular pet birds is  a type of parrot?",
+    "options": [
+      "Canary",
+      "Finch",
+      "Parakeet",
+      "All of the above"
+    ],
+    "correctIndex": "3",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What percentage of U.S households have pets?",
+    "options": [
+      "12",
+      "30",
+      "62",
+      "90"
+    ],
+    "correctIndex": "3",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What are Sea-monkeys?",
+    "options": [
+      "Brine-Shrimp",
+      "Fish Lice",
+      "Tounge worms",
+      "Spider Crabs"
+    ],
+    "correctIndex": "1",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of these dog breeds is considered are \"hypoallergenic\"?",
+    "options": [
+      "Havanese",
+      "Portuguese water dog",
+      "poodle",
+      "All of the above"
+    ],
+    "correctIndex": "4",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Where do golden hamsters live in the world?",
+    "options": [
+      "Central America",
+      "U.S Great pain",
+      "African savanna",
+      "Middle East"
+    ],
+    "correctIndex": "4",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the other name for a Siamese fighting fish?",
+    "options": [
+      "Golfish",
+      "Tetra",
+      "Betta",
+      "Molly"
+    ],
+    "correctIndex": "3",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "China's endagered giant pandas subsist almost entirely on what food",
+    "options": [
+      "Eucalyptus",
+      "Hazelnuts",
+      "Bamboo",
+      "All of the above"
+    ],
+    "correctIndex": "3",
+    "image": "http://apnojaipur.com/wp-content/uploads/2015/01/pets-care.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Since the U.S Endangered spicies Act is enacted in 1973, how many animals from the list have gone extinct?",
+    "options": [
+      "0",
+      "3",
+      "9",
+      "12"
+    ],
+    "correctIndex": "3",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What has killed of tes of thousands of amphibians in the last few decades?",
+    "options": [
+      "A fungus",
+      "melting ice",
+      "Bats",
+      "Hurricanes"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What was the last feline species to go extinct?",
+    "options": [
+      "lyberian lynx",
+      "Snow lepord",
+      "Florida panther",
+      "Saber-toothed cat"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Western lowland gorillas have been threatened by which of the following",
+    "options": [
+      "Poachers",
+      "Habitat loss",
+      "The Ebola virus",
+      "All of the above"
+    ],
+    "correctIndex": "4",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which of the following groups are disappearing the faster?",
+    "options": [
+      "Land species",
+      "Sea species",
+      "Freshwater species",
+      "All of the above"
+    ],
+    "correctIndex": "3",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which sea turtle is most critically endangered?",
+    "options": [
+      "Olive ridley",
+      "Leatherblack",
+      "Green sea turtle",
+      "kemps ridley"
+    ],
+    "correctIndex": "4",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What was the first animal to join endangered species list because of climate change?",
+    "options": [
+      "Gentoo penguin",
+      "Polar bear",
+      "Roseate spoonbil",
+      "Arctic fox"
+    ],
+    "correctIndex": "2",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What animals have recovered sufficiently to be removed from the U.S list of endangered and threatened spicies",
+    "options": [
+      "Blad eagle",
+      "American alligator",
+      "Peregrin falcon",
+      "All of the above"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "How many animal species were listed critically endangered by IUCN in 2010?",
+    "options": [
+      "887",
+      "1657",
+      "4232",
+      "11760"
+    ],
+    "correctIndex": "2",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "The crocodile species is believed to have been around for how long?",
+    "options": [
+      "200 million years",
+      "100 million years",
+      "500 million years",
+      "1 billion years"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.reef2rainforest.com/wp-content/uploads/2014/03/Animals-Group.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the name of an adult female horse?",
+    "options": [
+      "A mare",
+      "A rare",
+      "Pony",
+      "Gony"
+    ],
+    "correctIndex": "1",
+    "image": "http://buzzsharer.com/wp-content/uploads/2015/06/beautiful-running-horse.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "How many hearts does an octopus have?",
+    "options": [
+      "4",
+      "5",
+      "3",
+      "2"
+    ],
+    "correctIndex": "3",
+    "image": "https://i.ytimg.com/vi/rX-YiYHahoo/maxresdefault.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "An earthworm breathe with the help of",
+    "options": [
+      "Lungs             ",
+      "Ears",
+      "Nose                ",
+      "Skin"
+    ],
+    "correctIndex": "4",
+    "image": "http://welcomewildlife.com/wp-content/uploads/2015/05/Earthworm-clitellum.jpeg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which bird can fly backwards ?",
+    "options": [
+      "Peacock",
+      "Hummingbird ",
+      "Cardinal Bird",
+      "Crimson Sunbird"
+    ],
+    "correctIndex": "2",
+    "image": "http://media.salon.com/2014/01/shutterstock_119509225.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which animal has largest brain in the World ?",
+    "options": [
+      "Dolphin",
+      "Octopus",
+      "Blue Whale",
+      "Sperm Whale"
+    ],
+    "correctIndex": "4",
+    "image": "https://s-media-cache-ak0.pinimg.com/originals/48/d5/9a/48d59af1ae2dcc6be3df9768b9876531.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": " How many muscles in each ear of a cat?",
+    "options": [
+      "6",
+      "12",
+      "32",
+      "41"
+    ],
+    "correctIndex": "3",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_March_2010-1.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "How far can an owl rotate its head?",
+    "options": [
+      "90 degree",
+      "160 degree",
+      "270 degree",
+      "235 degree"
+    ],
+    "correctIndex": "3",
+    "image": "http://wdfw.wa.gov/living/species/graphics/owl_3.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which animal exclusively eat only eucalyptus leaves and nothing else",
+    "options": [
+      "Koala",
+      "Greater Glider",
+      "Common Wombat",
+      "Kangaroo"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.extremetech.com/wp-content/uploads/2013/09/4Vln8-640x428.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "One horn rhino is found in",
+    "options": [
+      "Sumatra",
+      "India",
+      "Africa",
+      "Sri lankha"
+    ],
+    "correctIndex": "2",
+    "image": "http://www.extremetech.com/wp-content/uploads/2013/09/4Vln8-640x428.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Rhino horn is made up of",
+    "options": [
+      "Keratin ",
+      "Elastin",
+      "Collagen",
+      "Fibroin"
+    ],
+    "correctIndex": "1",
+    "image": "http://www.extremetech.com/wp-content/uploads/2013/09/4Vln8-640x428.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Name the only country where both tigers and lions are found",
+    "options": [
+      "South Africa",
+      "India",
+      "Kenya",
+      "Bangladesh"
+    ],
+    "correctIndex": "2",
+    "image": "http://c3e308.medialib.glogster.com/media/3c/3c3fe9a692a9ddd0d0fdfde6cc00e30f21659d6a6af1c46fb3ec17c41b311325/lion-and-tiger-1-jpg.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the scientific name of Bengal Tiger",
+    "options": [
+      "Panthera tigris corbetti",
+      "Panthera tigris amoyensis",
+      "Panthera tigris altaica",
+      "Panthera tigris tigris"
+    ],
+    "correctIndex": "4",
+    "image": "http://c3e308.medialib.glogster.com/media/3c/3c3fe9a692a9ddd0d0fdfde6cc00e30f21659d6a6af1c46fb3ec17c41b311325/lion-and-tiger-1-jpg.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which animal can create the loudest sound among any living creature",
+    "options": [
+      "Whale shark ",
+      " Gibbon",
+      "Humpback whales",
+      "Howler Monkey"
+    ],
+    "correctIndex": "3",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/38/Hylobates_lar_pair_of_white_and_black_01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Arctic Tern Birds makes migration each year between Antarctica and",
+    "options": [
+      "Iceland",
+      "Greenland",
+      "Canada",
+      "Russia"
+    ],
+    "correctIndex": "3",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/38/Hylobates_lar_pair_of_white_and_black_01.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the largest type of ‘big cat’ in the world?",
+    "options": [
+      "Tiger",
+      "Lion",
+      "Lepord",
+      "Cheetah"
+    ],
+    "correctIndex": "1",
+    "image": "http://1.bp.blogspot.com/-aoEkB2DHDrE/VD_vgLk3H3I/AAAAAAAAD9g/fGR6RjWFunA/s1600/cat%2Bfamily.png"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which is the biggest of the Great Apes?",
+    "options": [
+      "gorilla",
+      "orangutan",
+      "chimpanzee",
+      "monkey"
+    ],
+    "correctIndex": "1",
+    "image": "http://static.ddmcdn.com/gif/great-ape-faces-670.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "Which animal has teeth in its stomach?",
+    "options": [
+      "boa constrictor",
+      "tarantula",
+      "lobster",
+      "All of the above"
+    ],
+    "correctIndex": "3",
+    "image": "https://s3-eu-west-1.amazonaws.com/hlc.son.assets/428a970e-e1a3-11e3-af7e-12313c03c493"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is the serious threat for hatched turtles in many parts of the world?",
+    "options": [
+      "Artificial lightning",
+      "Road barriers",
+      "Ferrets",
+      "Joggers"
+    ],
+    "correctIndex": "1",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Florida_Box_Turtle_Digon3a.jpg"
+  },
+  {
+    "topicId": "Animals",
+    "question": "What is largest sea turtle spicies?",
+    "options": [
+      "Hawksbill",
+      "Kemp's ridley",
+      "Leatherback",
+      "Loggerhead"
+    ],
+    "correctIndex": "3",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Florida_Box_Turtle_Digon3a.jpg"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to A Kiss Before Dying?",
+    "options": [
+      "Border",
+      "Koharram",
+      "Dil",
+      "Baazigar"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to Disclosure?",
+    "options": [
+      "Lagaan",
+      "Aashiqui",
+      "Aitraaz",
+      "Wake Up Sid"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to Unfaithful?",
+    "options": [
+      "Sanam Bewafa",
+      "Murder",
+      "Sangam",
+      "Leader"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to It Could Happen to You?",
+    "options": [
+      "Bade Dilwala",
+      "Ittefaq",
+      "Amar Prem",
+      "Billoo"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film’s first half is similar to Dirty Rotten Scoundrels?",
+    "options": [
+      "Bunty Aur Bubli",
+      "Khel",
+      "Mr. Natwarlal",
+      "Dostana"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to French Kiss?",
+    "options": [
+      "Pyaar Tho Hona Hi Thaa",
+      "Anand",
+      "Kashmir Ki Kali",
+      "Red Rose"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar toThe Wedding Singer?",
+    "options": [
+      "Saagar",
+      "Shaan",
+      "Kahiin Pyaar Na Ho Jaaye",
+      "Pyaar Bhara Dil"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to Seven Brides For Seven Brothers?",
+    "options": [
+      "Namak Haram",
+      "Kalia",
+      "Woh Saat Din",
+      "Satte Pe Satta"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which of the following actresses was born on the Ides of March?",
+    "options": [
+      "Anushka Sharma",
+      "Alia Bhatt",
+      "Ileana D’Cruz",
+      "Diana Penty"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film is similar to Indecent Proposal?",
+    "options": [
+      "Sauda",
+      "Tarana",
+      "Agent Vinod",
+      "Mission Kashmir"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who is popularly known as 'Father of Indian Cinema'?",
+    "options": [
+      "Dadasaheb Phalke",
+      "V. Shantaram",
+      "Ardeshir Irani",
+      "Kidar Sharma"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which of these movies is not directed by V. Shantaram?",
+    "options": [
+      "Jhanak Jhanak Payal Baaje",
+      "Do Ankhen Barah Haath",
+      "Navrang",
+      "Razia Sultan"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which actress made her debut along with Raj Kapoor with film 'Neel Kamal'?",
+    "options": [
+      "Nargis",
+      "Vyjayanthimala",
+      "Madhubala",
+      "Meena Kumari"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Music Director R.D. Burman is also known as …………………….",
+    "options": [
+      "Rocky",
+      "Pancham",
+      "Chichi",
+      "Chintu"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which Indian actor is known as 'Tragedy King'?",
+    "options": [
+      "Sanjeev Kumar",
+      "Guru Dutt",
+      "Amitabh Bachchan",
+      "Dilip Kumar"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Beautiful actress Madhubala was married to ……………………..",
+    "options": [
+      "Raj Kapoor",
+      "Dilip Kumar",
+      "Premnath",
+      "Kishore Kumar"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Name the production company of Dev Anand.",
+    "options": [
+      "Navketan Films",
+      "Vijayta Films",
+      "Madras Talkies",
+      "Mukta Arts"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Rajesh Khanna owned the title 'First Superstar' of Indian cinema after how many consecutive solo hit movies?",
+    "options": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Shivaji Rao Gaikwad is the real name of which actor?",
+    "options": [
+      "NTR",
+      "Chiranjeevi",
+      "Rajinikanth",
+      "Nagarjuna"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Singer Kishore Kumar bagged first Filmfare Award for which song?",
+    "options": [
+      "Roop Tera Mastana",
+      "Dil Aisa Kisi Ne Mera",
+      "Khaike Pan Banaras Wala",
+      "Zindagi Ek Safar"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Name the film in which Amitabh Bachchan, Rajinikanth and Kamal Hasan worked together.",
+    "options": [
+      "Hum",
+      "Andha Kanoon",
+      "Agneepath",
+      "Geraftaar"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which of these is not related to Hema Malini?",
+    "options": [
+      "Politics",
+      "Dance",
+      "Dance",
+      "Bollywood"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Amitabh Bachchan suffered a near fatal intestinal injury during the shooting of which film?",
+    "options": [
+      "Agneepath",
+      "Zanjeer",
+      "Coolie",
+      "Sholay"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which was the last movie directed by Yash Chopra?",
+    "options": [
+      "Rab Ne Bana Di Jodi",
+      "Jab Tak Hai Jaan",
+      "Veer Zara",
+      "Ek Tha Tiger"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "What is the name of the character played by Shahrukh Khan in the film My Name Is Khan? ",
+    "options": [
+      "Kabir Sheikh",
+      "Kabir Khan",
+      "Rizwan Khan",
+      "Rizwan Sheikh"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which book was in Miss Braganza’s hand when she entered Rahul’s class in ‘Kuch Kuch Hota Hai’?",
+    "options": [
+      "Lady Chatterley’s Lover",
+      "Romeo and Juliet",
+      "The Eternal Lover",
+      "Love is friendship"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Shahrukh khan’s first television apperence",
+    "options": [
+      "Fauji",
+      "Circus",
+      "Kaun banaga carorepati",
+      "Dil dariya"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Kajol portrayed the dual characters of Sonia and Naina Saigal in which of these films? ",
+    "options": [
+      "Dushman",
+      "Kuch Khatti Kuch Meethi",
+      "Hote Hote Pyar Ho Gaya",
+      "None of the Above"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "What was Kajol’s profession in ‘Yeh Dillagi’?",
+    "options": [
+      "Driver",
+      "Model",
+      "Model",
+      "Accountant"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Lata Mangeshkar made her debut in Hindi playback singing with the movie...?",
+    "options": [
+      "Andaaz",
+      "Deewar",
+      "Barsaat",
+      "Aap ke Sewa Main"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which was the first film in which Amitabh and Jaya Bachchan worked together?",
+    "options": [
+      "Guddi",
+      "Milli",
+      "Ek Nazar",
+      "Kabhi Kabhi"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Nominated in the Best Foreign film catergory at the Oscars, Mother India lost to...?",
+    "options": [
+      "Casablanca",
+      "Nights of Caberia",
+      "Gone With The Wind",
+      "Dragons"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who plays the blind friend in the 1964 Dosti?",
+    "options": [
+      "Mohan",
+      "Dinu",
+      "Ramu",
+      "Shyamu"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which of these films was Ashutosh Gowariker's directorial debut?",
+    "options": [
+      "Lagaan",
+      "Swades",
+      "Pehla Nasha",
+      "Afsana Pyaar Ka"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Before Akshay Kumar became an actor, he worked as a...?",
+    "options": [
+      "Clerk",
+      "Reporter",
+      "Waiter",
+      "Journalist"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Considering the 20th century, which of these actress won the Best Actress award only once?",
+    "options": [
+      "Rekha",
+      "Hema Malini",
+      "Dimple Kapadia",
+      "Jaya Bhaduri"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which was the first Hindi Movie to receive the national award?",
+    "options": [
+      "Kabuliwala",
+      "Do Aankhen Barah Haath",
+      "Mirza Ghalib",
+      "Anuradha"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Tabu's real name is...?",
+    "options": [
+      "Shakeela Merchant",
+      "Taslim Khan",
+      "Tabakul",
+      "Tabassum Fatima Hashmi"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Subhash Ghai's first film as a director was...?",
+    "options": [
+      "Karma",
+      "Kalicharan",
+      "Vidhaata",
+      "Hero"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "From where does Veeru propose to Basanti in Sholay?",
+    "options": [
+      "Top of a roof",
+      "Top of a ladder",
+      "Top of a hill",
+      "Top of a water tank"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Aishwarya Rai was crowned Miss World in which year?",
+    "options": [
+      "1993",
+      "1994",
+      "1995",
+      "1996"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which of these actors has never appeared in television advertisements?",
+    "options": [
+      "Govinda",
+      "Sanjay Dutt",
+      "Shah rukh khan",
+      "Anil Kapoor"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "For which of these films did Anil Kapoor shave off his moustache?",
+    "options": [
+      "Lamhe",
+      "Gharwali Baharwali",
+      "Tezaab",
+      "Mr. India"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "In which year did Amitabh Bachchan debut in Hindi cinema?",
+    "options": [
+      "1960",
+      "1965",
+      "1969",
+      "1972"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Guess the movie from the picture.",
+    "options": [
+      "Humpty Sharma Ki Dulhania",
+      "Student of the year",
+      "Dilwale",
+      "ABCD 2"
+    ],
+    "correctIndex": "2",
+    "image": "http://static.c2w.com/uploads/question/image/01/46/01/95/N1460195/medium/1354880307.jpg"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who sung the famous song Aye Dil-e-Nadaan for the movie Raziya Sultan?",
+    "options": [
+      "Lata Mangeshkar",
+      "Asha Bhonsle",
+      "Chitra Singh",
+      "Usha Mangeshkar"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Name the production house owned by Dev Anand that produced the box office hit film 'Jewel Thief'.",
+    "options": [
+      "Chetna Productions",
+      "Dev Features",
+      "Navketan Films",
+      "Dev Talkies"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who directed the classic comedy Rang Birangi (1983)?",
+    "options": [
+      "Hrishikesh Mukherjee",
+      "Kundan Shah",
+      "Gulzar",
+      "Sai Paranjpe"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "In which movie does Amitabh Bachchan train three blind men to loot a bank?",
+    "options": [
+      "Aankhein",
+      "Boom",
+      "Dev",
+      "Aks"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Name the 1996 film by Gulzar that tried to trace the circumstances that led to the rise of the Sikh insurgency in the 1980s",
+    "options": [
+      "Hu Tu Tu",
+      "Garam Hawa",
+      "Tamas",
+      "Maachis"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who directed the movie Sahib, Biwi aur Gangster?",
+    "options": [
+      "Shriram Raghavan",
+      "Tigmanshu Dhulia",
+      "Anurag Kashyap",
+      "Vishal Bharadwaj"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which film by Santosh Sivan is based on the life of a young boy and his pet donkey?",
+    "options": [
+      "Tahaan",
+      "The Blue Umbrella",
+      "Sikander",
+      "Gadhe Ka Bachcha"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "In which movie can you see both Naseeruddin Shah and Arshad Warsi trying to woo Vidya Balan?",
+    "options": [
+      "Shahr",
+      "Ishqiya",
+      "Mahanayak",
+      "Saat Khoon Maaf"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who plays the crime lord called Bhujang in Tridev?",
+    "options": [
+      "Amajd Khan",
+      "Amrish Puri",
+      "Sadashiv Amrapurkar",
+      "Anupam Kher"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Who was the stunts director of ‘Kuch Kuch Hota Hai’?",
+    "options": [
+      "Sham Kaushal",
+      "Shah Rukh Khan",
+      "Allan Amin",
+      "Karan Johar"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "He was the most successful failure in the world. Who is Shah Rukh referring to? ",
+    "options": [
+      "Rajesh Khanna",
+      "Imran Khan",
+      "His father",
+      "Mahatma Gandhi"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "What’s the name of the book Shah Rukh Khan wishes to write about his journey in films?",
+    "options": [
+      "The superstar within",
+      "The victim of the spotlight",
+      "20 years of a decade",
+      "Main hoon na"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Which of these films featured Jeetendra and Kajol?",
+    "options": [
+      "Gundaraj",
+      "Taaqat",
+      "Udhaar Ki Zindagi",
+      "Ishqiya"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Bollywood-Movies",
+    "question": "Kajol’s father Shomu Mukherjee was…",
+    "options": [
+      "A Director",
+      "A producer",
+      "An actor",
+      "A Stunt Actor"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Where did British first open their factory in Eastern part of India",
+    "options": [
+      "assam",
+      "orissa",
+      "bihar",
+      "sikkim"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "In Bengal, the headquarters of East india company was located at",
+    "options": [
+      "Fort st David",
+      "Fort william",
+      "Fort st george",
+      "none of above"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Goa was captured by Portuguese",
+    "options": [
+      "1479 AD",
+      "1575 AD",
+      "1510 AD",
+      "1600 AD"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "First Governor general of bengal",
+    "options": [
+      "Robert clive",
+      "William Bentinck",
+      "Lord canning",
+      "Warren hastings"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Sati was declared illegal and punishable by",
+    "options": [
+      "Lord william bentinck",
+      "lord ripon",
+      "Lord canning",
+      "Lord dalhousie"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "First English newspaper in India",
+    "options": [
+      "The bengal gazette",
+      "The Calcutta Gazette",
+      "The bangal journal",
+      "The bombay herald"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Who defeated Sultan Ibrahim Lodi in the First Battle of Panipat in 1526",
+    "options": [
+      "Jehangir",
+      "Humayun",
+      "Babur",
+      "Akbar"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "How many times did Mahmud of Gazni invade India?",
+    "options": [
+      "27",
+      "12",
+      "7",
+      "17"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Who built the taj mahal?",
+    "options": [
+      "Akbar",
+      "Shah Jahan",
+      " Jehangir",
+      "Humayun"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Name the famous battle that Rana Pratap fought against Akbar's forces",
+    "options": [
+      "Plassey",
+      "Panipat",
+      "Kalinga",
+      "Haldighat"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Name Maharana Pratap's famous horse",
+    "options": [
+      "Rana",
+      "Asvamedha",
+      "Bucephalus",
+      "chetak"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "When did Jawaharlal Nehru die?",
+    "options": [
+      " 27th May 1964",
+      "27th June 1959",
+      "27th May 1974",
+      "  27th June 1954"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Name the holy book of the Parsis.",
+    "options": [
+      "Bible",
+      "Zend Avesta",
+      "Bhagwat geeta",
+      "Koran"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Who built the famous Sanchi stupa?",
+    "options": [
+      "Akbar",
+      "Ashoka",
+      "Harsha",
+      "Vikramaditya"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Who was the last ruler of the Mughal dynasty?",
+    "options": [
+      "Aurangzeb",
+      " Shah Jahan",
+      "Bahadur Shah Zafar",
+      "Jehangir"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Name the Rajput princess whom Akbar married.",
+    "options": [
+      "jija bai",
+      "Jodha Bai",
+      "  Noor Jehan",
+      "Mumtaz Mahal"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-History",
+    "question": "Name the capital of King Vikramaditya.",
+    "options": [
+      "Agra",
+      "Kanauj",
+      "Ujjain",
+      "Raigadh"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "In the epic Ramayana, which bird tried to prevent Ravana from carrying Sita away?",
+    "options": [
+      "Vibhishan",
+      "Bhulinga",
+      "Garuda",
+      "Jatayu"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Which Indian fesival is celebrated once every twelve years?",
+    "options": [
+      "Kurukshetra",
+      "Pagoda mela",
+      "Kumbhamela",
+      "Ganesh Chaturthi"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "In Hindu mythology, who is the god of death?",
+    "options": [
+      "Brahma",
+      "Indra",
+      "Yama",
+      "Sarswati"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the goddess of speech, wisdom and learning?",
+    "options": [
+      "Shasti",
+      "Saraswati",
+      "Satyanarayana",
+      "Savitar"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the goddess of the sacred Ganges river in India?",
+    "options": [
+      "Kubera",
+      "Ganesha",
+      "Ganga",
+      "Indra"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who was an ancient goddess who existed from before the beginning of time?",
+    "options": [
+      "Ammavaru",
+      "Agastya",
+      "Anala",
+      "Agni"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "She has four arms, representing the four spiritual virtues. Who is this goddess?",
+    "options": [
+      "Jaganmatri",
+      "Manasa-Devi",
+      "Kama",
+      "Lakshmi"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "As a form of Parvati, this goddess lured demons to their death. Who is she?",
+    "options": [
+      "Anila",
+      "Ambika",
+      "Anantesa",
+      "Anala"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who wrote the Mahabharata?",
+    "options": [
+      "Vedavyasa",
+      "Rig Veda",
+      "Valmiki",
+      "Lord Ganesh"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who were the male guardians of the air, forests and mountains?",
+    "options": [
+      "Gandharvas",
+      "Sadhyas",
+      "Nakshatras",
+      "Rhibus"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the god of the Dead?",
+    "options": [
+      "Yama",
+      "Yoni",
+      "Yaksha",
+      "Vivasvat"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the god of fertility, wealth and cattle?",
+    "options": [
+      "Raktavija",
+      "Purusha",
+      "Puchan",
+      "Pushan"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the god of the Pole Star?",
+    "options": [
+      "Dhisana",
+      "Dhruva",
+      "Durgha",
+      "Dhatri"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "In Indian mythology, how many avathars or incarnations has Vishnu, one of Hinduism's holy trinity come to the world in?",
+    "options": [
+      "9",
+      "12",
+      "10",
+      "11"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is a moon goddess whose name means 'divine favor'?",
+    "options": [
+      "Anuradha",
+      "Anumati",
+      "Kurma",
+      "Kalki"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who once was the god of storms, winds and Death?",
+    "options": [
+      "Rudra",
+      "Rati",
+      "Ratri",
+      "Rukmini"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the goddess of prayer and devotion?",
+    "options": [
+      "Dyaus Pita",
+      "Ida",
+      "Durgha",
+      "Imra"
+    ],
+    "correctIndex": "2",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "What animal(s) is, are Ganapathi's vehicle?",
+    "options": [
+      "Lion",
+      "1,000 horses",
+      "Ram",
+      "Mouse"
+    ],
+    "correctIndex": "4",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Yama, the god of death in Hinduism, uses what animal as his transport?",
+    "options": [
+      "Buffalo",
+      "Camel",
+      "Elephant",
+      "Raven"
+    ],
+    "correctIndex": "1",
+    "image": "null"
+  },
+  {
+    "topicId": "Indian-Mythology",
+    "question": "Who is the god of the sun and brother of Varuna?",
+    "options": [
+      "Nakshatras",
+      "Maruts",
+      "Mitra",
+      "Kurma"
+    ],
+    "correctIndex": "3",
+    "image": "null"
+  }
+]

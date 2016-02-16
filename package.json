@@ -1,10 +1,33 @@
 {
   "name": "QuizRT",
+  "description": "Multi player Quiz App",
   "version": "2.0.0",
+  "keywords": [
+    "multi",
+    "player",
+    "quiz",
+    "realtime",
+    "app"
+  ],
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "test": "mocha"
   },
+  "contributors": [
+    "Raghav Goel",
+    "Kshitij Jain",
+    "Lakshay Bansal",
+    "Ayush Jain",
+    "Sourabh Gupta",
+    "Akshay Meher",
+    "Anil Sawant <anil.sawant1@wipro.com>",
+    "Abhinav Kareer <>",
+    "Pratik Sinha <pratik.sinha1@wipro.com>",
+    "Venkata Gopichand Maddela <venkata.maddela@wipro.com>",
+    "Mukesh Mishra <mukesh.mishra8@wipro.com>",
+    "Sunil Sanjeev Rao Mekala <sunil.mekala@wipro.com>"
+  ],
   "dependencies": {
     "async": "^1.5.0",
     "bcrypt-nodejs": "^0.0.3",
@@ -42,5 +65,22 @@
     "socket.io": "^1.4.4",
     "supervisor": "^0.9.1",
     "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  },
+  "testling": {
+    "harness": "mocha-bdd",
+    "files": "test/*.js",
+    "browsers": [
+      "chrome/latest",
+      "firefox/latest"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smekal/QuizRT3.git"
   }
 }
