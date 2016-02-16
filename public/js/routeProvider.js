@@ -22,8 +22,17 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       if($cookies.get('isAuthenticated'))
         $location.path('/userProfile');
 
+      // Add app level variables here
       $rootScope.stylesheetName = "index"; // name of the css stylesheet to be used while loading the app
       $rootScope.isAuthenticatedCookie = $cookies.get('isAuthenticated');
+      $rootScope.logInLogOutSuccessMsg = ''; // used on login.html page to display login/logout status msgs
+      $rootScope.logInLogOutErrorMsg = '';
+      $rootScope.serverErrorMsg = 'Error! Kindly check your URL.'; // used in eror.html to display Error message received from the server
+      $rootScope.isPlayingAGame = false; // used to identify if the user is playing a game. This is used to hide the footer nav if true
+      $rootScope.recentGames = {}; // save the recent games played by the user since last login. Saved as {gameId:gameBoard}
+      $rootScope.recentGamesTopicNames = {}; // save the recent games' topic names played by the user since last login. saved as {gameId:topicname}
+
+      // Added application level watcher here
       $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) { // watch that puts/removes cookie based on $rootScope.isAuthenticatedCookie
         if ( nv ) {
           $cookies.put('isAuthenticated',true);
@@ -31,11 +40,15 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           $cookies.remove('isAuthenticated');
         }
       });
-      $rootScope.logInLogOutSuccessMsg = ''; // used on login.html page to display login/logout status msgs
-      $rootScope.logInLogOutErrorMsg = '';
-      $rootScope.isPlayingAGame = false; // used to identify if the user is playing a game. This is used to hide the footer nav if true
-      $rootScope.serverErrorMsg = 'Error! Kindly check your URL.'; // used in eror.html to display Error message received from the server
+      $rootScope.$watch( 'isPlayingAGame', function(nv,ov) {
+        if ( nv ) {
+          $( '#footer-nav' ).slideUp();
+        } else {
+          $( '#footer-nav' ).slideDown();
+        }
+      });
 
+      // Add app level events here
       $rootScope.$on('login', function(event) {
         $location.path('/login');
       });
@@ -129,7 +142,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           'templateUrl': 'html/category.html',
           'controller': 'categoryController'
         })
-        .when('/topic/:topicID',{
+        .when('/topic/:topicId',{
           'templateUrl': 'html/topic.html',
           'controller': 'topicController'
         })
