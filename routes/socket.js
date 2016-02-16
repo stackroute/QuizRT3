@@ -54,7 +54,7 @@ module.exports = function(server,sessionMiddleware) {
           For now we cannot have two games on the same topic running simultaneously
         */
 
-        maxPlayers = 1;
+        maxPlayers = 3;
         // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
         var gamePlayers = gameManager.topicsMap.get( playerData.topicId ),
