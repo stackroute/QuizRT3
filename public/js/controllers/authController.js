@@ -17,9 +17,13 @@
 
 angular.module('quizRT')
   .controller('authController',function($scope,$http,$rootScope,$location,$cookies){
+
+    // redirect to login page if the user's isAuthenticated cookie doesn't exist
+    if( $rootScope.isAuthenticatedCookie ) {
+      $location.path('/userProfile');
+    }
     $rootScope.stylesheetName="style";
     $scope.logInErrorMsg = '';
-
     $scope.dismissMsg = function() {
       $rootScope.logInLogOutErrorMsg = '';
       $rootScope.logInLogOutSuccessMsg = '';

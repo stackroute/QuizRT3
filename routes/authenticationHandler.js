@@ -56,8 +56,8 @@ module.exports = function(passport){
 
 	//log out
 	router.post('/logout', function(req, res) {
-		// req.session.user=null;
-		console.log('logout of passsport called');
+		console.log( req.session.user.local.username + ' logged out.');
+    req.session.user = null;
 		req.logout();
 		res.send(null);
 	});

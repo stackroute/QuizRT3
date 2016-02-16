@@ -63,79 +63,68 @@ angular.module('quizRT')
         socket.on('startGame', function( startGameData ) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.question = "Starting Game ...";
-            var tId = $rootScope.tId;
-            var gId2 = startGameData.gameId;
-            var path = '/quizPlayer/quizData/' + tId + ',' + gId2;
+            $scope.time = 3;
 
-            $http.get(path)
-                .success(function(data, status, headers, config) { // this call retrieves the questions. Call is redundant
-                    //counter to start the Quiz
-                    $scope.time = 3;
+            var timeInterval = $interval( function() {
+                $scope.time--;
 
-                    var timeInterval = $interval(function() {
-                        $scope.time--;
+                //waiting for counter to end to start the Quiz
+                if ($scope.time === 0) {
+                    $scope.isDisabled = false;
+                    $scope.wrongAnswerers = 0;
+                    $scope.correctAnswerers = 0;
+                    $scope.unattempted = startGameData.maxPlayers;
+                    if ( questionCounter == startGameData.questions.length ) {
+                        $interval.cancel(timeInterval);
+                        $rootScope.finalScore = $scope.myscore;
+                        $rootScope.finalRank = $scope.myrank;
+                        socket.emit( 'gameFinished', startGameData.gameId);
+                        // $location.path('/quizResult/' + startGameData.gameId );
+                    } else {
+                        temp = loadNextQuestion( startGameData.questions, questionCounter);
 
-                        //waiting for counter to end to start the Quiz
-                        if ($scope.time == 0) {
-                            $scope.isDisabled = false;
-                            $scope.wrongAnswerers = 0;
-                            $scope.correctAnswerers = 0;
-                            $scope.unattempted = startGameData.maxPlayers;
-                            if ( questionCounter == data.questions.length ) {
-                                $interval.cancel(timeInterval);
-                                $rootScope.finalScore = $scope.myscore;
-                                $rootScope.finalRank = $scope.myrank;
-                                socket.emit( 'gameFinished', startGameData.gameId);
-                                // $location.path('/quizResult/' + startGameData.gameId );
+                        $scope.changeColor = function(id, element) {
+                            if (id == "option" + (temp.correctIndex)) {
+                                $(element.target).addClass('btn-success');
+                                $scope.myscore = $scope.myscore + $scope.time + 10;
+                                socket.emit('confirmAnswer', {
+                                    ans: "correct",
+                                    gameID: startGameData.gameId
+                                });
                             } else {
-                                temp = loadNextQuestion(data, questionCounter);
-
-                                $scope.changeColor = function(id, element) {
-                                    if (id == "option" + (temp.correctIndex)) {
-                                        $(element.target).addClass('btn-success');
-                                        $scope.myscore = $scope.myscore + $scope.time + 10;
-                                        socket.emit('confirmAnswer', {
-                                            ans: "correct",
-                                            gameID: startGameData.gameId
-                                        });
-                                    } else {
-                                        $(element.target).addClass('btn-danger');
-                                        angular.element('#option' + temp.correctIndex).addClass('btn-success');
-                                        $scope.myscore = $scope.myscore - 5;
-                                        socket.emit('confirmAnswer', {
-                                            ans: "wrong",
-                                            gameID: startGameData.gameId
-                                        });
-                                    }
-                                    $scope.isDisabled = true;
-                                    socket.emit('updateStatus', {
-                                        gameId: startGameData.gameId,
-                                        userId: $rootScope.loggedInUser.userId,
-                                        playerScore: $scope.myscore,
-                                        playerName: $rootScope.loggedInUser.name,
-                                        playerPic: $rootScope.loggedInUser.imageLink
-                                    });
-                                };
-
-                                $scope.question = questionCounter + ". " +temp.question;
-                                $scope.options = temp.options;
-
-                                if (temp.image != "null")
-                                    $scope.questionImage = temp.image;
-
-                                else {
-                                    $scope.questionImage = null;
-                                }
-                                $scope.time = 2;
+                                $(element.target).addClass('btn-danger');
+                                angular.element('#option' + temp.correctIndex).addClass('btn-success');
+                                $scope.myscore = $scope.myscore - 5;
+                                socket.emit('confirmAnswer', {
+                                    ans: "wrong",
+                                    gameID: startGameData.gameId
+                                });
                             }
+                            $scope.isDisabled = true;
+                            socket.emit('updateStatus', {
+                                gameId: startGameData.gameId,
+                                userId: $rootScope.loggedInUser.userId,
+                                playerScore: $scope.myscore,
+                                playerName: $rootScope.loggedInUser.name,
+                                playerPic: $rootScope.loggedInUser.imageLink
+                            });
+                        };
+
+                        $scope.question = questionCounter + ". " +temp.question;
+                        $scope.options = temp.options;
+
+                        if (temp.image != "null")
+                            $scope.questionImage = temp.image;
+
+                        else {
+                            $scope.questionImage = null;
                         }
+                        $scope.time = 2;
+                    }
+                }
 
-                    }, 1000);// to create 1s timer
+            }, 1000);// to create 1s timer
 
-                })
-                .error(function(data, status, headers, config) {
-                    console.log(data);
-                });
         });
         socket.on('takeScore', function(data) {
             //console.log("takeScore log emitted");
@@ -163,13 +152,13 @@ angular.module('quizRT')
         });
     });
 
-function loadNextQuestion(data, questionNumber) {
+function loadNextQuestion( questions, questionNumber) {
     var optionCounter = 0;
     var obj;
     var options = [];
-    while (data.questions[questionNumber].options[optionCounter]) {
+    while (questions[questionNumber].options[optionCounter]) {
         opt = {
-            name: data.questions[questionNumber].options[optionCounter],
+            name: questions[questionNumber].options[optionCounter],
             id: "option" + (optionCounter + 1)
         };
         options.push(opt);
@@ -177,9 +166,9 @@ function loadNextQuestion(data, questionNumber) {
     }
     obj = {
         "options": options,
-        "question": data.questions[questionNumber].question,
-        "image": data.questions[questionNumber].image,
-        "correctIndex": data.questions[questionNumber].correctIndex
+        "question": questions[questionNumber].question,
+        "image": questions[questionNumber].image,
+        "correctIndex": questions[questionNumber].correctIndex
     };
     questionCounter++;
     return obj;

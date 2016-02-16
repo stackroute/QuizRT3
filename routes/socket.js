@@ -15,13 +15,14 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //                      + Anil Sawant
 
-var gameManager = require('./gameManager/gameManager.js'),
+var GameManager = require('./gameManager/gameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     LeaderBoard = require('./gameManager/Leaderboard.js'),
     uuid= require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
-    Tournament=require("./../models/tournament"),
+    Tournament = require("./../models/tournament"),
+    questionBank = require('./questionBank.js'),
     defaultMaxPlayers =4;
     maxPlayers=0;
 
@@ -40,6 +41,8 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on('join',function( playerData ) {
       console.log('\n' + playerData.userId + ' joined');
+      console.log('Logging session in socket.js 44');
+      console.log(client.request.session);
       // check if the user is authenticated and his session exists, if so add him to the game
       if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
         var gamePlayer = {
@@ -48,7 +51,7 @@ module.exports = function(server,sessionMiddleware) {
           playerPic: playerData.playerPic,
           client: client
         };
-        gameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
+        GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
         /*
           The above logic has to be improved to map game-id and players for that game
           For now we cannot have two games on the same topic running simultaneously
@@ -57,22 +60,25 @@ module.exports = function(server,sessionMiddleware) {
         maxPlayers = 2;
         // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
-        var gamePlayers = gameManager.topicsMap.get( playerData.topicId ),
+        var gamePlayers = GameManager.get( playerData.topicId ),
             usersJoined = gamePlayers.length;
+
         if( usersJoined == maxPlayers ) {
-          console.log('\nPopping the topic from gameManager');
-          gameManager.popGame( playerData.topicId ); // pop the game from topicsMap and start the game
+          console.log('\nPopping the topic from GameManager');
+          GameManager.popGame( playerData.topicId ); // pop the game from topicsMap and start the game
           var gameId = uuid.v1(); // generate a unique game-id
 
-          // make the questions reserviour here.
-          // It will save N additional socket calls coming from N sockets
+          // (topicId, number of questions, callback)
+          questionBank.getQuizQuestions( playerData.topicId, 5 , function( questions ) {
+            gamePlayers.forEach( function(player) {
+              LeaderBoard.addPlayer( gameId, player );
+              player.client.emit('startGame', { topicId: playerData.topicId, gameId: gameId, maxPlayers: maxPlayers, questions: questions });
+              console.log("\nStarting game...");
+            });
+          });// end getQuizQuestions
 
-          gamePlayers.forEach( function(player) {
-            LeaderBoard.addPlayer( gameId, player );
-            player.client.emit('startGame', { gameId: gameId, maxPlayers: maxPlayers });
-            console.log("\nStarting game...");
-          }); //end gamePlayers.forEach
         } else {
+          console.log('pendingUsersCount = ' + (maxPlayers-usersJoined));
           gamePlayers.forEach( function(player) {
             console.log('\nEmitting pendingUsers');
             player.client.emit('pendingUsers', { pendingUsersCount: (maxPlayers-usersJoined) });
@@ -117,11 +123,17 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on( 'gameFinished', function( gameId ) {
-      var finishedGameBoard = LeaderBoard.games.get( gameId );
-      if ( finishedGameBoard ) {
+      var gameBoard = LeaderBoard.games.get( gameId ),
+          finishedGameBoard = [];
+      if ( gameBoard ) {
         for (var i = 0; i < finishedGameBoard.length; i++) {
-          if( finishedGameBoard[i].client )
-            delete finishedGameBoard[i].client;
+          var gamePlayer = {
+            userId: gameBoard[i].userId,
+            playerName: gameBoard[i].playerName,
+            playerPic: gameBoard[i].playerPic,
+            score: gameBoard[i].score
+          }
+          finishedGameBoard.push( gamePlayer );
         }
         client.emit('takeResult', { error: null, finishedGameBoard: finishedGameBoard } );
       } else {
@@ -131,13 +143,13 @@ module.exports = function(server,sessionMiddleware) {
 
     });
 
-    client.on('getResult',function( gameId ){
-      var finishedGameBoard = LeaderBoard.games.get( gameId );
-      for (var i = 0; i < finishedGameBoard.length; i++) {
-        delete finishedGameBoard[i].client;
-      }
-      client.emit('takeResult', finishedGameBoard );
-    });
+    // client.on('getResult',function( gameId ){
+    //   var finishedGameBoard = LeaderBoard.games.get( gameId );
+    //   for (var i = 0; i < finishedGameBoard.length; i++) {
+    //     delete finishedGameBoard[i].client;
+    //   }
+    //   client.emit('takeResult', finishedGameBoard );
+    // });
 
     client.on('updateProfile',function(clientData){
       var levelId = clientData.levelId,
@@ -211,37 +223,19 @@ module.exports = function(server,sessionMiddleware) {
 
     });
 
-
-      // for (var i = 0; i <leaderBoard.LeaderBoard.games.get(data.gameID).length; i++) {
-      //   if (leaderBoard.LeaderBoard.games.get(data.gameID)[i].sid == client.request.session.passport.user){
-      //     myRan= i+1;
-      //   }
-      // }
-      // client.emit('takeScore', {myRank:myRan});
-      // leaderBoard.LeaderBoard.games.get(data.gameID).forEach(function(player){
-      //   var myRan=0;
-      //   for (var i = 0; i <leaderBoard.LeaderBoard.games.get(data.gameID).length; i++) {
-      //     if (leaderBoard.LeaderBoard.games.get(data.gameID)[i].sid == player.client.request.session.passport.user){
-      //       myRan= i+1;
-      //     }
-      //   }
-      //   player.client.emit('takeScore', {myRank: myRan,topperScore:leaderBoard.LeaderBoard.games.get(data.gameID)[0].score,topperImage:leaderBoard.LeaderBoard.games.get(data.gameID)[0].imageUrl});
-      // });
-    //});
-
     client.on('leaveGame',function( topicId ){
       console.log('\nLeave game called');
-      if( gameManager.topicsMap.get( topicId ) && gameManager.topicsMap.get( topicId ).length ) {
-        var index = gameManager.topicsMap.get( topicId ).indexOf( client.request.session.user.local.username );
+      if( GameManager.get( topicId ) && GameManager.get( topicId ).length ) {
+        var index = GameManager.get( topicId ).indexOf( client.request.session.user.local.username );
         if ( index >=0 ) {
-          var userLeft = gameManager.topicsMap.get( topicId ).splice( index,1);
+          var userLeft = GameManager.get( topicId ).splice( index,1);
           console.log( userLeft.userId + ' left the game ' + topicId);
         } else {
           console.log( client.request.session.user.local.username + ' is not playing in ' + topicId );
         }
       } else {
         console.log( 'Game with topicId = ' + topicId + ' doesnot exist.');
-      } // gameManager.topicsMap.get(topicId).delete(client.request.session.passport.user.local.username);
+      } // GameManager.get(topicId).delete(client.request.session.passport.user.local.username);
     }); // end client-on-leaveGame
   });
 

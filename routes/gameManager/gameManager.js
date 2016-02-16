@@ -13,26 +13,25 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//											+ Anil Sawant
 
-var gameManager = {},
-		topicsMap = new Map();
 
-gameManager = {
-	topicsMap: topicsMap,
-	addPlayerToGame: function( topicId, gamePlayer ) {
-		if ( topicsMap.get( topicId ) && topicsMap.get( topicId ).length ){
-			topicsMap.get( topicId ).push(gamePlayer);
-		} else {
-			topicsMap.set(topicId, [gamePlayer]);
-		}
-	},
-	getGame: function( topicId ) {
-		return topicsMap.get( topicId );
-	},
-	popGame: function( topicId ) {
-		topicsMap.delete( topicId ); // pop the game from topicsMap and start the game
+var GameManager = function() {
+  this.games = new Map();
+}
+
+GameManager.prototype.addPlayerToGame = function( topicId, gamePlayer ) {
+	if ( this.games.get( topicId ) && this.games.get( topicId ).length ){
+		this.games.get( topicId ).push(gamePlayer);
+	} else {
+		this.games.set(topicId, [gamePlayer]);
 	}
 };
+GameManager.prototype.get = function( topicId ) {
+	return this.games.get( topicId );
+};
+GameManager.prototype.popGame = function( topicId ) {
+	this.games.delete( topicId ); // pop the game from games
+}
 
-module.exports = gameManager;
+module.exports = new GameManager();

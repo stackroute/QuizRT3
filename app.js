@@ -78,7 +78,7 @@ app.use( function( req, res, next ) {
   if( req.session && req.session.user ) {
     next();
   } else{
-    console.log('User is logged out. User session doesnt exist.');
+    console.log('User is logged out. User session doesnot exist.');
     res.writeHead(401);
     res.end( JSON.stringify( { error: 'User session does not exist. Kindly do a fresh login.'} ));
   }

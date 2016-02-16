@@ -22,77 +22,54 @@ var express = require('express'),
     Question=require("../models/question.js");
 
 router.route('/quizData/:id')
-.get(function(req, res) {
-  var topicInst = req.params.id;
-  console.log("fetching questions for :"+topicInst );
-  var temp=topicInst.split(",");
-  var topicId1=temp[0];
-  var groupId=temp[1];
+    .get( function(req, res) {
+      var topicInst = req.params.id;
+      console.log("fetching questions for :"+topicInst );
+      var temp=topicInst.split(",");
+      var topicId=temp[0];
+      var gameId=temp[1];
 
-  Quiz.findOne({gameId:groupId})
-  .exec(function(err,data){
-    //  console.log(data);
-    if(data==null)
-    {
-      Question.find({'topicId':topicId1})
-
-      .exec(function(err,data){
-        var myReservoir = Reservoir(5);// set the number of questions that the quiz will have
-        data.forEach(function(e) {
-          myReservoir.pushSome(e); // iterates through all the questions and randomly pushes only 5 into the reservoir
-        });
-        var quiz1=new Quiz();
-        quiz1.topicId=topicId1;
-        quiz1.gameId=groupId;
-        // var myReservoir = Reservoir(5);
-        // data.forEach(function(e) {
-        //   myReservoir.pushSome(e);
-        // });
-        quiz1.questions=[];
-        for(var i=0;i<5;++i)
-        {
-          quiz1.questions.push(myReservoir[i]._id);
-        }
-
-        console.log("hdkjsksdskdskdnskdnskd");
-        console.log(quiz1);
-        console.log("dvkdmfkdmfkdmd");
-        quiz1.save(function(err){
-          if ( err ) console.log(err);
-
-                Quiz.findOne({gameId:groupId})
-                .populate('questions')
-                .exec(function(err,data){
-                  console.log("dcndjcndjcnjcnjdcndjcraghav");
-                  console.log(data);
-                  console.log("dcndjcndjcnjcnjdcndjcraghav");
-                  res.send(data);
+      Quiz.findOne( { gameId: gameId } ) // find the liveGame in Quiz collection
+        .exec( function(err, liveGame) {
+          if( liveGame == null ) { // the game does't exist
+            Question.find( { 'topicId': topicId } ) // retrieve questions from Question collection for topicId
+              .exec( function(err, questions) {
+                var myReservoir = Reservoir(5);// set the number of questions that the quiz will have
+                questions.forEach(function(e) {
+                  myReservoir.pushSome(e); // iterates through all the questions and randomly pushes only 5 into the reservoir
                 });
-        });
+                var newQuiz = new Quiz();
+                newQuiz.topicId = topicId;
+                newQuiz.gameId = gameId;
+                newQuiz.questions = [];
 
+                console.log('\nReserviour');
+                console.log(myReservoir);
+                
+                for(var i=0;i<5;++i) {
+                  newQuiz.questions.push(myReservoir[i]._id);
+                }
+                newQuiz.save(function(err) {
+                  if ( err ) console.log(err);
+
+                  Quiz.findOne({gameId:gameId})
+                  .populate('questions')
+                  .exec(function(err,data){
+                    res.send(data);
+                  });
+                });
+              });
+        } else{
+          // when is this executed??
+          console.log('else part of loading questions into reserviour');
+          Quiz.findOne({gameId:gameId})
+          .populate('questions')
+          .exec(function(err,data){
+            console.log(data);
+            res.send(data);
+          });
+        }
       });
-
-
-
-    }
-
-else{
-  // when is this executed??
-  console.log('If part of loading questions into reserviour');
-  Quiz.findOne({gameId:groupId})
-  .populate('questions')
-  .exec(function(err,data){
-    console.log(data);
-    res.send(data);
-  });
-
-}
-
-
-
-
-
-});
-});
+    });
 
 module.exports= router;
