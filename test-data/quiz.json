@@ -1,0 +1,21 @@
+[
+	{
+		"topicId": "Football-Players",
+		"multiplier": 2,
+		"questions": ["56a5af7c5a32b4c60752debb", "56a5af7c5a32b4c60752dec0","56a5af7c5a32b4c60752dec3","56a5af7c5a32b4c60752debe","56a5af7c5a32b4c60752dec6"]
+	},
+	
+{
+	"topicId": "Cartoons",
+	"multiplier": 2,
+	"questions": ["56a5af7c5a32b4c60752dea2", "56a5af7c5a32b4c60752deb0","56a5af7c5a32b4c60752deab","56a5af7c5a32b4c60752dea6","56a5af7c5a32b4c60752dea1"]
+},
+
+{
+	"topicId": "Disney-Movies",
+	"multiplier": 2,
+	"questions": ["56a5af7c5a32b4c60752ded9", "56a5af7c5a32b4c60752decb","56a5af7c5a32b4c60752ded0","56a5af7c5a32b4c60752dee9","56a5af7c5a32b4c60752dee8"]
+}
+
+
+]

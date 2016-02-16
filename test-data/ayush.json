@@ -1,0 +1,79 @@
+{
+    "userId":"ay1",
+    "name":"Ayush",
+    "age":23,
+    "imageLink":"/images/userProfileImages/user.png",
+    "country":"Australia",
+    "flagLink":"/images/userProfileImages/indiaflag.png",
+    "badge":"Turing Master",
+    "totalGames":87,
+    "wins":67,
+    "topicsPlayed":
+      [
+        {
+          "topicId":"Cricket-World-Cup",
+        "gamesPlayed":45,
+        "gamesWon":38,
+        "level":3,
+         "isFollowed":true,
+         "points":100
+      }
+    ,
+        {
+
+        "topicId":"Game-of-Thrones",
+        "gamesPlayed":15,
+        "gamesWon":9,
+        "level":3,
+         "isFollowed":true,
+         "points":200
+      },
+          {
+        "topicId":"Indian-Politics",
+        "gamesPlayed":20,
+        "gamesWon":13,
+        "level":12,
+         "isFollowed":true,
+         "points":300
+      },
+          {
+
+          "topicId":"Java",
+          "gamesPlayed":55,
+          "gamesWon":29,
+          "level":7,
+           "isFollowed":true,
+           "points":200
+        },
+
+            {
+
+            "topicId":"Web-Development",
+            "gamesPlayed":65,
+            "gamesWon":27,
+            "level":6,
+             "isFollowed":true,
+             "points":200
+          },
+
+              {
+
+              "topicId":"Indian-Mythology",
+              "gamesPlayed":15,
+              "gamesWon":10,
+              "level":4,
+               "isFollowed":true,
+               "points":200
+            },
+
+                {
+
+                "topicId":"Indian-History",
+                "gamesPlayed":25,
+                "gamesWon":20,
+                "level":3,
+                 "isFollowed":true,
+                 "points":200
+              }
+    ]
+}
