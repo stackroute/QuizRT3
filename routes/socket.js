@@ -17,7 +17,7 @@
 
 var gameManager = require('./gameManager/gameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    leaderBoard = require('./gameManager/leaderboard.js'),
+    LeaderBoard = require('./gameManager/Leaderboard.js'),
     uuid= require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
@@ -31,11 +31,114 @@ module.exports = function(server,sessionMiddleware) {
     sessionMiddleware(socket.request, socket.request.res, next);
   });
   io.on('disconnect',function(client){
-    Players.delete(client.request.session.passport.user,client);
+    // Players.delete(client.request.session.user,client);
+    console.log( client.request.session.user.local.username + ' left a game (or was disconnected from one).');
     client.request.session.destroy();
   })
 
   io.on('connection', function(client) {
+
+    client.on('join',function( playerData ) {
+      console.log('\n' + playerData.userId + ' joined');
+      // check if the user is authenticated and his session exists, if so add him to the game
+      if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
+        var gamePlayer = {
+          userId: playerData.userId,
+          playerName: playerData.playerName,
+          playerPic: playerData.playerPic,
+          client: client
+        };
+        gameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
+        /*
+          The above logic has to be improved to map game-id and players for that game
+          For now we cannot have two games on the same topic running simultaneously
+        */
+
+        maxPlayers = 1;
+        // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+
+        var gamePlayers = gameManager.topicsMap.get( playerData.topicId ),
+            usersJoined = gamePlayers.length;
+        if( usersJoined == maxPlayers ) {
+          console.log('\nPopping the topic from gameManager');
+          gameManager.popGame( playerData.topicId ); // pop the game from topicsMap and start the game
+          var gameId = uuid.v1(); // generate a unique game-id
+
+          // make the questions reserviour here.
+          // It will save N additional socket calls coming from N sockets
+
+          gamePlayers.forEach( function(player) {
+            LeaderBoard.addPlayer( gameId, player );
+            player.client.emit('startGame', { gameId: gameId, maxPlayers: maxPlayers });
+            console.log("\nStarting game...");
+          }); //end gamePlayers.forEach
+        } else {
+          gamePlayers.forEach( function(player) {
+            console.log('\nEmitting pendingUsers');
+            player.client.emit('pendingUsers', { pendingUsersCount: (maxPlayers-usersJoined) });
+          });
+        }
+      } else {
+        console.log('User session doesnot exist for: ' + playerData.userId );
+        client.emit( 'userNotAuthenticated' );
+      }
+    }); // end client-on-join
+
+    client.on('confirmAnswer',function(data){
+      if(data.ans =='correct'){
+        //increment correct of allplayers
+        //decrement unsawered of all players
+        LeaderBoard.games.get(data.gameID).forEach(function(player){
+          player.client.emit('isCorrect');
+        });
+      }
+      else{
+        //increment wrong of allplayers
+        //decrement unsawered of all players
+        LeaderBoard.games.get(data.gameID).forEach(function(player){
+          player.client.emit('isWrong');
+        });
+      }
+    });
+
+    client.on('updateStatus',function( gameData ){
+      if ( client.request.session && gameData.userId == client.request.session.user.local.username ) {
+        LeaderBoard.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
+
+        var intermediateGameBoard = LeaderBoard.games.get( gameData.gameId ),
+            len = intermediateGameBoard.length,
+            gameTopper = intermediateGameBoard[0];
+        intermediateGameBoard.forEach( function( player, index) {
+          player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+        });
+      } else {
+        console.log('User session doesnot exist for the user: ' + gameData.userId );
+      }
+    });
+
+    client.on( 'gameFinished', function( gameId ) {
+      var finishedGameBoard = LeaderBoard.games.get( gameId );
+      if ( finishedGameBoard ) {
+        for (var i = 0; i < finishedGameBoard.length; i++) {
+          if( finishedGameBoard[i].client )
+            delete finishedGameBoard[i].client;
+        }
+        client.emit('takeResult', { error: null, finishedGameBoard: finishedGameBoard } );
+      } else {
+        console.log('LeaderBoard for ' + gameId + ' does not exist.');
+        client.emit('takeResult', { error: 'Result of your last game could not be retrived.'} );
+      }
+
+    });
+
+    client.on('getResult',function( gameId ){
+      var finishedGameBoard = LeaderBoard.games.get( gameId );
+      for (var i = 0; i < finishedGameBoard.length; i++) {
+        delete finishedGameBoard[i].client;
+      }
+      client.emit('takeResult', finishedGameBoard );
+    });
+
     client.on('updateProfile',function(clientData){
       var levelId = clientData.levelId,
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
@@ -43,12 +146,12 @@ module.exports = function(server,sessionMiddleware) {
 
       console.log('Update profile called');
       if ( tournamentId ) { // update coming from a tournament
-        Profile.findOne({userId:clientData.userID},function(err,profileData){
+        Profile.findOne({userId:clientData.userId},function(err,profileData){
           addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
         });
       } else {
         // update solo topic play
-        Profile.findOne({userId:clientData.userID},function(err,profileData){
+        Profile.findOne({userId:clientData.userId},function(err,profileData){
           profileData.totalGames++;
           if(clientData.rank == 1){
             profileData.wins++;
@@ -67,7 +170,9 @@ module.exports = function(server,sessionMiddleware) {
         });// end Profile.findOne()
       }
     });
+
     client.on('storeResult',function(gameData){
+      console.log('\nStoreResult called');
       var playerlist = [];
       var gameId=gameData.gameId;
       var tid=gameData.topicId;
@@ -79,7 +184,7 @@ module.exports = function(server,sessionMiddleware) {
         tournamentId=levelId.substr(0,levelId.lastIndexOf("_"));
 
       }
-      leaderBoard.leaderBoard.get(gameId).forEach(function(player,index){
+      LeaderBoard.games.get(gameId).forEach(function(player,index){
         //console.log(player);
         var temp = {
           'userId': player.sid,
@@ -105,115 +210,42 @@ module.exports = function(server,sessionMiddleware) {
       });
 
     });
-    client.on('getResult',function(data){
-      var tempLeaderBoard=[];
-      leaderBoard.leaderBoard.get(data).forEach(function(player) {
-        var temp={
-          'sid': player.sid,
-          'name': player.name,
-          'imageUrl': player.imageUrl,
-          'score': player.score
-        };
-        tempLeaderBoard.push(temp);
-      });
-      client.emit('takeResult',tempLeaderBoard);
-    });
-    client.on('confirmAnswer',function(data){
-      if(data.ans =='correct'){
-        //increment correct of allplayers
-        //decrement unsawered of all players
-        leaderBoard.leaderBoard.get(data.gameID).forEach(function(player){
-          player.client.emit('isCorrect');
-        });
-      }
-      else{
-        //increment wrong of allplayers
-        //decrement unsawered of all players
-        leaderBoard.leaderBoard.get(data.gameID).forEach(function(player){
-          player.client.emit('isWrong');
-        });
-      }
-    });
 
-    client.on('updateStatus',function(data){
-      leaderBoard.updateScore(data.gameID, client.request.session.passport.user, data.score);
-      var topperDat=leaderBoard.leaderBoard.get(data.gameID)[0];
-      var len = leaderBoard.leaderBoard.get(data.gameID).length;
 
-      // for (var i = 0; i <leaderBoard.leaderBoard.get(data.gameID).length; i++) {
-      //   if (leaderBoard.leaderBoard.get(data.gameID)[i].sid == client.request.session.passport.user){
+      // for (var i = 0; i <leaderBoard.LeaderBoard.games.get(data.gameID).length; i++) {
+      //   if (leaderBoard.LeaderBoard.games.get(data.gameID)[i].sid == client.request.session.passport.user){
       //     myRan= i+1;
       //   }
       // }
       // client.emit('takeScore', {myRank:myRan});
-      // leaderBoard.leaderBoard.get(data.gameID).forEach(function(player){
+      // leaderBoard.LeaderBoard.games.get(data.gameID).forEach(function(player){
       //   var myRan=0;
-      //   for (var i = 0; i <leaderBoard.leaderBoard.get(data.gameID).length; i++) {
-      //     if (leaderBoard.leaderBoard.get(data.gameID)[i].sid == player.client.request.session.passport.user){
+      //   for (var i = 0; i <leaderBoard.LeaderBoard.games.get(data.gameID).length; i++) {
+      //     if (leaderBoard.LeaderBoard.games.get(data.gameID)[i].sid == player.client.request.session.passport.user){
       //       myRan= i+1;
       //     }
       //   }
-      //   player.client.emit('takeScore', {myRank: myRan,topperScore:leaderBoard.leaderBoard.get(data.gameID)[0].score,topperImage:leaderBoard.leaderBoard.get(data.gameID)[0].imageUrl});
+      //   player.client.emit('takeScore', {myRank: myRan,topperScore:leaderBoard.LeaderBoard.games.get(data.gameID)[0].score,topperImage:leaderBoard.LeaderBoard.games.get(data.gameID)[0].imageUrl});
       // });
+    //});
 
-      leaderBoard.leaderBoard.get(data.gameID).forEach(function(player, index){
-        player.client.emit('takeScore', {myRank: index+1, topperScore:leaderBoard.leaderBoard.get(data.gameID)[0].score, topperImage:leaderBoard.leaderBoard.get(data.gameID)[0].imageUrl});
-      });
-    });
-
-    client.on('join',function(data){
-      console.log("--------------------------------------");
-      console.log( client.request.session);
-      console.log("---------------------------------------");
-     gameManager.addPlayer(data.tId, client.request.session.passport.user, client,data.name,data.image);
-      maxPlayers=1;
-      // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
-
-      var usersJoined=gameManager.players.get(data.tId).size;
-      var topicPlayers=[];
-      if( usersJoined == maxPlayers ) {
-
-        topicPlayers= gameManager.popPlayers(data.tId);
-
-        var gameId= makeid();
-        topicPlayers.forEach(function(player){
-          leaderBoard.addPlayer(gameId, player.sid, player.clientData.client, player.clientData.name, 0,player.clientData.imageUrl);
-          console.log("Starting game");
-          player.clientData.client.emit('startGame',{gameId:gameId,maxPlayers:maxPlayers});
-        }); //end topicPlayers.forEach
-      }
-      else
-      {
-        topicPlayers= gameManager.getAllPlayers(data.tId);
-        topicPlayers.forEach(function(player){
-          //console.log(maxPlayers+"-"+usersJoined);
-          player.clientData.client.emit('pendingUsers',{pendingUsersCount:(maxPlayers-usersJoined)});
-        });
-      }
-
-    }); // end client.on('join')
-
-    client.on('leaveGame',function(topicID){
-      // console.log(data);
-      if(gameManager.players.get(topicID)) gameManager.players.get(topicID).delete(client.request.session.passport.user);
-    });
-
+    client.on('leaveGame',function( topicId ){
+      console.log('\nLeave game called');
+      if( gameManager.topicsMap.get( topicId ) && gameManager.topicsMap.get( topicId ).length ) {
+        var index = gameManager.topicsMap.get( topicId ).indexOf( client.request.session.user.local.username );
+        if ( index >=0 ) {
+          var userLeft = gameManager.topicsMap.get( topicId ).splice( index,1);
+          console.log( userLeft.userId + ' left the game ' + topicId);
+        } else {
+          console.log( client.request.session.user.local.username + ' is not playing in ' + topicId );
+        }
+      } else {
+        console.log( 'Game with topicId = ' + topicId + ' doesnot exist.');
+      } // gameManager.topicsMap.get(topicId).delete(client.request.session.passport.user.local.username);
+    }); // end client-on-leaveGame
   });
 
 }
-
-/*   ***** ALERT  ****** ALERT  */
-
-// Delete this method if it's not used
-function renderThegame(matches){
-  if( matches.Players.size >= maxPlayers ){
-    matches.Players.forEach(function(item,key,value){
-      matches.Players.get(key).emit('startGame',matches.gameId);
-    });
-  }
-};
-
-
 
 // add played tournament to user profile
 function addTournamentToProfile( client, profileData, levelId, tournamentId ,clientData ) {
@@ -336,49 +368,43 @@ function updateTournamentAfterEveryGame(tournamentId,levelId,gameID,playerList)
 }
 
 
+// function game(gameId,Players,isRunning){
+//   this.isRunning = isRunning;
+//   this.gameId = gameId;
+//   this.Players = Players;
+// };
+//
+// function getRankAndTopScore(gameId,score,sessionID){
+//   var rank =0;
+//   var topScore=score;
+//   var match = getMatch(gameId);
+//   match.Players.get(sessionID).score= score;
+//   match.Players.forEach(function(item,key,value){
+//     if(key != sessionID){
+//       if(match.Players.get(key).score > score)
+//       rank++;
+//       if(match.Players.get(key).score > score)
+//       topScore = match.Players.get(key).score;
+//     }
+//   });
+//   return {rank:rank+1,topScore:topScore};
+// };
+//
+//
+// function getMatch(gameId){
+//   for (var i = 0; i < allGames.length; i++) {
+//     if(allGames[i].gameId == gameId){
+//       return allGames[i];
+//     }
+//   }
+//   return null;
+// };
 
-
-function makeid() {
-  return uuid.v1();
-};
-
-function game(gameId,Players,isRunning){
-  this.isRunning = isRunning;
-  this.gameId = gameId;
-  this.Players = Players;
-};
-
-function getRankAndTopScore(gameId,score,sessionID){
-  var rank =0;
-  var topScore=score;
-  var match = getMatch(gameId);
-  match.Players.get(sessionID).score= score;
-  match.Players.forEach(function(item,key,value){
-    if(key != sessionID){
-      if(match.Players.get(key).score > score)
-      rank++;
-      if(match.Players.get(key).score > score)
-      topScore = match.Players.get(key).score;
-    }
-  });
-  return {rank:rank+1,topScore:topScore};
-};
-
-
-function getMatch(gameId){
-  for (var i = 0; i < allGames.length; i++) {
-    if(allGames[i].gameId == gameId){
-      return allGames[i];
-    }
-  }
-  return null;
-};
-
-levelScore = function(n) {
+var levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);
 };
 
-findLevel = function(points) {
+var findLevel = function(points) {
   var i=1;
   while(points>=levelScore(i)) {
     i++;
