@@ -16,7 +16,7 @@
 */
 
 body {
-  padding-bottom: 72px; /* to counter fixed-footer height*/
+  padding-bottom: 75px; /* to counter fixed-footer height*/
 }
 footer {
   bottom: 0;
