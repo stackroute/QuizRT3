@@ -17,8 +17,10 @@
 
 angular.module('quizRT')
 	.controller('resultController', function( $scope, $rootScope, socket, $routeParams, $location){
-    $scope.topicName = "Compiling results..please wait";
+    $scope.msg = "Compiling the game result. Please wait...";
+		
 		setTimeout( function(){ // wait for 3s to get the results from server
+			console.log('Emitting getResult for ' + $routeParams.gameId);
       socket.emit('getResult', $routeParams.gameId );
       socket.on('takeResult',function( leaderBoard ) {
   			leaderBoard.sort(function(a,b) {
@@ -26,7 +28,7 @@ angular.module('quizRT')
   			});
 				console.log('leaderBoard');
 				console.log(leaderBoard);
-        $scope.topicName = $rootScope.tId;
+        $scope.msg = $rootScope.tId;
   			$scope.players = leaderBoard;
 				var levelId=$rootScope.levelId||false;
   			socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
@@ -39,11 +41,8 @@ angular.module('quizRT')
 				};
   			socket.emit('updateProfile', updateProfileObj );//score and rank
       });
-		},3000);
+		},5000); // waits for 5s before asking for result. that doesn't make sense!!
 
-		$scope.home = function() {
-			$location.path("/");
-		}
 		$scope.nextLevel = function() {
 			// use this to redirect the player back to the tournament he is playing
 			// use levelId for the same

@@ -14,32 +14,29 @@
 //   limitations under the License.
 //
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//                       + Anil Sawant
 -->
-<link rel="stylesheet" href="css/quizPlayer.css">
+<link rel="stylesheet" href="css/result.css">
 <div class="container" id="main">
-    <div class="panel panel-default col-xs-4 col-sm-4 col-lg-4"  ng-repeat="player in players">
-      <div class="panel-heading">
-        <h3 class="panel-title">Rank:{{$index + 1}}</h3>
-      </div>
-      <div class="panel-body content">
-
-        <a><img src="{{player.imageUrl}}"></a>
-
-      </div>
-      <div class="panel-footer">
-          <p>{{player.name}}:{{player.score}}</p>
-      </div>
-    </div><!--end panel-->
-
-    <div class="row">
-      <button type="button" ng-click="home()" class="btn btn-success">HOME</button>
-      <button type="button" ng-click="nextLevel()" class="btn btn-warning">bACK</button>
-    </div>
-</div>
-  <!-- <div id="foot" class="row">
-    <div  class="col-xs-12 play-button-bar">
-        <a ng-click="home()" id="startGameButton" class="btn btn-success">HOME</a>
-    </div>
+  <div class="msg">
+    <h2>{{msg}}</h2>
   </div>
-</div>-->
+
+  <div class="panel panel-default col-xs-4 col-sm-4 col-lg-4"  ng-repeat="player in players">
+    <div class="panel-heading">
+      <h3 class="panel-title">Rank:{{$index + 1}}</h3>
+    </div>
+    <div class="panel-body content">
+
+      <a><img src="{{player.imageUrl}}"></a>
+
+    </div>
+    <div class="panel-footer">
+        <p>{{player.name}}:{{player.score}}</p>
+    </div>
+  </div><!--end panel-->
+  <!--  show the nextLevel button only when the game played was from a tournament-->
+  <div ng-if="!comingFromTournament" class="row">
+    <button class="btn btn-success" ng-click="nextLevel()">Next level</button>
+  </div>
+</div>
