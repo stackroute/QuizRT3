@@ -71,8 +71,8 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       };
     })
     .factory('socket', function ($rootScope) {
-      // var socket = io.connect('http://172.23.238.159:8080');
-     var socket = io.connect('http://localhost:8080');
+      var socket = io.connect('http://172.23.238.182:8080');
+    //  var socket = io.connect('http://localhost:8080');
       return {
         on: function (eventName, callback) {
          socket.on(eventName, function () {

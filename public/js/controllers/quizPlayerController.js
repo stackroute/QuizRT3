@@ -50,7 +50,16 @@ angular.module('quizRT')
             playersPerMatch: playersPerMatch
         };
         socket.emit('join', playerData); // enter the game and wait for other players to join
-        
+
+        socket.on( 'userNotAuthenticated', function() {
+            $rootScope.isAuthenticatedCookie = false;
+            $rootScope.serverErrorMsg = errorResponse.data.error;
+            $rootScope.serverErrorStatus = errorResponse.status;
+            $rootScope.serverErrorStatusText = errorResponse.statusText;
+            $location.path('/error');
+            console.log('Problem maintaining the user session!');
+        });
+
         socket.on('startGame', function( startGameData ) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.question = "Starting Game ...";
