@@ -18,13 +18,13 @@
 var GameManager = require('./gameManager/gameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     LeaderBoard = require('./gameManager/Leaderboard.js'),
-    uuid= require('node-uuid'),
+    uuid = require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
     Tournament = require("./../models/tournament"),
-    questionBank = require('./questionBank.js'),
+    questionBank = require('./questionBank'),
     defaultMaxPlayers =4;
-    maxPlayers=0;
+    maxPlayers = 0;
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
@@ -51,10 +51,13 @@ module.exports = function(server,sessionMiddleware) {
           playerPic: playerData.playerPic,
           client: client
         };
+
         GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
         /*
           The above logic has to be improved to map game-id and players for that game
           For now we cannot have two games on the same topic running simultaneously
+          //
+          // GameManager.addPlayerToGame( topicId, minPlayers, player)
         */
 
         maxPlayers = 2;
@@ -85,7 +88,7 @@ module.exports = function(server,sessionMiddleware) {
           });
         }
       } else {
-        console.log('User session doesnot exist for: ' + playerData.userId );
+        console.log('User session does not exist for: ' + playerData.userId );
         client.emit( 'userNotAuthenticated' );
       }
     }); // end client-on-join
@@ -118,15 +121,16 @@ module.exports = function(server,sessionMiddleware) {
           player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
         });
       } else {
-        console.log('User session doesnot exist for the user: ' + gameData.userId );
+        console.log('User session does not exist for the user: ' + gameData.userId );
       }
     });
 
-    client.on( 'gameFinished', function( gameId ) {
-      var gameBoard = LeaderBoard.games.get( gameId ),
+    client.on( 'gameFinished', function( game ) {
+      var gameBoard = LeaderBoard.games.get( game.gameId ),
           finishedGameBoard = [];
       if ( gameBoard ) {
-        for (var i = 0; i < finishedGameBoard.length; i++) {
+        // extra loop to exclude player.client from response
+        for (var i = 0; i < gameBoard.length; i++) { // sending player.client gives CallStack overflow error
           var gamePlayer = {
             userId: gameBoard[i].userId,
             playerName: gameBoard[i].playerName,
@@ -135,10 +139,15 @@ module.exports = function(server,sessionMiddleware) {
           }
           finishedGameBoard.push( gamePlayer );
         }
-        client.emit('takeResult', { error: null, finishedGameBoard: finishedGameBoard } );
+        var gameResultObj = {
+          gameId: game.gameId,
+          topicId: game.topicId,
+          finishedGameBoard: finishedGameBoard
+        }
+        client.emit('takeResult', { error: null, gameResult: gameResultObj } );
       } else {
         console.log('LeaderBoard for ' + gameId + ' does not exist.');
-        client.emit('takeResult', { error: 'Result of your last game could not be retrived.'} );
+        client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
       }
 
     });
@@ -358,41 +367,7 @@ function updateTournamentAfterEveryGame(tournamentId,levelId,gameID,playerList)
     }
 
   });
-
 }
-
-
-// function game(gameId,Players,isRunning){
-//   this.isRunning = isRunning;
-//   this.gameId = gameId;
-//   this.Players = Players;
-// };
-//
-// function getRankAndTopScore(gameId,score,sessionID){
-//   var rank =0;
-//   var topScore=score;
-//   var match = getMatch(gameId);
-//   match.Players.get(sessionID).score= score;
-//   match.Players.forEach(function(item,key,value){
-//     if(key != sessionID){
-//       if(match.Players.get(key).score > score)
-//       rank++;
-//       if(match.Players.get(key).score > score)
-//       topScore = match.Players.get(key).score;
-//     }
-//   });
-//   return {rank:rank+1,topScore:topScore};
-// };
-//
-//
-// function getMatch(gameId){
-//   for (var i = 0; i < allGames.length; i++) {
-//     if(allGames[i].gameId == gameId){
-//       return allGames[i];
-//     }
-//   }
-//   return null;
-// };
 
 var levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);

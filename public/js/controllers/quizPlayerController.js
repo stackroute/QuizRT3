@@ -78,7 +78,7 @@ angular.module('quizRT')
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        socket.emit( 'gameFinished', startGameData.gameId);
+                        socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId } );
                         // $location.path('/quizResult/' + startGameData.gameId );
                     } else {
                         temp = loadNextQuestion( startGameData.questions, questionCounter);
@@ -146,9 +146,12 @@ angular.module('quizRT')
             $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
         });
         socket.on( 'takeResult', function( resultData ) {
-            $rootScope.recentGames[$rootScope.freakgid] = resultData;
-            $rootScope.recentGamesTopicNames[$rootScope.freakgid] = $rootScope.tId;
-            $location.path( '/quizResult/' + $rootScope.freakgid );
+            $rootScope.recentGames[resultData.gameId] = {
+              error: resultData.error,
+              topicId: resultData.topicId,
+              gameBoard: resultData.gameResult
+            };
+            $location.path( '/quizResult/' + resultData.gameId );
         });
     });
 
