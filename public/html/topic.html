@@ -29,7 +29,7 @@
           <img ng-src="{{topic.topicIcon}}"  class="img-responsive" alt="">
           <div class="follow">
             <h3>
-            <span title="Unfollow this topic" class="glyphicon glyphicon-heart" ng-show="userTopicFollowState" ng-click="followUnfollow()"></span>
+            <span title="Unfollow this topic" class="glyphicon glyphicon-heart" ng-show="userTopicFollowState" ng-click="followUnfollow()" style="color: red;"></span>
             <span title="Follow this topic" class="glyphicon glyphicon-heart-empty" ng-hide="userTopicFollowState" ng-click="followUnfollow()"></span>
             <span>{{topicFollowers}}</span>
           </h3>
