@@ -44,11 +44,12 @@ angular.module('quizRT')
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
 					var levelId = $rootScope.levelId || false;
-					socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
+					socket.emit('storeResult',{ gameId: $scope.gameId, topicId: $scope.topicId, levelId: levelId });
+
 					var updateProfileObj = {
 						score: $rootScope.finalScore,
 						rank: $rootScope.finalRank,
-						topicid: $rootScope.tId, // change this with $scope.topicId
+						topicid: $scope.topicId, // change this with $scope.topicId
 						userId: $rootScope.loggedInUser.userId,
 						levelId: levelId
 					};

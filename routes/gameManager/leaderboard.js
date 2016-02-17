@@ -40,9 +40,10 @@ LeaderBoard.prototype.updateScore = function( gameId, userId, score) {
     }
     return false;
   });
-  this.games.get(gameId).sort( function(a,b) { // refresh the leaderBoard
-    return b.score-a.score;
-  });
+
+  // this.games.get(gameId).sort( function(a,b) { // refresh the leaderBoard
+  //   return b.score-a.score;
+  // });
 };
 
 module.exports = new LeaderBoard();

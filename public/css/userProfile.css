@@ -50,6 +50,9 @@ footer .nav img {
 #recentGames .btnRow{
   padding: 10px 20px 5px;
 }
+#recentGames .btnRow button {
+  margin: 5px 10px;
+}
 .panel {
   cursor: pointer;
 }

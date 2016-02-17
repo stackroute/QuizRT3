@@ -15,7 +15,7 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //                      + Anil Sawant
 
-var GameManager = require('./gameManager/gameManager.js'),
+var GameManager = require('./gameManager/GameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     LeaderBoard = require('./gameManager/Leaderboard.js'),
     uuid = require('node-uuid'),
@@ -60,7 +60,7 @@ module.exports = function(server,sessionMiddleware) {
           // GameManager.addPlayerToGame( topicId, minPlayers, player)
         */
 
-        maxPlayers = 2;
+        maxPlayers = 1;
         // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
         var gamePlayers = GameManager.get( playerData.topicId ),
@@ -68,7 +68,7 @@ module.exports = function(server,sessionMiddleware) {
 
         if( usersJoined == maxPlayers ) {
           console.log('\nPopping the topic from GameManager');
-          GameManager.popGame( playerData.topicId ); // pop the game from topicsMap and start the game
+          GameManager.popGame( playerData.topicId ); // pop and start the game
           var gameId = uuid.v1(); // generate a unique game-id
 
           // (topicId, number of questions, callback)
@@ -97,14 +97,14 @@ module.exports = function(server,sessionMiddleware) {
       if(data.ans =='correct'){
         //increment correct of allplayers
         //decrement unsawered of all players
-        LeaderBoard.games.get(data.gameID).forEach(function(player){
+        LeaderBoard.get(data.gameID).forEach(function(player){
           player.client.emit('isCorrect');
         });
       }
       else{
         //increment wrong of allplayers
         //decrement unsawered of all players
-        LeaderBoard.games.get(data.gameID).forEach(function(player){
+        LeaderBoard.get(data.gameID).forEach(function(player){
           player.client.emit('isWrong');
         });
       }
@@ -114,7 +114,7 @@ module.exports = function(server,sessionMiddleware) {
       if ( client.request.session && gameData.userId == client.request.session.user.local.username ) {
         LeaderBoard.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
 
-        var intermediateGameBoard = LeaderBoard.games.get( gameData.gameId ),
+        var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
             len = intermediateGameBoard.length,
             gameTopper = intermediateGameBoard[0];
         intermediateGameBoard.forEach( function( player, index) {
@@ -126,7 +126,7 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on( 'gameFinished', function( game ) {
-      var gameBoard = LeaderBoard.games.get( game.gameId ),
+      var gameBoard = LeaderBoard.get( game.gameId ),
           finishedGameBoard = [];
       if ( gameBoard ) {
         // extra loop to exclude player.client from response
@@ -149,16 +149,7 @@ module.exports = function(server,sessionMiddleware) {
         console.log('LeaderBoard for ' + gameId + ' does not exist.');
         client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
       }
-
     });
-
-    // client.on('getResult',function( gameId ){
-    //   var finishedGameBoard = LeaderBoard.games.get( gameId );
-    //   for (var i = 0; i < finishedGameBoard.length; i++) {
-    //     delete finishedGameBoard[i].client;
-    //   }
-    //   client.emit('takeResult', finishedGameBoard );
-    // });
 
     client.on('updateProfile',function(clientData){
       var levelId = clientData.levelId,
@@ -192,47 +183,55 @@ module.exports = function(server,sessionMiddleware) {
       }
     });
 
-    client.on('storeResult',function(gameData){
-      console.log('\nStoreResult called');
-      var playerlist = [];
-      var gameId=gameData.gameId;
-      var tid=gameData.topicId;
-      var tournamentId="";
-      var levelId="";
-      if(gameData.levelId)
-      {
-        levelId=gameData.levelId;
-        tournamentId=levelId.substr(0,levelId.lastIndexOf("_"));
+    client.on( 'storeResult', function( gameData ){
+      console.log('\nStoreResult called with gameId = ' + gameData.gameId + ' , topicid = ' + gameData.topicId + ', levelId = ' + gameData.levelId);
+      var playerList = [],
+          tournamentId = "",
+          levelId = "";
 
+      if( gameData.levelId ) {
+        levelId = gameData.levelId;
+        tournamentId = levelId.substr(0,levelId.lastIndexOf("_"));
       }
-      LeaderBoard.games.get(gameId).forEach(function(player,index){
-        //console.log(player);
-        var temp = {
-          'userId': player.sid,
-          'name' : player.name,
-          'imageUrl': player.imageUrl,
-          'rank':index+1,
-          'score': player.score
-        }
-        playerlist.push(temp);
-      });
-      var game1= new Game({
-        gId: gameId,
-        players:playerlist
-      });
-      game1.save(function (err, data) {
-        if (err) console.log(err);
-        else {
-          if(gameData.levelId)
-          {
-            updateTournamentAfterEveryGame(tournamentId,levelId,data._id,playerlist);
+      var gameBoard = LeaderBoard.get( gameData.gameId )
+      if ( gameBoard ) {
+        gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
+                    return b.score-a.score;
+                  });
+        gameBoard.forEach( function( player, index ) {
+          var tempPlayer = {
+            'userId': player.userId,
+            'name' : player.playerName,
+            'imageUrl': player.playerPic,
+            'rank':index+1,
+            'score': player.score
           }
-        }
-      });
+          playerList.push( tempPlayer );
+        });
 
+        // Save the finished game to MongoDB
+        var newGame = new Game({
+          gameId: gameData.gameId,
+          players: playerList
+        });
+        console.log('\nnewGame');
+        console.log(newGame);
+        newGame.save(function (err, data) {
+          if ( err ) {
+            console.log('Finished game could not be saved to Mongo');
+            console.error(err);;
+          } else {
+            if( gameData.levelId ) {
+              updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList );
+            }
+          }
+        });
+      } else {
+        console.log('Problem retrieving the leaderBoard for gameId : ' + gameData.gameId );
+      }
     });
 
-    client.on('leaveGame',function( topicId ){
+    client.on('leaveGame', function( topicId ){
       console.log('\nLeave game called');
       if( GameManager.get( topicId ) && GameManager.get( topicId ).length ) {
         var index = GameManager.get( topicId ).indexOf( client.request.session.user.local.username );

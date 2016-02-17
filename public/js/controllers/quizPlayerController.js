@@ -65,7 +65,7 @@ angular.module('quizRT')
         });
 
         socket.on('startGame', function( startGameData ) {
-          if ( startGameData.questions.length && startGameData.questions[0]) {
+          if ( startGameData.questions && startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.questionCounter = 0; // reset the questionCounter for each game
             $scope.question = "Starting Game ...";
@@ -85,7 +85,6 @@ angular.module('quizRT')
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
                         socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId } );
-                        // $location.path('/quizResult/' + startGameData.gameId );
                     } else {
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 

@@ -17,9 +17,11 @@
 
 var mongoose = require('mongoose'),
     gameSchema = mongoose.Schema({
-      gId: {type:String, unique:true},
+      gameId: {type:String, unique:true},
       players:[{
         userId: String,
+        name: String,
+        imageUrl: String,
         score: Number,
         rank:Number
       }]

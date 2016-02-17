@@ -47,9 +47,9 @@ angular.module('quizRT')
           $rootScope.isAuthenticatedCookie = false;
           $cookies.remove('isAuthenticated');
         } else{
-          $location.path('/userProfile');
           $cookies.put('isAuthenticated',true);
           $rootScope.isAuthenticatedCookie = true;
+          $location.path('/userProfile');
         }
       });
     };

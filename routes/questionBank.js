@@ -12,8 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
+//   Name of Developers  Anil Sawant
 
 var Reservoir = require('reservoir'),
     Question = require("../models/question.js");
@@ -40,29 +39,10 @@ module.exports = {
           for (var i = 0; i < noOfQs; i++) {
             fewQuestions.push(myReservoir[i]);
           }
-          done(fewQuestions);
+          fewQuestions[0] ? done(fewQuestions) : done( null ); // if no questions send null else send the questions
         }
 
       });
     }
   }
 }
-// var newQuiz = new Quiz();
-// newQuiz.topicId = topicId;
-// newQuiz.gameId = gameId;
-// newQuiz.questions = [];
-//
-// console.log('\nReserviour');
-// console.log(myReservoir);
-//
-// for(var i=0;i<5;++i) {
-//   newQuiz.questions.push(myReservoir[i]._id);
-// }
-// newQuiz.save( function(err) {
-//   if ( err )  {
-//     console.log(err);
-//     console.log('New Quiz could not be saved to Mongo.');
-//   } else {
-//     console.log('New quiz saved to Mongo successfully.');
-//   }
-// });

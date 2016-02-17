@@ -54,11 +54,11 @@ mongoose.connection.on('open', function() {
 require('./routes/socket.js')(server,sessionMiddleware);
 
 app.use(logger('dev'));
-app.use(sessionMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
