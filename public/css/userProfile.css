@@ -47,6 +47,9 @@ footer .nav img {
   height: auto;
   cursor: pointer;
 }
+#recentGames .row{
+  padding: 5px;
+}
 .panel {
   cursor: pointer;
 }
