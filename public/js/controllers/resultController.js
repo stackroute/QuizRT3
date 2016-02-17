@@ -21,7 +21,13 @@ angular.module('quizRT')
 		if ( !$rootScope.recentGames || !$rootScope.recentGames[$scope.gameId] ) {
 			$location.path( '/404');
 		} else {
-			$scope.msg = "Compiling the game result. Please wait...";
+			if ( $rootScope.showRecentResult ) {
+				$scope.timeBeforeResult = 0;
+				$rootScope.showRecentResult = false;
+			} else {
+				$scope.timeBeforeResult = 3000;
+				$scope.msg = "Compiling the game result. Please wait...";
+			}
 			$scope.topicId = $rootScope.recentGames[$scope.gameId].topicId;
 			if ( $rootScope.levelId ) {
 				$scope.isComingFromTournament = true;
@@ -32,7 +38,7 @@ angular.module('quizRT')
 					$scope.msg = $rootScope.recentGames[$scope.gameId].error;
 				} else {
 					if ( $rootScope.recentGames[$scope.gameId].gameBoard ) {
-						$scope.gameTopper = $rootScope.recentGames[$scope.gameId].gameBoard.splice(0,1);
+						$scope.gameTopper = $rootScope.recentGames[$scope.gameId].gameBoard[0];
 					}
 					$scope.gameBoard = $rootScope.recentGames[$scope.gameId].gameBoard; // show the results
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
@@ -48,7 +54,7 @@ angular.module('quizRT')
 					};
 					socket.emit('updateProfile', updateProfileObj );//score and rank
 				}
-			}, 3000); // show the results after 3s. LOL!!!! ROFL!!!! LOL!!!!!
+			}, $scope.timeBeforeResult); // show the results after 3s. LOL!!!! ROFL!!!! LOL!!!!!
 
 			$scope.nextLevel = function() {
 				if ( $rootScope.levelId ) {

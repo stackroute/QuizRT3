@@ -47,8 +47,8 @@ footer .nav img {
   height: auto;
   cursor: pointer;
 }
-#recentGames .row{
-  padding: 5px;
+#recentGames .btnRow{
+  padding: 10px 20px 5px;
 }
 .panel {
   cursor: pointer;

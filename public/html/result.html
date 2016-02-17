@@ -28,17 +28,17 @@
       </div>
       <div class="panel-body content">
 
-        <a><img src="{{gameTopper[0].playerPic}}"></a>
+        <a><img src="{{gameTopper.playerPic}}"></a>
 
       </div>
       <div class="panel-footer">
-          <p>{{gameTopper[0].playerName}} : {{gameTopper[0].score}}</p>
+          <p>{{gameTopper.playerName}} : {{gameTopper.score}}</p>
       </div>
     </div><!--end panel-->
   </div>
-  <div class="panel panel-default"  ng-repeat="player in gameBoard">
+  <div ng-if="$index>0" class="panel panel-default"  ng-repeat="player in gameBoard">
     <div class="panel-heading">
-      <h3 class="panel-title">Rank : {{$index + 2}}</h3>
+      <h3 class="panel-title">Rank : {{$index + 1}}</h3>
     </div>
     <div class="panel-body content">
 

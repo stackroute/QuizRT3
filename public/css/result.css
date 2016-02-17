@@ -18,6 +18,9 @@
 .gameBoard .panel-body {
   padding: 3px;
 }
+.gameBoard .panel-body img{
+  width: 100%;
+}
 .gameBoard .panel-footer {
   padding: 8px;
   text-align: center;

@@ -90,16 +90,17 @@
 			</div>
 			</div>
 
-			<!--  Invitations Section -->
+			<!--  recentGames Section -->
 			<section id="recentGames">
 				<div class="row sectionHeader">Recent game's results</div>
 				<div class="row topic-info" ng-hide="recentGameResults.length">
 					No recent games.
 				</div>
-				<div class="row">
+				<div class="row btnRow">
 					<button type="button" class="btn btn-info" ng-repeat="game in recentGameResults" ng-click="showRecentResult(game.gameId)">{{game.topicId}}</button>
 				</div>
 			</section>
+
 			<!--  Invitations Section -->
 			<section>
 				<div class="row sectionHeader">Invitations</div>
