@@ -47,6 +47,9 @@ footer .nav img {
   height: auto;
   cursor: pointer;
 }
+.panel {
+  cursor: pointer;
+}
 .panel-body {
   padding: 0;
 }
