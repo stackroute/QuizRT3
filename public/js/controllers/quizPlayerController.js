@@ -15,9 +15,6 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //                      + Anil Sawant
 
-var topScore = 0;
-var questionCounter = 0;
-var temp;
 angular.module('quizRT')
     .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
         $rootScope.stylesheetName = "quizPlayer";
@@ -62,6 +59,7 @@ angular.module('quizRT')
 
         socket.on('startGame', function( startGameData ) {
             $rootScope.freakgid = startGameData.gameId;
+            $scope.questionCounter = 0; // reset the questionCounter for each game
             $scope.question = "Starting Game ...";
             $scope.time = 3;
 
@@ -74,17 +72,17 @@ angular.module('quizRT')
                     $scope.wrongAnswerers = 0;
                     $scope.correctAnswerers = 0;
                     $scope.unattempted = startGameData.maxPlayers;
-                    if ( questionCounter == startGameData.questions.length ) {
+                    if ( $scope.questionCounter == startGameData.questions.length ) {
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
                         socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId } );
                         // $location.path('/quizResult/' + startGameData.gameId );
                     } else {
-                        temp = loadNextQuestion( startGameData.questions, questionCounter);
+                        $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
                         $scope.changeColor = function(id, element) {
-                            if (id == "option" + (temp.correctIndex)) {
+                            if (id == "option" + ($scope.temp.correctIndex)) {
                                 $(element.target).addClass('btn-success');
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 socket.emit('confirmAnswer', {
@@ -93,7 +91,7 @@ angular.module('quizRT')
                                 });
                             } else {
                                 $(element.target).addClass('btn-danger');
-                                angular.element('#option' + temp.correctIndex).addClass('btn-success');
+                                angular.element('#option' + $scope.temp.correctIndex).addClass('btn-success');
                                 $scope.myscore = $scope.myscore - 5;
                                 socket.emit('confirmAnswer', {
                                     ans: "wrong",
@@ -110,10 +108,10 @@ angular.module('quizRT')
                             });
                         };
 
-                        $scope.question = questionCounter + ". " +temp.question;
-                        $scope.options = temp.options;
+                        $scope.question = $scope.questionCounter + ". " +$scope.temp.question;
+                        $scope.options = $scope.temp.options;
 
-                        if (temp.image != "null")
+                        if ($scope.temp.image != "null")
                             $scope.questionImage = temp.image;
 
                         else {
@@ -155,7 +153,7 @@ angular.module('quizRT')
         });
     });
 
-function loadNextQuestion( questions, questionNumber) {
+function loadNextQuestion( questions, questionNumber, $scope) {
     var optionCounter = 0;
     var obj;
     var options = [];
@@ -173,6 +171,6 @@ function loadNextQuestion( questions, questionNumber) {
         "image": questions[questionNumber].image,
         "correctIndex": questions[questionNumber].correctIndex
     };
-    questionCounter++;
+    $scope.questionCounter++;
     return obj;
 }
