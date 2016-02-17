@@ -72,50 +72,25 @@ footer .nav img {
   display: inline-block;
   margin: 0px 3px;
 }
-.panel-body {
-  padding: 0;
-}
 .topicsholder img
 {
   height:100%;
   width:100%;
 }
-
-.panel-footer {
-  position:relative;
-  padding:10px 5px;
-  font-size: 1.1em;
-  color: slategrey;
-  word-wrap: break-word;
-}
-.panel-footer p{
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
 .win-loss {
   position:absolute;
   bottom: 3%;
   right: 3%;
   font-weight: bold;
 }
-.content {
-  position: relative;
-}
-
-.content{
-  padding:25px;
-}
 #main {
   padding-bottom: 10px;
 }
-  #GamesInfo{
-    border-left: 2px red solid;
-    padding-top:5px;
-    color:white;
-  }
-
+#GamesInfo{
+  border-left: 2px red solid;
+  padding-top:5px;
+  color:white;
+}
 .sectionHeader{
   background-color:lightyellow;
   color:black;
@@ -267,10 +242,6 @@ text-align: center;
      margin: 0px;
    }
 
-   .panel-body {
-     padding: 0;
-   }
-
 
    .topicsholder img {
      height:100%;
@@ -345,11 +316,6 @@ text-align: center;
      width: 100%;
      margin: 0px;
    }
-
-   .panel-body {
-     padding: 0;
-   }
-
 
    .topicsholder img {
      height:100%;

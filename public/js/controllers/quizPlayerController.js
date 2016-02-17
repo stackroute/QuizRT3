@@ -146,12 +146,12 @@ angular.module('quizRT')
             $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
         });
         socket.on( 'takeResult', function( resultData ) {
-            $rootScope.recentGames[resultData.gameId] = {
+            $rootScope.recentGames[resultData.gameResult.gameId] = {
               error: resultData.error,
-              topicId: resultData.topicId,
-              gameBoard: resultData.gameResult
+              topicId: resultData.gameResult.topicId,
+              gameBoard: resultData.gameResult.finishedGameBoard
             };
-            $location.path( '/quizResult/' + resultData.gameId );
+            $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
     });
 

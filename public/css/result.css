@@ -3,3 +3,39 @@
   font-weight: bold;
   text-align: center;
 }
+.gameBoard .panel {
+  margin: auto;
+  float: none;
+  width: 16.6667%;
+}
+.gameBoard .panel-heading {
+  text-align: center;
+}
+.gameBoard #gameTopper .panel-heading h3 {
+  color: #555;
+  font-weight: bold;
+}
+.gameBoard .panel-body {
+  padding: 3px;
+}
+.gameBoard .panel-footer {
+  padding: 8px;
+  text-align: center;
+}
+.gameBoard .panel-footer p{
+  font-weight: bold;
+  margin: 0;
+}
+#gameTopper {
+  border-top: 1px solid #777;
+  padding-top: 5px;
+  margin:10px 0;
+}
+#buttonsDiv {
+  border-top: 1px solid #777;
+  margin-top: 5px;
+  padding-top: 5px;
+  clear: both;
+  display: block;
+  text-align: center;
+}

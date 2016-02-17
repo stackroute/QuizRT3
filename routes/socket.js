@@ -88,8 +88,8 @@ module.exports = function(server,sessionMiddleware) {
           });
         }
       } else {
-        console.log('User session does not exist for: ' + playerData.userId );
-        client.emit( 'userNotAuthenticated' );
+        console.log('User session does not exist for: ' + playerData.userId + '. Or the user client was knocked out.');
+        client.emit( 'userNotAuthenticated' ); //this may not be of much use
       }
     }); // end client-on-join
 

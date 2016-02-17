@@ -17,28 +17,28 @@
 //                       + Anil Sawant
 -->
 <link rel="stylesheet" href="css/result.css">
-<div class="container" id="main">
+<div class="container gameBoard" id="main">
   <div class="msg">
     <h2>{{msg}}</h2>
   </div>
-  <div class="row" id="gameTopper">
-    <div class="panel panel-default col-xs-4 col-sm-3 col-md-2">
+  <div ng-if="gameTopper" class="row" id="gameTopper">
+    <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Rank: 1</h3>
+        <h3 class="panel-title">Rank : 1</h3>
       </div>
       <div class="panel-body content">
 
-        <a><img src="{{gameTopper.playerPic}}"></a>
+        <a><img src="{{gameTopper[0].playerPic}}"></a>
 
       </div>
       <div class="panel-footer">
-          <p>{{gameTopper.playerName}} : {{gameTopper.score}}</p>
+          <p>{{gameTopper[0].playerName}} : {{gameTopper[0].score}}</p>
       </div>
     </div><!--end panel-->
   </div>
-  <div class="panel panel-default col-xs-4 col-sm-3 col-md-2"  ng-repeat="player in gameBoard">
+  <div class="panel panel-default"  ng-repeat="player in gameBoard">
     <div class="panel-heading">
-      <h3 class="panel-title">Rank:{{$index + 2}}</h3>
+      <h3 class="panel-title">Rank : {{$index + 2}}</h3>
     </div>
     <div class="panel-body content">
 
@@ -46,11 +46,11 @@
 
     </div>
     <div class="panel-footer">
-        <p>{{player.playerName}}:{{player.score}}</p>
+        <p>{{player.playerName}} : {{player.score}}</p>
     </div>
   </div><!--end panel-->
   <!--  show the nextLevel button only when the game played was from a tournament-->
-  <div class="container">
+  <div id="buttonsDiv">
     <div class="row">
       <button ng-if="isComingFromTournament" class="btn btn-success" ng-click="nextLevel()">Next level</button>
       <button class="btn btn-primary" ng-click="goHome()">Home</button>

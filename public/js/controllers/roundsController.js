@@ -8,7 +8,7 @@ angular.module("quizRT")
 
       /*
       $scope.$on( '$routeChangeSuccess', function(args) {
-        // there's one watcher in quizPlayerController to show-hide the footer-nav
+        // there's one watcher in quizPlayerController to show-hide the footer-nav when user is playing a quiz
         // if footer-nav doesn't show/hide properly
         // use this watcher in every page where footer-nav should be visible
         // $rootScope.isPlayingAGame = false;
@@ -35,6 +35,7 @@ angular.module("quizRT")
             successResponse.data.leaderBoard.sort( function(a,b) {
               return b.totalScore - a.totalScore;
             });
+            console.log('Leaderboard:');
             console.log(successResponse.data.leaderBoard);
             successResponse.data.leaderBoard.forEach( function(player,index) {
               if ( player.userId && player.userId.local.username == $rootScope.loggedInUser.userId ) {
