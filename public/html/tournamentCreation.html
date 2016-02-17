@@ -16,69 +16,54 @@
 -->
 
 
-<div class="container" id="tournamentCreation">
-
-    <h3>Create new tournament</h3>
-    <hr>
-    <form class="form-horizontal ">
-        <div class="form-group has-success">
-            <label class="control-label col-xs-3" for="Name"><h4>Name</h4></label>
-            <div class="col-xs-9">
-                <input type="Name" class="form-control" id="Name" placeholder="Give your tournament name">
+<div class="container" id="tournamentCreation" ng-controller="tournamentCreationController">
+    <div id="heading">
+        <h4>Tournament Creation</h4>
+        <hr>
+    </div>
+    
+    <form name="form" class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="name">Name</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control input-sm" id="name" ng-model="tournament.name" placeholder="Give your tournament name">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-3" for="inputImage"><h4>Image</h4></label>
-            <div class="col-xs-9">
-                <input type="text" class="form-control" id="inputImage" placeholder="Tournament Picture">
-                <div ng-controller="createTournamentController">
-                  <input type="file" id="file" name="file"/>
-                  <br>
-                </div>
+            <label class="control-label col-sm-3" for="imageFile">Image</label>
+            <div class="col-sm-9">
+                <input type="file" id="imageFile" file-Upload="tournament.imageFile">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-3" for="levels"><h4>Levels</h4></label>
-            <div class="col-xs-9">
-                <input type="text" class="form-control" placeholder="Select the Levels">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Subject
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                    </ul>
-                </div>
+            <label class="control-label col-sm-3" for="levels">Levels</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control input-sm" id="levels" ng-model="tournament.levels" placeholder="Number of levels in the tournament">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-3" for="Players"><h4>Number of Players</h4></label>
-            <div class="col-xs-9">
-                <input type="text" class="form-control" id="Players" placeholder="Number of Players">
+            <label class="control-label col-sm-3" for="playersCount">Number of Players</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control input-sm" id="playersCount" ng-model="tournament.playersCount" placeholder="Number of Players">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-xs-3" for="Rules"><h5>Specific Rules</h5></label>
-            <div class="col-xs-9">
-                <textarea readonly rows="3" class="form-control" id="Rules" placeholder="Specify Rules for the Game">Rules for the game, You have to select the maximum number of player, and level of the tournament in order to start the tournament. You have to play the game with in the tournament and you can see the result on the go, you can play each level only one time and you have to play all the levels.
+            <label class="control-label col-sm-3" for="rulesDescription">Specific Rules</label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control input-sm" id="rulesDescription" ng-model="tournament.rulesDescription" placeholder="Specify Rules for the Tournaments">Rules for the game, You have to select the maximum number of player, and level of the tournament in order to start the tournament. You have to play the game with in the tournament and you can see the result on the go, you can play each level only one time and you have to play all the levels.
                   </textarea>
 
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-3 col-xs-9">
+            <div class="col-sm-offset-2 col-sm-9">
                 <label class="checkbox-inline">
                     <input type="checkbox" value="news"> Send me latest news and updates of Tournaments
                 </label>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-3 col-xs-9">
+            <div class="col-sm-offset-2 col-sm-9">
                 <label class="checkbox-inline">
                     <input type="checkbox" value="agree">  I agree to the <a href="#">Terms and Conditions</a>.
                 </label>
@@ -86,13 +71,10 @@
         </div>
         <br>
         <div class="form-group">
-            <div class="col-xs-offset-3 col-xs-9">
-                
-                <button type="submit" class="btn btn-default">Submit</button>
-               
-                <button type="reset" class="btn btn-default">Reset</button>
+            <div class="col-sm-offset-2 col-sm-9">
+                <button type="submit" class="btn btn-primary" ng-click="createTournament(tournament)">Submit</button>
+                <button type="reset" class="btn btn-primary" ng-click="reset()">Reset</button>
             </div>
         </div>
     </form>
-
 </div><!-- end container -->
