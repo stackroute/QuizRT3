@@ -11,14 +11,14 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//  
- 
+//
+
 angular.module('quizRT')
   .controller('categoriesController', function($scope,$http,$location,$rootScope){
     $scope.categories="";
-    $rootScope.stylesheetName="categories";
+    // $rootScope.stylesheetName="category";
     $scope.showCategory=function(categoryID){
       var path = '/category/'+categoryID;
       $location.path(path);

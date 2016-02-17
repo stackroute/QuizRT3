@@ -17,6 +17,13 @@
 
 angular.module('quizRT')
     .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
+      if ( !$rootScope.loggedInUser ) {
+        $rootScope.isAuthenticatedCookie = false;
+        $rootScope.serverErrorMsg = 'User not authenticated.';
+        $rootScope.serverErrorStatus = 401;
+        $rootScope.serverErrorStatusText = 'You are not logged in. kindly do a fresh login.';
+        $location.path('/error');
+      } else {
         $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;
@@ -50,14 +57,15 @@ angular.module('quizRT')
 
         socket.on( 'userNotAuthenticated', function() {
             $rootScope.isAuthenticatedCookie = false;
-            $rootScope.serverErrorMsg = errorResponse.data.error;
-            $rootScope.serverErrorStatus = errorResponse.status;
-            $rootScope.serverErrorStatusText = errorResponse.statusText;
+            $rootScope.serverErrorMsg = 'User not authenticated.';
+            $rootScope.serverErrorStatus = 401;
+            $rootScope.serverErrorStatusText = 'User session could not be found. kindly do a fresh login.';
             $location.path('/error');
             console.log('Problem maintaining the user session!');
         });
 
         socket.on('startGame', function( startGameData ) {
+          if ( startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.questionCounter = 0; // reset the questionCounter for each game
             $scope.question = "Starting Game ...";
@@ -122,6 +130,10 @@ angular.module('quizRT')
                 }
 
             }, 1000);// to create 1s timer
+          } else {
+            $rootScope.isPlayingAGame = false;
+            $scope.question = 'Selected topic does not have any questions in our QuestionBank :(';
+          }
 
         });
         socket.on('takeScore', function(data) {
@@ -151,6 +163,7 @@ angular.module('quizRT')
             };
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
+      }
     });
 
 function loadNextQuestion( questions, questionNumber, $scope) {
