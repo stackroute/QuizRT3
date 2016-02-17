@@ -27,7 +27,10 @@ angular.module('quizRT')
         $scope.a=7;
         $scope.see = true;
         $scope.btnImg = "images/userProfileImages/seeall.jpg";
-
+        $scope.recentGameResults = [];
+        for ( game in $rootScope.recentGames ) {
+          $scope.recentGameResults.push( $rootScope.recentGames[game] );
+        }
         $scope.showTournamentDetails = function( tournamentId ) {
           $location.path( '/tournament/' + tournamentId );
         };
@@ -42,6 +45,9 @@ angular.module('quizRT')
            $scope.btnImg = "images/userProfileImages/seeall.jpg";
            $scope.a=7;
          }
+        }
+        $scope.showRecentResult = function( gameId ) {
+          $location.path( '/quizResult/' + gameId );
         }
 
       // refresh the user profile

@@ -159,6 +159,7 @@ angular.module('quizRT')
             $rootScope.recentGames[resultData.gameResult.gameId] = {
               error: resultData.error,
               topicId: resultData.gameResult.topicId,
+              gameId: resultData.gameResult.gameId,
               gameBoard: resultData.gameResult.finishedGameBoard
             };
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
