@@ -31,12 +31,9 @@ angular.module('quizRT')
 				if ( $rootScope.recentGames[$scope.gameId].error ) {
 					$scope.msg = $rootScope.recentGames[$scope.gameId].error;
 				} else {
-					console.log(typeof $rootScope.recentGames[$scope.gameId].gameBoard);
 					if ( $rootScope.recentGames[$scope.gameId].gameBoard ) {
 						$scope.gameTopper = $rootScope.recentGames[$scope.gameId].gameBoard.splice(0,1);
 					}
-					console.log('Topper:');
-					console.log($scope.gameTopper);
 					$scope.gameBoard = $rootScope.recentGames[$scope.gameId].gameBoard; // show the results
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
