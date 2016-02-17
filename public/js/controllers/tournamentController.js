@@ -59,12 +59,12 @@
         $scope.refreshTournament( $scope.tournamentId );// call for the first time
 
         $scope.play = function(levelId, topicId, title, topic_name) {
-          $rootScope.levelId=levelId;
-          $rootScope.title=title;
-          $rootScope.tId=topicId;
-          $rootScope.topicName=topic_name;
-          $rootScope.roundCount = levelId.substring(levelId.lastIndexOf("_") + 1);
-          $location.path('/quizPlayer');
+          $rootScope.playGame = {};
+          $rootScope.playGame.levelId = levelId;
+          $rootScope.playGame.topicId = topicId;
+          $rootScope.playGame.topicName = topic_name;
+          $rootScope.playGame.tournamentTitle = title;
+          $location.path( '/quizPlayer' );
           $rootScope.isPlayingAGame = true;
         };
    });

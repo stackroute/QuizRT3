@@ -58,13 +58,14 @@ angular.module("quizRT")
       }
       $scope.refreshTournament( $scope.tournamentId );// call for the first time
 
-      $scope.play = function(levelId, topicId, title, topic_name) {
-        $rootScope.levelId=levelId;
-        $rootScope.title=title;
-        $rootScope.tId=topicId;
-        $rootScope.topicName=topic_name;
+      $scope.play = function( levelId, topicId, title, topic_name ) {
+        $rootScope.levelId = levelId;
+        $rootScope.title = title;
+        $rootScope.tId = topicId;
+        $rootScope.topicName = topic_name;
         $rootScope.roundCount = levelId.substring(levelId.lastIndexOf("_") + 1);
-        $location.path('/quizPlayer');
+        var quizPlayUrl = '/quizPlayer?levelId=' + levelId + '&topicId=' + topicId + '&'
+        $location.path( );
         $rootScope.isPlayingAGame = true;
       };
  });

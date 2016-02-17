@@ -24,6 +24,11 @@ angular.module('quizRT')
         $rootScope.serverErrorStatusText = 'You are not logged in. kindly do a fresh login.';
         $location.path('/error');
       } else {
+        $scope.levelId = $rootScope.playGame.levelId;
+        $scope.topicId = $rootScope.playGame.topicId;
+        $scope.quizTitle = $rootScope.playGame.topicName;
+        $scope.tournamentTitle = $rootScope.playGame.tournamentTitle;
+        $scope.roundCount = $scope.levelId.substring($scope.levelId.lastIndexOf("_") + 1);
         $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;
@@ -35,14 +40,15 @@ angular.module('quizRT')
         console.log("WAITING FOR " + playersPerMatch +" OTHER PLAYERS");
 
         // levelId is defined for Tournaments only
-        if($rootScope.levelId){
-             $scope.levelDetails = "Round "+ $rootScope.roundCount + " : " + $rootScope.topicName;
+        if($scope.levelId){
+             $scope.levelDetails = "Round "+ $scope.roundCount + " : " + $scope.tournamentTitle;
         }else{
             $scope.levelDetails = "";
         }
         // watch when the user leaves the quiz-play page to show/hide footer nav
         $scope.$on( '$routeChangeStart', function(args) {
           $rootScope.isPlayingAGame = false;
+          $rootScope.playGame = {};
         });
 
         // create the playerData obj for the quiz gameManager to identify the player and his client
