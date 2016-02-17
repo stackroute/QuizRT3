@@ -182,7 +182,6 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on( 'storeResult', function( gameData ){
-      console.log('\nStoreResult called with gameId = ' + gameData.gameId + ' , topicid = ' + gameData.topicId + ', levelId = ' + gameData.levelId);
       var playerList = [],
           tournamentId = "",
           levelId = "";
@@ -322,50 +321,60 @@ function validateAndSaveProfile( profileData, client ) {
 
 
 //Updateing tournament after each game played
-function updateTournamentAfterEveryGame(tournamentId,levelId,gameID,playerList)
-{
-
-  Tournament.findOne({_id:tournamentId},function(err,tournamentData){
-    if(err)
-    {
+function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerList ) {
+  Tournament.findOne({ _id: tournamentId }, function( err, tournamentData ) {
+    if(err) {
+      console.log('Tournament ' + tournamentId + ' could not be read from MongoDB.');
       console.log(err);
-    }
-    else {
+    } else {
       tournamentData.totalGamesPlayed++;
-      tournamentData.topics.forEach(function(topic){
-        if(topic.userId==levelId)
-        {
-          topic.games.push(gameID);
+      tournamentData.topics.some( function(topic) {
+        if(topic._Id == levelId) {
+          topic.games.push( gameID );
         }
-
       });
+      playerList.forEach( function( player ) {
+        var isPlayerOnBoard = tournamentData.leaderBoard.some( function( boardPlayer ) {
+          if ( player.userId == boardPlayer.userId ) {
 
-      playerList.forEach( function(player) {
-        var temp=tournamentData.leaderBoard.filter(function(item){
-          return (item.userId==player.userId)
+            return true;
+          }
         });
 
-        if(temp.length==0)
-        {
-          //tournamentData.leaderBoard.push({userId:player.userId,totalScore:player.score});
-          tournamentData.leaderBoard.push(player);
+        // put the player on leaderBoard
+        if ( !isPlayerOnBoard ) {
+          tournamentData.leaderBoard.push( player );
         }
-        else {
-          var tempVar=temp[0];
-          var ind=tournamentData.leaderBoard.indexOf(tempVar);
-          tournamentData.leaderBoard[ind].totalScore+=player.score;
-        }
-      });
-      tournamentData.leaderBoard.sort(function(a, b) {
-        return b.totalScore - a.totalScore;
-      });
 
-      tournamentData.save();
-      console.log("updated tournament space");
+        // save the tournamentData to MongoDB
+        tournamentData.save( function(err, savedTournament ) {
+          if ( err ) {
+            console.log('Tournament could not be saved to MongoDB.');
+            console.error(err);
+          } else {
+            console.log('Tournament saved to MongoDB : ' + tournamentId);
+          }
+        });
+      }); // end playerList.forEach
     }
-
-  });
+  }); // end tournament.findOne
 }
+//
+//   var temp = tournamentData.leaderBoard.filter(function(item){
+//     return (item.userId == player.userId);
+//   });
+//
+//   if( temp.length == 0 ) {
+//     tournamentData.leaderBoard.push( player );
+//   } else {
+//     var tempVar=temp[0];
+//     var ind=tournamentData.leaderBoard.indexOf(tempVar);
+//     tournamentData.leaderBoard[ind].totalScore+=player.score;
+//   }
+// });
+//
+// tournamentData.save();
+// console.log("updated tournament space");
 
 var levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);

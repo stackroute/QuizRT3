@@ -47,6 +47,7 @@ angular.module('quizRT')
          }
         }
         $scope.showRecentResult = function( gameId ) {
+          $rootScope.isComingFromTournament = false;
           $rootScope.showRecentResult = true;
           $location.path( '/quizResult/' + gameId );
         }
