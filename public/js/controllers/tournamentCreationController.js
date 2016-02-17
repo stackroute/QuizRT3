@@ -1,6 +1,8 @@
 angular.module('quizRT')
     .controller('createTournamentController',function($http,$scope,$rootScope,$location,socket){
 
+       $rootScope.stylesheetName = "tournamentCreation";
+
       $scope.data = 'none';
       $scope.add = function()
       {

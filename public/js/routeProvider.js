@@ -208,8 +208,8 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           'controller': 'halloffameController'
         })
         .when('/createTournament' , {
-          'templateUrl': 'html/createTournament.html',
-          'controller': 'createTournamentController'
+          'templateUrl': 'html/tournamentCreation.html',
+          'controller': 'tournamentCreationController'
         })
         .otherwise({
           redirectTo : '/404'

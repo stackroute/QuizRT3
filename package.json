@@ -67,17 +67,10 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.0",
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
-  },
-  "testling": {
-    "harness": "mocha-bdd",
-    "files": "test/*.js",
-    "browsers": [
-      "chrome/latest",
-      "firefox/latest"
-    ]
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "supertest": "^1.2.0"
   },
   "repository": {
     "type": "git",
