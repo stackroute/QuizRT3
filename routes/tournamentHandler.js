@@ -64,6 +64,13 @@ router.route('/tournament/:tId')
             });
 
     });
+router.route('/createTournament')
+    .post(function(req , res){
+        
+        console.log(req.body.levels);
+        //var tournament = new Tournament();
+
+    });
 /*
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {
