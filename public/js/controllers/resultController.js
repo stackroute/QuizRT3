@@ -31,17 +31,14 @@ angular.module('quizRT')
 				if ( $rootScope.recentGames[$scope.gameId].error ) {
 					$scope.msg = $rootScope.recentGames[$scope.gameId].error;
 				} else {
-					console.log(typeof $rootScope.recentGames[$scope.gameId].gameBoard);
 					if ( $rootScope.recentGames[$scope.gameId].gameBoard ) {
 						$scope.gameTopper = $rootScope.recentGames[$scope.gameId].gameBoard.splice(0,1);
 					}
-					console.log('Topper:');
-					console.log($scope.gameTopper);
 					$scope.gameBoard = $rootScope.recentGames[$scope.gameId].gameBoard; // show the results
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
 					var levelId = $rootScope.levelId || false;
-					// socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
+					socket.emit('storeResult',{gameId:$rootScope.freakgid,topicId:$rootScope.tId,levelId:levelId});
 					var updateProfileObj = {
 						score: $rootScope.finalScore,
 						rank: $rootScope.finalRank,
@@ -49,7 +46,7 @@ angular.module('quizRT')
 						userId: $rootScope.loggedInUser.userId,
 						levelId: levelId
 					};
-					// socket.emit('updateProfile', updateProfileObj );//score and rank
+					socket.emit('updateProfile', updateProfileObj );//score and rank
 				}
 			}, 3000); // show the results after 3s. LOL!!!! ROFL!!!! LOL!!!!!
 
