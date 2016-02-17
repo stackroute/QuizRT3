@@ -40,9 +40,7 @@ module.exports = function(server,sessionMiddleware) {
   io.on('connection', function(client) {
 
     client.on('join',function( playerData ) {
-      console.log('\n' + playerData.userId + ' joined');
-      console.log('Logging session in socket.js 44');
-      console.log(client.request.session);
+      console.log('\n' + playerData.userId + ' joined. Wants to play ' + playerData.topicId );
       // check if the user is authenticated and his session exists, if so add him to the game
       if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
         var gamePlayer = {
@@ -214,8 +212,7 @@ module.exports = function(server,sessionMiddleware) {
           gameId: gameData.gameId,
           players: playerList
         });
-        console.log('\nnewGame');
-        console.log(newGame);
+
         newGame.save(function (err, data) {
           if ( err ) {
             console.log('Finished game could not be saved to Mongo');
@@ -223,6 +220,8 @@ module.exports = function(server,sessionMiddleware) {
           } else {
             if( gameData.levelId ) {
               updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList );
+            } else {
+              console.log('Game saved to MongoDB : ' + newGame.gameId );
             }
           }
         });
