@@ -173,7 +173,6 @@ module.exports = function(server,sessionMiddleware) {
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
 
-      console.log('Update profile called');
       if ( tournamentId ) { // update coming from a tournament
         Profile.findOne({userId:clientData.userId},function(err,profileData){
           addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
@@ -300,8 +299,11 @@ function storeResult( gameId, levelId, topicId, gameBoard, done ) {
 
         newGame.save(function (err, data) {
           if ( err ) {
-            console.log('Finished game could not be saved to Mongo');
-            console.error(err);;
+            if (err.name === 'MongoError' && err.code === 11000) {
+              console.log('Finished game already saved to Mongo.');
+            } else {
+              console.error(err);
+            }
           } else {
             console.log('Game saved to MongoDB : ' + newGame.gameId );
             if( levelId ) {
