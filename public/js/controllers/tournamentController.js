@@ -32,29 +32,29 @@
         $scope.refreshTournament = function( tournamentId ) {
           $http.get( '/tournamentHandler/tournament/' + tournamentId )
              .then(function( successResponse ) {
-              successResponse.data.leaderBoard.sort( function(a,b) {
-                return b.totalScore - a.totalScore;
-              });
-              console.log('Leaderboard:');
-              console.log(successResponse.data.leaderBoard);
-              successResponse.data.leaderBoard.some( function(player,index) {
-                if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
-                  $scope.userTournamentStats = player;
-                  $scope.userTournamentStats.rank = index+1;
-                  return true
-                }
-              });
+               successResponse.data.tournament.leaderBoard.sort( function(a,b) {
+                 return b.totalScore - a.totalScore;
+               });
+               console.log('Leaderboard:');
+               console.log(successResponse.data.tournament.leaderBoard);
+               successResponse.data.tournament.leaderBoard.some( function(player,index) {
+                 if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
+                   $scope.userTournamentStats = player;
+                   $scope.userTournamentStats.rank = index+1;
+                   return true
+                 }
+               });
 
-              $scope.tournament = successResponse.data;
-              $rootScope.playersPerMatch = successResponse.data.playersPerMatch;
-              console.log('successResponse.data');
-              console.log(successResponse.data);
-              $rootScope.loggedInUser.tournaments.forEach(function(tournament){
-                if(tournament.tournamentId == successResponse.data._id){
-                  $scope.playedTournament = tournament;
-                  $scope.levelCleared = tournament.levelCleared;
-                }
-              });
+               $scope.tournament = successResponse.data.tournament;
+               $rootScope.playersPerMatch = successResponse.data.tournament.playersPerMatch;
+               console.log('successResponse.data');
+               console.log(successResponse.data);
+               $rootScope.loggedInUser.tournaments.forEach(function(tournament){
+                 if(tournament.tournamentId == successResponse.data.tournament._id){
+                   $scope.playedTournament = tournament;
+                   $scope.levelCleared = tournament.levelCleared;
+                 }
+               });
             }, function( errorResponse ) {
                  console.log('Failed to refresh the leader board. Showing old data.');
             });
