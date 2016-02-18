@@ -69,7 +69,7 @@ angular.module('quizRT')
       $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
       $http.post( '/topicsHandler/topic/'+ $scope.topicId )
         .then( function( successResponse ) {
-
+          // no idea what is done here
         }, function( errorResponse ) {
 
         });

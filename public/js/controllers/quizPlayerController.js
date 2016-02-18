@@ -56,7 +56,7 @@ angular.module('quizRT')
         // create the playerData obj for the quiz gameManager to identify the player and his client
         var playerData = {
             levelId: $scope.levelId, // defined only for Tournaments
-            topicId: $rootScope.topicId,
+            topicId: $scope.topicId,
             userId: $rootScope.loggedInUser.userId,
             playerName: $rootScope.loggedInUser.name,
             playerPic: $rootScope.loggedInUser.imageLink,

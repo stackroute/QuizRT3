@@ -119,14 +119,14 @@ module.exports = function(server,sessionMiddleware) {
       if(data.ans =='correct'){
         //increment correct of allplayers
         //decrement unsawered of all players
-        LeaderBoard.get(data.gameID).forEach(function(player){
+        GameManager.get(data.gameID).forEach(function(player){
           player.client.emit('isCorrect');
         });
       }
       else{
         //increment wrong of allplayers
         //decrement unsawered of all players
-        LeaderBoard.get(data.gameID).forEach(function(player){
+        GameManager.get(data.gameID).forEach(function(player){
           player.client.emit('isWrong');
         });
       }
