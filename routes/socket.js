@@ -15,7 +15,7 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //                      + Anil Sawant
 
-var GameManager = require('./gameManager/GameManager2.js'),
+var GameManager = require('./gameManager/GameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     LeaderBoard = require('./gameManager/Leaderboard.js'),
     uuid = require('node-uuid'),
@@ -23,7 +23,7 @@ var GameManager = require('./gameManager/GameManager2.js'),
     Profile = require("./../models/profile"),
     Tournament = require("./../models/tournament"),
     questionBank = require('./questionBank'),
-    defaultMaxPlayers =4;
+    defaultMaxPlayers = 2;
     maxPlayers = 0;
 
 module.exports = function(server,sessionMiddleware) {
@@ -38,14 +38,14 @@ module.exports = function(server,sessionMiddleware) {
   })
 
   io.on('connection', function(client) {
+
     client.on('disconnect', function() {
-      console.log( client.request.session.user.local.username + ' socket disconnected from server.');
+      console.log( client.request.session.user.local.username + ' disconnected from server.');
     });
 
     client.on('join',function( playerData ) {
       console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
-      console.log('\nUser session for ' +playerData.userId );
-      console.log(client.request.session);
+
       // check if the user is authenticated and his session exists, if so add him to the game
       if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
         var gamePlayer = {
