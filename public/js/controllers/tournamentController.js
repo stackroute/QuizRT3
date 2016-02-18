@@ -38,7 +38,7 @@
               console.log('Leaderboard:');
               console.log(successResponse.data.leaderBoard);
               successResponse.data.leaderBoard.forEach( function(player,index) {
-                if ( player.userId && player.userId.local.username == $rootScope.loggedInUser.userId ) {
+                if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
                   $scope.userTournamentStats = player;
                   $scope.userTournamentStats.rank = index+1;
                 }

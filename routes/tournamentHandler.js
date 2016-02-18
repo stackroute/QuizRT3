@@ -55,18 +55,22 @@ router.route('/tournament/:tId')
     .get(function(req, res) {
         Tournament.findById(req.params.tId)
             .populate("topics.name")
-            .populate("leaderBoard.userId")
+            // .populate("leaderBoard.userId")
             .exec(function(err, tournaments) {
                 if (err) {
+                  console.log('Could not retrieve tournament ' + req.params.tId);
+                  console.log(err);
                     return res.send(err);
                 }
+                console.log('Retrieved and sent :  ' + req.params.tId);
+                console.log(tournaments);
                 return res.json(tournaments);
             });
 
     });
 router.route('/createTournament')
     .post(function(req , res){
-        
+
         console.log(req.body.levels);
         //var tournament = new Tournament();
 
