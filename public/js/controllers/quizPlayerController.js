@@ -28,7 +28,9 @@ angular.module('quizRT')
         $scope.topicId = $rootScope.playGame.topicId;
         $scope.quizTitle = $rootScope.playGame.topicName;
         $scope.tournamentTitle = $rootScope.playGame.tournamentTitle;
-        $scope.roundCount = $scope.levelId.substring($scope.levelId.lastIndexOf("_") + 1);
+        if ( $scope.levelId && $scope.levelId.length ) {
+          $scope.roundCount = $scope.levelId.substring($scope.levelId.lastIndexOf("_") + 1);
+        }
         $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;

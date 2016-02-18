@@ -25,14 +25,13 @@ angular.module('quizRT')
      $rootScope.tId = $scope.topicId;
     //  socket.emit('leaveGame', $scope.topicId);
      var path = '/topicsHandler/topic/'+ $scope.topicId;
-     $rootScope.tId = $scope.topicId;
 
      socket.emit('disjoin',"leaving page topic play");
 
      /*
         HTTP methods are used as follows:
         GET: to retrieve topic details along with userStats
-        PUT: to follow - unFollow a topic
+        PUT: to follow-unFollow a topic
         POST: to update the topic and userStats when user hits Play Now!
      */
      $http.get(path)
@@ -64,7 +63,9 @@ angular.module('quizRT')
          });
     };
 
-    $scope.playGame = function() {
+    $scope.playGame = function( topicId ) {
+      $rootScope.playGame = {};
+      $rootScope.playGame.topicId = topicId;
       $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
       $http.post( '/topicsHandler/topic/'+ $scope.topicId )
         .then( function( successResponse ) {
