@@ -50,7 +50,6 @@ angular.module('quizRT')
         // watch when the user leaves the quiz-play page to show/hide footer nav
         $scope.$on( '$routeChangeStart', function(args) {
           $rootScope.isPlayingAGame = false;
-          $rootScope.playGame = {};
         });
 
         // create the playerData obj for the quiz gameManager to identify the player and his client

@@ -29,8 +29,11 @@ angular.module('quizRT')
 				$scope.msg = "Compiling the game result. Please wait...";
 			}
 			$scope.topicId = $rootScope.recentGames[$scope.gameId].topicId;
+			console.log('In resultController');
+			console.log($rootScope.playGame);
 			if ( $rootScope.playGame.levelId ) {
 				$scope.isComingFromTournament = true;
+				console.log('$scope.isComingFromTournament = ' + $scope.isComingFromTournament);
 			}
 
 			$timeout( function() {
@@ -66,6 +69,11 @@ angular.module('quizRT')
 				}
 			};
 		}
+		
+		$scope.$on( '$routeChangeStart', function(args) {
+			$rootScope.playGame = {}; // reset the playGame object so that new game can be mapped to it
+		});
+
 		$scope.goHome = function() {
 			$location.path( '/userProfile' );
 		};

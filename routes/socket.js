@@ -169,11 +169,14 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('updateProfile',function(clientData){
+      console.log('\nclientData');
+      console.log(clientData);
       var levelId = clientData.levelId,
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
 
       if ( tournamentId ) { // update coming from a tournament
+        console.log('\nIts a tournament\n');
         Profile.findOne({userId:clientData.userId},function(err,profileData){
           addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
         });
@@ -288,7 +291,6 @@ function storeResult( gameId, levelId, topicId, gameBoard, done ) {
             'userId': player.userId,
             'playerName' : player.playerName,
             'playerPic': player.playerPic,
-            'rank':index+1,
             'totalScore': new Number(player.score)
           }
           playerList.push( tempPlayer );
@@ -324,6 +326,7 @@ function storeResult( gameId, levelId, topicId, gameBoard, done ) {
 
 // add played tournament to user profile
 function addTournamentToProfile( client, profileData, levelId, tournamentId ,clientData ) {
+  console.log('\n adding tournament to profile');
   var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
       len = profileData.tournaments ? profileData.tournaments.length : 0,
       tournamentFound = false;
@@ -413,7 +416,7 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
       playerList.forEach( function( player ) {
         var isPlayerOnBoard = tournamentData.leaderBoard.some( function( boardPlayer ) {
           if ( player.userId == boardPlayer.userId ) {
-            boardPlayer.totalScore += player.score;
+            boardPlayer.totalScore += new Number(player.score);
             return true;
           }
         });
