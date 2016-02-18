@@ -30,8 +30,13 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       $rootScope.serverErrorMsg = 'Error! Kindly check your URL.'; // used in eror.html to display Error message received from the server
       $rootScope.isPlayingAGame = false; // used to identify if the user is playing a game. This is used to hide the footer nav if true
       $rootScope.recentGames = {}; // save the recent games played by the user since last login. Saved as {gameId:gameBoard}
-      $rootScope.playGame = {}; // used to pass topic/tournament details to quizPlayerController
-
+      $rootScope.playGame = {
+        levelId: "",
+        topicId: "",
+        topicName: "",
+        tournamentTitle: ""
+      }; // used to pass topic/tournament details to quizPlayerController
+      
       // Added application level watcher here
       $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) { // watch that puts/removes cookie based on $rootScope.isAuthenticatedCookie
         if ( nv ) {

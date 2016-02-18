@@ -31,7 +31,7 @@ var mongoose = require('mongoose'),
         userId: { type: String, ref: 'Profile'},
         playerName:String,
         playerPic: String,
-        totalScore:Number
+        totalScore: Number
       }],
       totalGamesPlayed:{type:Number,default:0},
       topics: [

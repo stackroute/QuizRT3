@@ -85,7 +85,7 @@
                     <div class="tbody">
                       <h6 ng-if="!tournament.leaderBoard.length">Looks like this tournament is not attracting any birds...</h6>
                       <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
-                        <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
+                        <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId)">
                           <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio" disabled></span>{{calculateRank(player.totalScore,$index)}}</div>
                           <div class="td col-xs-6">{{player.playerName}}</div>
                           <div class="td col-xs-2">{{player.totalScore}}<span class="bolt bolt-right pull-right"><input type="radio" disabled></span></div>

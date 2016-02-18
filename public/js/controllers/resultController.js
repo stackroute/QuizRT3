@@ -21,7 +21,7 @@ angular.module('quizRT')
 		if ( !$rootScope.recentGames || !$rootScope.recentGames[$scope.gameId] ) {
 			$location.path( '/404');
 		} else {
-			if ( $rootScope.showRecentResult ) {
+			if ( $rootScope.showRecentResult ) { // to show the result direclty when user clicks on recent result button
 				$scope.timeBeforeResult = 0;
 				$rootScope.showRecentResult = false;
 			} else {
@@ -29,7 +29,7 @@ angular.module('quizRT')
 				$scope.msg = "Compiling the game result. Please wait...";
 			}
 			$scope.topicId = $rootScope.recentGames[$scope.gameId].topicId;
-			if ( $rootScope.levelId ) {
+			if ( $rootScope.playGame.levelId ) {
 				$scope.isComingFromTournament = true;
 			}
 
@@ -43,7 +43,7 @@ angular.module('quizRT')
 					$scope.gameBoard = $rootScope.recentGames[$scope.gameId].gameBoard; // show the results
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
-					var levelId = $rootScope.levelId || false;
+					var levelId = $rootScope.playGame.levelId || false;
 					socket.emit('storeResult',{ gameId: $scope.gameId, topicId: $scope.topicId, levelId: levelId });
 
 					var updateProfileObj = {
@@ -53,13 +53,15 @@ angular.module('quizRT')
 						userId: $rootScope.loggedInUser.userId,
 						levelId: levelId
 					};
+					console.log('updateProfileObj');
+					console.log(updateProfileObj);
 					socket.emit('updateProfile', updateProfileObj );//score and rank
 				}
 			}, $scope.timeBeforeResult); // show the results after a delay. LOL!!!! ROFL!!!! LOL!!!!!
 
 			$scope.nextLevel = function() {
-				if ( $rootScope.levelId ) {
-					var tournamentId = $rootScope.levelId.substring(0, $rootScope.levelId.indexOf('_') );
+				if ( $rootScope.playGame.levelId ) {
+					var tournamentId = $rootScope.playGame.levelId.substring(0, $rootScope.playGame.levelId.indexOf('_') );
 					$location.path( '/tournament/' + tournamentId );
 				}
 			};

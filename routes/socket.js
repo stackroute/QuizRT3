@@ -15,7 +15,7 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //                      + Anil Sawant
 
-var GameManager = require('./gameManager/GameManager.js'),
+var GameManager = require('./gameManager/GameManager2.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     LeaderBoard = require('./gameManager/Leaderboard.js'),
     uuid = require('node-uuid'),
@@ -267,6 +267,7 @@ module.exports = function(server,sessionMiddleware) {
 
 // store the game result in MongoDB
 function storeResult( gameId, levelId, topicId, gameBoard, done ) {
+  console.log('\nStore result called for ' + gameId);
   Game.findOne( {gameId: gameId}, function(err, game) {
     if (err) {
       console.log('Mongo error while finding a game.');
@@ -280,13 +281,15 @@ function storeResult( gameId, levelId, topicId, gameBoard, done ) {
         gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
                     return b.score-a.score;
                   });
+                  console.log('\nGameBoard:');
+                  console.log(gameBoard);
         gameBoard.forEach( function( player, index ) {
           var tempPlayer = { // this looks redundant. No need to save the rank. Sort by score instead
             'userId': player.userId,
             'playerName' : player.playerName,
             'playerPic': player.playerPic,
             'rank':index+1,
-            'totalScore': player.score
+            'totalScore': new Number(player.score)
           }
           playerList.push( tempPlayer );
         });
@@ -394,6 +397,7 @@ function validateAndSaveProfile( profileData, client ) {
 
 //Updateing tournament after each game played
 function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerList, done ) {
+  console.log('\nUpdate tournament called');
   Tournament.findOne({ _id: tournamentId }, function( err, tournamentData ) {
     if(err) {
       console.log('Tournament ' + tournamentId + ' could not be read from MongoDB.');
