@@ -63,8 +63,8 @@ module.exports = function(server,sessionMiddleware) {
           // --> uses GameManager for individual games
         */
 
-        maxPlayers = 2;
-        // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
+        // maxPlayers = 4;
+        maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
         var gamePlayers = GameManager.get( playerData.topicId ),
             usersJoined = gamePlayers.length;
