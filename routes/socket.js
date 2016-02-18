@@ -40,7 +40,7 @@ module.exports = function(server,sessionMiddleware) {
   io.on('connection', function(client) {
 
     client.on('join',function( playerData ) {
-      console.log('\n' + playerData.userId + ' joined. Wants to play ' + playerData.topicId );
+      console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
       // check if the user is authenticated and his session exists, if so add him to the game
       if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
         var gamePlayer = {
@@ -63,7 +63,7 @@ module.exports = function(server,sessionMiddleware) {
           // --> uses GameManager for individual games
         */
 
-        maxPlayers = 1;
+        maxPlayers = 2;
         // maxPlayers=data.playersPerMatch || defaultMaxPlayers;
 
         var gamePlayers = GameManager.get( playerData.topicId ),
