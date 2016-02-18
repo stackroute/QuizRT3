@@ -22,7 +22,7 @@
         <hr>
     </div>
     
-    <form name="form" class="form-horizontal" novalidate>
+    <form name="form" class="form-horizontal">
         <div class="form-group">
             <label class="control-label col-sm-3" for="name">Name</label>
             <div class="col-sm-9">
@@ -30,15 +30,24 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3" for="imageFile">Image</label>
+            <label class="control-label col-sm-3" for="imageLink">Image</label>
             <div class="col-sm-9">
-                <input type="file" id="imageFile" file-Upload="tournament.imageFile">
+                <input type="file" id="imageLink" file-upload="imageFile" >
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-3" for="levels">Levels</label>
-            <div class="col-sm-9">
-                <input type="number" class="form-control input-sm" id="levels" ng-model="tournament.levels" placeholder="Number of levels in the tournament">
+            <div class="col-sm-9" ng-init="names=['Level 1','Level 2','Level 3']" >
+                <ul>
+                    <li ng-repeat="x in names">
+                        {{x}} <select ng-model="['Level 1','Level 2','Level 3']"></select>
+                    </li>
+                </ul>
+               <!--  <input type="number" class="form-control input-sm" id="levels" ng-model="tournament.levels" placeholder="Number of levels in the tournament">
+
+                <select>
+                    
+                </select> -->
             </div>
         </div>
         <div class="form-group">
@@ -55,7 +64,7 @@
 
             </div>
         </div>
-        <div class="form-group">
+<!--         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-9">
                 <label class="checkbox-inline">
                     <input type="checkbox" value="news"> Send me latest news and updates of Tournaments
@@ -68,7 +77,7 @@
                     <input type="checkbox" value="agree">  I agree to the <a href="#">Terms and Conditions</a>.
                 </label>
             </div>
-        </div>
+        </div> -->
         <br>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-9">

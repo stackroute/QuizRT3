@@ -68,12 +68,34 @@ router.route('/tournament/:tId')
             });
 
     });
+    
 router.route('/createTournament')
     .post(function(req , res){
+        console.log("Inside Create tournament");
+       var form = new formidable.IncomingForm(),
+        fields =[],
+        tournament = null;
+        
+        form.uploadDir = process.cwd() + '/public/temp';
 
-        console.log(req.body.levels);
-        //var tournament = new Tournament();
+/*        form.on('field',function(name,value) {
+            tournament = value;
+            console.log(value);
+             console.log(tournament.name);
+        });
+*/
+        form.on('file',function(name,file) {
+            console.log('inside file');
+        });
 
+        form.on('field', function (field, value) {
+            console.log('inside field');
+            tournament = JSON.parse(value);
+        
+        });
+
+        form.parse(req);
+        
     });
 /*
 router.route('/leaderBoard/:tId')
