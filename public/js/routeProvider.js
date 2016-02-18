@@ -16,7 +16,7 @@
 //                        + Anil Sawant
 
 angular.module('quizRT', ['ngRoute', 'ngCookies'])
-    .run(function($cookies,$rootScope,$http,$location) {
+    .run(function($cookies,$rootScope,$http,$location,socket) {
 
       // redirect to user-profile page if the user's cookie exists
       if($cookies.get('isAuthenticated'))
@@ -36,7 +36,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
         topicName: "",
         tournamentTitle: ""
       }; // used to pass topic/tournament details to quizPlayerController
-      
+
       // Added application level watcher here
       $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) { // watch that puts/removes cookie based on $rootScope.isAuthenticatedCookie
         if ( nv ) {
@@ -50,6 +50,16 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           $( '#footer-nav' ).slideUp();
         } else {
           $( '#footer-nav' ).slideDown();
+        }
+      });
+
+      // refresh the user profile
+      socket.on('refreshUser', function( refreshObj ) {
+        console.log('Refresh User received');
+        if ( refreshObj.error ) {
+          console.log('User could not be refreshed. Will be refreshed when user navigates to Profile page.');
+        }else {
+          $rootScope.loggedInUser = refreshObj.user;
         }
       });
 

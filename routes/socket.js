@@ -408,13 +408,16 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
       });
       playerList.forEach( function( player ) {
         var isPlayerOnBoard = tournamentData.leaderBoard.some( function( boardPlayer ) {
+
           if ( player.userId == boardPlayer.userId ) {
+            console.log('\nPlayer on LeaderBoard. updating score');
             boardPlayer.totalScore += new Number(player.score);
             return true;
           }
         });
         // put the player on leaderBoard
         if ( !isPlayerOnBoard ) {
+          console.log('\nPushing new player to leaderboard');
           tournamentData.leaderBoard.push( player );
         }
       }); // end playerList.forEach

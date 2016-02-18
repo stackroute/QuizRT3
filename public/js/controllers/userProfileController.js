@@ -52,11 +52,6 @@ angular.module('quizRT')
           $location.path( '/quizResult/' + gameId );
         }
 
-      // refresh the user profile
-      // socket.on('refreshUser', function( user ) {
-      //   $rootScope.loggedInUser = user;
-      // });
-
       $http({method : 'GET',url:'/userProfile/profileData'})
         .then( function( successResponse ){
           $scope.data = successResponse.data.user;
