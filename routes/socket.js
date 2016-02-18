@@ -417,18 +417,18 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
         if ( !isPlayerOnBoard ) {
           tournamentData.leaderBoard.push( player );
         }
-
-        // save the updated tournamentData to MongoDB
-        tournamentData.save( function(err, savedTournament ) {
-          if ( err ) {
-            console.log('Tournament could not be saved to MongoDB.');
-            console.error(err);
-          } else {
-            console.log('Tournament saved to MongoDB : ' + tournamentId);
-            done(); // done after saving the game in tournament, updating it, and refreshing the leaderBoard
-          }
-        });
       }); // end playerList.forEach
+
+      // save the updated tournamentData to MongoDB
+      tournamentData.save( function(err, savedTournament ) {
+        if ( err ) {
+          console.log('Tournament could not be saved to MongoDB.');
+          console.error(err);
+        } else {
+          console.log('Tournament saved to MongoDB : ' + tournamentId);
+          done(); // done after saving the game in tournament, updating it, and refreshing the leaderBoard
+        }
+      });
     }
   }); // end tournament.findOne
 }

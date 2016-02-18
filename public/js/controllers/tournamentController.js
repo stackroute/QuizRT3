@@ -37,15 +37,18 @@
               });
               console.log('Leaderboard:');
               console.log(successResponse.data.leaderBoard);
-              successResponse.data.leaderBoard.forEach( function(player,index) {
+              successResponse.data.leaderBoard.some( function(player,index) {
                 if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
                   $scope.userTournamentStats = player;
                   $scope.userTournamentStats.rank = index+1;
+                  return true
                 }
               });
 
               $scope.tournament = successResponse.data;
               $rootScope.playersPerMatch = successResponse.data.playersPerMatch;
+              console.log('successResponse.data');
+              console.log(successResponse.data);
               $rootScope.loggedInUser.tournaments.forEach(function(tournament){
                 if(tournament.tournamentId == successResponse.data._id){
                   $scope.playedTournament = tournament;

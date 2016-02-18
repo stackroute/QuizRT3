@@ -33,7 +33,7 @@ router.route('/tournaments')
                 return res.json(tournaments);
             });
     })
-    .post( function(req,res) {
+    .post( function(req,res) {// not used . Can be used to retrieve multiple tournaments. takes tournamentIds array
       if ( req.data && req.data.tournamentIds ) {
         Tournament.find({'_id':{'$or': req.data.tournamentIds }})
                   .exec( function(err, userTournaments){
@@ -56,15 +56,15 @@ router.route('/tournament/:tId')
         Tournament.findById(req.params.tId)
             .populate("topics.name")
             // .populate("leaderBoard.userId")
-            .exec(function(err, tournaments) {
+            .exec(function(err, tournament) {
                 if (err) {
                   console.log('Could not retrieve tournament ' + req.params.tId);
                   console.log(err);
-                    return res.send(err);
+                  res.writeHead(204, {'Content-Type':'application/json'} );
+                  return res.end(JSON.stringify( { error:null, tournament: null } ));
                 }
-                console.log('Retrieved and sent :  ' + req.params.tId);
-                console.log(tournaments);
-                return res.json(tournaments);
+
+                return res.json( { error:null, tournament: tournament } );
             });
 
     });
