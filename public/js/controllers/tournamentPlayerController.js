@@ -12,13 +12,13 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-//   
+//
 //   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu , Mukesh Kumar Mishra
-//  
+//
 -->
 
 angular.module('quizRT')
-	.controller('tournamentPlayerController', function(socket,$route,$scope,$location, $interval,$http,$rootScope,$window){
+	.controller('tournamentPlayerController', function( $route,$scope,$location, $interval,$http,$rootScope,$window){
 
 		// specifies name of css file to be loaded
 		$rootScope.stylesheetName="quizPlayer";
@@ -28,14 +28,14 @@ angular.module('quizRT')
 		$scope.wrongAnswerers = 0;
 		console.log($rootScope.tournamentId);
 
-		socket.emit('joinTournament',{
+		$rootScope.socket.emit('joinTournament',{
 			tournamentId:$rootScope.tournamentId,
 			name:$rootScope.fakeMyName,
 			image:$rootScope.myImage
 		});
 
-		socket.on('startTournament',function(startGameData){
-			
+		$rootScope.socket.on('startTournament',function(startGameData){
+
 			var tournamentId = $rootScope.tournamentId;
 			var tournamentGameID = startGameData.tournamentGameID;
 			$rootScope.tournamentGameID = tournamentGameID;
@@ -43,5 +43,5 @@ angular.module('quizRT')
 			var URL = '/tournamentHandler/tournamentPlayer/quizData' + tournamentId +', ' + tournamentGameID ;
 
 		});
-		
+
 	});

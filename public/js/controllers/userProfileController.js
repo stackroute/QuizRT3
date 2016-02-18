@@ -16,7 +16,7 @@
 //                        + Anil Sawant
 
 angular.module('quizRT')
-    .controller('userProfileController',function($http,$scope,$rootScope,$location,socket){
+    .controller('userProfileController',function($http,$scope,$rootScope,$location){
 
       // redirect to login page if the user's isAuthenticated cookie doesn't exist
       if( !$rootScope.isAuthenticatedCookie ){

@@ -54,14 +54,14 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       });
 
       // refresh the user profile
-      socket.on('refreshUser', function( refreshObj ) {
-        console.log('Refresh User received');
-        if ( refreshObj.error ) {
-          console.log('User could not be refreshed. Will be refreshed when user navigates to Profile page.');
-        }else {
-          $rootScope.loggedInUser = refreshObj.user;
-        }
-      });
+      // socket.on('refreshUser', function( refreshObj ) {
+      //   console.log('Refresh User received');
+      //   if ( refreshObj.error ) {
+      //     console.log('User could not be refreshed. Will be refreshed when user navigates to Profile page.');
+      //   }else {
+      //     $rootScope.loggedInUser = refreshObj.user;
+      //   }
+      // });
 
       // Add app level events here
       $rootScope.$on('login', function(event) {
@@ -70,6 +70,13 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       $rootScope.$on('logout', function(event,user) {
         console.log('Hey ' + user.name + "!, you will be logged out.");
         $http.post('auth/logout').then( function( successResponse ){
+          console.log('Disconnecting sockets...');
+            if ( $rootScope.socket ) {
+              $rootScope.socket.disconnect();
+            } else {
+              console.log('Socket not found!!');
+            }
+
             $cookies.remove('isAuthenticated');
             $rootScope.loggedInUser = null;
             $rootScope.isAuthenticatedCookie = false;
@@ -86,29 +93,36 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       };
     })
     .factory('socket', function ($rootScope) {
-      var socket = io.connect('http://172.23.238.182:8080');
-    //  var socket = io.connect('http://localhost:8080');
-      return {
-        on: function (eventName, callback) {
-         socket.on(eventName, function () {
-         var args = arguments;
-         $rootScope.$apply(function () {
-           callback.apply(socket, args);
-          });
-         });
-        },
-        emit: function (eventName, data, callback) {
-          socket.emit(eventName, data, function () {
+
+      return function($rootScope) {
+        var socket = io.connect('http://172.23.238.182:8080', {'forceNew':true } );
+        console.log('Socket initialized');
+
+        return {
+          on: function (eventName, callback) {
+           socket.on(eventName, function () {
            var args = arguments;
            $rootScope.$apply(function () {
-            if (callback) {
-            callback.apply(socket, args);
-            }
+             callback.apply(socket, args);
+            });
            });
-          })
-         }
-       }
-      })
+          },
+          emit: function (eventName, data, callback) {
+            socket.emit(eventName, data, function () {
+             var args = arguments;
+             $rootScope.$apply(function () {
+              if (callback) {
+              callback.apply(socket, args);
+              }
+             });
+            })
+          },
+          disconnect: function() {
+            console.log('socket.disconnet');
+            socket.disconnect();
+          }
+         };
+      }})
      .config(function($routeProvider){
        $routeProvider
         .when('/404',{

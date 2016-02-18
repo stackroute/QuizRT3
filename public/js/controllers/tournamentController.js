@@ -35,8 +35,7 @@
                successResponse.data.tournament.leaderBoard.sort( function(a,b) {
                  return b.totalScore - a.totalScore;
                });
-               console.log('Leaderboard:');
-               console.log(successResponse.data.tournament.leaderBoard);
+               
                successResponse.data.tournament.leaderBoard.some( function(player,index) {
                  if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
                    $scope.userTournamentStats = player;
@@ -47,8 +46,7 @@
 
                $scope.tournament = successResponse.data.tournament;
                $rootScope.playersPerMatch = successResponse.data.tournament.playersPerMatch;
-               console.log('successResponse.data');
-               console.log(successResponse.data);
+
                $rootScope.loggedInUser.tournaments.forEach(function(tournament){
                  if(tournament.tournamentId == successResponse.data.tournament._id){
                    $scope.playedTournament = tournament;

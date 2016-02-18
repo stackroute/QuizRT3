@@ -16,7 +16,7 @@
 //												+ Anil Sawant
 
 angular.module('quizRT')
-	.controller('resultController', function( $scope, $rootScope, socket, $route, $location, $timeout) {
+	.controller('resultController', function( $scope, $rootScope, $route, $location, $timeout) {
 		$scope.gameId = $route.current.params.gameId;
 		if ( !$rootScope.recentGames || !$rootScope.recentGames[$scope.gameId] ) {
 			$location.path( '/404');
@@ -29,11 +29,9 @@ angular.module('quizRT')
 				$scope.msg = "Compiling the game result. Please wait...";
 			}
 			$scope.topicId = $rootScope.recentGames[$scope.gameId].topicId;
-			console.log('In resultController');
-			console.log($rootScope.playGame);
+
 			if ( $rootScope.playGame.levelId ) {
 				$scope.isComingFromTournament = true;
-				console.log('$scope.isComingFromTournament = ' + $scope.isComingFromTournament);
 			}
 
 			$timeout( function() {
@@ -47,7 +45,7 @@ angular.module('quizRT')
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
 					var levelId = $rootScope.playGame.levelId || false;
-					socket.emit('storeResult',{ gameId: $scope.gameId, topicId: $scope.topicId, levelId: levelId });
+					$rootScope.socket.emit('storeResult',{ gameId: $scope.gameId, topicId: $scope.topicId, levelId: levelId });
 
 					var updateProfileObj = {
 						score: $rootScope.finalScore,
@@ -56,9 +54,7 @@ angular.module('quizRT')
 						userId: $rootScope.loggedInUser.userId,
 						levelId: levelId
 					};
-					console.log('updateProfileObj');
-					console.log(updateProfileObj);
-					socket.emit('updateProfile', updateProfileObj );//score and rank
+					$rootScope.socket.emit('updateProfile', updateProfileObj );//score and rank
 				}
 			}, $scope.timeBeforeResult); // show the results after a delay. LOL!!!! ROFL!!!! LOL!!!!!
 
@@ -69,7 +65,7 @@ angular.module('quizRT')
 				}
 			};
 		}
-		
+
 		$scope.$on( '$routeChangeStart', function(args) {
 			$rootScope.playGame = {}; // reset the playGame object so that new game can be mapped to it
 		});

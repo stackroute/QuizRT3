@@ -16,7 +16,7 @@
 //                      + Anil Sawant
 
 angular.module('quizRT')
-    .controller('quizPlayerController', function(socket, $route, $scope, $location, $interval, $http, $rootScope, $window) {
+    .controller('quizPlayerController', function($route, $scope, $location, $interval, $http, $rootScope, $window) {
       if ( !$rootScope.loggedInUser ) {
         $rootScope.isAuthenticatedCookie = false;
         $rootScope.serverErrorMsg = 'User not authenticated.';
@@ -61,9 +61,9 @@ angular.module('quizRT')
             playerPic: $rootScope.loggedInUser.imageLink,
             playersPerMatch: playersPerMatch
         };
-        socket.emit('join', playerData); // enter the game and wait for other players to join
+        $rootScope.socket.emit('join', playerData); // enter the game and wait for other players to join
 
-        socket.on( 'userNotAuthenticated', function() {
+        $rootScope.socket.on( 'userNotAuthenticated', function() {
             $rootScope.isAuthenticatedCookie = false;
             $rootScope.serverErrorMsg = 'User not authenticated.';
             $rootScope.serverErrorStatus = 401;
@@ -72,7 +72,7 @@ angular.module('quizRT')
             console.log('Problem maintaining the user session!');
         });
 
-        socket.on('startGame', function( startGameData ) {
+        $rootScope.socket.on('startGame', function( startGameData ) {
           if ( startGameData.questions && startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.questionCounter = 0; // reset the questionCounter for each game
@@ -92,7 +92,7 @@ angular.module('quizRT')
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: startGameData.levelId } );
+                        $rootScope.socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: startGameData.levelId } );
                     } else {
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
@@ -100,7 +100,7 @@ angular.module('quizRT')
                             if (id == "option" + ($scope.temp.correctIndex)) {
                                 $(element.target).addClass('btn-success');
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
-                                socket.emit('confirmAnswer', {
+                                $rootScope.socket.emit('confirmAnswer', {
                                     ans: "correct",
                                     gameID: startGameData.gameId,
                                     topicId: startGameData.topicId
@@ -109,14 +109,14 @@ angular.module('quizRT')
                                 $(element.target).addClass('btn-danger');
                                 angular.element('#option' + $scope.temp.correctIndex).addClass('btn-success');
                                 $scope.myscore = $scope.myscore - 5;
-                                socket.emit('confirmAnswer', {
+                                $rootScope.socket.emit('confirmAnswer', {
                                     ans: "wrong",
                                     gameID: startGameData.gameId,
                                     topicId: startGameData.topicId
                                 });
                             }
                             $scope.isDisabled = true;
-                            socket.emit('updateStatus', {
+                            $rootScope.socket.emit('updateStatus', {
                                 gameId: startGameData.gameId,
                                 topicId: startGameData.topicId,
                                 userId: $rootScope.loggedInUser.userId,
@@ -146,7 +146,7 @@ angular.module('quizRT')
           }
 
         });
-        socket.on('takeScore', function(data) {
+        $rootScope.socket.on('takeScore', function(data) {
             //console.log("takeScore log emitted");
             //console.log("rank= " + data.myRank);
             $scope.myrank = data.myRank;
@@ -154,18 +154,18 @@ angular.module('quizRT')
             $scope.topperImage = data.topperImage;
             console.log(data.topperImage);
         });
-        socket.on('isCorrect', function(data) {
+        $rootScope.socket.on('isCorrect', function(data) {
             $scope.correctAnswerers++;
             $scope.unattempted--;
         });
-        socket.on('isWrong', function(data) {
+        $rootScope.socket.on('isWrong', function(data) {
             $scope.wrongAnswerers++;
             $scope.unattempted--;
         });
-        socket.on('pendingUsers', function(data) {
+        $rootScope.socket.on('pendingUsers', function(data) {
             $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
         });
-        socket.on( 'takeResult', function( resultData ) {
+        $rootScope.socket.on( 'takeResult', function( resultData ) {
             $rootScope.recentGames[resultData.gameResult.gameId] = {
               error: resultData.error,
               topicId: resultData.gameResult.topicId,

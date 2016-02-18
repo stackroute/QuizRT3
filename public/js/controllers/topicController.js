@@ -16,7 +16,7 @@
 //
 
 angular.module('quizRT')
-  .controller('topicController', function(socket,$scope,$rootScope,$routeParams,$http) {
+  .controller('topicController', function( $scope, $rootScope, $routeParams, $http) {
      $scope.topicId = $routeParams.topicId;
      $scope.topic = {};
      $scope.userTopicFollowState = false;
@@ -26,7 +26,7 @@ angular.module('quizRT')
     //  socket.emit('leaveGame', $scope.topicId);
      var path = '/topicsHandler/topic/'+ $scope.topicId;
 
-     socket.emit('disjoin',"leaving page topic play");
+     $rootScope.socket.emit('disjoin',"leaving page topic play");
 
      /*
         HTTP methods are used as follows:
