@@ -169,14 +169,11 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('updateProfile',function(clientData){
-      console.log('\nclientData');
-      console.log(clientData);
       var levelId = clientData.levelId,
       tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
       // above logic entirely depends on levelId having underscore('_')
 
       if ( tournamentId ) { // update coming from a tournament
-        console.log('\nIts a tournament\n');
         Profile.findOne({userId:clientData.userId},function(err,profileData){
           addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
         });
@@ -270,7 +267,6 @@ module.exports = function(server,sessionMiddleware) {
 
 // store the game result in MongoDB
 function storeResult( gameId, levelId, topicId, gameBoard, done ) {
-  console.log('\nStore result called for ' + gameId);
   Game.findOne( {gameId: gameId}, function(err, game) {
     if (err) {
       console.log('Mongo error while finding a game.');
@@ -284,8 +280,6 @@ function storeResult( gameId, levelId, topicId, gameBoard, done ) {
         gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
                     return b.score-a.score;
                   });
-                  console.log('\nGameBoard:');
-                  console.log(gameBoard);
         gameBoard.forEach( function( player, index ) {
           var tempPlayer = { // this looks redundant. No need to save the rank. Sort by score instead
             'userId': player.userId,
@@ -326,7 +320,6 @@ function storeResult( gameId, levelId, topicId, gameBoard, done ) {
 
 // add played tournament to user profile
 function addTournamentToProfile( client, profileData, levelId, tournamentId ,clientData ) {
-  console.log('\n adding tournament to profile');
   var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
       len = profileData.tournaments ? profileData.tournaments.length : 0,
       tournamentFound = false;
