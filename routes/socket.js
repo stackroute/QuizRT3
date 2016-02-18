@@ -138,7 +138,7 @@ module.exports = function(server,sessionMiddleware) {
         var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
             len = intermediateGameBoard.length,
             gameTopper = intermediateGameBoard[0];
-        intermediateGameBoard.forEach( function( player, index) {
+        GameManager.get(gameData.topicId).forEach( function( player, index) {
           player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
         });
       } else {
