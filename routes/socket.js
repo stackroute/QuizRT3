@@ -70,7 +70,6 @@ module.exports = function(server,sessionMiddleware) {
             usersJoined = gamePlayers.length;
 
         if( usersJoined == maxPlayers ) {
-          console.log('\nPopping the Game from GameManager');
           var gameId = uuid.v1(); // generate a unique game-id
 
           // @params (topicId, number of questions, callback)
@@ -119,14 +118,14 @@ module.exports = function(server,sessionMiddleware) {
       if(data.ans =='correct'){
         //increment correct of allplayers
         //decrement unsawered of all players
-        GameManager.get(data.gameID).forEach(function(player){
+        GameManager.get(data.topicId).forEach(function(player){
           player.client.emit('isCorrect');
         });
       }
       else{
         //increment wrong of allplayers
         //decrement unsawered of all players
-        GameManager.get(data.gameID).forEach(function(player){
+        GameManager.get(data.topicId).forEach(function(player){
           player.client.emit('isWrong');
         });
       }

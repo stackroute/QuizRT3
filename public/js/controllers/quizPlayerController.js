@@ -103,7 +103,8 @@ angular.module('quizRT')
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 socket.emit('confirmAnswer', {
                                     ans: "correct",
-                                    gameID: startGameData.gameId
+                                    gameID: startGameData.gameId,
+                                    topicId: startGameData.topicId
                                 });
                             } else {
                                 $(element.target).addClass('btn-danger');
@@ -111,12 +112,14 @@ angular.module('quizRT')
                                 $scope.myscore = $scope.myscore - 5;
                                 socket.emit('confirmAnswer', {
                                     ans: "wrong",
-                                    gameID: startGameData.gameId
+                                    gameID: startGameData.gameId,
+                                    topicId: startGameData.topicId
                                 });
                             }
                             $scope.isDisabled = true;
                             socket.emit('updateStatus', {
                                 gameId: startGameData.gameId,
+                                topicId: startGameData.topicId,
                                 userId: $rootScope.loggedInUser.userId,
                                 playerScore: $scope.myscore,
                                 playerName: $rootScope.loggedInUser.name,
