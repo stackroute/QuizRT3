@@ -55,7 +55,7 @@ angular.module('quizRT')
 					};
 					socket.emit('updateProfile', updateProfileObj );//score and rank
 				}
-			}, $scope.timeBeforeResult); // show the results after 3s. LOL!!!! ROFL!!!! LOL!!!!!
+			}, $scope.timeBeforeResult); // show the results after a delay. LOL!!!! ROFL!!!! LOL!!!!!
 
 			$scope.nextLevel = function() {
 				if ( $rootScope.levelId ) {

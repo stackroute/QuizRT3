@@ -12,8 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//                       + Anil Sawant
+//   Name of Developers  Anil Sawant
 
 var LeaderBoard = function() {
   this.games = new Map();
@@ -41,9 +40,9 @@ LeaderBoard.prototype.updateScore = function( gameId, userId, score) {
     return false;
   });
 
-  // this.games.get(gameId).sort( function(a,b) { // refresh the leaderBoard
-  //   return b.score-a.score;
-  // });
+  this.games.get( gameId ).sort( function(a,b) { // refresh the leaderBoard
+    return b.score-a.score;                     // this is requred to get the gameTopper after every question
+  });
 };
 
 module.exports = new LeaderBoard();

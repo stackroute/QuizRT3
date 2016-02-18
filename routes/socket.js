@@ -33,7 +33,7 @@ module.exports = function(server,sessionMiddleware) {
   });
   io.on('disconnect',function(client){
     // Players.delete(client.request.session.user,client);
-    console.log( client.request.session.user.local.username + ' left a game (or was disconnected from one).');
+    console.log( client.request.session.user.local.username + ' was disconnected from the server.');
     client.request.session.destroy();
   })
 
@@ -50,12 +50,17 @@ module.exports = function(server,sessionMiddleware) {
           client: client
         };
 
+        // if ( playerData.levelId ) {
+        //
+        // }
         GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
         /*
           The above logic has to be improved to map game-id and players for that game
           For now we cannot have two games on the same topic running simultaneously
           //
           // GameManager.addPlayerToGame( topicId, minPlayers, player)
+          // TournamentManager.addPlayerToTournament( levelId, topicId, minPlayers, player)
+          // --> uses GameManager for individual games
         */
 
         maxPlayers = 1;
@@ -65,23 +70,42 @@ module.exports = function(server,sessionMiddleware) {
             usersJoined = gamePlayers.length;
 
         if( usersJoined == maxPlayers ) {
-          console.log('\nPopping the topic from GameManager');
-          GameManager.popGame( playerData.topicId ); // pop and start the game
+          console.log('\nPopping the Game from GameManager');
           var gameId = uuid.v1(); // generate a unique game-id
 
-          // (topicId, number of questions, callback)
+          // @params (topicId, number of questions, callback)
           questionBank.getQuizQuestions( playerData.topicId, 5 , function( questions ) {
+            // prepare the LeaderBoard for the game
+            gamePlayers.forEach( function(player) { // extra loop to exclude player.client from leaderBoard and prevent CallStack Overflow error
+              var gamePlayer = {
+                userId: player.userId,
+                playerName: player.playerName,
+                playerPic: player.playerPic,
+                score: 0 // add score to gamePlayer and initialize it to zero
+              }
+              LeaderBoard.addPlayer( gameId, gamePlayer );
+            });
+            /*  Note: Keep separate loops to prepare LeaderBoard and startGameData
+                      This will reduce the time-lag for receiving questions
+            */
+            console.log('\n');
+            // prepare startGameData and emit startGame for each player
             gamePlayers.forEach( function(player) {
-              LeaderBoard.addPlayer( gameId, player );
-              player.client.emit('startGame', { topicId: playerData.topicId, gameId: gameId, maxPlayers: maxPlayers, questions: questions });
-              console.log("\nStarting game...");
+              var startGameData  = {
+                gameId: gameId,
+                levelId: playerData.levelId, // defined only for tournaments
+                topicId: playerData.topicId,
+                maxPlayers: maxPlayers,
+                questions: questions
+              };
+              player.client.emit('startGame', startGameData );
+              console.log("Starting game for " + player.userId );
             });
           });// end getQuizQuestions
 
         } else {
           console.log('pendingUsersCount = ' + (maxPlayers-usersJoined));
           gamePlayers.forEach( function(player) {
-            console.log('\nEmitting pendingUsers');
             player.client.emit('pendingUsers', { pendingUsersCount: (maxPlayers-usersJoined) });
           });
         }
@@ -124,27 +148,23 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on( 'gameFinished', function( game ) {
-      var gameBoard = LeaderBoard.get( game.gameId ),
-          finishedGameBoard = [];
+      var gameBoard = LeaderBoard.get( game.gameId );
       if ( gameBoard ) {
-        // extra loop to exclude player.client from response
-        for (var i = 0; i < gameBoard.length; i++) { // sending player.client gives CallStack overflow error
-          var gamePlayer = {
-            userId: gameBoard[i].userId,
-            playerName: gameBoard[i].playerName,
-            playerPic: gameBoard[i].playerPic,
-            score: gameBoard[i].score
-          }
-          finishedGameBoard.push( gamePlayer );
-        }
         var gameResultObj = {
           gameId: game.gameId,
           topicId: game.topicId,
-          finishedGameBoard: finishedGameBoard
+          gameBoard: gameBoard
         }
         client.emit('takeResult', { error: null, gameResult: gameResultObj } );
+
+        // store the finished game into MongoDB
+        storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
+          GameManager.popGame( game.topicId ); // pop and delete the reference to the game from GameManager
+          console.log('Result saved and Game popped: ' + game.topicId);
+        });
+
       } else {
-        console.log('LeaderBoard for ' + gameId + ' does not exist.');
+        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in join event.');
         client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
       }
     });
@@ -181,53 +201,53 @@ module.exports = function(server,sessionMiddleware) {
       }
     });
 
-    client.on( 'storeResult', function( gameData ){
-      var playerList = [],
-          tournamentId = "",
-          levelId = "";
-
-      if( gameData.levelId ) {
-        levelId = gameData.levelId;
-        tournamentId = levelId.substr(0,levelId.lastIndexOf("_"));
-      }
-      var gameBoard = LeaderBoard.get( gameData.gameId )
-      if ( gameBoard ) {
-        gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
-                    return b.score-a.score;
-                  });
-        gameBoard.forEach( function( player, index ) {
-          var tempPlayer = {
-            'userId': player.userId,
-            'name' : player.playerName,
-            'imageUrl': player.playerPic,
-            'rank':index+1,
-            'score': player.score
-          }
-          playerList.push( tempPlayer );
-        });
-
-        // Save the finished game to MongoDB
-        var newGame = new Game({
-          gameId: gameData.gameId,
-          players: playerList
-        });
-
-        newGame.save(function (err, data) {
-          if ( err ) {
-            console.log('Finished game could not be saved to Mongo');
-            console.error(err);;
-          } else {
-            if( gameData.levelId ) {
-              updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList );
-            } else {
-              console.log('Game saved to MongoDB : ' + newGame.gameId );
-            }
-          }
-        });
-      } else {
-        console.log('Problem retrieving the leaderBoard for gameId : ' + gameData.gameId );
-      }
-    });
+    // client.on( 'storeResult', function( gameData ){
+    //   var playerList = [],
+    //       tournamentId = "",
+    //       levelId = "";
+    //
+    //   if( gameData.levelId ) {
+    //     levelId = gameData.levelId;
+    //     tournamentId = levelId.substr(0,levelId.lastIndexOf("_"));
+    //   }
+    //   var gameBoard = LeaderBoard.get( gameData.gameId )
+    //   if ( gameBoard ) {
+    //     gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
+    //                 return b.score-a.score;
+    //               });
+    //     gameBoard.forEach( function( player, index ) {
+    //       var tempPlayer = {
+    //         'userId': player.userId,
+    //         'name' : player.playerName,
+    //         'imageUrl': player.playerPic,
+    //         'rank':index+1,
+    //         'score': player.score
+    //       }
+    //       playerList.push( tempPlayer );
+    //     });
+    //
+    //     // Save the finished game to MongoDB
+    //     var newGame = new Game({
+    //       gameId: gameData.gameId,
+    //       players: playerList
+    //     });
+    //
+    //     newGame.save(function (err, data) {
+    //       if ( err ) {
+    //         console.log('Finished game could not be saved to Mongo');
+    //         console.error(err);;
+    //       } else {
+    //         if( gameData.levelId ) {
+    //           updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList );
+    //         } else {
+    //           console.log('Game saved to MongoDB : ' + newGame.gameId );
+    //         }
+    //       }
+    //     });
+    //   } else {
+    //     console.log('Problem retrieving the leaderBoard for gameId : ' + gameData.gameId );
+    //   }
+    // });
 
     client.on('leaveGame', function( topicId ){
       console.log('\nLeave game called');
@@ -246,6 +266,57 @@ module.exports = function(server,sessionMiddleware) {
   });
 
 }
+
+// store the game result in MongoDB
+function storeResult( gameId, levelId, topicId, gameBoard, done ) {
+  Game.findOne( {gameId: gameId}, function(err, game) {
+    if (err) {
+      console.log('Mongo error while finding a game.');
+      console.error(err);
+    } else {
+      if ( game ) {
+        // game has already been saved. Don't save it again
+        console.log('Game already saved: ' + gameId);
+      } else {
+        var playerList = [];
+        gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
+                    return b.score-a.score;
+                  });
+        gameBoard.forEach( function( player, index ) {
+          var tempPlayer = { // this looks redundant. No need to save the rank. Sort by score instead
+            'userId': player.userId,
+            'playerName' : player.playerName,
+            'playerPic': player.playerPic,
+            'rank':index+1,
+            'totalScore': player.score
+          }
+          playerList.push( tempPlayer );
+        });
+
+        // Save the finished game to MongoDB
+        var newGame = new Game({
+          gameId: gameId,
+          players: playerList
+        });
+
+        newGame.save(function (err, data) {
+          if ( err ) {
+            console.log('Finished game could not be saved to Mongo');
+            console.error(err);;
+          } else {
+            console.log('Game saved to MongoDB : ' + newGame.gameId );
+            if( levelId ) {
+              var tournamentId = levelId.substr(0,levelId.lastIndexOf("_"));
+              updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList, done );
+            } else {
+              done(); // done after saving if the game is not from a tournament
+            }
+          }
+        });
+      }
+    }
+  });
+};
 
 // add played tournament to user profile
 function addTournamentToProfile( client, profileData, levelId, tournamentId ,clientData ) {
@@ -321,7 +392,7 @@ function validateAndSaveProfile( profileData, client ) {
 
 
 //Updateing tournament after each game played
-function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerList ) {
+function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerList, done ) {
   Tournament.findOne({ _id: tournamentId }, function( err, tournamentData ) {
     if(err) {
       console.log('Tournament ' + tournamentId + ' could not be read from MongoDB.');
@@ -331,28 +402,29 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
       tournamentData.topics.some( function(topic) {
         if(topic._Id == levelId) {
           topic.games.push( gameID );
+          return true;
         }
       });
       playerList.forEach( function( player ) {
         var isPlayerOnBoard = tournamentData.leaderBoard.some( function( boardPlayer ) {
           if ( player.userId == boardPlayer.userId ) {
-
+            boardPlayer.totalScore += player.score;
             return true;
           }
         });
-
         // put the player on leaderBoard
         if ( !isPlayerOnBoard ) {
           tournamentData.leaderBoard.push( player );
         }
 
-        // save the tournamentData to MongoDB
+        // save the updated tournamentData to MongoDB
         tournamentData.save( function(err, savedTournament ) {
           if ( err ) {
             console.log('Tournament could not be saved to MongoDB.');
             console.error(err);
           } else {
             console.log('Tournament saved to MongoDB : ' + tournamentId);
+            done(); // done after saving the game in tournament, updating it, and refreshing the leaderBoard
           }
         });
       }); // end playerList.forEach

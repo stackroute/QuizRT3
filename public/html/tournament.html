@@ -83,14 +83,14 @@
                       <div class="th col-xs-2">Score</div>
                     </div>
                     <div class="tbody">
-                      <h6 ng-if="!tournament.leaderBoard.length">Looks like this tournament is not attracting any birds.</h6>
+                      <h6 ng-if="!tournament.leaderBoard.length">Looks like this tournament is not attracting any birds...</h6>
                       <div class="tr-wrap" ng-repeat="player in tournament.leaderBoard | limitTo:10 ">
                         <div class="tr" ng-click="toggleLeaderBoardPlayerdetails(player.userId.local.username)">
                           <div class="td col-xs-4"><span class="bolt bolt-left"><input type="radio" disabled></span>{{calculateRank(player.totalScore,$index)}}</div>
                           <div class="td col-xs-6">{{player.playerName}}</div>
                           <div class="td col-xs-2">{{player.totalScore}}<span class="bolt bolt-right pull-right"><input type="radio" disabled></span></div>
                         </div>
-                        <div class="playerDetails" id="{{player.userId.local.username}}">
+                        <div class="playerDetails" id="{{player.userId}}">
                           <div class="playerRow"> <!-- need this div to make display = flex -->
                             <div class="td col-xs-4">
                               <img ng-if="!player.playerPic" ng-src="images/userProfileImages/user.png" alt="player img" class="img-responsive img-thumbnail"/>

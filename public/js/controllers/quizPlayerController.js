@@ -21,7 +21,7 @@ angular.module('quizRT')
         $rootScope.isAuthenticatedCookie = false;
         $rootScope.serverErrorMsg = 'User not authenticated.';
         $rootScope.serverErrorStatus = 401;
-        $rootScope.serverErrorStatusText = 'You are not logged in. kindly do a fresh login.';
+        $rootScope.serverErrorStatusText = 'You are not logged in. Kindly do a fresh login.';
         $location.path('/error');
       } else {
         $scope.levelId = $rootScope.playGame.levelId;
@@ -53,7 +53,8 @@ angular.module('quizRT')
 
         // create the playerData obj for the quiz gameManager to identify the player and his client
         var playerData = {
-            topicId: $rootScope.levelId || $rootScope.tId,
+            levelId: $scope.levelId, // defined only for Tournaments
+            topicId: $rootScope.topicId,
             userId: $rootScope.loggedInUser.userId,
             playerName: $rootScope.loggedInUser.name,
             playerPic: $rootScope.loggedInUser.imageLink,
@@ -90,7 +91,7 @@ angular.module('quizRT')
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId } );
+                        socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: startGameData.levelId } );
                     } else {
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
@@ -165,7 +166,7 @@ angular.module('quizRT')
               error: resultData.error,
               topicId: resultData.gameResult.topicId,
               gameId: resultData.gameResult.gameId,
-              gameBoard: resultData.gameResult.finishedGameBoard
+              gameBoard: resultData.gameResult.gameBoard
             };
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
