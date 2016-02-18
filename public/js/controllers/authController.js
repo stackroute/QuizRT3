@@ -21,6 +21,7 @@ angular.module('quizRT')
     // redirect to login page if the user's isAuthenticated cookie doesn't exist
     if( $rootScope.isAuthenticatedCookie ) {
       $location.path('/userProfile');
+      $rootScope.initializeSockets();
     }
     $rootScope.stylesheetName="style";
     $scope.logInErrorMsg = '';
@@ -50,8 +51,7 @@ angular.module('quizRT')
           $cookies.put('isAuthenticated',true);
           $rootScope.isAuthenticatedCookie = true;
           $location.path('/userProfile');
-          console.log('Initializing sockets after successful login...');
-          $rootScope.socket = socket($rootScope); // to use it through out the app
+          $rootScope.initializeSockets(); // initialize Sockets on successful login
         }
       });
     };

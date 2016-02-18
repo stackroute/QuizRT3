@@ -18,9 +18,16 @@
 angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .run(function($cookies,$rootScope,$http,$location,socket) {
 
+      $rootScope.initializeSockets = function() {
+        console.log('Initializing sockets...');
+        $rootScope.socket = socket($rootScope); // to use it through out the app
+      }
+
       // redirect to user-profile page if the user's cookie exists
-      if($cookies.get('isAuthenticated'))
+      if($cookies.get('isAuthenticated')) {
         $location.path('/userProfile');
+        $rootScope.initializeSockets();
+      }
 
       // Add app level variables here
       $rootScope.stylesheetName = "index"; // name of the css stylesheet to be used while loading the app
@@ -96,7 +103,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
 
       return function($rootScope) {
         var socket = io.connect('http://172.23.238.182:8080', {'forceNew':true } );
-        console.log('Socket initialized');
+        console.log('Socket initialized and set to $rootScope.socket.');
 
         return {
           on: function (eventName, callback) {
