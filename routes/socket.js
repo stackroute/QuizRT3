@@ -38,11 +38,13 @@ module.exports = function(server,sessionMiddleware) {
   })
 
   io.on('connection', function(client) {
+    console.log( client.request.session.user.local.username + ' connected to QuizRT server. Socket Id: ' + client.id);
 
     client.on('disconnect', function() {
       // need to implement:
       // finding the user disconnected and dropping him from GameManager
-      console.log( client.request.session.user.local.username + ' disconnected from server.');
+      console.log( client.request.session.user.local.username + ' disconnected from QuizRT server.');
+      client.request.session.destroy();
     });
 
     client.on('join',function( playerData ) {
@@ -62,6 +64,7 @@ module.exports = function(server,sessionMiddleware) {
         var addedSuccessfully = GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
         if ( !addedSuccessfully ) {
           console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
+          client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
         }
 
         /*
@@ -130,6 +133,10 @@ module.exports = function(server,sessionMiddleware) {
         client.emit( 'userNotAuthenticated' ); //this may not be of much use
       }
     }); // end client-on-join
+
+    client.on( 'isPlayingThisTopic', function( playerData ) {
+
+    });
 
     client.on('confirmAnswer',function(data){
       if(data.ans =='correct'){
@@ -215,54 +222,6 @@ module.exports = function(server,sessionMiddleware) {
         });// end Profile.findOne()
       }
     });
-
-    // client.on( 'storeResult', function( gameData ){
-    //   var playerList = [],
-    //       tournamentId = "",
-    //       levelId = "";
-    //
-    //   if( gameData.levelId ) {
-    //     levelId = gameData.levelId;
-    //     tournamentId = levelId.substr(0,levelId.lastIndexOf("_"));
-    //   }
-    //   var gameBoard = LeaderBoard.get( gameData.gameId )
-    //   if ( gameBoard ) {
-    //     gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
-    //                 return b.score-a.score;
-    //               });
-    //     gameBoard.forEach( function( player, index ) {
-    //       var tempPlayer = {
-    //         'userId': player.userId,
-    //         'name' : player.playerName,
-    //         'imageUrl': player.playerPic,
-    //         'rank':index+1,
-    //         'score': player.score
-    //       }
-    //       playerList.push( tempPlayer );
-    //     });
-    //
-    //     // Save the finished game to MongoDB
-    //     var newGame = new Game({
-    //       gameId: gameData.gameId,
-    //       players: playerList
-    //     });
-    //
-    //     newGame.save(function (err, data) {
-    //       if ( err ) {
-    //         console.log('Finished game could not be saved to Mongo');
-    //         console.error(err);;
-    //       } else {
-    //         if( gameData.levelId ) {
-    //           updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList );
-    //         } else {
-    //           console.log('Game saved to MongoDB : ' + newGame.gameId );
-    //         }
-    //       }
-    //     });
-    //   } else {
-    //     console.log('Problem retrieving the leaderBoard for gameId : ' + gameData.gameId );
-    //   }
-    // });
 
     client.on('leaveGame', function( topicId ){
       console.log('\nLeave game called');

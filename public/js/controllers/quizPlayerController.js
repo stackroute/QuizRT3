@@ -174,6 +174,9 @@ angular.module('quizRT')
             };
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
+        $rootScope.socket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
+          $scope.question = 'WARNING!! You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
+        });
       }
     });
 
