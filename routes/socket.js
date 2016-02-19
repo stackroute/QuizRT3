@@ -66,7 +66,7 @@ module.exports = function(server,sessionMiddleware) {
         //     give it to TournamentManager
         // }
         var addedSuccessfully = GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
-        if ( !addedSuccessfully ) {
+        if ( addedSuccessfully === false ) {
           console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
           client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
         }

@@ -40,6 +40,7 @@ var GameManager = function() {
       } else { // gamePlayer is not playing any game(s) so far
         this.players.set( gamePlayer.userId, [topicId] ); // set the topicId as the first game gamePlayer is playing i.e. set it in the map
         game.push( gamePlayer ); // since the game already exists, add gamePlayer to topicId's array of players
+        return true;
       }
   	} else { // game with topicId doesn't exist, or doesn't have any player(s)
   		this.games.set( topicId, [gamePlayer] ); // set the gamePlayer as the first player of the topicId

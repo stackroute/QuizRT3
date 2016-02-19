@@ -147,8 +147,6 @@ angular.module('quizRT')
 
         });
         $rootScope.socket.on('takeScore', function(data) {
-            //console.log("takeScore log emitted");
-            //console.log("rank= " + data.myRank);
             $scope.myrank = data.myRank;
             $scope.topperScore = data.topperScore;
             $scope.topperImage = data.topperImage;
@@ -175,7 +173,7 @@ angular.module('quizRT')
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
         $rootScope.socket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
-          $scope.question = 'WARNING!! You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
+          $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
           $rootScope.isPlayingAGame = false;
         });
       }
