@@ -20,11 +20,13 @@
 }
 
 #quizTitle {
+  color: #ccc;
   text-align: center;
   margin: -15px 0;
 }
 #quizTitle p{
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 #questionInfoPanel h4{
@@ -126,7 +128,7 @@ body{
 }
 
 #main{
-  height: 100%;
+  color: #ccc;
   margin-bottom: 0;
 }
 

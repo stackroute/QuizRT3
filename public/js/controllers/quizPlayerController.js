@@ -176,6 +176,7 @@ angular.module('quizRT')
         });
         $rootScope.socket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
           $scope.question = 'WARNING!! You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
+          $rootScope.isPlayingAGame = false;
         });
       }
     });
