@@ -121,10 +121,6 @@ router.route('/topic/:topicId')
       res.writeHead(401);
       res.end( JSON.stringify({ error: 'User session does not exist. Kindly do a fresh Login.' }) );
     }
-
-    // delete the follwing if it is not used
-    req.session.tid = req.params.topicId;
-
   })
   .put( function(req,res) { // set isFollowed for the topic in user's profile and increment/decrement no of followers in topic
     if ( req.session && req.session.user ) {

@@ -22,12 +22,12 @@ angular.module('quizRT')
      $scope.userTopicFollowState = false;
      $scope.topicFollowers = 0;
      $rootScope.stylesheetName = "topic";
-     $rootScope.tId = $scope.topicId;
-    //  socket.emit('leaveGame', $scope.topicId);
      var path = '/topicsHandler/topic/'+ $scope.topicId;
 
-     $rootScope.socket.emit('disjoin',"leaving page topic play");
+     $rootScope.socket.emit( 'checkIfPlayingThisTopic', { topicId: $scope.topicId, userId: $rootScope.loggedInUser.userId } );
+     $rootScope.socket.on( 'notPlayingThisTopic' , function() {
 
+     });
      /*
         HTTP methods are used as follows:
         GET: to retrieve topic details along with userStats
@@ -69,20 +69,9 @@ angular.module('quizRT')
       $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
       $http.post( '/topicsHandler/topic/'+ $scope.topicId )
         .then( function( successResponse ) {
-          // no idea what is done here
+          $location.path( '/quizPlayer' );
         }, function( errorResponse ) {
-
+          console.log(errorResponse.data.error);
         });
     }
-
-    // $scope.addToPlayedGames = function() {
-    //   $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
-    //   $http.post(path)
-    //        .success(function(data, status, headers, config) {
-    //        })
-    //        .error(function(data, status, headers, config) {
-    //          console.log(data);
-    //        });
-    // }
-
   });

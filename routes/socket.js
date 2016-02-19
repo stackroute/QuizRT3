@@ -43,7 +43,7 @@ module.exports = function(server,sessionMiddleware) {
     client.on('disconnect', function() {
       // need to implement:
       // finding the user disconnected and dropping him from GameManager
-      console.log( client.request.session.user.local.username + ' disconnected from QuizRT server.');
+      console.log( client.request.session.user.local.username + ' disconnected from QuizRT server. Socket Id: ' + client.id);
       client.request.session.destroy();
     });
 
@@ -134,8 +134,9 @@ module.exports = function(server,sessionMiddleware) {
       }
     }); // end client-on-join
 
-    client.on( 'isPlayingThisTopic', function( playerData ) {
-
+    client.on( 'checkIfPlayingThisTopic', function( playerData ) {
+      playerData.userId;
+      playerData.topicId;
     });
 
     client.on('confirmAnswer',function(data){
