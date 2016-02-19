@@ -147,9 +147,10 @@ module.exports = function(passport){
 	    		User.findOne({'facebook.id': profile.id}, function(err, user){
 	    			if(err)
 	    				return done(err);
-	    			if(user)
+	    			if(user) {
+							console.log('Saved directly from Facebook');
 	    				return done(null, user);
-	    			else {
+	    			} else {
 	    				var newUser = new User();
 	    				newUser.facebook.id = profile.id;
 	    				newUser.facebook.token = accessToken;

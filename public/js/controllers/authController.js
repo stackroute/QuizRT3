@@ -60,9 +60,11 @@ angular.module('quizRT')
       $http.post('/auth/register', $scope.user).success(function(data){
         if(data.state == 'success') {
           $rootScope.logInLogOutSuccessMsg = 'Registered sucessfully! Login and enjoy!!';
+          $rootScope.logInLogOutErrorMsg = '';
           $location.path('/login');
         } else{
           $rootScope.logInLogOutErrorMsg = 'Could not register you at the moment. Kindly come back again.';
+          $rootScope.logInLogOutSuccessMsg = '';
           $location.path('/login');
         }
       });

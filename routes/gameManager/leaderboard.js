@@ -15,34 +15,47 @@
 //   Name of Developers  Anil Sawant
 
 var LeaderBoard = function() {
-  this.games = new Map();
-}
+  this.games = new Map(); // holds leaderBoards for all the games
 
-LeaderBoard.prototype.addPlayer = function( gameId, player ) {
-  player.score = 0; // add score property to player and initialize it to zero
-  if( this.games.get( gameId ) && this.games.get( gameId ).length ) {
-    this.games.get( gameId ).push( player );
-  } else {
-    this.games.set( gameId, [player] );
-  }
-};
+  /**
+  ** @param gameId as String
+  ** @return leaderBoard for the gameId
+  */
+  this.get = function( gameId ) {
+    return this.games.get( gameId );
+  };
 
-LeaderBoard.prototype.get = function(gameId) {
-  return this.games.get(gameId);
-};
-
-LeaderBoard.prototype.updateScore = function( gameId, userId, score) {
-  this.games.get( gameId ).some( function( player ) {
-    if( player.userId == userId ){
-      player.score = score;
-      return true;
+  this.createNewLeaderBoard = function( gameId, players ) {
+    if( this.games.has( gameId ) ) { // leaderBoard for the gameId already exists return false
+      return false;
     }
-    return false;
-  });
+    this.games.set( gameId, players); // add the leaderBoard against the gameId
+    return true;
+  };
 
-  this.games.get( gameId ).sort( function(a,b) { // refresh the leaderBoard
-    return b.score-a.score;                     // this is requred to get the gameTopper after every question
-  });
-};
+  /**
+  ** @param gameId as String, userId as String, score as Number
+  ** @return true if the score was updated for the userId, for the gameId, and respective LeaderBoard was updated
+  */
+  this.updateScore = function( gameId, userId, score) {
+    if( this.games.has( gameId ) ) {
+      var wasPlayerScoreUpdated = this.games.get( gameId ).some( function( player ) {
+        if( player.userId == userId ){
+          player.score = score;
+          return true; // loop breaking condition
+        }
+        return false;
+      });
+
+      if ( wasPlayerScoreUpdated ) { // if the player was not found return false
+        this.games.get( gameId ).sort( function(a,b) { // refresh the leaderBoard
+          return b.score-a.score;                     // this is requred to get the gameTopper after every question
+        });
+        return true;
+      }
+      return false;
+    }
+  };
+}
 
 module.exports = new LeaderBoard();

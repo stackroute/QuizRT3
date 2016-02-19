@@ -40,12 +40,13 @@ module.exports = function(server,sessionMiddleware) {
   io.on('connection', function(client) {
 
     client.on('disconnect', function() {
+      // need to implement:
+      // finding the user disconnected and dropping him from GameManager
       console.log( client.request.session.user.local.username + ' disconnected from server.');
     });
 
     client.on('join',function( playerData ) {
       console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
-
       // check if the user is authenticated and his session exists, if so add him to the game
       if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
         var gamePlayer = {
@@ -56,9 +57,13 @@ module.exports = function(server,sessionMiddleware) {
         };
 
         // if ( playerData.levelId ) {
-        //
+        //     give it to TournamentManager
         // }
-        GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
+        var addedSuccessfully = GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
+        if ( !addedSuccessfully ) {
+          console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
+        }
+
         /*
           The above logic has to be improved to map game-id and players for that game
           For now we cannot have two games on the same topic running simultaneously
@@ -71,15 +76,16 @@ module.exports = function(server,sessionMiddleware) {
         // maxPlayers = 4;
         maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
 
-        var gamePlayers = GameManager.get( playerData.topicId ),
+        var gamePlayers = GameManager.getGamePlayers( playerData.topicId ),
             usersJoined = gamePlayers.length;
 
-        if( usersJoined == maxPlayers ) {
+        if( usersJoined === maxPlayers ) {
           var gameId = uuid.v1(); // generate a unique game-id
 
           // @params (topicId, number of questions, callback)
-          questionBank.getQuizQuestions( playerData.topicId, 5 , function( questions ) {
+          questionBank.getQuizQuestions( playerData.topicId, 5 , function( err, questions ) {
             // prepare the LeaderBoard for the game
+            var players = [];
             gamePlayers.forEach( function(player) { // extra loop to exclude player.client from leaderBoard and prevent CallStack Overflow error
               var gamePlayer = {
                 userId: player.userId,
@@ -87,10 +93,11 @@ module.exports = function(server,sessionMiddleware) {
                 playerPic: player.playerPic,
                 score: 0 // add score to gamePlayer and initialize it to zero
               }
-              LeaderBoard.addPlayer( gameId, gamePlayer );
+              players.push( gamePlayer );
             });
-            /*  Note: Keep separate loops to prepare LeaderBoard and startGameData
-                      This will reduce the time-lag for receiving questions
+            LeaderBoard.createNewLeaderBoard( gameId, players );
+            /*  Note: Keep separate loops to prepare LeaderBoard and to prepare startGameData
+                      This will reduce the time-lag between successive startGame emits
             */
             console.log('\n');
             // prepare startGameData and emit startGame for each player
@@ -107,10 +114,15 @@ module.exports = function(server,sessionMiddleware) {
             });
           });// end getQuizQuestions
 
-        } else {
+        } else if( usersJoined < maxPlayers ){
           console.log('pendingUsersCount = ' + (maxPlayers-usersJoined));
           gamePlayers.forEach( function(player) {
             player.client.emit('pendingUsers', { pendingUsersCount: (maxPlayers-usersJoined) });
+          });
+        } else {
+          console.log('Somethings is wrong!!. usersJoined > maxPlayers ');
+          gamePlayers.forEach( function(player) {
+            player.client.emit('serverError', { pendingUsersCount: (maxPlayers-usersJoined) });
           });
         }
       } else {
@@ -123,14 +135,14 @@ module.exports = function(server,sessionMiddleware) {
       if(data.ans =='correct'){
         //increment correct of allplayers
         //decrement unsawered of all players
-        GameManager.get(data.topicId).forEach(function(player){
+        GameManager.getGamePlayers(data.topicId).forEach(function(player){
           player.client.emit('isCorrect');
         });
       }
       else{
         //increment wrong of allplayers
         //decrement unsawered of all players
-        GameManager.get(data.topicId).forEach(function(player){
+        GameManager.getGamePlayers(data.topicId).forEach(function(player){
           player.client.emit('isWrong');
         });
       }
@@ -143,7 +155,7 @@ module.exports = function(server,sessionMiddleware) {
         var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
             len = intermediateGameBoard.length,
             gameTopper = intermediateGameBoard[0];
-        GameManager.get(gameData.topicId).forEach( function( player, index) {
+        GameManager.getGamePlayers(gameData.topicId).forEach( function( player, index) {
           player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
         });
       } else {
@@ -254,10 +266,10 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on('leaveGame', function( topicId ){
       console.log('\nLeave game called');
-      if( GameManager.get( topicId ) && GameManager.get( topicId ).length ) {
-        var index = GameManager.get( topicId ).indexOf( client.request.session.user.local.username );
+      if( GameManager.getGamePlayers( topicId ) && GameManager.getGamePlayers( topicId ).length ) {
+        var index = GameManager.getGamePlayers( topicId ).indexOf( client.request.session.user.local.username );
         if ( index >=0 ) {
-          var userLeft = GameManager.get( topicId ).splice( index,1);
+          var userLeft = GameManager.getGamePlayers( topicId ).splice( index,1);
           console.log( userLeft.userId + ' left the game ' + topicId);
         } else {
           console.log( client.request.session.user.local.username + ' is not playing in ' + topicId );

@@ -21,6 +21,7 @@ angular.module('quizRT')
       // redirect to login page if the user's isAuthenticated cookie doesn't exist
       if( !$rootScope.isAuthenticatedCookie ){
         $rootScope.logInLogOutErrorMsg = 'You are logged out. Kindly Login...';
+        $rootScope.logInLogOutSuccessMsg = '';
         $location.path('/login');
       } else {
         $rootScope.stylesheetName="userProfile";

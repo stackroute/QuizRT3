@@ -20,14 +20,12 @@ var Reservoir = require('reservoir'),
 module.exports = {
   getQuizQuestions: function( topicId, noOfQs, done ) {
     if ( isNaN(noOfQs) ) {
-      console.log('noOfQs is not a number');
-      done( null );
+      done( 'noOfQs is not a number', null );
     } else {
       Question.find( { 'topicId': topicId } ) // retrieve questions from Question collection for topicId
       .exec( function(err, questions) {
         if ( err ) {
-          console.log('Question cannot be read from mongo.');
-          done( null );
+          done( 'Questions cannot be read from mongo.', null );
         } else {
           var myReservoir = Reservoir( noOfQs ),
               fewQuestions = [];
@@ -39,9 +37,8 @@ module.exports = {
           for (var i = 0; i < noOfQs; i++) {
             fewQuestions.push(myReservoir[i]);
           }
-          fewQuestions[0] ? done(fewQuestions) : done( null ); // if no questions send null else send the questions
+          fewQuestions[0] ? done( null, fewQuestions) : done( 'No Questions in QuestionBank for ' + topicId + '.', null ); // if no questions send null else send the questions
         }
-
       });
     }
   }
