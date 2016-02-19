@@ -16,7 +16,7 @@
 //
 
 angular.module('quizRT')
-  .controller('topicController', function( $scope, $rootScope, $routeParams, $http) {
+  .controller('topicController', function( $scope, $rootScope, $routeParams, $http, $location) {
      $scope.topicId = $routeParams.topicId;
      $scope.topic = {};
      $scope.userTopicFollowState = false;
