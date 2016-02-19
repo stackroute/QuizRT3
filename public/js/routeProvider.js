@@ -47,7 +47,9 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       // Added application level watcher here
       $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) { // watch that puts/removes cookie based on $rootScope.isAuthenticatedCookie
         if ( nv ) {
-          $cookies.put('isAuthenticated',true);
+          var now = new Date(),
+              exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());// this will set the expiration to 12 months
+          $cookies.put('isAuthenticated',true, { expires: exp });
         } else {
           $cookies.remove('isAuthenticated');
         }

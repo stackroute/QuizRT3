@@ -48,7 +48,10 @@ angular.module('quizRT')
           $rootScope.isAuthenticatedCookie = false;
           $cookies.remove('isAuthenticated');
         } else{
-          $cookies.put('isAuthenticated',true);
+          var now = new Date(),
+              exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());// this will set the expiration to 12 months
+
+          $cookies.put('isAuthenticated',true, { expires: exp });
           $rootScope.isAuthenticatedCookie = true;
           $location.path('/userProfile');
           $rootScope.initializeSockets(); // initialize Sockets on successful login

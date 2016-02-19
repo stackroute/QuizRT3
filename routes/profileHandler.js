@@ -23,9 +23,9 @@ var express = require('express'),
 
 router.get('/profileData', function(req, res, next) {
   if ( req.session && req.session.user ) {
-    console.log('Authenticated user: ' + req.session.user.local.username);
+    console.log('Authenticated user: ' + req.session.user);
     if( !(req.session.user == null) ){
-      var usr = req.session.user.local.username;
+      var usr = req.session.user;
       Profile.findOne({userId: usr})
         .populate("topicsPlayed.topicId")
             .exec(function(err,profileData){

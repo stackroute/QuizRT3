@@ -41,9 +41,10 @@ var express = require('express'),
     Quiz = require("./models/quiz"),
     sessionMiddleware = session({
       store: redis_store,
+      saveUninitialized: false,
+      resave: false,
       cookie: {
-        expires: 100000000000,
-        maxAge: 10000000
+        maxAge: 3600000
       },
       secret: 'keyboard cat'
     });
@@ -78,9 +79,9 @@ app.use('/auth',authenticationHandler);
 var initPassport = require('./passport-init');
 initPassport(passport);
 
-// middleware to check if user session exists
+// middleware to check if user session exists, and check for isAuthenticated cookie
 app.use( function( req, res, next ) {
-  if( req.session && req.session.user ) {
+  if( req.cookies.isAuthenticated || (req.session && req.session.user) ) {
     next();
   } else{
     console.log('User is logged out. User session doesnot exist.');

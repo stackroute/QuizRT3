@@ -25,8 +25,13 @@ angular.module('quizRT')
      var path = '/topicsHandler/topic/'+ $scope.topicId;
 
      $rootScope.socket.emit( 'checkIfPlayingThisTopic', { topicId: $scope.topicId, userId: $rootScope.loggedInUser.userId } );
-     $rootScope.socket.on( 'notPlayingThisTopic' , function() {
-
+     $rootScope.socket.on( 'playingThisTopicStatus' , function( isPlaying ) {
+       if ( isPlaying ) {
+         $rootScope.playGame = {};
+         $rootScope.playGame.topicId = $scope.topicId;
+         $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
+         $location.path( '/quizPlayer' );
+       }
      });
      /*
         HTTP methods are used as follows:
@@ -43,7 +48,7 @@ angular.module('quizRT')
            $rootScope.levelId = null;
          }, function( errorResponse ) {
            if ( errorResponse.status === 401 ) {
-             $rootScope.isAuthenticatedCookie = false;
+            //  $rootScope.isAuthenticatedCookie = false;
              console.log('User not authenticated by Passport.');
            }
            $rootScope.serverErrorMsg = errorResponse.data.error;

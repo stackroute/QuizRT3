@@ -33,28 +33,29 @@ module.exports = function(server,sessionMiddleware) {
   });
   io.on('disconnect',function(client){
     // Players.delete(client.request.session.user,client);
-    console.log( client.request.session.user.local.username + ' was disconnected from the server.');
+    console.log( client.request.session.user + ' was disconnected from the server.');
     client.request.session.destroy();
   })
 
   io.on('connection', function(client) {
+    console.log('\n\n\n');
+    // console.log(client.request);
     if ( client.request.session && client.request.session.user ) {
-      console.log( client.request.session.user.local.username + ' connected to QuizRT server. Socket Id: ' + client.id);
+      console.log( client.request.session.user + ' connected to QuizRT server. Socket Id: ' + client.id);
     }
 
     client.on('disconnect', function() {
       // need to implement:
       // finding the user disconnected and dropping him from GameManager
       if ( client.request.session && client.request.session.user ) {
-        console.log( client.request.session.user.local.username + ' disconnected from QuizRT server. Socket Id: ' + client.id);
+        console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
       }
-      client.request.session.destroy();
     });
 
     client.on('join',function( playerData ) {
       console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
       // check if the user is authenticated and his session exists, if so add him to the game
-      if ( client.request.session && (playerData.userId == client.request.session.user.local.username) ) {//req.session.user.local.username
+      if ( client.request.session && (playerData.userId == client.request.session.user) ) {//req.session.user.local.username
         var gamePlayer = {
           userId: playerData.userId,
           playerName: playerData.playerName,
@@ -139,8 +140,12 @@ module.exports = function(server,sessionMiddleware) {
     }); // end client-on-join
 
     client.on( 'checkIfPlayingThisTopic', function( playerData ) {
-      playerData.userId;
-      playerData.topicId;
+      var playerTopics = GameManager.getPlayerTopics( playerData.userId );
+      if ( playerTopics && (playerTopics.indexOf( playerData.topicId ) >= 0) ) {
+        client.emit('playingThisTopicStatus', true );
+      } else {
+        client.emit('playingThisTopicStatus', false );
+      }
     });
 
     client.on('confirmAnswer',function(data){
@@ -161,7 +166,7 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('updateStatus',function( gameData ){
-      if ( client.request.session && gameData.userId == client.request.session.user.local.username ) {
+      if ( client.request.session && gameData.userId == client.request.session.user ) {
         LeaderBoard.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
 
         var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
@@ -231,12 +236,12 @@ module.exports = function(server,sessionMiddleware) {
     client.on('leaveGame', function( topicId ){
       console.log('\nLeave game called');
       if( GameManager.getGamePlayers( topicId ) && GameManager.getGamePlayers( topicId ).length ) {
-        var index = GameManager.getGamePlayers( topicId ).indexOf( client.request.session.user.local.username );
+        var index = GameManager.getGamePlayers( topicId ).indexOf( client.request.session.user );
         if ( index >=0 ) {
           var userLeft = GameManager.getGamePlayers( topicId ).splice( index,1);
           console.log( userLeft.userId + ' left the game ' + topicId);
         } else {
-          console.log( client.request.session.user.local.username + ' is not playing in ' + topicId );
+          console.log( client.request.session.user + ' is not playing in ' + topicId );
         }
       } else {
         console.log( 'Game with topicId = ' + topicId + ' doesnot exist.');

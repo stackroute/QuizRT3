@@ -63,7 +63,7 @@ module.exports = function(passport){
 					// User and password both match, return user from done method
 					// which will be treated like success
 					if( req.session ) {
-						req.session.user = user;
+						req.session.user = user.local.username;
 					} else {
 						console.log('Failed to create request session. Check if Redis is installed. Subsequent session validaions will fail.' );
 					}
