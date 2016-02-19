@@ -45,8 +45,7 @@ angular.module('quizRT')
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
 					var levelId = $rootScope.playGame.levelId || false;
-					$rootScope.socket.emit('storeResult',{ gameId: $scope.gameId, topicId: $scope.topicId, levelId: levelId });
-
+		
 					var updateProfileObj = {
 						score: $rootScope.finalScore,
 						rank: $rootScope.finalRank,

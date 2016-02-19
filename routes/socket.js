@@ -38,7 +38,11 @@ module.exports = function(server,sessionMiddleware) {
   })
 
   io.on('connection', function(client) {
-    console.log( client.request.session.user.local.username + ' connected to QuizRT server. Socket Id: ' + client.id);
+    if ( client.request.session && client.request.session.user ) {
+      console.log( client.request.session.user.local.username + ' connected to QuizRT server. Socket Id: ' + client.id);
+    } else {
+      console.log( 'Socket Id: ' + client.id + ' connected to QuizRT server. Does not have a user.');
+    }
 
     client.on('disconnect', function() {
       // need to implement:
