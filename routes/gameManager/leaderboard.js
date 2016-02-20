@@ -25,6 +25,10 @@ var LeaderBoard = function() {
     return this.games.get( gameId );
   };
 
+  /**
+  ** @param gameId as String, players as an Array
+  ** @return true if the game leaderBoard was created, otherwise false
+  */
   this.createNewLeaderBoard = function( gameId, players ) {
     if( this.games.has( gameId ) ) { // leaderBoard for the gameId already exists return false
       return false;
@@ -34,12 +38,24 @@ var LeaderBoard = function() {
   };
 
   /**
+  ** @param gameId as String
+  ** @return true if the game leaderBoard was deleted, false otherwise
+  */
+  this.dissolve = function( gameId ) {
+    if ( this.games.has( gameId ) ) {
+      this.games.delete( gameId );
+      return true;
+    }
+    return false;
+  };
+
+  /**
   ** @param gameId as String, userId as String, score as Number
-  ** @return true if the score was updated for the userId, for the gameId, and respective LeaderBoard was updated
+  ** @return true if the score was updated for the userId, for the gameId, and the respective LeaderBoard was updated
   */
   this.updateScore = function( gameId, userId, score) {
     if( this.games.has( gameId ) ) {
-      var wasPlayerScoreUpdated = this.games.get( gameId ).some( function( player ) {
+      var scoreUpdated = this.games.get( gameId ).some( function( player ) {
         if( player.userId == userId ){
           player.score = score;
           return true; // loop breaking condition
@@ -47,15 +63,14 @@ var LeaderBoard = function() {
         return false;
       });
 
-      if ( wasPlayerScoreUpdated ) { // if the player was not found return false
+      if ( scoreUpdated ) { // if the player, game was found and the score was updated
         this.games.get( gameId ).sort( function(a,b) { // refresh the leaderBoard
           return b.score-a.score;                     // this is requred to get the gameTopper after every question
         });
-        return true;
+        return true;// return true if updateScore completed properly
       }
-      return false;
+      return false; // if the player was not found return false
     }
   };
 }
-
 module.exports = new LeaderBoard();
