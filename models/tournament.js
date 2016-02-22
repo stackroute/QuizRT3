@@ -34,13 +34,11 @@ var mongoose = require('mongoose'),
         totalScore: Number
       }],
       totalGamesPlayed:{type:Number,default:0},
-      topics: [
-        {
-           _id:String,
-          name:{type: String, ref: 'Topic'},
+      topics: [{
+          levelId:String,
+          topicId:{type: String, ref: 'Topic'},
           games:[{type: String, ref: 'Game'}]
-         }
-      ]
+       }]
     }),
     Tournament = mongoose.model('Tournament', tournamentSchema);
 
