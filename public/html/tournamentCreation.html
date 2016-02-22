@@ -24,9 +24,15 @@
     
     <form name="form" class="form-horizontal">
         <div class="form-group">
-            <label class="control-label col-sm-3" for="name">Name</label>
+            <label class="control-label col-sm-3" for="title">Title</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control input-sm" id="name" ng-model="tournament.name" placeholder="Give your tournament name">
+                <input type="text" class="form-control input-sm" id="title" ng-model="tournament.title" placeholder="Give your tournament title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="description">Description</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control input-sm" id="description" ng-model="tournament.description" placeholder="Give your tournament description">
             </div>
         </div>
         <div class="form-group">
@@ -35,25 +41,25 @@
                 <input type="file" id="imageLink" file-upload="imageFile" >
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id ="levels">
             <label class="control-label col-sm-3" for="levels">Levels</label>
-            <div class="col-sm-9" ng-init="names=['Level 1','Level 2','Level 3']" >
+            <div class="col-sm-9" >
+                <img ng-src="images/add-icon.png" ng-click="addLevels()">
                 <ul>
-                    <li ng-repeat="x in names">
-                        {{x}} <select ng-model="['Level 1','Level 2','Level 3']"></select>
+                    <li ng-repeat="level in levelsArray track by $index">
+                        <span>{{level}} :</span>
+                        <select ng-model="initialTopic" ng-change="selectionChange(initialTopic.topicName , $index)" ng-options="topic.topicName for topic in topics">
+                            <option value="">-- choose topic --</option>
+                        </select>
                     </li>
                 </ul>
-               <!--  <input type="number" class="form-control input-sm" id="levels" ng-model="tournament.levels" placeholder="Number of levels in the tournament">
-
-                <select>
-                    
-                </select> -->
+                <span id="helpBlock" class="help-block">Choose topic for each level.</span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3" for="playersCount">Number of Players</label>
+            <label class="control-label col-sm-3" for="playersPerMatch">Number of Players</label>
             <div class="col-sm-9">
-                <input type="number" class="form-control input-sm" id="playersCount" ng-model="tournament.playersCount" placeholder="Number of Players">
+                <input type="number" class="form-control input-sm" id="playersPerMatch" ng-model="tournament.playersPerMatch" placeholder="Number of Players">
             </div>
         </div>
         <div class="form-group">

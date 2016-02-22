@@ -57,7 +57,17 @@ router.route('/category/:categoryId')
 	      });
 });
 
-
+router.route('/topics')
+  .get( function(req, res){
+    Topic.find({} , 'topicName')
+      .exec(function(err,topics){
+        if(err){
+            return res.send(err);
+          }
+        return res.json(topics);
+      });
+});
+  
 router.route('/topic/:topicId')
   .get( function(req,res) { // retrieve a topic's details
     var topicWithUserStats = {
