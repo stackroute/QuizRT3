@@ -273,8 +273,8 @@ var GameManager = function() {
   ** @param gamePlayer as Object
   ** @return true if the gamePlayer was successfully popped; otherwise false
   */
-  this.popPlayer = function( gamePlayer ) {
-    var playerGames = this.players.get( gamePlayer.userId ),
+  this.popPlayer = function( userId ) {
+    var playerGames = this.players.get( userId ),
         self = this,
         removedFromGamesCount = 0,
         gameRemoved = false;
@@ -284,8 +284,8 @@ var GameManager = function() {
             gamePlayers = game ? game.players : null; // to check where if gamePlayer entry is there in games
         if ( gamePlayers && gamePlayers.length ) { // game has some players
           gameRemoved = gamePlayers.some( function( savedGamePlayer, index ) {
-            if ( savedGamePlayer.userId == gamePlayer.userId ) {
-              console.log( gamePlayers.splice( index, 1 ) , ' was removed from ' + gameId );
+            if ( savedGamePlayer.userId == userId ) {
+              console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               removedFromGamesCount++ ;
               return true;
             }
@@ -298,8 +298,8 @@ var GameManager = function() {
         }
       });
       if ( removedFromGamesCount == playerGames.length ) { // gamePlayer was removed from all the games he was part of
-        if ( this.players.has( gamePlayer.userId ) ) {
-          this.players.delete( gamePlayer.userId ); // delete the player mapping
+        if ( this.players.has( userId ) ) {
+          this.players.delete( userId ); // delete the player mapping
           return true;
         }
       }

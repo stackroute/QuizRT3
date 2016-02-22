@@ -48,6 +48,12 @@ module.exports = function(server,sessionMiddleware) {
         console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
       }
     });
+    client.on('logout', function( userData, done) {
+      console.log( client.request.session.user + ' logged out.');
+      done( GameManager.popPlayer( client.request.session.user ) );
+      client.request.session.user = null;
+  		client.request.logout();
+    });
 
     client.on('join',function( playerData ) {
       console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );

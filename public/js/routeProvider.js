@@ -78,25 +78,21 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       });
       $rootScope.$on('logout', function(event,user) {
         console.log('Hey ' + user.name + "!, you will be logged out.");
-        $http.post('auth/logout').then( function( successResponse ){
+        $rootScope.socket.emit('logout', $rootScope.loggedInUser.userId, function( status ) {
           console.log('Disconnecting sockets...');
-            if ( $rootScope.socket ) {
-              $rootScope.socket.disconnect();
-            } else {
-              console.log('Socket not found!!');
-            }
-
-            $cookies.remove('isAuthenticated');
-            $rootScope.loggedInUser = null;
-            $rootScope.isAuthenticatedCookie = false;
-            $rootScope.logInLogOutSuccessMsg = 'Logged out successfully!'
-            $location.path('/login');
-          }, function( errorResponse ) {
-            $rootScope.loggedInUser = null;
-            $rootScope.logInLogOutErrorMsg = 'Something went wrong!  Kindly do a fresh login-logout.'
-            $location.path('/login');
-          });
+          if ( $rootScope.socket ) {
+            $rootScope.socket.disconnect();
+          } else {
+            console.log('Socket not found!!');
+          }
+          $cookies.remove('isAuthenticated');
+          $rootScope.loggedInUser = null;
+          $rootScope.isAuthenticatedCookie = false;
+          $rootScope.logInLogOutSuccessMsg = 'Logged out successfully!';
+          $location.path('/login');
+        });
       });
+
       $rootScope.redirectTo = function( location ) {
         $location.path( "/" + location);
       };

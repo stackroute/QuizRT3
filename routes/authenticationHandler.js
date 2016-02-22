@@ -54,13 +54,6 @@ module.exports = function(passport){
 	passport.authenticate('google', { successRedirect: '/userProfile',
 																			failureRedirect: '/' }));
 
-	//log out
-	router.post('/logout', function(req, res) {
-		console.log( req.session.user + ' logged out.');
-    req.session.user = null;
-		req.logout();
-		res.send(null);
-	});
 
 	return router;
 
