@@ -18,35 +18,29 @@ var LeaderBoard = function() {
   this.games = new Map(); // holds leaderBoards for all the games
 
   /**
+  ** @param gameId as String, players as an Array
+  ** @return true if the game leaderBoard was created, otherwise false
+  */
+  this.createNewLeaderBoard = function( gameId, players, callback) {
+    if ( !(typeof gameId === 'string') || !Array.isArray( players ) || !(typeof callback === 'function') ) {
+      callback(new Error('Parameter type error.'));
+      return;
+    }
+    if( this.games.has( gameId ) ) { // leaderBoard for the gameId already exists return false
+      callback( new Error('Game already exists. Cannot create two LeaderBoards for one game.') );
+      return;
+    }
+    this.games.set( gameId, players); // add the leaderBoard against the gameId
+    callback( null, this.games.get( gameId ) ); // return the reference to the newly created leaderBoard
+    return;
+  };
+
+  /**
   ** @param gameId as String
   ** @return leaderBoard for the gameId
   */
   this.get = function( gameId ) {
     return this.games.get( gameId );
-  };
-
-  /**
-  ** @param gameId as String, players as an Array
-  ** @return true if the game leaderBoard was created, otherwise false
-  */
-  this.createNewLeaderBoard = function( gameId, players ) {
-    if( this.games.has( gameId ) ) { // leaderBoard for the gameId already exists return false
-      return false;
-    }
-    this.games.set( gameId, players); // add the leaderBoard against the gameId
-    return true;
-  };
-
-  /**
-  ** @param gameId as String
-  ** @return true if the game leaderBoard was deleted, false otherwise
-  */
-  this.dissolve = function( gameId ) {
-    if ( this.games.has( gameId ) ) {
-      this.games.delete( gameId );
-      return true;
-    }
-    return false;
   };
 
   /**
@@ -71,6 +65,18 @@ var LeaderBoard = function() {
       }
       return false; // if the player was not found return false
     }
+  };
+
+  /**
+  ** @param gameId as String
+  ** @return true if the game leaderBoard was deleted, false otherwise
+  */
+  this.dissolve = function( gameId ) {
+    if ( this.games.has( gameId ) ) {
+      this.games.delete( gameId );
+      return true;
+    }
+    return false;
   };
 }
 module.exports = new LeaderBoard();

@@ -32,14 +32,10 @@ module.exports = function(server,sessionMiddleware) {
     sessionMiddleware(socket.request, socket.request.res, next);
   });
   io.on('disconnect',function(client){
-    // Players.delete(client.request.session.user,client);
-    console.log( client.request.session.user + ' was disconnected from the server.');
-    client.request.session.destroy();
+    console.log( 'Server sockets died. All the clients were disconnected from the server.');
   })
 
   io.on('connection', function(client) {
-    console.log('\n\n\n');
-    // console.log(client.request);
     if ( client.request.session && client.request.session.user ) {
       console.log( client.request.session.user + ' connected to QuizRT server. Socket Id: ' + client.id);
     }
@@ -103,32 +99,33 @@ module.exports = function(server,sessionMiddleware) {
               }
               players.push( gamePlayer );
             });
-            LeaderBoard.createNewLeaderBoard( gameId, players );
+            LeaderBoard.createNewLeaderBoard( gameId, players, function(err, leaderBoard){
+              console.log('\n');
+              // prepare startGameData and emit startGame for each player
+              gamePlayers.forEach( function(player) {
+                var startGameData  = {
+                  gameId: gameId,
+                  levelId: playerData.levelId, // defined only for tournaments
+                  topicId: playerData.topicId,
+                  maxPlayers: maxPlayers,
+                  questions: questions
+                };
+                player.client.emit('startGame', startGameData );
+                console.log("Starting game for " + player.userId );
+              });
+            });
             /*  Note: Keep separate loops to prepare LeaderBoard and to prepare startGameData
                       This will reduce the time-lag between successive startGame emits
             */
-            console.log('\n');
-            // prepare startGameData and emit startGame for each player
-            gamePlayers.forEach( function(player) {
-              var startGameData  = {
-                gameId: gameId,
-                levelId: playerData.levelId, // defined only for tournaments
-                topicId: playerData.topicId,
-                maxPlayers: maxPlayers,
-                questions: questions
-              };
-              player.client.emit('startGame', startGameData );
-              console.log("Starting game for " + player.userId );
-            });
           });// end getQuizQuestions
 
         } else if( usersJoined < maxPlayers ){
-          console.log('pendingUsersCount = ' + (maxPlayers-usersJoined));
+          console.log('Waiting for ' + (maxPlayers-usersJoined) + ' more players.');
           gamePlayers.forEach( function(player) {
             player.client.emit('pendingUsers', { pendingUsersCount: (maxPlayers-usersJoined) });
           });
         } else {
-          console.log('Somethings is wrong!!. usersJoined > maxPlayers ');
+          console.log('Something is wrong!!. usersJoined > maxPlayers ');
           gamePlayers.forEach( function(player) {
             player.client.emit('serverError', { pendingUsersCount: (maxPlayers-usersJoined) });
           });

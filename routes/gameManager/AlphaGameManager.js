@@ -152,6 +152,7 @@ var GameManager = function() {
 
     questionBank.getQuizQuestions( game.topicId, 5 , function( err, questions ) { // get questions from the questionBank
       if ( err ) {
+        console.log('ERROR: Failed to get quiz questions for ' + gameId + '. Cannot start the game. Terminating the game launch.');
         console.error(err);
         return false;
       }
