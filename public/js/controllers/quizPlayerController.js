@@ -87,7 +87,7 @@ angular.module('quizRT')
                     $scope.isDisabled = false;
                     $scope.wrongAnswerers = 0;
                     $scope.correctAnswerers = 0;
-                    $scope.unattempted = startGameData.maxPlayers;
+                    $scope.unattempted = startGameData.playersNeeded;
                     if ( $scope.questionCounter == startGameData.questions.length ) {
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
