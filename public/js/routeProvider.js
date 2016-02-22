@@ -88,6 +88,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           $cookies.remove('isAuthenticated');
           $rootScope.loggedInUser = null;
           $rootScope.isAuthenticatedCookie = false;
+          $rootScope.logInLogOutErrorMsg = '';
           $rootScope.logInLogOutSuccessMsg = 'Logged out successfully!';
           $location.path('/login');
         });
