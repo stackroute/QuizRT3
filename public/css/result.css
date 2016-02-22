@@ -3,12 +3,10 @@
   font-weight: bold;
   text-align: center;
 }
-.gameBoard .panel {
-  width: 16.6667%;
-}
 .gameBoard #gameTopper .panel {
   margin: auto;
   float: none;
+  width: 16.6667%;
 }
 .gameBoard .panel-heading {
   text-align: center;

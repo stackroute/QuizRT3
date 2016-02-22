@@ -18,12 +18,9 @@
 // var GameManager = require('./gameManager/GameManager.js'),
 var GameManager = require('./gameManager/AlphaGameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    LeaderBoard = require('./gameManager/Leaderboard.js'),
-    uuid = require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
     Tournament = require("./../models/tournament"),
-    questionBank = require('./questionBank'),
     defaultMaxPlayers = 2;
     maxPlayers = 0;
 
@@ -45,6 +42,7 @@ module.exports = function(server,sessionMiddleware) {
       // need to implement:
       // finding the user disconnected and dropping him from GameManager
       if ( client.request.session && client.request.session.user ) {
+        GameManager.popPlayer( client.request.session.user ); // pop the user from all the games
         console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
       }
     });
@@ -119,9 +117,9 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on('updateStatus',function( gameData ){
       if ( client.request.session && gameData.userId == client.request.session.user ) {
-        LeaderBoard.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
+        GameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
 
-        var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
+        var intermediateGameBoard = GameManager.getLeaderBoard( gameData.gameId ),
             len = intermediateGameBoard.length,
             gameTopper = intermediateGameBoard[0];
         GameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
@@ -134,7 +132,7 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on( 'gameFinished', function( game ) {
       console.log(client.request.session.user + ' finished game: ' + game.gameId );
-      var gameBoard = LeaderBoard.get( game.gameId );
+      var gameBoard = GameManager.getLeaderBoard( game.gameId );
       if ( gameBoard ) {
         var gameResultObj = {
           gameId: game.gameId,

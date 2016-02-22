@@ -35,7 +35,7 @@
                successResponse.data.tournament.leaderBoard.sort( function(a,b) {
                  return b.totalScore - a.totalScore;
                });
-               
+
                successResponse.data.tournament.leaderBoard.some( function(player,index) {
                  if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
                    $scope.userTournamentStats = player;
@@ -65,7 +65,12 @@
           $rootScope.playGame.topicId = topicId;
           $rootScope.playGame.topicName = topic_name;
           $rootScope.playGame.tournamentTitle = title;
-          $location.path( '/quizPlayer' );
-          $rootScope.isPlayingAGame = true;
+          if ( $rootScope.playGame.topicId && $rootScope.playGame.levelId ) {
+            $location.path( '/quizPlayer' );
+            $rootScope.isPlayingAGame = true;
+          } else {
+            console.log('Cannot play. LevelId or topicId is undefined!!');
+          }
+
         };
    });
