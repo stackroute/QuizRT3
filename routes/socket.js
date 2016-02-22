@@ -51,7 +51,7 @@ module.exports = function(server,sessionMiddleware) {
     client.on('join',function( playerData ) {
       console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
       // check if the user is authenticated and his session exists, if so add him to the game
-      if ( client.request.session && (playerData.userId == client.request.session.user) ) {//req.session.user.local.username
+      if ( client.request.session && (playerData.userId == client.request.session.user) ) {//req.session.user
         var gamePlayer = {
           userId: playerData.userId,
           playerName: playerData.playerName,
@@ -242,7 +242,7 @@ module.exports = function(server,sessionMiddleware) {
         }
       } else {
         console.log( 'Game with topicId = ' + topicId + ' doesnot exist.');
-      } // GameManager.get(topicId).delete(client.request.session.passport.user.local.username);
+      } // GameManager.get(topicId).delete(client.request.session.passport.user);
     }); // end client-on-leaveGame
   });
 

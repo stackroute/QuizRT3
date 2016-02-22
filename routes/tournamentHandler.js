@@ -68,14 +68,14 @@ router.route('/tournament/:tId')
             });
 
     });
-    
+
 router.route('/createTournament')
     .post(function(req , res){
         console.log("Inside Create tournament");
        var form = new formidable.IncomingForm(),
         fields =[],
         tournament = null;
-        
+
         form.uploadDir = process.cwd() + '/public/temp';
 
 /*        form.on('field',function(name,value) {
@@ -91,75 +91,18 @@ router.route('/createTournament')
         form.on('field', function (field, value) {
             console.log('inside field');
             tournament = JSON.parse(value);
-        
+
         });
 
         form.parse(req);
-        
-    });
-/*
-router.route('/leaderBoard/:tId')
-    .get(function(req, res) {
-
-        Tournament.findById(req.params.tId)
-            .populate("leaderBoard.userId")
-            .exec(function(err, tournaments) {
-                if (err) {
-                    return res.send(err);
-                }
-
-                var usr = req.session.user.local.username;
-
-                cntr = 0;
-                tempLeaderBoard = [];
-                var tempFlag = false;
-                tournaments.leaderBoard.forEach(function(tempUser, index) {
-
-                    Profile.findOne({
-                        userId: tempUser.userId.local.username
-                    })
-                        .exec(function(err, profile) {
-                            if (err) {
-                                return res.send(err);
-                            }
-                            cntr++;
-
-                            if (cntr <= 10 && cntr <= tournaments.leaderBoard.length) {
-                                tempLeaderBoard.push({
-                                    name: profile.name,
-                                    score: tempUser.totalScore,
-                                    rank: index + 1
-                                });
-                            }
-                            if (usr == profile.userId) {
-                                tempFlag = true;
-                                currUserStat = {
-                                    name: profile.name,
-                                    rank: index + 1,
-                                    score: tempUser.totalScore,
-                                    imgLink: profile.imageLink
-                                };
-                            }
-
-                            if ((tempLeaderBoard.length == tournaments.leaderBoard.length || tempLeaderBoard.length == 10) && tempFlag) {
-                                return res.json({
-                                    leaderBoard: tempLeaderBoard,
-                                    myStat: currUserStat
-                                });
-                            }
-                        });
-                });
-
-
-            });
 
     });
-*/
+
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {
       console.log('Request received for leaderboard');
         //get current loggedIn username
-        var usr = req.session.user.local.username,
+        var usr = req.session.user,
             leaderBoard = [],
             myStats = {},
             myStatsFound = false;
