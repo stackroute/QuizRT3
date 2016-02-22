@@ -181,18 +181,7 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on('leaveGame', function( gameId ){
-      console.log('\nLeave game called');
-      if( GameManager.getGamePlayers( gameId ) && GameManager.getGamePlayers( gameId ).length ) {
-        var index = GameManager.getGamePlayers( gameId ).indexOf( client.request.session.user );
-        if ( index >=0 ) {
-          var userLeft = GameManager.getGamePlayers( gameId ).splice( index,1);
-          console.log( userLeft.userId + ' left the game ' + gameId);
-        } else {
-          console.log( client.request.session.user + ' is not playing in ' + gameId );
-        }
-      } else {
-        console.log( 'Game with gameId = ' + gameId + ' doesnot exist.');
-      } // GameManager.get(topicId).delete(client.request.session.passport.user);
+      GameManager.leaveGame( gameId, client.request.session.user );
     }); // end client-on-leaveGame
   });
 
