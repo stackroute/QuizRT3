@@ -15,7 +15,7 @@
 //	Name of Developers Anil Sawant
 
 var uuid = require('node-uuid'), // used to generate unique ids
-    questionBank = require('./questionBank'),
+    questionBank = require('../questionBank'),
     LeaderBoard = require('./Leaderboard.js');
 
 /**
@@ -103,7 +103,7 @@ var GameManager = function() {
         if ( !isPlayingSameTopic ) {
           playerGames.push( gameId ); // add the gameId to gamePlayer's array of playing-games
           gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to players array the game
-          console.log( gamePlayer , ' was added to ' , gameId);
+          console.log( gamePlayer.userId , ' was added to ' , gameId);
           return true;
         }
         return false;// player is already playing topicId.
@@ -111,7 +111,7 @@ var GameManager = function() {
       } else { // gamePlayer is not playing any game(s) so far
         this.players.set( gamePlayer.userId, [gameId] ); // set the gameId as the first game gamePlayer is playing i.e. set it in the map
         gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to players array the game
-        console.log( gamePlayer , ' was added to ' , gameId);
+        console.log( gamePlayer.userId , ' was added to ' , gameId);
         return true;
       }
   	}
@@ -138,6 +138,7 @@ var GameManager = function() {
     var game = this.games.get( gameId );
     if ( game.players ) {
       game.players.forEach( function(player) {
+        console.log('Emitting pending players = ' + (game.playersNeeded - game.players.length) + ' for ' + player.userId );
         player.client.emit('pendingPlayers', { gameId: gameId, pendingPlayers: (game.playersNeeded - game.players.length) } );
       });
     }
@@ -156,7 +157,7 @@ var GameManager = function() {
         console.error(err);
         return false;
       }
-      prepare the LeaderBoard for the game
+      //prepare the LeaderBoard for the game
       var players = []
       game.players.forEach( function(player) { // extra loop to exclude player.client from leaderBoard and prevent CallStack Overflow error
         var gamePlayer = {
@@ -167,34 +168,53 @@ var GameManager = function() {
         }
         players.push( gamePlayer );
       });
-      var leaderBoardCreated = leaderBoard.createNewLeaderBoard( gameId, players ); // create the leaderBoard for the game before starting
-      if ( leaderBoardCreated ) {
+      LeaderBoard.createNewLeaderBoard( gameId, players, function(err, leaderBoardCreated) {
+        if ( err ) {
+          console.log('ERROR: Failed to create LeaderBoard for ' + gameId + '. Cannot start the game. Terminating the game launch.');
+          return false;
+        }
         game.leaderBoard = players; // set the leaderBoard on game also. gives 2nd way to access it. other being getLeaderBoard()
         console.log('\n');
+        console.log('Starting game: ' + gameId);
         game.players.forEach( function(player) {
+          console.log('Starting game for ' + player.userId );
           player.client.emit('startGame', { topicId: game.topicId, gameId: gameId, playersNeeded: game.playersNeeded, questions: questions });
         });
+        console.log('\n');
         return true;
-      } else {
-        console.log('ERROR: Failed to create LeaderBoard for ' + gameId + '. Cannot start the game. Terminating the game launch.');
-        return false;
-      }
+      }); // create the leaderBoard for the game before starting
     });// end getQuizQuestions
+  };
+
+  /**
+  ** @param topicId as String
+  ** @return Array of players playing topicId
+  */
+  this.getGamePlayers = function( gameId ) {
+  	return this.games.get( gameId );
+  };
+
+  /**
+  ** @param gamePlayer as Obj
+  ** @return Array of topics gamePlayer is playing
+  */
+  this.getPlayerTopics = function( userId ) {
+  	return this.players.get( userId );
   };
 
   /**
   ** @param gameId as String, gamePlayer as Object
   ** @return true if gamePlayer left the game successfully; otherwise false
   */
-  this.leaveGame = function( gameId, gamePlayer ) {
-    var playerGames = this.players.get( gamePlayer.userId ),
+  this.leaveGame = function( gameId, userId ) {
+    var playerGames = this.players.get( userId ),
         game = this.games.get( gameId ),
         gamePlayers = game ? game.players : null, // array of players playing gameId
         playerLeft = false;
 
     if ( gamePlayers && gamePlayers.length ) {
       playerLeft = gamePlayers.some( function( savedPlayer, index ) {
-        if ( savedPlayer.userId == gamePlayer.userId ) {
+        if ( savedPlayer.userId == userId ) {
           console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
           return true;
         }
@@ -208,10 +228,10 @@ var GameManager = function() {
       }
       var index = playerGames.indexOf( gameId );
       if ( playerGames && playerGames.length &&  (index != -1)) {
-        console.log( playerGames.splice( index, 1 ), ' was removed from ' + gamePlayer.userId  + "'s array of games.");
+        console.log( playerGames.splice( index, 1 ), ' was removed from ' + userId  + "'s array of games.");
       }
       if ( playerGames && !playerGames.length ) { // remove the player mapping if the player is not playing any topic
-        this.players.delete( gamePlayer.userId );
+        this.players.delete( userId );
       }
       return true; // player successfully left the game and other cleanup was done
     }
@@ -292,7 +312,7 @@ var GameManager = function() {
   ** @return Array of players playing gameId
   */
   this.getGamePlayers = function( gameId ) {
-  	return this.games.get( gameId ) ? this.games.get( gameId ).players : null ;
+  	return this.games.has( gameId ) ? this.games.get( gameId ).players : null ;
   };
 
   /**
@@ -307,15 +327,15 @@ var GameManager = function() {
   ** @desc exposes the LeaderBoard.get method from GameManager
   */
   this.getLeaderBoard = function( gameId ) { // expose the LeaderBoard from GameManager
-    return leaderBoard.get( gameId ); // call the LeaderBoard to get game specific leaderBoard
+    return LeaderBoard.get( gameId ); // call the LeaderBoard to get game specific leaderBoard
   };
 
   /**
   ** @desc exposes the LeaderBoard.updateScore method from GameManager
   */
   this.updateScore = function( gameId, userId, score) {
-    leaderBoard.updateScore( gameId, userId, score); // call the LeaderBoard to update the player score
+    LeaderBoard.updateScore( gameId, userId, score); // call the LeaderBoard to update the player score
   };
 }
 
-// module.exports = new GameManager();
+module.exports = new GameManager();

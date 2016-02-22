@@ -102,7 +102,7 @@ angular.module('quizRT')
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 $rootScope.socket.emit('confirmAnswer', {
                                     ans: "correct",
-                                    gameID: startGameData.gameId,
+                                    gameId: startGameData.gameId,
                                     topicId: startGameData.topicId
                                 });
                             } else {
@@ -111,7 +111,7 @@ angular.module('quizRT')
                                 $scope.myscore = $scope.myscore - 5;
                                 $rootScope.socket.emit('confirmAnswer', {
                                     ans: "wrong",
-                                    gameID: startGameData.gameId,
+                                    gameId: startGameData.gameId,
                                     topicId: startGameData.topicId
                                 });
                             }
@@ -160,8 +160,8 @@ angular.module('quizRT')
             $scope.wrongAnswerers++;
             $scope.unattempted--;
         });
-        $rootScope.socket.on('pendingUsers', function(data) {
-            $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
+        $rootScope.socket.on('pendingPlayers', function(data) {
+            $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
         });
         $rootScope.socket.on( 'takeResult', function( resultData ) {
             $rootScope.recentGames[resultData.gameResult.gameId] = {
