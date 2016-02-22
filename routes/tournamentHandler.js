@@ -12,12 +12,15 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Abhinav Kareer,Sunil Mekala, Chandu
-//
+
 var express = require('express'),
     Reservoir = require('reservoir'),
     router = express.Router(),
     Profile = require("../models/profile"),
+    formidable = require('formidable'),
+    path = require('path'),
+    fs = require('fs'),
+    slugify = require('slugify'),
     Tournament = require("../models/tournament");
 
 
@@ -76,27 +79,121 @@ router.route('/createTournament')
         fields =[],
         tournament = null;
 
+        // make 'public/temp' directory if it doesn't exist
+          try {
+            fs.mkdirSync('public/temp');
+          } catch(e) {
+            if ( e.code != 'EEXIST' ) {
+              throw e;
+            }
+          }
+
         form.uploadDir = process.cwd() + '/public/temp';
 
-/*        form.on('field',function(name,value) {
-            tournament = value;
-            console.log(value);
-             console.log(tournament.name);
-        });
-*/
-        form.on('file',function(name,file) {
-            console.log('inside file');
-        });
-
         form.on('field', function (field, value) {
-            console.log('inside field');
             tournament = JSON.parse(value);
-
         });
+
+        form.on('file',function(name,file) {
+
+            var oldPath = file.path,
+                newFileName = slugify(tournament.title) + '_' + file.name,
+                imageUrl = 'images/tournamentIcons/' + newFileName;
+
+            fs.rename(file.path , 'public/' + imageUrl , function(err){
+                if (err) throw err;
+                console.log('Tournament Icon saved successfully');
+
+                //update saved image path to tournament imageURL
+                tournament.imageUrl = imageUrl;
+
+                saveTournament(req, res , tournament);
+
+            });
+            
+        });
+
+        
 
         form.parse(req);
 
     });
+
+function saveTournament(req, res ,tournament){
+
+    if(validateTournament(req, res, tournament)){
+
+        var tournamentModel = new Tournament(),
+        topics = [];
+
+        // set tournament details to tournament model
+        var tournamentId = slugify(tournament.title);
+        tournamentModel._id = tournamentId;
+        tournamentModel.title = tournament.title;
+        tournamentModel.description = tournament.description;
+        tournamentModel.matches =  tournament.levelTopicArray.length;
+        tournamentModel.playersPerMatch = tournament.playersPerMatch;
+        tournamentModel.imageUrl = tournament.imageUrl;
+
+        var levelsTopicArray = tournament.levelTopicArray;
+            len = levelsTopicArray.length;
+
+        for(var cnt=0; cnt< len ; cnt++){
+            var topic = {};
+            topic['levelId'] = tournamentId + '_' + (cnt+1);
+            topic['topicId'] = levelsTopicArray[cnt];
+
+            topics.push(topic);
+        }
+
+        tournamentModel.topics = topics;
+
+        //tournamentModel
+
+        console.log(tournamentModel);
+
+        tournamentModel.save(function(err, tournament){
+            if(err){
+                console.log('Database error. Could not save tournament details: ' + tournament.title);
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error:'Could not save tournament details: ' + tournament.title}) );
+            
+            }
+            res.json({ error: null, tournamentId:tournament._id });
+
+        });
+
+
+    }
+}
+
+function validateTournament(req, res ,tournament){
+
+    var isValid = false;
+
+    //check whether tournament exist with same _id
+    Tournament.findOne({_id: slugify(tournament.title)})
+        .exec(function(err , tournament){
+
+            if(err){
+                console.log('Database error. Could not validate tournament details: ' + tournament.title);
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error:'Could not validate tournament details: ' + tournament.title}) );
+            
+            }else if(tournament){
+                console.log('Tournament already exist with given title :' + tournament.title);
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error:'Tournament already exist with given title. Please change your tournament title.'}) );
+                          
+            }else{
+                isValid = true;
+            }
+
+        });
+
+    return isValid;
+
+}
 
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {
