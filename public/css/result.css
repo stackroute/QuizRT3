@@ -8,6 +8,9 @@
   float: none;
   width: 16.6667%;
 }
+#otherPlayers {
+  padding: 0 10px;
+}
 .gameBoard .panel-heading {
   text-align: center;
 }
@@ -41,4 +44,10 @@
   clear: both;
   display: block;
   text-align: center;
+}
+
+@media (max-width:768px) {
+  .gameBoard #gameTopper .panel {
+    width: 33.3334%;
+  }
 }

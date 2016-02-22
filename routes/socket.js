@@ -137,6 +137,7 @@ module.exports = function(server,sessionMiddleware) {
         var gameResultObj = {
           gameId: game.gameId,
           topicId: game.topicId,
+          levelId: game.levelId,
           gameBoard: gameBoard
         }
         client.emit('takeResult', { error: null, gameResult: gameResultObj } );
