@@ -173,12 +173,12 @@ angular.module('quizRT')
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
         $rootScope.socket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
-          $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
+          $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly complete the previous game or play a different one.';
           $rootScope.isPlayingAGame = false;
         });
         $rootScope.socket.on( 'serverMsg', function( msgData ) {
           if (msgData.type == 'LOGOUT') {
-            $rootScope.$emit('logout',$rootScope.loggedInUser.userId);
+            $location.path( '/userProfile' );
           }
         });
       }

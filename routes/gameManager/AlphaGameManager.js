@@ -288,7 +288,7 @@ var GameManager = function() {
         if ( gamePlayers && gamePlayers.length ) { // game has some players
           gamePlayers.some( function( savedGamePlayer, index ) {
             if ( savedGamePlayer.userId == userId ) {
-              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Your session will be killed. This can be due to logging out of your other live session or due to server error.'});
+              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions will be killed.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               self.emitPendingPlayers( gameId );
               removedFromGamesCount++ ;
