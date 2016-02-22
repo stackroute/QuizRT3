@@ -3,10 +3,9 @@
   font-weight: bold;
   text-align: center;
 }
-.gameBoard #gameTopper .panel {
-  margin: auto;
-  float: none;
-  width: 16.6667%;
+.gameBoard #gameTopper #topper {
+  margin: auto !important;
+  float: none !important;
 }
 #otherPlayers {
   padding: 0 10px;
@@ -46,8 +45,14 @@
   text-align: center;
 }
 
-@media (max-width:768px) {
+/*@media (min-width:500px) and (max-width:768px) {
   .gameBoard #gameTopper .panel {
     width: 33.3334%;
   }
 }
+
+@media (max-width:500px){
+  .gameBoard #gameTopper .panel {
+    width: 50%;
+  }
+}*/

@@ -145,8 +145,10 @@ module.exports = function(server,sessionMiddleware) {
         console.log(game);
         // store the finished game into MongoDB
         storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
-          GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
-          console.log('Result saved and Game popped: ' + game.gameId);
+          setTimeout( function() {
+            GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
+            console.log('Result saved and Game popped: ' + game.gameId);
+          }, 50);
         });
 
       } else {

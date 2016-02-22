@@ -92,7 +92,7 @@ angular.module('quizRT')
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        $rootScope.socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: startGameData.levelId } );
+                        $rootScope.socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: $scope.levelId } );
                     } else {
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 

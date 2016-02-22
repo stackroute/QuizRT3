@@ -179,7 +179,7 @@ var GameManager = function() {
         console.log('Starting game: ' + gameId);
         game.players.forEach( function(player) {
           console.log('Starting game for ' + player.userId );
-          player.client.emit('startGame', { topicId: game.topicId, levelId: game.levelId, gameId: gameId, playersNeeded: game.playersNeeded, questions: questions });
+          player.client.emit('startGame', { topicId: game.topicId, gameId: gameId, playersNeeded: game.playersNeeded, questions: questions });
         });
         if ( !questions || !questions.length ) {
           self.popGame( gameId );
