@@ -14,7 +14,7 @@
 //
 //	Name of Developers Anil Sawant
 
-var uuid = require('node-uuid'), // used to generate unique ids
+var uuid = require('node-uuid'), // used to generate unique game ids
     questionBank = require('../questionBank'),
     LeaderBoard = require('./Leaderboard.js');
 
@@ -280,15 +280,15 @@ var GameManager = function() {
   this.popPlayer = function( userId ) {
     var playerGames = this.players.get( userId ),
         self = this,
-        removedFromGamesCount = 0,
-        gameRemoved = false;
+        removedFromGamesCount = 0;
     if ( playerGames && playerGames.length ) {
       playerGames.forEach( function( gameId ) { // before popping the player, delete the gamePlayer entry in all the games
         var game = self.games.get( gameId ),
             gamePlayers = game ? game.players : null; // to check where if gamePlayer entry is there in games
         if ( gamePlayers && gamePlayers.length ) { // game has some players
-          gameRemoved = gamePlayers.some( function( savedGamePlayer, index ) {
+          gamePlayers.some( function( savedGamePlayer, index ) {
             if ( savedGamePlayer.userId == userId ) {
+              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Your session will be killed. This can be due to logging out of your other live session or due to server error.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               self.emitPendingPlayers( gameId );
               removedFromGamesCount++ ;

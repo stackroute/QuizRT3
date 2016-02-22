@@ -64,25 +64,12 @@ module.exports = function(server,sessionMiddleware) {
           client: client
         };
 
-        // if ( playerData.levelId ) {
-        //     give it to TournamentManager
-        // }
-        // var addedSuccessfully = GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
         maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
         var addedSuccessfully = GameManager.managePlayer( playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
         if ( addedSuccessfully === false ) {
           console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
           client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
         }
-
-        /*
-          The above logic has to be improved to map game-id and players for that game
-          For now we cannot have two games on the same topic running simultaneously
-          //
-          // GameManager.addPlayerToGame( topicId, minPlayers, player)
-          // TournamentManager.addPlayerToTournament( levelId, topicId, minPlayers, player)
-          // --> uses GameManager for individual games
-        */
       } else {
         console.log('User session does not exist for: ' + playerData.userId + '. Or the user client was knocked out.');
         client.emit( 'userNotAuthenticated' ); //this may not be of much use
@@ -148,7 +135,7 @@ module.exports = function(server,sessionMiddleware) {
           setTimeout( function() {
             GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
             console.log('Result saved and Game popped: ' + game.gameId);
-          }, 50);
+          }, 100);
         });
 
       } else {

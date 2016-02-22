@@ -176,6 +176,11 @@ angular.module('quizRT')
           $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
           $rootScope.isPlayingAGame = false;
         });
+        $rootScope.socket.on( 'serverMsg', function( msgData ) {
+          if (msgData.type == 'LOGOUT') {
+            $rootScope.$emit('logout',$rootScope.loggedInUser.userId);
+          }
+        });
       }
     });
 
