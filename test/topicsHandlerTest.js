@@ -17,7 +17,7 @@ var expect=require("chai").expect,
     		});
         });
 
-        describe('Describe Find items-------------------------------1', function(){
+        describe('Describe Find items-------------------------------DES', function(){
           beforeEach(function(){
           modelStub.withArgs({_id: "Hello"}).yields(null, {
             _id: "Hello",
@@ -33,14 +33,13 @@ var expect=require("chai").expect,
 }]});
             });
 
-      it('Getting /category/:categoryId get function-------------2', function(done){
+      it('Getting /category/:categoryId get function-------------IT', function(done){
         address
          .get("/topicsHandler/category/Hello")
          .end(function(err,res){
          expect(res.statusCode).to.be.equal(200);
           // expect(res.body[0].categoryName).to.be.equal("Big Hello");
-          
-           done();
+          done();
       });
     });
   });
