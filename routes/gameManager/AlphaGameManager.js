@@ -25,7 +25,7 @@ var uuid = require('node-uuid'), // used to generate unique game ids
 **       and LeaderBoard for maintaining the user scores.
 */
 var GameManager = function() {
-  this.games = new Map(); // holds all the games Waiting, Live, and Finished
+  this.games = new Map(); // holds all the games. Waiting, Live, and Finished
   this.players = new Map();// to map userId to [gameIds]
   this.topicsWaiting = {}; // holds only the games which are waiting for players. Maps topicId to gameId
 
@@ -288,7 +288,7 @@ var GameManager = function() {
         if ( gamePlayers && gamePlayers.length ) { // game has some players
           gamePlayers.some( function( savedGamePlayer, index ) {
             if ( savedGamePlayer.userId == userId ) {
-              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions will be killed.'});
+              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions in GameManager will be popped.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               self.emitPendingPlayers( gameId );
               removedFromGamesCount++ ;

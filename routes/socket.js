@@ -30,7 +30,7 @@ module.exports = function(server,sessionMiddleware) {
     sessionMiddleware(socket.request, socket.request.res, next);
   });
   io.on('disconnect',function(client){
-    console.log( 'Server sockets died. All the clients were disconnected from the server.');
+    console.log( 'Server crashed. All the clients were disconnected from the server.');
   })
 
   io.on('connection', function(client) {
@@ -39,8 +39,6 @@ module.exports = function(server,sessionMiddleware) {
     }
 
     client.on('disconnect', function() {
-      // need to implement:
-      // finding the user disconnected and dropping him from GameManager
       if ( client.request.session && client.request.session.user ) {
         GameManager.popPlayer( client.request.session.user ); // pop the user from all the games
         console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
@@ -128,8 +126,6 @@ module.exports = function(server,sessionMiddleware) {
           gameBoard: gameBoard
         }
         client.emit('takeResult', { error: null, gameResult: gameResultObj } );
-        console.log('Store result: ');
-        console.log(game);
         // store the finished game into MongoDB
         storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
           setTimeout( function() {
@@ -139,7 +135,7 @@ module.exports = function(server,sessionMiddleware) {
         });
 
       } else {
-        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in join event.');
+        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in GameManager.js.');
         client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
       }
     });
@@ -301,7 +297,7 @@ function validateAndSaveProfile( profileData, client ) {
       }else {
         console.log("User profile persisted sucessfully!!\n");
         // use the refreshUser event on client side (in userProfileController) to refresh the user stats after every game
-        client.emit('refreshUser', { error: null, user: updatedUserProfile } );
+        client.emit('refreshUser', { error: null, user: updatedUserProfile } );// not used so far
       }
     }); //end save
   }
@@ -352,22 +348,6 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
     }
   }); // end tournament.findOne
 }
-//
-//   var temp = tournamentData.leaderBoard.filter(function(item){
-//     return (item.userId == player.userId);
-//   });
-//
-//   if( temp.length == 0 ) {
-//     tournamentData.leaderBoard.push( player );
-//   } else {
-//     var tempVar=temp[0];
-//     var ind=tournamentData.leaderBoard.indexOf(tempVar);
-//     tournamentData.leaderBoard[ind].totalScore+=player.score;
-//   }
-// });
-//
-// tournamentData.save();
-// console.log("updated tournament space");
 
 var levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);
