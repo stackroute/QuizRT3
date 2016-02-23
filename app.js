@@ -79,7 +79,7 @@ app.use('/auth',authenticationHandler);
 var initPassport = require('./passport-init');
 initPassport(passport);
 
-// middleware to check if user session exists, and check for isAuthenticated cookie
+middleware to check if user session exists, and check for isAuthenticated cookie
 app.use( function( req, res, next ) {
   if( req.cookies.isAuthenticated || (req.session && req.session.user) ) {
     next();

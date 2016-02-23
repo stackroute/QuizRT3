@@ -58,3 +58,4 @@ describe('Test Tournament Handler Router', function (err) {
 			  done();
 	 		 });
   });
+});
