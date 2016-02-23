@@ -14,8 +14,8 @@
 //
 //	Name of Developers Anil Sawant
 
-var uuid = require('node-uuid'), // used to generate unique ids
-    questionBank = require('./questionBank'),
+var uuid = require('node-uuid'), // used to generate unique game ids
+    questionBank = require('../questionBank'),
     LeaderBoard = require('./Leaderboard.js');
 
 /**
@@ -25,7 +25,8 @@ var uuid = require('node-uuid'), // used to generate unique ids
 **       and LeaderBoard for maintaining the user scores.
 */
 var GameManager = function() {
-  this.games = new Map(); // holds all the games Waiting, Live, and Finished
+  this.games = new Map(); // holds all the games. Waiting, Live, and Finished
+  this.players = new Map();// to map userId to [gameIds]
   this.topicsWaiting = {}; // holds only the games which are waiting for players. Maps topicId to gameId
 
   /**
@@ -49,24 +50,72 @@ var GameManager = function() {
   ** @param topicId as String, playersNeeded as Number, incomingPlayer as Object
   ** @return true if player was added to a game, otherwise false
   */
-  this.addPlayerToGame = function( topicId, playersNeeded, incomingPlayer ) {
+  this.managePlayer = function( topicId, playersNeeded, incomingPlayer ) {
     var gameId4TopicInWaitStack = this.topicsWaiting[topicId];
     if ( gameId4TopicInWaitStack ) { // if the game is waiting in the wait stack
-      this.games.get( gameId4TopicInWaitStack ).players.push( incomingPlayer ); //add the player in a game having topic = topicId
-      if ( this.isGameReady( gameId4TopicInWaitStack ) ) {
-        this.startGame( gameId4TopicInWaitStack ); //start the game
-        delete this.topicsWaiting[topicId]; //remove the topic from wait stack
+      var isPlayerAdded = this.addPlayerToGame( gameId4TopicInWaitStack, topicId, incomingPlayer );
+      if ( isPlayerAdded ) {
+        if ( this.isGameReady( gameId4TopicInWaitStack ) ) {
+          this.startGame( gameId4TopicInWaitStack ); //start the game
+          delete this.topicsWaiting[topicId]; //remove the topic from wait stack
+          return true;
+        }
+        this.emitPendingPlayers( gameId4TopicInWaitStack );
+        return true; // GameManager started managing the player
       }
+      return false;
     } else {
       var gameId = this.createNewGame( topicId, playersNeeded ); // create a new game
-      this.games.get( gameId ).players.push( incomingPlayer ); //add the player to a game having topic = topicId
-      if ( this.isGameReady( gameId ) ) { // check if the game is ready to start
-        this.startGame( gameId ); //start the game
-        delete this.topicsWaiting[topicId]; //remove the topic from wait stack
-      } else {
-        this.emitPendingPlayers( gameId );
+      if ( gameId ) { // if the game was created successfully
+        var isPlayerAdded = this.addPlayerToGame( gameId, topicId, incomingPlayer );
+        if ( isPlayerAdded ) {
+          if ( this.isGameReady( gameId ) ) {
+            this.startGame( gameId ); //start the game
+            delete this.topicsWaiting[topicId]; //remove the topic from wait stack
+            return true;
+          }
+          this.emitPendingPlayers( gameId );
+          return true; // GameManager started managing the player
+        }
+        return false;
       }
+      return false;
     }
+  };
+
+  /**
+  ** @param gameId as String, topicId as String, gamePlayer as Object
+  ** @return true if gamePlayer was added to a game; otherwise false
+  */
+  this.addPlayerToGame = function( gameId, topicId, gamePlayer ) {
+    var playerGames = this.players.get( gamePlayer.userId ),
+        gamePlayers = this.games.get( gameId ) ? this.games.get( gameId ).players : null,
+        self = this;
+
+  	if ( gamePlayers ) { // players Array exists in the game. This check is not necessary
+      if ( playerGames && playerGames.length ) { // gamePlayer is already playing some game(s)
+        var isPlayingSameTopic = playerGames.some( function( savedGameId ) {
+          if ( savedGameId == gameId && self.games.get( savedGameId ) && (self.games.get( savedGameId ).topicId == topicId) ) {
+            return true;
+          }
+          return false;
+        });
+        if ( !isPlayingSameTopic ) {
+          playerGames.push( gameId ); // add the gameId to gamePlayer's array of playing-games
+          gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to players array the game
+          console.log( gamePlayer.userId , ' was added to ' , gameId);
+          return true;
+        }
+        return false;// player is already playing topicId.
+                     // Can't play the same topic until the game is finished/popped
+      } else { // gamePlayer is not playing any game(s) so far
+        this.players.set( gamePlayer.userId, [gameId] ); // set the gameId as the first game gamePlayer is playing i.e. set it in the map
+        gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to players array the game
+        console.log( gamePlayer.userId , ' was added to ' , gameId);
+        return true;
+      }
+  	}
+    return false;
   };
 
   /**
@@ -87,9 +136,12 @@ var GameManager = function() {
   */
   this.emitPendingPlayers = function( gameId ) {
     var game = this.games.get( gameId );
-    game.players.forEach( function(player) {
-      player.client.emit('pendingPlayers', { gameId: gameId, pendingPlayers: (game.playersNeeded - game.players.length) } );
-    });
+    if ( game.players ) {
+      game.players.forEach( function(player) {
+        console.log('Emitting pending players = ' + (game.playersNeeded - game.players.length) + ' for ' + player.userId );
+        player.client.emit('pendingPlayers', { gameId: gameId, pendingPlayers: (game.playersNeeded - game.players.length) } );
+      });
+    }
   };
 
   /**
@@ -97,14 +149,16 @@ var GameManager = function() {
   ** @return true if everything is setup before starting a Game and 'startGame' events are emitted
   */
   this.startGame = function( gameId ) {
-    var game = this.games.get( gameId );
+    var game = this.games.get( gameId ),
+        self = this;
 
     questionBank.getQuizQuestions( game.topicId, 5 , function( err, questions ) { // get questions from the questionBank
       if ( err ) {
+        console.log('ERROR: Failed to get quiz questions for ' + gameId + '. Cannot start the game. Terminating the game launch.');
         console.error(err);
-        return false;
+        // return false;
       }
-      // prepare the LeaderBoard for the game
+      //prepare the LeaderBoard for the game
       var players = []
       game.players.forEach( function(player) { // extra loop to exclude player.client from leaderBoard and prevent CallStack Overflow error
         var gamePlayer = {
@@ -115,20 +169,163 @@ var GameManager = function() {
         }
         players.push( gamePlayer );
       });
-      var leaderBoardCreated = LeaderBoard.createNewLeaderBoard( gameId, players ); // create the leaderBoard for the game before starting
-      if ( leaderBoardCreated ) {
+      LeaderBoard.createNewLeaderBoard( gameId, players, function(err, leaderBoardCreated) {
+        if ( err ) {
+          console.log('ERROR: Failed to create LeaderBoard for ' + gameId + '. Cannot start the game. Terminating the game launch.');
+          return false;
+        }
         game.leaderBoard = players; // set the leaderBoard on game also. gives 2nd way to access it. other being getLeaderBoard()
         console.log('\n');
+        console.log('Starting game: ' + gameId);
         game.players.forEach( function(player) {
+          console.log('Starting game for ' + player.userId );
           player.client.emit('startGame', { topicId: game.topicId, gameId: gameId, playersNeeded: game.playersNeeded, questions: questions });
-          console.log("Starting game for " + player.userId );
         });
+        if ( !questions || !questions.length ) {
+          self.popGame( gameId );
+        }
+        console.log('\n');
         return true;
-      } else {
-        console.log('ERROR: Failed to create LeaderBoard for ' + gameId );
-        return false;
-      }
+      }); // create the leaderBoard for the game before starting
     });// end getQuizQuestions
+  };
+
+  /**
+  ** @param topicId as String
+  ** @return Array of players playing topicId
+  */
+  this.getGamePlayers = function( gameId ) {
+  	return this.games.get( gameId );
+  };
+
+  /**
+  ** @param gamePlayer as Obj
+  ** @return Array of topics gamePlayer is playing
+  */
+  this.getPlayerTopics = function( userId ) {
+  	return this.players.get( userId );
+  };
+
+  /**
+  ** @param gameId as String, gamePlayer as Object
+  ** @return true if gamePlayer left the game successfully; otherwise false
+  */
+  this.leaveGame = function( gameId, userId ) {
+    var playerGames = this.players.get( userId ),
+        game = this.games.get( gameId ),
+        gamePlayers = game ? game.players : null, // array of players playing gameId
+        playerLeft = false;
+
+    if ( gamePlayers && gamePlayers.length ) {
+      playerLeft = gamePlayers.some( function( savedPlayer, index ) {
+        if ( savedPlayer.userId == userId ) {
+          console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
+          return true;
+        }
+        return false;
+      });
+    }
+    if ( playerLeft ) { // do some cleanup
+      if ( gamePlayers && !gamePlayers.length ) { // remove the game mapping if the game doesn't have any players
+        delete this.topicsWaiting[game.topicId]; //remove the topic from wait stack
+        this.games.delete( gameId );
+      }
+      var index = playerGames.indexOf( gameId );
+      if ( playerGames && playerGames.length &&  (index != -1)) {
+        console.log( playerGames.splice( index, 1 ), ' was removed from ' + userId  + "'s array of games.");
+      }
+      if ( playerGames && !playerGames.length ) { // remove the player mapping if the player is not playing any topic
+        this.players.delete( userId );
+      }
+      return true; // player successfully left the game and other cleanup was done
+    }
+    return false; // the player or the game does not exist
+  };
+
+
+  /**
+  ** @param gameId as String
+  ** @return true if the game was successfully popped; otherwise false
+  */
+  this.popGame = function( gameId ) {
+    var game = this.games.get( gameId ),
+        gamePlayers = game ? game.players : null,
+        self = this;
+    if ( gamePlayers && gamePlayers.length ) {
+      gamePlayers.forEach( function( gamePlayer ) { // before deleting the game delete the gameId entry in all the players
+        var playerGames = self.players.get( gamePlayer.userId );
+        if ( playerGames && playerGames.length ) { // player is playing some games
+          var index = playerGames.indexOf( gameId );
+          if ( index != -1 ) { // if player is playing the gameId to be popped
+            console.log( gamePlayer.userId + ' was removed from ' + playerGames.splice( index, 1 ) );
+          }
+          if ( playerGames && !playerGames.length ) { // remove the player mapping if the player is not playing any topic
+            self.players.delete( gamePlayer.userId );
+          }
+        }
+      });
+    }
+    if ( this.games.has( gameId ) ) {
+      delete this.topicsWaiting[game.topicId]; //remove the topic from wait stack
+      this.games.delete( gameId ); // pop the game if it exists
+      return true;
+    }
+    return false; // game doesn't exist
+  }
+
+  /**
+  ** @param gamePlayer as Object
+  ** @return true if the gamePlayer was successfully popped; otherwise false
+  */
+  this.popPlayer = function( userId ) {
+    var playerGames = this.players.get( userId ),
+        self = this,
+        removedFromGamesCount = 0;
+    if ( playerGames && playerGames.length ) {
+      playerGames.forEach( function( gameId ) { // before popping the player, delete the gamePlayer entry in all the games
+        var game = self.games.get( gameId ),
+            gamePlayers = game ? game.players : null; // to check where if gamePlayer entry is there in games
+        if ( gamePlayers && gamePlayers.length ) { // game has some players
+          gamePlayers.some( function( savedGamePlayer, index ) {
+            if ( savedGamePlayer.userId == userId ) {
+              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions in GameManager will be popped.'});
+              console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
+              self.emitPendingPlayers( gameId );
+              removedFromGamesCount++ ;
+              return true;
+            }
+            return false;
+          });
+          if ( gamePlayers && !gamePlayers.length ) { // cleanup
+            delete self.topicsWaiting[game.topicId]; //remove the topic from wait stack
+            self.games.delete( gameId );
+          }
+        }
+      });
+      if ( removedFromGamesCount == playerGames.length ) { // gamePlayer was removed from all the games he was part of
+        if ( this.players.has( userId ) ) {
+          this.players.delete( userId ); // delete the player mapping
+          return true;
+        }
+      }
+      return false; // gamePlayer was removed from a few games but not from all he was part of
+    }
+  }
+
+  /**
+  ** @param gameId as String
+  ** @return Array of players playing gameId
+  */
+  this.getGamePlayers = function( gameId ) {
+  	return this.games.has( gameId ) ? this.games.get( gameId ).players : null ;
+  };
+
+  /**
+  ** @param gamePlayer as Obj
+  ** @return Array of topics gamePlayer is playing
+  */
+  this.getPlayerGames = function( gamePlayer ) {
+  	return this.players.get( gamePlayer.userId );
   };
 
   /**
@@ -143,10 +340,6 @@ var GameManager = function() {
   */
   this.updateScore = function( gameId, userId, score) {
     LeaderBoard.updateScore( gameId, userId, score); // call the LeaderBoard to update the player score
-  };
-
-  this.popGame = function( gameId ) { // not used as of now
-  	this.games.delete( gameId ); // pop the game from games
   };
 }
 

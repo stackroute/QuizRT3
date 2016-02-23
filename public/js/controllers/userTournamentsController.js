@@ -16,44 +16,50 @@
 
 angular.module('quizRT')
   .controller('userTournamentsController', function($rootScope,$scope,$location,$http) {
-    // get all the user tournaments
-    if ( $rootScope.loggedInUser && $rootScope.loggedInUser.tournaments && $rootScope.loggedInUser.tournaments.length) {
-      var reqObj = {
-        method: 'POST', // since no. of tournamentIds can get large
-        url: '/tournamentHandler/tournaments',
-        data: { tournamentIds:[] },
-        headers:{'Content-Type':'application/json'}
-      };
-      $rootScope.loggedInUser.tournaments.forEach( function( tournament ) {
-        reqObj.data.tournamentIds.push( tournament.id );
-      });
-      $http( reqObj )
-        .then( function( successResponse ){
-          $scope.userTournaments = successResponse.data.userTournaments;
-        }, function( errorResponse ) {
-          console.log('Could not retrieve user tournaments from MongoDB');
-        });
-    }
-
-    // GET all the tournaments
-    if( !($scope.tournaments && $scope.tournaments.length) ) {
-      var reqObj = {
-        method: 'GET',
-        url: '/tournamentHandler/tournaments'
-      };
-      $http( reqObj )
-        .success(function(data){
-          $scope.tournaments = data;
-        })
-        .error( function(err) {
-          console.log('Could not retrieve tournaments from MongoDB');
-        });
+    // redirect to login page if the user's isAuthenticated cookie doesn't exist
+    if( !$rootScope.isAuthenticatedCookie ){
+      $rootScope.logInLogOutErrorMsg = 'You are logged out. Kindly Login...';
+      $rootScope.logInLogOutSuccessMsg = '';
+      $location.path('/login');
     } else {
-      // $scope.$apply();
+
+      // get all the user tournaments
+      if ( $rootScope.loggedInUser && $rootScope.loggedInUser.tournaments && $rootScope.loggedInUser.tournaments.length) {
+        var reqObj = {
+          method: 'POST', // since no. of tournamentIds can get large
+          url: '/tournamentHandler/tournaments',
+          data: { tournamentIds:[] },
+          headers:{'Content-Type':'application/json'}
+        };
+        $rootScope.loggedInUser.tournaments.forEach( function( tournament ) {
+          reqObj.data.tournamentIds.push( tournament.id );
+        });
+        $http( reqObj )
+          .then( function( successResponse ){
+            $scope.userTournaments = successResponse.data.userTournaments;
+          }, function( errorResponse ) {
+            console.log('Could not retrieve user tournaments from MongoDB');
+          });
+      }
+
+      // GET all the tournaments
+      if( !($scope.tournaments && $scope.tournaments.length) ) {
+        var reqObj = {
+          method: 'GET',
+          url: '/tournamentHandler/tournaments'
+        };
+        $http( reqObj )
+          .success(function(data){
+            $scope.tournaments = data;
+          })
+          .error( function(err) {
+            console.log('Could not retrieve tournaments from MongoDB');
+          });
+      } else {
+        // $scope.$apply();
+      }
+      $scope.showTournamentDetails = function( tournamentId ) {
+        $location.path( '/tournament/' + tournamentId );
+      };
     }
-
-
-    $scope.showTournamentDetails = function( tournamentId ) {
-      $location.path( '/tournament/' + tournamentId );
-    };
   });

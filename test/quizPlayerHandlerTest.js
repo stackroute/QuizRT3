@@ -3,6 +3,7 @@ var expect = require('chai').expect,
   request = require('supertest'),
 	app = require('../app.js'),
 	address = request("http://localhost:8080"),
+<<<<<<< HEAD
   Quiz = require("../models/quiz"),
   Question=require("../models/question");
 
@@ -40,5 +41,19 @@ var expect = require('chai').expect,
           // expect(res.body[0].multiplier).to.be.equal(76);
            done();
          });
+=======
+	Tournament = require("../models/tournament");
+
+
+  describe.only('Test Tournament Handler Router', function (err) {
+
+   it('Getting /quizPlayer/quizData/:id get function from "QUIZ PLAYER HANDLER" through App.js', function (done)
+  	 {address
+  		.get('/quizPlayer/quizData/')
+  		.end(function(err,res) {
+  		 expect(res.statusCode).to.be.equal(200);
+  		 done();
+  		});
+>>>>>>> 350399d0edcbb7a492b83c92482acd8bcf410b0a
      });
    });

@@ -12,12 +12,15 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Abhinav Kareer,Sunil Mekala, Chandu
-//
+
 var express = require('express'),
     Reservoir = require('reservoir'),
     router = express.Router(),
     Profile = require("../models/profile"),
+    formidable = require('formidable'),
+    path = require('path'),
+    fs = require('fs'),
+    slugify = require('slugify'),
     Tournament = require("../models/tournament");
 
 
@@ -25,7 +28,7 @@ var express = require('express'),
 router.route('/tournaments')
     .get(function(req, res) {
         Tournament.find()
-            .populate("topics.name")
+            .populate("topics.topicId")
             .exec(function(err, tournaments) {
                 if (err) {
                     return res.send(err);
@@ -54,7 +57,7 @@ router.route('/tournaments')
 router.route('/tournament/:tId')
     .get(function(req, res) {
         Tournament.findById(req.params.tId)
-            .populate("topics.name")
+            .populate("topics.topicId")
             // .populate("leaderBoard.userId")
             .exec(function(err, tournament) {
                 if (err) {
@@ -68,98 +71,135 @@ router.route('/tournament/:tId')
             });
 
     });
-    
+
 router.route('/createTournament')
     .post(function(req , res){
         console.log("Inside Create tournament");
        var form = new formidable.IncomingForm(),
         fields =[],
         tournament = null;
-        
+
+        // make 'public/temp' directory if it doesn't exist
+          try {
+            fs.mkdirSync('public/temp');
+          } catch(e) {
+            if ( e.code != 'EEXIST' ) {
+              throw e;
+            }
+          }
+
         form.uploadDir = process.cwd() + '/public/temp';
 
-/*        form.on('field',function(name,value) {
-            tournament = value;
-            console.log(value);
-             console.log(tournament.name);
-        });
-*/
-        form.on('file',function(name,file) {
-            console.log('inside file');
-        });
-
         form.on('field', function (field, value) {
-            console.log('inside field');
             tournament = JSON.parse(value);
-        
         });
 
-        form.parse(req);
-        
-    });
-/*
-router.route('/leaderBoard/:tId')
-    .get(function(req, res) {
+        form.on('file',function(name,file) {
 
-        Tournament.findById(req.params.tId)
-            .populate("leaderBoard.userId")
-            .exec(function(err, tournaments) {
-                if (err) {
-                    return res.send(err);
-                }
+            var oldPath = file.path,
+                newFileName = slugify(tournament.title) + '_' + file.name,
+                imageUrl = 'images/tournamentIcons/' + newFileName;
 
-                var usr = req.session.user.local.username;
+            fs.rename(file.path , 'public/' + imageUrl , function(err){
+                if (err) throw err;
+                console.log('Tournament Icon saved successfully');
 
-                cntr = 0;
-                tempLeaderBoard = [];
-                var tempFlag = false;
-                tournaments.leaderBoard.forEach(function(tempUser, index) {
+                //update saved image path to tournament imageURL
+                tournament.imageUrl = imageUrl;
 
-                    Profile.findOne({
-                        userId: tempUser.userId.local.username
-                    })
-                        .exec(function(err, profile) {
-                            if (err) {
-                                return res.send(err);
-                            }
-                            cntr++;
-
-                            if (cntr <= 10 && cntr <= tournaments.leaderBoard.length) {
-                                tempLeaderBoard.push({
-                                    name: profile.name,
-                                    score: tempUser.totalScore,
-                                    rank: index + 1
-                                });
-                            }
-                            if (usr == profile.userId) {
-                                tempFlag = true;
-                                currUserStat = {
-                                    name: profile.name,
-                                    rank: index + 1,
-                                    score: tempUser.totalScore,
-                                    imgLink: profile.imageLink
-                                };
-                            }
-
-                            if ((tempLeaderBoard.length == tournaments.leaderBoard.length || tempLeaderBoard.length == 10) && tempFlag) {
-                                return res.json({
-                                    leaderBoard: tempLeaderBoard,
-                                    myStat: currUserStat
-                                });
-                            }
-                        });
-                });
-
+                saveTournament(req, res , tournament);
 
             });
+            
+        });
+
+        
+
+        form.parse(req);
 
     });
-*/
+
+function saveTournament(req, res ,tournament){
+
+    if(validateTournament(req, res, tournament)){
+
+        var tournamentModel = new Tournament(),
+        topics = [];
+
+        // set tournament details to tournament model
+        var tournamentId = slugify(tournament.title);
+        tournamentModel._id = tournamentId;
+        tournamentModel.title = tournament.title;
+        tournamentModel.description = tournament.description;
+        tournamentModel.matches =  tournament.levelTopicArray.length;
+        tournamentModel.playersPerMatch = tournament.playersPerMatch;
+        tournamentModel.imageUrl = tournament.imageUrl;
+
+        var levelsTopicArray = tournament.levelTopicArray;
+            len = levelsTopicArray.length;
+
+        for(var cnt=0; cnt< len ; cnt++){
+            var topic = {};
+            topic['levelId'] = tournamentId + '_' + (cnt+1);
+            topic['topicId'] = levelsTopicArray[cnt];
+
+            topics.push(topic);
+        }
+
+        tournamentModel.topics = topics;
+
+        //tournamentModel
+
+        console.log(tournamentModel);
+
+        tournamentModel.save(function(err, tournament){
+            if(err){
+                console.log('Database error. Could not save tournament details: ' + tournament.title);
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error:'Could not save tournament details: ' + tournament.title}) );
+            
+            }
+            res.json({ error: null, tournamentId:tournament._id });
+
+        });
+
+
+    }
+}
+
+function validateTournament(req, res ,tournament){
+
+    var isValid = false;
+
+    //check whether tournament exist with same _id
+    Tournament.findOne({_id: slugify(tournament.title)})
+        .exec(function(err , tournament){
+
+            if(err){
+                console.log('Database error. Could not validate tournament details: ' + tournament.title);
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error:'Could not validate tournament details: ' + tournament.title}) );
+            
+            }else if(tournament){
+                console.log('Tournament already exist with given title :' + tournament.title);
+                res.writeHead(500, {'Content-type': 'application/json'});
+                res.end(JSON.stringify({ error:'Tournament already exist with given title. Please change your tournament title.'}) );
+                          
+            }else{
+                isValid = true;
+            }
+
+        });
+
+    return isValid;
+
+}
+
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {
       console.log('Request received for leaderboard');
         //get current loggedIn username
-        var usr = req.session.user.local.username,
+        var usr = req.session.user,
             leaderBoard = [],
             myStats = {},
             myStatsFound = false;

@@ -57,7 +57,17 @@ router.route('/category/:categoryId')
 	      });
 });
 
-
+router.route('/topics')
+  .get( function(req, res){
+    Topic.find({} , 'topicName')
+      .exec(function(err,topics){
+        if(err){
+            return res.send(err);
+          }
+        return res.json(topics);
+      });
+});
+  
 router.route('/topic/:topicId')
   .get( function(req,res) { // retrieve a topic's details
     var topicWithUserStats = {
@@ -78,7 +88,7 @@ router.route('/topic/:topicId')
     };
 
     if ( req.session && req.session.user ) {
-      Profile.findOne( {userId: req.session.user.local.username} )
+      Profile.findOne( {userId: req.session.user} )
       .exec( function(err, userProfileData ) {
         if(err) {
           res.writeHead(500, {'Content-type': 'application/json'} );
@@ -124,7 +134,7 @@ router.route('/topic/:topicId')
   })
   .put( function(req,res) { // set isFollowed for the topic in user's profile and increment/decrement no of followers in topic
     if ( req.session && req.session.user ) {
-      Profile.findOne( {userId: req.session.user.local.username} )
+      Profile.findOne( {userId: req.session.user} )
       .exec( function(err, userProfileData ) {
         if(err) {
           res.writeHead(500, {'Content-type': 'application/json'} );
@@ -200,7 +210,7 @@ router.route('/topic/:topicId')
   })
   .post( function(req,res) { // used to save updates to userProfile and Topic when user hits play now.
     if ( req.session && req.session.user ) {
-      Profile.findOne( {userId: req.session.user.local.username} )
+      Profile.findOne( {userId: req.session.user} )
       .exec( function(err, userProfileData ) {
         if(err) {
           res.writeHead(500, {'Content-type': 'application/json'} );

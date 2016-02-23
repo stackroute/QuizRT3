@@ -12,8 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//											+ Anil Sawant
+//   Name of Developers  Anil Sawant
 
 
 
@@ -22,30 +21,30 @@ var GameManager = function() {
   this.players = new Map();// to map userId to [topicIds]
 
   /**
-  ** @param topicId as String, gamePlayer as String/Obj
-  ** @return true if user was added to a game; otherwise false
+  ** @param topicId as String, gamePlayer as Object
+  ** @return true if gamePlayer was added to a game; otherwise false
   */
   this.addPlayerToGame = function( topicId, gamePlayer ) {
-    var player = this.players.get( gamePlayer.userId ),
-        game = this.games.get( topicId );
+    var playerTopics = this.players.get( gamePlayer.userId ),
+        gamePlayers = this.games.get( topicId );
 
-  	if ( game && game.length ) { // game with topicId exists, and already has player(s)
-      if ( player && player.length ) { // gamePlayer is already playing some game(s)
-        if( player.indexOf( topicId ) != -1 ) // gamePlayer is playing the same topicId
+  	if ( gamePlayers && gamePlayers.length ) { // game with topicId exists, and already has player(s)
+      if ( playerTopics && playerTopics.length ) { // gamePlayer is already playing some game(s)
+        if( playerTopics.indexOf( topicId ) != -1 ) // gamePlayer is playing the same topicId
           return false;
 
-        player.push( topicId ); // add the topicId to gamePlayer's array of playing-topics
-        game.push( gamePlayer ); // add the gamePlayer to topicId's array of players
+        playerTopics.push( topicId ); // add the topicId to gamePlayer's array of playing-topics
+        gamePlayers.push( gamePlayer ); // add the gamePlayer to topicId's array of players
         return true;
       } else { // gamePlayer is not playing any game(s) so far
         this.players.set( gamePlayer.userId, [topicId] ); // set the topicId as the first game gamePlayer is playing i.e. set it in the map
-        game.push( gamePlayer ); // since the game already exists, add gamePlayer to topicId's array of players
+        gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to topicId's array of players
         return true;
       }
   	} else { // game with topicId doesn't exist, or doesn't have any player(s)
   		this.games.set( topicId, [gamePlayer] ); // set the gamePlayer as the first player of the topicId
-      if ( player && player.length ) { // player is already playing some other game
-        player.push( topicId ); // push the topicId to his previous playing-topics array
+      if ( playerTopics && playerTopics.length ) { // player is already playing some other game
+        playerTopics.push( topicId ); // push the topicId to his previous playing-topics array
         return true;
       }
       this.players.set( gamePlayer.userId, [topicId] ); // this is the first topic for the player, hence set it in map
@@ -53,35 +52,118 @@ var GameManager = function() {
   	}
   };
 
+  /**
+  ** @param topicId as String, gamePlayer as Object
+  ** @return true if gamePlayer left the game successfully; otherwise false
+  */
   this.leaveGame = function( topicId, gamePlayer ) {
-    var player = this.players.get( gamePlayer ),
-        game = this.games.get( topicId );
+    var playerTopics = this.players.get( gamePlayer.userId ),
+        gamePlayers = this.games.get( topicId ),
+        playerLeft = false;
 
-    if ( game && game.length ) {
-      console.log( game.splice( game.indexOf( gamePlayer ), 1 ) , ' left ' + topicId );
+    if ( gamePlayers && gamePlayers.length ) {
+      playerLeft = gamePlayers.some( function( savedPlayer, index ) {
+        if ( savedPlayer.userId == gamePlayer.userId ) {
+          console.log( gamePlayers.splice( index, 1 ) , ' left ' + topicId );
+          return true;
+        }
+        return false;
+      });
     }
-    if ( game && !game.length ) {
-      this.games.delete( topicId );
+    if ( playerLeft ) { // do some cleanup
+      if ( gamePlayers && !gamePlayers.length ) { // remove the game mapping if the game doesn't have any players
+        this.games.delete( topicId );
+      }
+      var index = playerTopics.indexOf( topicId);
+      if ( playerTopics && playerTopics.length &&  (index != -1)) {
+        console.log( playerTopics.splice( index, 1 ), ' was removed from ' + gamePlayer.userId  + "'s array");
+      }
+      if ( playerTopics && !playerTopics.length ) { // remove the player mapping if the player is not playing any topic
+        this.players.delete( gamePlayer.userId );
+      }
+      return true; // player successfully left the game and other cleanup was done
     }
-    if ( player && player.length ) {
-      console.log( player.splice( player.indexOf( topicId), 1 ), ' was removed from ' + gamePlayer + "'s array");
-    }
-    if ( player && !player.length ) {
-      this.players.delete( gamePlayer )
-    }
+    return false; // the player or the game did not exist
   };
 
+  /**
+  ** @param topicId as String
+  ** @return Array of players playing topicId
+  */
   this.getGamePlayers = function( topicId ) {
   	return this.games.get( topicId );
   };
+
+  /**
+  ** @param gamePlayer as Obj
+  ** @return Array of topics gamePlayer is playing
+  */
   this.getPlayerTopics = function( gamePlayer ) {
-  	return this.players.get( gamePlayer );
+  	return this.players.get( gamePlayer.userId );
   };
+
+  /**
+  ** @param topicId as String
+  ** @return true if the game was successfully popped; otherwise false
+  */
   this.popGame = function( topicId ) {
-  	this.games.delete( topicId ); // pop the game from games
+    var gamePlayers = this.games.get( topicId ),
+        self = this;
+    if ( gamePlayers && gamePlayers.length ) {
+      gamePlayers.forEach( function( gamePlayer ) { // before deleting the game delete the gameId entry in all the players
+        var playerTopics = self.players.get( gamePlayer.userId );
+        if ( playerTopics && playerTopics.length ) { // player is playing some topics
+          var index = playerTopics.indexOf( topicId );
+          if ( index != -1 ) { // if player is playing the topicId to be popped
+            console.log( playerTopics.splice( index, 1 ) + ' was removed from ' + gamePlayer.userId );
+          }
+          if ( playerTopics && !playerTopics.length ) { // remove the player mapping if the player is not playing any topic
+            self.players.delete( gamePlayer.userId );
+          }
+        }
+      });
+    }
+    if ( this.games.has( topicId ) ) {
+      this.games.delete( topicId ); // pop the game if it exists
+      return true;
+    }
+    return false; // game doesn't exist
   }
+
+  /**
+  ** @param gamePlayer as Object
+  ** @return true if the gamePlayer was successfully popped; otherwise false
+  */
   this.popPlayer = function( gamePlayer ) {
-  	this.players.delete( gamePlayer ); // pop the player from players
+    var playerTopics = this.players.get( gamePlayer.userId ),
+        self = this,
+        removedFromTopicsCount = 0,
+        topicRemoved = false;
+    if ( playerTopics && playerTopics.length ) {
+      playerTopics.forEach( function( topicId ) { // before popping the player, delete the gamePlayer entry in all the games
+        var topicPlayers = self.games.get( topicId ); // to check where if gamePlayer entry is there in games
+        if ( topicPlayers && topicPlayers.length ) { // topic has some players
+          topicRemoved = topicPlayers.some( function( topicPlayer, index ) {
+            if ( topicPlayer.userId == gamePlayer.userId ) {
+              console.log( topicPlayers.splice( index, 1 ) , ' was removed from ' + topicId );
+              removedFromTopicsCount++ ;
+              return true;
+            }
+            return false;
+          });
+          if ( topicPlayers && !topicPlayers.length ) { // cleanup
+            self.games.delete( topicId );
+          }
+        }
+      });
+      if ( removedFromTopicsCount == playerTopics.length ) { // gamePlayer was removed from all the games he was part of
+        if ( this.players.has( gamePlayer.userId ) ) {
+          this.players.delete( gamePlayer.userId ); // delete the player mapping
+          return true;
+        }
+      }
+      return false; // gamePlayer was removed from a few games but not from all he was part of
+    }
   }
 }
 

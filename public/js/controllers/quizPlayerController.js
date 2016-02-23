@@ -87,12 +87,12 @@ angular.module('quizRT')
                     $scope.isDisabled = false;
                     $scope.wrongAnswerers = 0;
                     $scope.correctAnswerers = 0;
-                    $scope.unattempted = startGameData.maxPlayers;
+                    $scope.unattempted = startGameData.playersNeeded;
                     if ( $scope.questionCounter == startGameData.questions.length ) {
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        $rootScope.socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: startGameData.levelId } );
+                        $rootScope.socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: $scope.levelId } );
                     } else {
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
@@ -102,7 +102,7 @@ angular.module('quizRT')
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 $rootScope.socket.emit('confirmAnswer', {
                                     ans: "correct",
-                                    gameID: startGameData.gameId,
+                                    gameId: startGameData.gameId,
                                     topicId: startGameData.topicId
                                 });
                             } else {
@@ -111,7 +111,7 @@ angular.module('quizRT')
                                 $scope.myscore = $scope.myscore - 5;
                                 $rootScope.socket.emit('confirmAnswer', {
                                     ans: "wrong",
-                                    gameID: startGameData.gameId,
+                                    gameId: startGameData.gameId,
                                     topicId: startGameData.topicId
                                 });
                             }
@@ -160,8 +160,8 @@ angular.module('quizRT')
             $scope.wrongAnswerers++;
             $scope.unattempted--;
         });
-        $rootScope.socket.on('pendingUsers', function(data) {
-            $scope.question = "WAITING FOR " + data.pendingUsersCount +" OTHER PLAYER(S)";
+        $rootScope.socket.on('pendingPlayers', function(data) {
+            $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
         });
         $rootScope.socket.on( 'takeResult', function( resultData ) {
             $rootScope.recentGames[resultData.gameResult.gameId] = {
@@ -173,8 +173,13 @@ angular.module('quizRT')
             $location.path( '/quizResult/' + resultData.gameResult.gameId );
         });
         $rootScope.socket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
-          $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly enter your previous session.';
+          $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly complete the previous game or play a different one.';
           $rootScope.isPlayingAGame = false;
+        });
+        $rootScope.socket.on( 'serverMsg', function( msgData ) {
+          if (msgData.type == 'LOGOUT') {
+            $location.path( '/userProfile' );
+          }
         });
       }
     });

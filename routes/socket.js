@@ -15,14 +15,12 @@
 //   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
 //                      + Anil Sawant
 
-var GameManager = require('./gameManager/GameManager.js'),
+// var GameManager = require('./gameManager/GameManager.js'),
+var GameManager = require('./gameManager/AlphaGameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    LeaderBoard = require('./gameManager/Leaderboard.js'),
-    uuid = require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
     Tournament = require("./../models/tournament"),
-    questionBank = require('./questionBank'),
     defaultMaxPlayers = 2;
     maxPlayers = 0;
 
@@ -32,30 +30,31 @@ module.exports = function(server,sessionMiddleware) {
     sessionMiddleware(socket.request, socket.request.res, next);
   });
   io.on('disconnect',function(client){
-    // Players.delete(client.request.session.user,client);
-    console.log( client.request.session.user + ' was disconnected from the server.');
-    client.request.session.destroy();
+    console.log( 'Server crashed. All the clients were disconnected from the server.');
   })
 
   io.on('connection', function(client) {
-    console.log('\n\n\n');
-    // console.log(client.request);
     if ( client.request.session && client.request.session.user ) {
       console.log( client.request.session.user + ' connected to QuizRT server. Socket Id: ' + client.id);
     }
 
     client.on('disconnect', function() {
-      // need to implement:
-      // finding the user disconnected and dropping him from GameManager
       if ( client.request.session && client.request.session.user ) {
+        GameManager.popPlayer( client.request.session.user ); // pop the user from all the games
         console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
       }
+    });
+    client.on('logout', function( userData, done) {
+      console.log( client.request.session.user + ' logged out.');
+      done( GameManager.popPlayer( client.request.session.user ) );
+      client.request.session.user = null;
+  		client.request.logout();
     });
 
     client.on('join',function( playerData ) {
       console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
       // check if the user is authenticated and his session exists, if so add him to the game
-      if ( client.request.session && (playerData.userId == client.request.session.user) ) {//req.session.user.local.username
+      if ( client.request.session && (playerData.userId == client.request.session.user) ) {//req.session.user
         var gamePlayer = {
           userId: playerData.userId,
           playerName: playerData.playerName,
@@ -63,75 +62,11 @@ module.exports = function(server,sessionMiddleware) {
           client: client
         };
 
-        // if ( playerData.levelId ) {
-        //     give it to TournamentManager
-        // }
-        var addedSuccessfully = GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
+        maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
+        var addedSuccessfully = GameManager.managePlayer( playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
         if ( addedSuccessfully === false ) {
           console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
           client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
-        }
-
-        /*
-          The above logic has to be improved to map game-id and players for that game
-          For now we cannot have two games on the same topic running simultaneously
-          //
-          // GameManager.addPlayerToGame( topicId, minPlayers, player)
-          // TournamentManager.addPlayerToTournament( levelId, topicId, minPlayers, player)
-          // --> uses GameManager for individual games
-        */
-
-        // maxPlayers = 4;
-        maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
-
-        var gamePlayers = GameManager.getGamePlayers( playerData.topicId ),
-            usersJoined = gamePlayers.length;
-
-        if( usersJoined === maxPlayers ) {
-          var gameId = uuid.v1(); // generate a unique game-id
-
-          // @params (topicId, number of questions, callback)
-          questionBank.getQuizQuestions( playerData.topicId, 5 , function( err, questions ) {
-            // prepare the LeaderBoard for the game
-            var players = [];
-            gamePlayers.forEach( function(player) { // extra loop to exclude player.client from leaderBoard and prevent CallStack Overflow error
-              var gamePlayer = {
-                userId: player.userId,
-                playerName: player.playerName,
-                playerPic: player.playerPic,
-                score: 0 // add score to gamePlayer and initialize it to zero
-              }
-              players.push( gamePlayer );
-            });
-            LeaderBoard.createNewLeaderBoard( gameId, players );
-            /*  Note: Keep separate loops to prepare LeaderBoard and to prepare startGameData
-                      This will reduce the time-lag between successive startGame emits
-            */
-            console.log('\n');
-            // prepare startGameData and emit startGame for each player
-            gamePlayers.forEach( function(player) {
-              var startGameData  = {
-                gameId: gameId,
-                levelId: playerData.levelId, // defined only for tournaments
-                topicId: playerData.topicId,
-                maxPlayers: maxPlayers,
-                questions: questions
-              };
-              player.client.emit('startGame', startGameData );
-              console.log("Starting game for " + player.userId );
-            });
-          });// end getQuizQuestions
-
-        } else if( usersJoined < maxPlayers ){
-          console.log('pendingUsersCount = ' + (maxPlayers-usersJoined));
-          gamePlayers.forEach( function(player) {
-            player.client.emit('pendingUsers', { pendingUsersCount: (maxPlayers-usersJoined) });
-          });
-        } else {
-          console.log('Somethings is wrong!!. usersJoined > maxPlayers ');
-          gamePlayers.forEach( function(player) {
-            player.client.emit('serverError', { pendingUsersCount: (maxPlayers-usersJoined) });
-          });
         }
       } else {
         console.log('User session does not exist for: ' + playerData.userId + '. Or the user client was knocked out.');
@@ -152,14 +87,14 @@ module.exports = function(server,sessionMiddleware) {
       if(data.ans =='correct'){
         //increment correct of allplayers
         //decrement unsawered of all players
-        GameManager.getGamePlayers(data.topicId).forEach(function(player){
+        GameManager.getGamePlayers(data.gameId).forEach(function(player){
           player.client.emit('isCorrect');
         });
       }
       else{
         //increment wrong of allplayers
         //decrement unsawered of all players
-        GameManager.getGamePlayers(data.topicId).forEach(function(player){
+        GameManager.getGamePlayers(data.gameId).forEach(function(player){
           player.client.emit('isWrong');
         });
       }
@@ -167,12 +102,12 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on('updateStatus',function( gameData ){
       if ( client.request.session && gameData.userId == client.request.session.user ) {
-        LeaderBoard.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
+        GameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
 
-        var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
+        var intermediateGameBoard = GameManager.getLeaderBoard( gameData.gameId ),
             len = intermediateGameBoard.length,
             gameTopper = intermediateGameBoard[0];
-        GameManager.getGamePlayers(gameData.topicId).forEach( function( player, index) {
+        GameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
           player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
         });
       } else {
@@ -181,23 +116,26 @@ module.exports = function(server,sessionMiddleware) {
     });
 
     client.on( 'gameFinished', function( game ) {
-      var gameBoard = LeaderBoard.get( game.gameId );
+      console.log(client.request.session.user + ' finished game: ' + game.gameId );
+      var gameBoard = GameManager.getLeaderBoard( game.gameId );
       if ( gameBoard ) {
         var gameResultObj = {
           gameId: game.gameId,
           topicId: game.topicId,
+          levelId: game.levelId,
           gameBoard: gameBoard
         }
         client.emit('takeResult', { error: null, gameResult: gameResultObj } );
-
         // store the finished game into MongoDB
         storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
-          GameManager.popGame( game.topicId ); // pop and delete the reference to the game from GameManager
-          console.log('Result saved and Game popped: ' + game.topicId);
+          setTimeout( function() {
+            GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
+            console.log('Result saved and Game popped: ' + game.gameId);
+          }, 100);
         });
 
       } else {
-        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in join event.');
+        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in GameManager.js.');
         client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
       }
     });
@@ -233,19 +171,8 @@ module.exports = function(server,sessionMiddleware) {
       }
     });
 
-    client.on('leaveGame', function( topicId ){
-      console.log('\nLeave game called');
-      if( GameManager.getGamePlayers( topicId ) && GameManager.getGamePlayers( topicId ).length ) {
-        var index = GameManager.getGamePlayers( topicId ).indexOf( client.request.session.user );
-        if ( index >=0 ) {
-          var userLeft = GameManager.getGamePlayers( topicId ).splice( index,1);
-          console.log( userLeft.userId + ' left the game ' + topicId);
-        } else {
-          console.log( client.request.session.user + ' is not playing in ' + topicId );
-        }
-      } else {
-        console.log( 'Game with topicId = ' + topicId + ' doesnot exist.');
-      } // GameManager.get(topicId).delete(client.request.session.passport.user.local.username);
+    client.on('leaveGame', function( gameId ){
+      GameManager.leaveGame( gameId, client.request.session.user );
     }); // end client-on-leaveGame
   });
 
@@ -370,7 +297,7 @@ function validateAndSaveProfile( profileData, client ) {
       }else {
         console.log("User profile persisted sucessfully!!\n");
         // use the refreshUser event on client side (in userProfileController) to refresh the user stats after every game
-        client.emit('refreshUser', { error: null, user: updatedUserProfile } );
+        client.emit('refreshUser', { error: null, user: updatedUserProfile } );// not used so far
       }
     }); //end save
   }
@@ -421,22 +348,6 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
     }
   }); // end tournament.findOne
 }
-//
-//   var temp = tournamentData.leaderBoard.filter(function(item){
-//     return (item.userId == player.userId);
-//   });
-//
-//   if( temp.length == 0 ) {
-//     tournamentData.leaderBoard.push( player );
-//   } else {
-//     var tempVar=temp[0];
-//     var ind=tournamentData.leaderBoard.indexOf(tempVar);
-//     tournamentData.leaderBoard[ind].totalScore+=player.score;
-//   }
-// });
-//
-// tournamentData.save();
-// console.log("updated tournament space");
 
 var levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);
