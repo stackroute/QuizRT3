@@ -28,12 +28,15 @@ router.route('/quizData/:id')
       var temp=topicInst.split(",");
       var topicId=temp[0];
       var gameId=temp[1];
-
-      Quiz.findOne( { gameId: gameId } ) // find the liveGame in Quiz collection
+      console.log(topicId);
+      console.log(gameId);
+      Quiz.findOne( { 'gameId': gameId } ) // find the liveGame in Quiz collection
         .exec( function(err, liveGame) {
           if( liveGame == null ) { // the game does't exist
+            console.log("--------------------", liveGame);
             Question.find( { 'topicId': topicId } ) // retrieve questions from Question collection for topicId
               .exec( function(err, questions) {
+                console.log("Retunrning Questions...................",questions);
                 var myReservoir = Reservoir(5);// set the number of questions that the quiz will have
                 questions.forEach(function(e) {
                   myReservoir.pushSome(e); // iterates through all the questions and randomly pushes only 5 into the reservoir
@@ -45,7 +48,7 @@ router.route('/quizData/:id')
 
                 console.log('\nReserviour');
                 console.log(myReservoir);
-                
+
                 for(var i=0;i<5;++i) {
                   newQuiz.questions.push(myReservoir[i]._id);
                 }
