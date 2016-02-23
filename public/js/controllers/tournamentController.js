@@ -80,5 +80,18 @@
             }
 
           };
+
+          $scope.showPlayButton = function(index , levelCleared){
+
+            var showPlayButton = false;
+
+            if(index == levelCleared && ($scope.tournament.startDate <= new Date())){
+              showPlayButton = true;
+
+            }
+
+          return showPlayButton;
+
+          }
         }
    });

@@ -29,6 +29,27 @@
   text-align: center;
   color: white;
 }
+.rounds-header p{
+  font-size: 16px;
+}
+
+#rules p{
+  font-size: 16px;
+}
+
+#dates {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#dates p{
+  font-size: 14px;
+}
+
+#dates h4 {
+  color : #1BC98E;
+}
+
 .heading{
   margin-top: -30px;
   font-size: 20px;
@@ -192,9 +213,16 @@
     font-size: 12px;
   }
 }
-@media (min-width: 768px) {
-  #leaderBoard .modal-dialog {
-    width: 720px;
-    margin: 30px auto;
+@media (max-width: 768px) {
+
+  .topic-user h4{
+    font-size: 16px;
   }
+}
+  @media (min-width: 768px) {
+    #leaderBoard .modal-dialog {
+      width: 720px;
+      margin: 30px auto;
+    }
+
 }

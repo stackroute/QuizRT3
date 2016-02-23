@@ -23,7 +23,7 @@ return this;
  var modelStub = sinon.stub(Quiz, 'findOne');
 
 
- describe.only('Find a item given the argument', function(){
+ describe('Find a item given the argument', function(){
       beforeEach(function(done){
         modelStub.withArgs({'gameId':'game1'}).returns(mockFindOne);
         done();
