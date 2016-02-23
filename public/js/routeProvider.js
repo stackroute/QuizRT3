@@ -76,6 +76,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       $rootScope.$on('login', function(event) {
         $location.path('/login');
       });
+
       $rootScope.$on('logout', function(event,user) {
         console.log('Hey ' + user.name + "!, you will be logged out.");
         $rootScope.socket.emit('logout', $rootScope.loggedInUser.userId, function( status ) {
@@ -88,6 +89,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           $cookies.remove('isAuthenticated');
           $rootScope.loggedInUser = null;
           $rootScope.isAuthenticatedCookie = false;
+          $rootScope.logInLogOutErrorMsg = '';
           $rootScope.logInLogOutSuccessMsg = 'Logged out successfully!';
           $location.path('/login');
         });

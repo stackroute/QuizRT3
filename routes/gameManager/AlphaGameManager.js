@@ -14,7 +14,7 @@
 //
 //	Name of Developers Anil Sawant
 
-var uuid = require('node-uuid'), // used to generate unique ids
+var uuid = require('node-uuid'), // used to generate unique game ids
     questionBank = require('../questionBank'),
     LeaderBoard = require('./Leaderboard.js');
 
@@ -25,7 +25,7 @@ var uuid = require('node-uuid'), // used to generate unique ids
 **       and LeaderBoard for maintaining the user scores.
 */
 var GameManager = function() {
-  this.games = new Map(); // holds all the games Waiting, Live, and Finished
+  this.games = new Map(); // holds all the games. Waiting, Live, and Finished
   this.players = new Map();// to map userId to [gameIds]
   this.topicsWaiting = {}; // holds only the games which are waiting for players. Maps topicId to gameId
 
@@ -149,13 +149,14 @@ var GameManager = function() {
   ** @return true if everything is setup before starting a Game and 'startGame' events are emitted
   */
   this.startGame = function( gameId ) {
-    var game = this.games.get( gameId );
+    var game = this.games.get( gameId ),
+        self = this;
 
     questionBank.getQuizQuestions( game.topicId, 5 , function( err, questions ) { // get questions from the questionBank
       if ( err ) {
         console.log('ERROR: Failed to get quiz questions for ' + gameId + '. Cannot start the game. Terminating the game launch.');
         console.error(err);
-        return false;
+        // return false;
       }
       //prepare the LeaderBoard for the game
       var players = []
@@ -180,6 +181,9 @@ var GameManager = function() {
           console.log('Starting game for ' + player.userId );
           player.client.emit('startGame', { topicId: game.topicId, gameId: gameId, playersNeeded: game.playersNeeded, questions: questions });
         });
+        if ( !questions || !questions.length ) {
+          self.popGame( gameId );
+        }
         console.log('\n');
         return true;
       }); // create the leaderBoard for the game before starting
@@ -276,16 +280,17 @@ var GameManager = function() {
   this.popPlayer = function( userId ) {
     var playerGames = this.players.get( userId ),
         self = this,
-        removedFromGamesCount = 0,
-        gameRemoved = false;
+        removedFromGamesCount = 0;
     if ( playerGames && playerGames.length ) {
       playerGames.forEach( function( gameId ) { // before popping the player, delete the gamePlayer entry in all the games
         var game = self.games.get( gameId ),
             gamePlayers = game ? game.players : null; // to check where if gamePlayer entry is there in games
         if ( gamePlayers && gamePlayers.length ) { // game has some players
-          gameRemoved = gamePlayers.some( function( savedGamePlayer, index ) {
+          gamePlayers.some( function( savedGamePlayer, index ) {
             if ( savedGamePlayer.userId == userId ) {
+              savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions in GameManager will be popped.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
+              self.emitPendingPlayers( gameId );
               removedFromGamesCount++ ;
               return true;
             }

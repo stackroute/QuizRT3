@@ -17,122 +17,128 @@
 
 angular.module('quizRT')
   .controller('userSettingsController', function($rootScope, $scope, $http) {
-    var $inputFile = $('#inputFile'),
-        $profilePic = $('#profilePic');
-    $scope.passwordMessage = '';
-    $scope.errorMessage = '';
-    $scope.tempLoggedInUser = $rootScope.loggedInUser;
-    $scope.tempLoggedInUser.oldPassword = '';
-    $scope.tempLoggedInUser.newPassword = '';
-    $scope.tempLoggedInUser.confirmPassword = '';
+    // redirect to login page if the user's isAuthenticated cookie doesn't exist
+    if( !$rootScope.isAuthenticatedCookie ){
+      $rootScope.logInLogOutErrorMsg = 'You are logged out. Kindly Login...';
+      $rootScope.logInLogOutSuccessMsg = '';
+      $location.path('/login');
+    } else {
+      var $inputFile = $('#inputFile'),
+          $profilePic = $('#profilePic');
+      $scope.passwordMessage = '';
+      $scope.errorMessage = '';
+      $scope.tempLoggedInUser = $rootScope.loggedInUser;
+      $scope.tempLoggedInUser.oldPassword = '';
+      $scope.tempLoggedInUser.newPassword = '';
+      $scope.tempLoggedInUser.confirmPassword = '';
 
-    $scope.onlineImageLink = '';
-    $scope.loadOnlineImage = function() {
-      if ( $scope.onlineImageLink ) {
-        $scope.tempLoggedInUser.imageLink = $scope.onlineImageLink;
+      $scope.onlineImageLink = '';
+      $scope.loadOnlineImage = function() {
+        if ( $scope.onlineImageLink ) {
+          $scope.tempLoggedInUser.imageLink = $scope.onlineImageLink;
+        }
       }
-    }
-    $scope.updateUserProfile = function() {
+      $scope.updateUserProfile = function() {
 
-      if ( !$scope.tempLoggedInUser.name) {
-        $scope.errorMessage = 'Enter your Name.';
-      }else if ( !$scope.tempLoggedInUser.country ) {
-        $scope.errorMessage = 'Enter your Country.';
-      }else if ( !$scope.tempLoggedInUser.age ) {
-        $scope.errorMessage = 'Enter your Age.';
-      }else if ( !$scope.tempLoggedInUser.emailId ) {
-        $scope.errorMessage = 'Enter your Email-ID.';
-      }else {
-        $scope.errorMessage = '';
+        if ( !$scope.tempLoggedInUser.name) {
+          $scope.errorMessage = 'Enter your Name.';
+        }else if ( !$scope.tempLoggedInUser.country ) {
+          $scope.errorMessage = 'Enter your Country.';
+        }else if ( !$scope.tempLoggedInUser.age ) {
+          $scope.errorMessage = 'Enter your Age.';
+        }else if ( !$scope.tempLoggedInUser.emailId ) {
+          $scope.errorMessage = 'Enter your Email-ID.';
+        }else {
+          $scope.errorMessage = '';
+          var reqObj = {
+            method: 'POST',
+            url: 'userProfile/userSettings/updateProfile',
+            data: { user:$scope.tempLoggedInUser },
+            headers:{'Content-Type':'application/json'}
+          };
+          $http( reqObj ).then( function(successResponse){
+              if ( successResponse.data.error ) {
+                console.log(data.error);
+              }else {
+                $scope.errorMessage = 'Profile updated successfully.';
+                $rootScope.loggedInUser = successResponse.data.updatedUserProfile;
+              }
+            },function(errorResponse) {
+              $scope.errorMessage = 'Could not save updated user profile to MongoDB';
+            });
+        }
+      };
+      $scope.changePassword = function( tempLoggedInUser ) {
+        if ( tempLoggedInUser.oldPassword ) {
+          if ( tempLoggedInUser.newPassword ) {
+            if ( tempLoggedInUser.newPassword === tempLoggedInUser.confirmPassword ) {
+              $scope.passwordMessage = '';
+              alert('Password Changed');
+              tempLoggedInUser.oldPassword = '';
+              tempLoggedInUser.newPassword = '';
+              tempLoggedInUser.confirmPassword = '';
+            }else {
+              $scope.passwordMessage = 'Confirm password not same.'
+            }
+          } else {
+            $scope.passwordMessage = 'Enter new password.'
+          }
+        }else {
+          $scope.passwordMessage = 'Enter old password.';
+        }
+      };
+      $scope.removeIcon = function() {
+        $scope.tempLoggedInUser.imageLink = '';
+        $profilePic.css('border', '1px solid #aaa');
+      };
+      $scope.slideToggle = function( id ) {
+        if( id.indexOf('Password') >=0 ) {
+          $scope.toggleVarPassword ? $scope.toggleVarPassword = false : $scope.toggleVarPassword = true;
+        }else if ( id.indexOf('Image') >=0 ) {
+          $scope.toggleVarOnlineImageLink ? $scope.toggleVarOnlineImageLink = false : $scope.toggleVarOnlineImageLink = true;
+        }
+        $( id ).slideToggle();
+      };
+      $scope.$watch('passwordMessage', function(nv,ov) {
+        if (nv) {
+          $('#changePasswordDiv .alert').slideDown();
+        }else {
+          $('#changePasswordDiv .alert').slideUp();
+        }
+      });
+      $scope.$watch('errorMessage', function(nv,ov) {
+        if (nv) {
+          $('#userProfileForm').children('.alert').slideDown();
+        }else {
+          $('#userProfileForm').children('.alert').slideUp();
+        }
+      });
+
+      // to pop-up the input dialog
+      $profilePic.on('click',function() {
+        $inputFile.click();
+      });
+      // to handle the selected input file and upload it
+      $inputFile.on('change',function() {
+        var fileToUpload = this.files[0];
+        var formData = new FormData();
+        formData.append('userID', $rootScope.loggedInUser.userId );
+        formData.append('teamIcon', fileToUpload );
         var reqObj = {
           method: 'POST',
-          url: 'userProfile/userSettings/updateProfile',
-          data: { user:$scope.tempLoggedInUser },
-          headers:{'Content-Type':'application/json'}
-        };
-        $http( reqObj ).then( function(successResponse){
-            if ( successResponse.data.error ) {
-              console.log(data.error);
-            }else {
-              $scope.errorMessage = 'Profile updated successfully.';
-              $rootScope.loggedInUser = successResponse.data.updatedUserProfile;
-            }
-          },function(errorResponse) {
-            $scope.errorMessage = 'Could not save updated user profile to MongoDB';
-          });
-      }
-    };
-    $scope.changePassword = function( tempLoggedInUser ) {
-      if ( tempLoggedInUser.oldPassword ) {
-        if ( tempLoggedInUser.newPassword ) {
-          if ( tempLoggedInUser.newPassword === tempLoggedInUser.confirmPassword ) {
-            $scope.passwordMessage = '';
-            alert('Password Changed');
-            tempLoggedInUser.oldPassword = '';
-            tempLoggedInUser.newPassword = '';
-            tempLoggedInUser.confirmPassword = '';
-          }else {
-            $scope.passwordMessage = 'Confirm password not same.'
-          }
-        } else {
-          $scope.passwordMessage = 'Enter new password.'
+          url: 'userProfile/userSettings/profilePic',
+          headers: { 'Content-Type': undefined }, // to reset to browser default Content-Type
+          data: formData
         }
-      }else {
-        $scope.passwordMessage = 'Enter old password.';
-      }
-    };
-    $scope.removeIcon = function() {
-      $scope.tempLoggedInUser.imageLink = '';
-      $profilePic.css('border', '1px solid #aaa');
-    };
-    $scope.slideToggle = function( id ) {
-      if( id.indexOf('Password') >=0 ) {
-        $scope.toggleVarPassword ? $scope.toggleVarPassword = false : $scope.toggleVarPassword = true;
-      }else if ( id.indexOf('Image') >=0 ) {
-        $scope.toggleVarOnlineImageLink ? $scope.toggleVarOnlineImageLink = false : $scope.toggleVarOnlineImageLink = true;
-      }
-      $( id ).slideToggle();
-    };
-    $scope.$watch('passwordMessage', function(nv,ov) {
-      if (nv) {
-        $('#changePasswordDiv .alert').slideDown();
-      }else {
-        $('#changePasswordDiv .alert').slideUp();
-      }
-    });
-    $scope.$watch('errorMessage', function(nv,ov) {
-      if (nv) {
-        $('#userProfileForm').children('.alert').slideDown();
-      }else {
-        $('#userProfileForm').children('.alert').slideUp();
-      }
-    });
-
-    // to pop-up the input dialog
-    $profilePic.on('click',function() {
-      $inputFile.click();
-    });
-    // to handle the selected input file and upload it
-    $inputFile.on('change',function() {
-      var fileToUpload = this.files[0];
-      var formData = new FormData();
-      formData.append('userID', $rootScope.loggedInUser.userId );
-      formData.append('teamIcon', fileToUpload );
-      var reqObj = {
-        method: 'POST',
-        url: 'userProfile/userSettings/profilePic',
-        headers: { 'Content-Type': undefined }, // to reset to browser default Content-Type
-        data: formData
-      }
-      $http( reqObj ).then( function( successResponse ){
-        $profilePic.css('padding',0)
-                    .css('border', '1px solid transparent');
-        $rootScope.loggedInUser.imageLink = successResponse.data.tempUrl;
-        $scope.tempLoggedInUser.imageLink = successResponse.data.tempUrl;
-      }, function( errorResponse ){
-        console.log('Error in uploading user profile picture.');
-        alert('Error in uploading user profile picture.')
+        $http( reqObj ).then( function( successResponse ){
+          $profilePic.css('padding',0)
+                      .css('border', '1px solid transparent');
+          $rootScope.loggedInUser.imageLink = successResponse.data.tempUrl;
+          $scope.tempLoggedInUser.imageLink = successResponse.data.tempUrl;
+        }, function( errorResponse ){
+          console.log('Error in uploading user profile picture.');
+          alert('Error in uploading user profile picture.')
+        });
       });
-    });
-
+    }
   });

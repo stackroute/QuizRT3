@@ -98,7 +98,7 @@
                             </div>
                             <div class="td col-xs-6">
                               {{player.playerName}}  @({{player.totalScore}})
-                              <p ng-if="prevRank==1">
+                              <p ng-if="prevRank==1" ng-show="loggedInUser.userId==player.userId">
                                 Let's see how long you can stay at the top
                               </p>
                             </div>

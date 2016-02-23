@@ -18,12 +18,9 @@
 // var GameManager = require('./gameManager/GameManager.js'),
 var GameManager = require('./gameManager/AlphaGameManager.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    LeaderBoard = require('./gameManager/Leaderboard.js'),
-    uuid = require('node-uuid'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
     Tournament = require("./../models/tournament"),
-    questionBank = require('./questionBank'),
     defaultMaxPlayers = 2;
     maxPlayers = 0;
 
@@ -33,7 +30,7 @@ module.exports = function(server,sessionMiddleware) {
     sessionMiddleware(socket.request, socket.request.res, next);
   });
   io.on('disconnect',function(client){
-    console.log( 'Server sockets died. All the clients were disconnected from the server.');
+    console.log( 'Server crashed. All the clients were disconnected from the server.');
   })
 
   io.on('connection', function(client) {
@@ -42,9 +39,8 @@ module.exports = function(server,sessionMiddleware) {
     }
 
     client.on('disconnect', function() {
-      // need to implement:
-      // finding the user disconnected and dropping him from GameManager
       if ( client.request.session && client.request.session.user ) {
+        GameManager.popPlayer( client.request.session.user ); // pop the user from all the games
         console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
       }
     });
@@ -66,25 +62,12 @@ module.exports = function(server,sessionMiddleware) {
           client: client
         };
 
-        // if ( playerData.levelId ) {
-        //     give it to TournamentManager
-        // }
-        // var addedSuccessfully = GameManager.addPlayerToGame( playerData.topicId, gamePlayer ); // add the player against the topicId.
         maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
         var addedSuccessfully = GameManager.managePlayer( playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
         if ( addedSuccessfully === false ) {
           console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
           client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
         }
-
-        /*
-          The above logic has to be improved to map game-id and players for that game
-          For now we cannot have two games on the same topic running simultaneously
-          //
-          // GameManager.addPlayerToGame( topicId, minPlayers, player)
-          // TournamentManager.addPlayerToTournament( levelId, topicId, minPlayers, player)
-          // --> uses GameManager for individual games
-        */
       } else {
         console.log('User session does not exist for: ' + playerData.userId + '. Or the user client was knocked out.');
         client.emit( 'userNotAuthenticated' ); //this may not be of much use
@@ -119,9 +102,9 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on('updateStatus',function( gameData ){
       if ( client.request.session && gameData.userId == client.request.session.user ) {
-        LeaderBoard.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
+        GameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
 
-        var intermediateGameBoard = LeaderBoard.get( gameData.gameId ),
+        var intermediateGameBoard = GameManager.getLeaderBoard( gameData.gameId ),
             len = intermediateGameBoard.length,
             gameTopper = intermediateGameBoard[0];
         GameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
@@ -134,23 +117,25 @@ module.exports = function(server,sessionMiddleware) {
 
     client.on( 'gameFinished', function( game ) {
       console.log(client.request.session.user + ' finished game: ' + game.gameId );
-      var gameBoard = LeaderBoard.get( game.gameId );
+      var gameBoard = GameManager.getLeaderBoard( game.gameId );
       if ( gameBoard ) {
         var gameResultObj = {
           gameId: game.gameId,
           topicId: game.topicId,
+          levelId: game.levelId,
           gameBoard: gameBoard
         }
         client.emit('takeResult', { error: null, gameResult: gameResultObj } );
-
         // store the finished game into MongoDB
         storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
-          GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
-          console.log('Result saved and Game popped: ' + game.gameId);
+          setTimeout( function() {
+            GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
+            console.log('Result saved and Game popped: ' + game.gameId);
+          }, 100);
         });
 
       } else {
-        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in join event.');
+        console.log('LeaderBoard for ' + gameId + ' does not exist. Check in GameManager.js.');
         client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
       }
     });
@@ -312,7 +297,7 @@ function validateAndSaveProfile( profileData, client ) {
       }else {
         console.log("User profile persisted sucessfully!!\n");
         // use the refreshUser event on client side (in userProfileController) to refresh the user stats after every game
-        client.emit('refreshUser', { error: null, user: updatedUserProfile } );
+        client.emit('refreshUser', { error: null, user: updatedUserProfile } );// not used so far
       }
     }); //end save
   }
@@ -363,22 +348,6 @@ function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerLi
     }
   }); // end tournament.findOne
 }
-//
-//   var temp = tournamentData.leaderBoard.filter(function(item){
-//     return (item.userId == player.userId);
-//   });
-//
-//   if( temp.length == 0 ) {
-//     tournamentData.leaderBoard.push( player );
-//   } else {
-//     var tempVar=temp[0];
-//     var ind=tournamentData.leaderBoard.indexOf(tempVar);
-//     tournamentData.leaderBoard[ind].totalScore+=player.score;
-//   }
-// });
-//
-// tournamentData.save();
-// console.log("updated tournament space");
 
 var levelScore = function(n) {
   return ((35 * (n * n)) +(95*n)-130);

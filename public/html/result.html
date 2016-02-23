@@ -22,33 +22,40 @@
     <h2>{{msg}}</h2>
   </div>
   <div ng-if="gameTopper" class="row" id="gameTopper">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Rank : 1</h3>
-      </div>
-      <div class="panel-body content">
+    <div id="topper" class="col-md-3 col-sm-4 col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Rank : 1</h3>
+        </div>
+        <div class="panel-body content">
 
-        <a><img src="{{gameTopper.playerPic}}"></a>
+          <a><img src="{{gameTopper.playerPic}}"></a>
 
-      </div>
-      <div class="panel-footer">
-          <p>{{gameTopper.playerName}} : {{gameTopper.score}}</p>
-      </div>
-    </div><!--end panel-->
+        </div>
+        <div class="panel-footer">
+            <p>{{gameTopper.playerName}} : {{gameTopper.score}}</p>
+        </div>
+      </div><!--end panel-->
+    </div>
   </div>
-  <div ng-if="$index>0" class="panel panel-default"  ng-repeat="player in gameBoard">
-    <div class="panel-heading">
-      <h3 class="panel-title">Rank : {{$index + 1}}</h3>
-    </div>
-    <div class="panel-body content">
+  <div class="row">
+    <div id="otherPlayers" ng-if="$index>0" class="col-md-3 col-sm-4 col-xs-6" ng-repeat="player in gameBoard">
+      <div class="panel panel-default " >
+        <div class="panel-heading">
+          <h3 class="panel-title">Rank : {{$index + 1}}</h3>
+        </div>
+        <div class="panel-body content">
 
-      <a><img src="{{player.playerPic}}"></a>
+          <a><img src="{{player.playerPic}}"></a>
 
+        </div>
+        <div class="panel-footer">
+            <p>{{player.playerName}} : {{player.score}}</p>
+        </div>
+      </div><!--end panel-->
     </div>
-    <div class="panel-footer">
-        <p>{{player.playerName}} : {{player.score}}</p>
-    </div>
-  </div><!--end panel-->
+  </div>
+
   <!--  show the nextLevel button only when the game played was from a tournament-->
   <div id="buttonsDiv">
     <div class="row">
