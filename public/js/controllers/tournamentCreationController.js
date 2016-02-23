@@ -27,8 +27,6 @@ angular.module('quizRT')
 
               $scope.topics = successResponse.data;
               $scope.initialTopic = $scope.topics[0].topicName;
-              console.log($scope.topics);
-              console.log('$$$$$$$$$$$$');
 
             },
             function(errorResponse){
@@ -40,10 +38,12 @@ angular.module('quizRT')
           );
 
      $scope.addLevels = function(levelIndex){
-      
       $scope.levelsArray.push("Level " + ($scope.levelsArray.length + 1));
-
      };
+
+     $scope.deleteLevels = function(levelIndex){
+      
+     }
 
      $scope.selectionChange = function(value , index){
        $scope.levelTopicArray[index] = value;
@@ -52,25 +52,32 @@ angular.module('quizRT')
      };
 
      $scope.createTournament = function(tournament){
-      
-      tournament.levelTopicArray = $scope.levelTopicArray;
+
+      var isValidTournament = validateTournament(tournament);
+
+      if(isValidTournament){
+        tournament.levelTopicArray = $scope.levelTopicArray;
         console.log($scope.tournament);
-      var fileData = new FormData();
+        var fileData = new FormData();
+        
+        fileData.append('data',JSON.stringify(tournament));
+        fileData.append('file',$scope.imageFile);
+
+        $http.post('tournamentHandler/createTournament', fileData , {headers: { 'Content-Type': undefined }})
+        .then(
+            function(successResponse){
+              var tournamentId = successResponse.data.tournamentId;
+              $location.path( "/tournament/" + tournamentId);
+              
+            },// end successCallback
+            function(errorResponse){
+
+            } //end errorCallback
+          );
+
+      }
       
-      fileData.append('data',JSON.stringify(tournament));
-      fileData.append('file',$scope.imageFile);
-
-      $http.post('tournamentHandler/createTournament', fileData , {headers: { 'Content-Type': undefined }})
-      .then(
-          function(successResponse){
-            var tournamentId = successResponse.data.tournamentId;
-            $location.path( "/tournament/" + tournamentId);
-            
-          },// end successCallback
-          function(errorResponse){
-
-          } //end errorCallback
-        );
+      
 
      }
 
@@ -82,6 +89,35 @@ angular.module('quizRT')
         $scope.user = {};
       };
 
+      validateTournament = function(tournament){
+
+        var isValidTournament = false;
+        
+
+        if(!tournament || !tournament.title ){
+          alert("Please provide title for the tournament.");
+          
+        }else if(!$scope.imageFile){
+           alert("Please choose image file for the tournament.");
+
+        }else if($scope.levelTopicArray.length == 0){
+           alert("Please select topic for each level");
+
+        }else if(!tournament.playersPerMatch || (tournament.playersPerMatch >1)) {
+           alert("Please provide players required for each match");
+
+        }else{
+          isValidTournament =  true;
+        }
+
+        return isValidTournament;
+
+
+
+      }
+
 
     }]);
+
+
 
