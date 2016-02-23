@@ -6,7 +6,7 @@ var expect = require('chai').expect,
 	Tournament = require("../models/tournament");
 
 
-  describe.only('Test Tournament Handler Router', function (err) {
+  describe('Test Tournament Handler Router', function (err) {
 
    it('Getting /quizPlayer/quizData/:id get function from "QUIZ PLAYER HANDLER" through App.js', function (done)
   	 {address

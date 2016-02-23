@@ -6,7 +6,7 @@ var expect=require("chai").expect,
      categories = require("../models/category");
      var modelStub = sinon.stub(categories, 'find');
 
-  describe.only("Topic Handler router", function(err){
+  describe("Topic Handler router", function(err){
 
        it('Getting /topicsHandler/categories get function from "Topics Handler"  through App.js', function(done){
         address
@@ -39,7 +39,7 @@ var expect=require("chai").expect,
          .end(function(err,res){
          expect(res.statusCode).to.be.equal(200);
           // expect(res.body[0].categoryName).to.be.equal("Big Hello");
-          
+
            done();
       });
     });

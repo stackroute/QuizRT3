@@ -90,7 +90,11 @@ angular.module('quizRT')
         $scope.play = function() {
           $location.path( "/categories" );
         }
-
+        $rootScope.socket.on( 'refreshUser', function( refreshData ) {
+          console.log('Refresh user recevied.');
+          $rootScope.loggedInUser = refreshData.user;
+        });
+        
         $http({method : 'GET',url:'/tournamentHandler/tournaments'})
         .success(function(data){
           $scope.tournaments = data;

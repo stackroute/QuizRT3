@@ -15,7 +15,7 @@
 //	Name of Developers Anil Sawant
 
 var uuid = require('node-uuid'), // used to generate unique game ids
-    questionBank = require('../questionBank'),
+    questionBank = require('./questionBank'),
     LeaderBoard = require('./Leaderboard.js');
 
 /**

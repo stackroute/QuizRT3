@@ -1,0 +1,19 @@
+Update:
+
+	db.profile_collection.update({},{$set:{tournaments:[]}},{multi:true});
+	db.tournaments.update({},{$set:{leaderBoard:[]}},{multi:true});
+	db.game_collection.remove({});
+	
+Remove a document from collection :
+SQL --> delete from table where userId = ###; 
+Mongo --> db.profile_collection.remove({userId:###});
+
+	
+Get / display selected properties only :
+SQL --> select col1,col2 from table where userId=###;
+Mongo --> db.profile_collection.find({userId:###},{col1:1,col2:1,_id=0});
+
+	
+OR
+SQL --> Select * from table where  id = 1 OR id = 2 OR id = 3;
+Mongo --> db.students.find({$or:[{id:1},{id:2},{id:3}]})
