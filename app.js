@@ -80,15 +80,15 @@ var initPassport = require('./passport-init');
 initPassport(passport);
 
 // middleware to check if user session exists, and check for isAuthenticated cookie
-app.use( function( req, res, next ) {
-  if( req.cookies.isAuthenticated || (req.session && req.session.user) ) {
-    next();
-  } else{
-    console.log('User is logged out. User session doesnot exist.');
-    res.writeHead(401);
-    res.end( JSON.stringify( { error: 'User session does not exist. Kindly do a fresh login.'} ));
-  }
-});
+//app.use( function( req, res, next ) {
+//   if( req.cookies.isAuthenticated || (req.session && req.session.user) ) {
+//     next();
+//   } else{
+//     console.log('User is logged out. User session doesnot exist.');
+//     res.writeHead(401);
+//     res.end( JSON.stringify( { error: 'User session does not exist. Kindly do a fresh login.'} ));
+//   }
+// });
 app.use('/userProfile', profileHandler);
 app.use('/topicsHandler', topicsHandler);
 app.use('/tournamentHandler', tournamentHandler);
