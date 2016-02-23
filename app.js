@@ -78,9 +78,7 @@ app.use('/', index);
 app.use('/auth',authenticationHandler);
 var initPassport = require('./passport-init');
 initPassport(passport);
-
-
-middleware to check if user session exists, and check for isAuthenticated cookie
+//middleware to check if user session exists, and check for isAuthenticated cookie
 app.use( function( req, res, next ) {
   if( req.cookies.isAuthenticated || (req.session && req.session.user) ) {
     next();
@@ -100,8 +98,7 @@ app.use( function( req, res, next ) {
 //     res.writeHead(401);
 //     res.end( JSON.stringify( { error: 'User session does not exist. Kindly do a fresh login.'} ));
 //   }
-// });
->>>>>>> 82b558b3ec4acda51b2e9514157cebc6b43241ae
+
 app.use('/userProfile', profileHandler);
 app.use('/topicsHandler', topicsHandler);
 app.use('/tournamentHandler', tournamentHandler);
