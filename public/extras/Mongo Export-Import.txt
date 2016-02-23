@@ -2,10 +2,11 @@ Step 1: Run mongod service ( >mongod)
 
 Export collections:
 	mongoexport --host 172.23.238.253 -d quizRT3 -c #collectionName -o #outputFileName.json
-	
+
 	mongoexport --host 172.23.238.253 -d quizRT3 -c Teams -o Teams.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c Users_Collection -o Users_Collection.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c badges -o badges.json
+	mongoexport --host 172.23.238.253 -d quizRT3 -c profile_collection -o profile_collection.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c category_collection -o category_collection.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c fixtures -o fixtures.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c game_collection -o game_collection.json
@@ -14,8 +15,8 @@ Export collections:
 	mongoexport --host 172.23.238.253 -d quizRT3 -c teams -o teams2.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c topics_collection -o topics_collection.json
 	mongoexport --host 172.23.238.253 -d quizRT3 -c tournaments -o tournaments.json
-	
-	
+
+
 Import collections
 	mongoimport --host 172.23.238.253 -d quizRT3 -c Teams  Teams.json
 	mongoimport --host 172.23.238.253 -d quizRT3 -c Users_Collection Users_Collection.json

@@ -35,7 +35,6 @@ var express = require('express'),
     profileHandler = require('./routes/profileHandler'),
     tournamentHandler = require('./routes/tournamentHandler'),
     index = require('./routes/index'),
-    quizPlayerHandler = require('./routes/quizPlayerHandler'),
     authenticationHandler = require('./routes/authenticationHandler')(passport),
     redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient}),
     Quiz = require("./models/quiz"),
@@ -102,7 +101,6 @@ app.use( function( req, res, next ) {
 app.use('/userProfile', profileHandler);
 app.use('/topicsHandler', topicsHandler);
 app.use('/tournamentHandler', tournamentHandler);
-app.use('/quizPlayer',quizPlayerHandler);
 
 
 server.listen(8080, function() {
