@@ -28,18 +28,24 @@ var mongoose = require('mongoose'),
       imageUrl:String,
       tournamentFollowers: {type:Number,default:0},
       rulesDescription : String,
+      totalGamesPlayed:{type:Number,default:0},
+      startDate : {type: Date},
+      endDate : {type: Date},
       leaderBoard: [{
         userId: { type: String, ref: 'Profile'},
         playerName:String,
         playerPic: String,
         totalScore: Number
       }],
-      totalGamesPlayed:{type:Number,default:0},
       topics: [{
           levelId:String,
           topicId:{type: String, ref: 'Topic'},
           games:[{type: String, ref: 'Game'}]
-       }]
+       }],
+       registration : {
+        startDate : {type: Date},
+        endDate   : {type: Date}
+      }
     }),
     Tournament = mongoose.model('Tournament', tournamentSchema);
 

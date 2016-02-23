@@ -20,7 +20,7 @@ var express = require('express'),
     formidable = require('formidable'),
     path = require('path'),
     fs = require('fs'),
-    slugify = require('slugify'),
+    slug = require('slug'),
     Tournament = require("../models/tournament");
 
 
@@ -74,7 +74,7 @@ router.route('/tournament/:tId')
 
 router.route('/createTournament')
     .post(function(req , res){
-        console.log("Inside Create tournament");
+        
        var form = new formidable.IncomingForm(),
         fields =[],
         tournament = null;
@@ -97,7 +97,7 @@ router.route('/createTournament')
         form.on('file',function(name,file) {
 
             var oldPath = file.path,
-                newFileName = slugify(tournament.title) + '_' + file.name,
+                newFileName = slug(tournament.title) + '_' + file.name,
                 imageUrl = 'images/tournamentIcons/' + newFileName;
 
             fs.rename(file.path , 'public/' + imageUrl , function(err){
@@ -108,22 +108,17 @@ router.route('/createTournament')
                 tournament.imageUrl = imageUrl;
 
                 saveTournament(req, res , tournament);
-
             });
-            
         });
-
-        
 
         form.parse(req);
 
     });
 
 function saveTournament(req, res ,tournament){
-    console.log('inside saveTournament');
 
     //check whether tournament exist with same _id
-    Tournament.findOne({_id: slugify(tournament.title)})
+    Tournament.findOne({_id: slug(tournament.title)})
         .exec(function(err , tournamentFromDB){
 
             if(err){
@@ -138,13 +133,11 @@ function saveTournament(req, res ,tournament){
                           
             }else{
                 // save tournament
-                console.log('inside validateTournament if');
-
                 var tournamentModel = new Tournament(),
                 topics = [];
 
                 // set tournament details to tournament model
-                var tournamentId = slugify(tournament.title);
+                var tournamentId = slug(tournament.title);
                 tournamentModel._id = tournamentId;
                 tournamentModel.title = tournament.title;
                 tournamentModel.description = tournament.description;
@@ -152,6 +145,10 @@ function saveTournament(req, res ,tournament){
                 tournamentModel.playersPerMatch = tournament.playersPerMatch;
                 tournamentModel.imageUrl = tournament.imageUrl;
                 tournamentModel.rulesDescription = tournament.rulesDescription;
+                tournamentModel.registration.startDate = tournament.registrationStartDate;
+                tournamentModel.registration.endDate = tournament.registrationEndDate;
+                tournamentModel.startDate = tournament.startDate;
+                tournamentModel.endDate = tournament.endDate;
 
                 var levelsTopicArray = tournament.levelTopicArray;
                     len = levelsTopicArray.length;
@@ -159,14 +156,14 @@ function saveTournament(req, res ,tournament){
                 for(var cnt=0; cnt< len ; cnt++){
                     var topic = {};
                     topic['levelId'] = tournamentId + '_' + (cnt+1);
-                    topic['topicId'] = slugify(levelsTopicArray[cnt]);
+                    topic['topicId'] = slug(levelsTopicArray[cnt]);
 
                     topics.push(topic);
                 }
 
                 tournamentModel.topics = topics;
 
-                console.log(tournamentModel);
+                console.log("Tournament Model to be saved.",tournamentModel);
 
                 tournamentModel.save(function(err, tournament){
                     if(err){
@@ -175,7 +172,7 @@ function saveTournament(req, res ,tournament){
                         res.end(JSON.stringify({ error:'Could not save tournament details: ' + tournament.title}) );
                     
                     }
-                    console.log('sending tournamentId');
+                     console.log("tournamentId created :",tournament._id);
                     res.json({ error: null, tournamentId:tournament._id });
 
                 });
@@ -190,7 +187,7 @@ function saveTournament(req, res ,tournament){
 //     var isValid = false;
 
 //     //check whether tournament exist with same _id
-//     Tournament.findOne({_id: slugify(tournament.title)})
+//     Tournament.findOne({_id: slug(tournament.title)})
 //         .exec(function(err , tournament){
 
 //             if(err){
