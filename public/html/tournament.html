@@ -18,7 +18,10 @@
 
 <div class="container">
       <div class="rounds-header">
-        <h3>{{tournament.title}}<br><small>{{tournament.description}}</small></h3>
+        <h3>{{tournament.title}}</h3>
+        <p>
+          {{tournament.description}}
+        </p>
       </div><!--end topic-header-->
 <div class="row">
 
@@ -34,7 +37,7 @@
           </div>
         </div><!--end topic-icon-->
         <div class="col-xs-6 topic-user">
-          <div class="wins row">
+          <div class="row">
             <div class="col-xs-8">
               <h4>#Players/Match</h4>
             </div>
@@ -59,12 +62,15 @@
             </div>
           </div> <!--end losses-->
           <div class="losses row">
-           <div class="col-xs-6 col-sm-6 col-lg-6">
-              <button class="btn btn-info">Level Cleared: <span id="levelnum">{{levelCleared}}</span></button>
+           <div class="col-xs-8">
+              <span class="info" id="info"><h4>#You are on level</h4></span>
+          </div>
+          <div class="col-xs-4">
+            <h4>{{levelCleared}}</h4>
           </div>
 
           <!-- Leaderboard for the tournament -->
-          <div class="col-xs-6 col-sm-6 col-lg-6">
+          <div class="col-xs-5 col-sm-5 col-lg-5 pull-right">
             <button href="#leaderBoard" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
           </div>
           <div class="modal fade" id="leaderBoard" tabindex="-1" role="dialog">
@@ -129,6 +135,8 @@
         </div> <!--end topic-user-->
 
     </div>
+    <div class="row"><div class="heading col-xs-12"><h3>-Rules-</h3><br><h6>{{tournament.rulesDescription}}</h6></div></div>
+
     <hr>
   <div class="heading col-xs-12 col-sm-12 col-lg-12">
     <h3 class="statement pull-left">Rounds</h3>
