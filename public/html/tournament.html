@@ -68,7 +68,24 @@
           <div class="col-xs-4">
             <h4>{{levelCleared}}</h4>
           </div>
-
+        </div>
+        <div class="losses row">
+         <div class="col-xs-8">
+            <span class="info" id="info"><h4>Start Date</h4></span>
+        </div>
+        <div class="col-xs-4">
+          <h4>{{tournament.startDate | date : 'mediumDate'  }}</h4>
+        </div>
+      </div>
+      <div class="losses row">
+       <div class="col-xs-8">
+          <span class="info" id="info"><h4>End Date</h4></span>
+      </div>
+      <div class="col-xs-4">
+        <h4>{{tournament.endDate | date : 'mediumDate'  }}</h4>
+      </div>
+    </div>
+          <div class="losses row">
           <!-- Leaderboard for the tournament -->
           <div class="col-xs-5 col-sm-5 col-lg-5 pull-right">
             <button href="#leaderBoard" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
@@ -142,20 +159,20 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
        <div class="dates col-xs-12" id="dates">
-        <div class="col-xs-6">
+         <div class="col-xs-6">
         <h4>Registration</h4>
-        <p>Start Date: {{tournament.registration.startDate | date : 'dd-MM-yyyy' }}</p>
-        <p>End Date: {{tournament.registration.endDate | date : 'dd-MM-yyyy'  }}
+        <p>Start: {{tournament.registration.startDate | date : 'mediumDate' }}</p>
+        <p>End: {{tournament.registration.endDate | date : 'mediumDate'  }}</p>
        </div>
         <div class="col-xs-6">
         <h4>Tournament</h4>
-        <p>Start Date: {{tournament.startDate | date : 'dd-MM-yyyy' }}</p>
-        <p>End Date: {{tournament.endDate | date : 'dd-MM-yyyy'  }}
+        <p>Start: {{tournament.startDate | date : 'mediumDate' }}</p>
+        <p>End: {{tournament.endDate | date : 'mediumDate'  }}</p>
        </div>
       </div>
-    </div>
+    </div> -->
 
 
     <hr>
@@ -176,7 +193,7 @@
       <div class="play-now pull-right" id="foot">
         <div class="col-xs-12 play-button-bar">
           <button class="levelScoreBtn btn btn-warning" ng-show="$index < levelCleared">{{playedTournament.levelPoints[$index]}}</button>
-          <button ng-show="showPlayButton($index , levelCleared)" class="play-now-button btn btn-success" ng-click="play(stages.levelId, stages.topicId._id, tournament.title, stages.topicId.topicName)">Play Now!</button>
+          <button ng-show="showPlayButton($index)" class="play-now-button btn btn-success" ng-click="play(stages.levelId, stages.topicId._id, tournament.title, stages.topicId.topicName)">Play Now!</button>
         </div>
       </div>
     </div>
