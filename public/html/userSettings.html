@@ -24,7 +24,7 @@
 		<div id="addProfilePic" class="row">
 			<div class="col-md-3 col-xs-4">
 				<div id="profilePic">
-					<img ng-show="tempLoggedInUser.imageLink" src="{{tempLoggedInUser.imageLink}}" alt="" />
+					<img ng-show="tempLoggedInUser.imageLink" src="{{tempLoggedInUser.imageLink}}" ng-src="{{tempLoggedInUser.imageLink}}" alt="" />
 					<span ng-hide="tempLoggedInUser.imageLink" ng-click="removeIcon()">add photo</span>
 				</div>
 				<input type="file" class="hide" id="inputFile">

@@ -182,6 +182,11 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           'controller': 'quizPlayerController',
           'reload':true
         })
+        .when('/tournamentArena',{
+          'templateUrl': 'html/tournamentArena.html',
+          'controller': 'tournamentPlayController',
+          'reload':true
+        })
         .when('/quizResult/:gameId',{
           'templateUrl': 'html/result.html',
           'controller': 'resultController'

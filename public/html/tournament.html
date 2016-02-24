@@ -193,7 +193,7 @@
       <div class="play-now pull-right" id="foot">
         <div class="col-xs-12 play-button-bar">
           <button class="levelScoreBtn btn btn-warning" ng-show="$index < levelCleared">{{playedTournament.levelPoints[$index]}}</button>
-          <button ng-show="showPlayButton($index)" class="play-now-button btn btn-success" ng-click="play(stages.levelId, stages.topicId._id, tournament.title, stages.topicId.topicName)">Play Now!</button>
+          <button ng-show="showPlayButton($index)" class="play-now-button btn btn-success" ng-click="playTournament(stages.levelId, stages.topicId._id, tournament.title, stages.topicId.topicName)">Play Now!</button>
         </div>
       </div>
     </div>

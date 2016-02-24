@@ -131,7 +131,7 @@ angular.module('quizRT')
                         $scope.options = $scope.temp.options;
 
                         if ($scope.temp.image != "null")
-                            $scope.questionImage = temp.image;
+                            $scope.questionImage = $scope.temp.image;
 
                         else {
                             $scope.questionImage = null;

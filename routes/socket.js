@@ -17,6 +17,7 @@
 
 // var GameManager = require('./gameManager/GameManager.js'),
 var GameManager = require('./gameManager/AlphaGameManager.js'),
+    TournamentManager = require('./tournamentManager/TournamentManager2.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     Game = require("./../models/game"),
     Profile = require("./../models/profile"),
@@ -110,59 +111,19 @@ module.exports = function(server,sessionMiddleware) {
         });
 
         client.on( 'gameFinished', function( game ) {
-          console.log(client.request.session.user + ' finished game: ' + game.gameId );
-          var gameBoard = GameManager.getLeaderBoard( game.gameId );
-          if ( gameBoard ) {
-            var gameResultObj = {
-              gameId: game.gameId,
-              topicId: game.topicId,
-              levelId: game.levelId,
-              gameBoard: gameBoard
-            }
-            client.emit('takeResult', { error: null, gameResult: gameResultObj } );
-            // store the finished game into MongoDB
-            storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
-              setTimeout( function() {
-                GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
-                console.log('Result saved and Game popped: ' + game.gameId);
-              }, 100);
-            });
-
-          } else {
-            console.log('LeaderBoard for ' + gameId + ' does not exist. Check in GameManager.js.');
-            client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
-          }
+          GameManager.finishGame( game );
         });
 
         client.on('updateProfile',function(clientData){
-          var levelId = clientData.levelId,
-          tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
-          // above logic entirely depends on levelId having underscore('_')
-
-          if ( tournamentId ) { // update coming from a tournament
-            Profile.findOne({userId:clientData.userId},function(err,profileData){
-              addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
-            });
-          } else {
-            // update solo topic play
-            Profile.findOne({userId:clientData.userId},function(err,profileData){
-              profileData.totalGames++;
-              if(clientData.rank == 1){
-                profileData.wins++;
-              }
-              profileData.topicsPlayed.forEach(function(topic){
-                if(topic.topicId == clientData.topicid){
-                  topic.gamesPlayed++;
-                  if(clientData.rank == 1){
-                    topic.gamesWon++;
-                  }
-                  topic.points+=clientData.score;
-                  topic.level = findLevel(topic.points);
-                }
-              });
-              validateAndSaveProfile( profileData, client );
-            });// end Profile.findOne()
-          }
+          var updateProfileObj = {
+            score: clientData.score,
+            rank: clientData.rank,
+            topicid: clientData.topicId, // change this with $scope.topicId
+            userId: clientData.userId,
+            levelId: clientData.levelId
+          };
+          console.log('updateProfileObj',updateProfileObj);
+          updateProfile( client, clientData);
         });
 
         client.on('leaveGame', function( gameId ){
@@ -176,25 +137,19 @@ module.exports = function(server,sessionMiddleware) {
           .of('/tournament')
           .on('connection', function(client) {
             if ( client.request.session && client.request.session.user ) {
-              console.log( client.request.session.user + ' connected to QuizRT server. Socket Id: ' + client.id);
+              console.log( client.request.session.user + ' connected to QuizRT server. Tournament Socket Id: ' + client.id);
             }
 
             client.on('disconnect', function() {
               if ( client.request.session && client.request.session.user ) {
                 GameManager.popPlayer( client.request.session.user ); // pop the user from all the games
-                console.log( client.request.session.user + ' disconnected from QuizRT server. Socket Id: ' + client.id);
+                console.log( client.request.session.user + ' disconnected from QuizRT server. Tournament Socket Id: ' + client.id);
               }
             });
-            client.on('logout', function( userData, done) {
-              console.log( client.request.session.user + ' logged out.');
-              done( GameManager.popPlayer( client.request.session.user ) );
-              client.request.session.user = null;
-          		client.request.logout();
-            });
 
-            client.on('join',function( playerData ) {
-              console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId );
-              // check if the user is authenticated and his session exists, if so add him to the game
+            client.on('joinTournament',function( playerData ) {
+              console.log( playerData.userId + ' joined. Wants to play ' + playerData.topicId + ' of tournament ' + playerData.levelId  );
+
               if ( client.request.session && (playerData.userId == client.request.session.user) ) {//req.session.user
                 var gamePlayer = {
                   userId: playerData.userId,
@@ -204,16 +159,18 @@ module.exports = function(server,sessionMiddleware) {
                 };
 
                 maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
-                var addedSuccessfully = GameManager.managePlayer( playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
+                console.log('\nTournamentManager');
+                console.log(TournamentManager);
+                var addedSuccessfully = TournamentManager.managePlayer( playerData.tournamentId, playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
                 if ( addedSuccessfully === false ) {
-                  console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
-                  client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
+                  console.log('User is already playing the game ' + playerData.topicId + ' of ' + playerData.levelId + '. Cannot add him again.');
+                  client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId, levelId: playerData.levelId });
                 }
               } else {
                 console.log('User session does not exist for: ' + playerData.userId + '. Or the user client was knocked out.');
                 client.emit( 'userNotAuthenticated' ); //this may not be of much use
               }
-            }); // end client-on-join
+            }); // end client-on-joinTournament
 
 
             client.on('confirmAnswer',function(data){
@@ -274,223 +231,19 @@ module.exports = function(server,sessionMiddleware) {
             });
 
             client.on('updateProfile',function(clientData){
-              var levelId = clientData.levelId,
-              tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
-              // above logic entirely depends on levelId having underscore('_')
-
-              if ( tournamentId ) { // update coming from a tournament
-                Profile.findOne({userId:clientData.userId},function(err,profileData){
-                  addTournamentToProfile( client, profileData, levelId, tournamentId, clientData );
-                });
-              } else {
-                // update solo topic play
-                Profile.findOne({userId:clientData.userId},function(err,profileData){
-                  profileData.totalGames++;
-                  if(clientData.rank == 1){
-                    profileData.wins++;
-                  }
-                  profileData.topicsPlayed.forEach(function(topic){
-                    if(topic.topicId == clientData.topicid){
-                      topic.gamesPlayed++;
-                      if(clientData.rank == 1){
-                        topic.gamesWon++;
-                      }
-                      topic.points+=clientData.score;
-                      topic.level = findLevel(topic.points);
-                    }
-                  });
-                  validateAndSaveProfile( profileData, client );
-                });// end Profile.findOne()
-              }
+              var updateProfileObj = {
+    						score: clientData.score,
+    						rank: clientData.rank,
+    						topicid: clientData.topicId, // change this with $scope.topicId
+    						userId: clientData.userId,
+    						levelId: clientData.levelId
+    					};
+              console.log('updateProfileObj',updateProfileObj);
+              updateProfile( client, clientData);
             });
 
             client.on('leaveGame', function( gameId ){
               GameManager.leaveGame( gameId, client.request.session.user );
             }); // end client-on-leaveGame
           });// end tournament socket
-
-
 }
-
-// store the game result in MongoDB
-function storeResult( gameId, levelId, topicId, gameBoard, done ) {
-  Game.findOne( {gameId: gameId}, function(err, game) {
-    if (err) {
-      console.log('Mongo error while finding a game.');
-      console.error(err);
-    } else {
-      if ( game ) {
-        // game has already been saved. Don't save it again
-        console.log('Game already saved: ' + gameId);
-      } else {
-        var playerList = [];
-        gameBoard.sort( function(a,b) { // sort the leaderBoard in asc order of score
-                    return b.score-a.score;
-                  });
-        gameBoard.forEach( function( player, index ) {
-          var tempPlayer = { // this looks redundant. No need to save the rank. Sort by score instead
-            'userId': player.userId,
-            'playerName' : player.playerName,
-            'playerPic': player.playerPic,
-            'totalScore': new Number(player.score)
-          }
-          playerList.push( tempPlayer );
-        });
-
-        // Save the finished game to MongoDB
-        var newGame = new Game({
-          gameId: gameId,
-          players: playerList
-        });
-
-        newGame.save(function (err, data) {
-          if ( err ) {
-            if (err.name === 'MongoError' && err.code === 11000) {
-              console.log('Finished game already saved to Mongo.');
-            } else {
-              console.error(err);
-            }
-          } else {
-            console.log('Game saved to MongoDB : ' + newGame.gameId );
-            if( levelId ) {
-              var tournamentId = levelId.substr(0,levelId.lastIndexOf("_"));
-              updateTournamentAfterEveryGame( tournamentId, levelId, data._id, playerList, done );
-            } else {
-              done(); // done after saving if the game is not from a tournament
-            }
-          }
-        });
-      }
-    }
-  });
-};
-
-// add played tournament to user profile
-function addTournamentToProfile( client, profileData, levelId, tournamentId ,clientData ) {
-  var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
-      len = profileData.tournaments ? profileData.tournaments.length : 0,
-      tournamentFound = false;
-
-  for (var i = 0; i < len; i++) {
-    if ( profileData.tournaments[i].tournamentId == tournamentId ) {
-      tournamentFound = true;
-      console.log( tournamentId + ' tournament updated in user profile');
-      if ( profileData.tournaments[i].status == 'COMPLETED' ) {
-        console.log('ERROR: User has already COMPLETED the ' + tournamentId + ' tournament.');
-      } else {
-        if ( profileData.tournaments[i].levelCleared === levelCleared ) {
-          console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
-        } else {
-          profileData.tournaments[i].levelCleared = levelCleared;
-          profileData.tournaments[i].levelPoints[levelCleared-1] = clientData.score ;
-          profileData.tournaments[i].currentRank = clientData.rank;
-          if ( levelCleared == profileData.tournaments[i].finalLevel ) {
-            profileData.tournaments[i].status = 'COMPLETED';
-          }
-          validateAndSaveProfile( profileData, client );
-        }
-      }
-      break;// break if a Tournament was found
-    }
-  }// end for
-
-  if( !tournamentFound ) {
-    console.log('New tournament insert in user profile');
-    Tournament.findOne({_id: tournamentId }, function(err, tournament ) {
-      if ( err ) {
-        console.log('Cannot find the tournament : ' + tournamentId);
-        console.error(err);
-      }else {
-        var newTournamentObj = {
-          "tournamentId": tournamentId,
-          "status": 'PLAYING',
-          "levelCleared": levelCleared,
-          "levelPoints":[clientData.score],
-          "currentRank":clientData.rank,
-          "finalLevel": tournament.matches
-        };
-        // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
-        profileData.tournaments.push( newTournamentObj );
-        validateAndSaveProfile( profileData, client );
-      }
-    }); //end Tournament.findOne()
-  }// end if tournament not Found
-}
-
-// persist user profile to MongoDB
-function validateAndSaveProfile( profileData, client ) {
-  var validationError = profileData.validateSync();
-  if ( validationError ) {
-    console.log('Mongoose validaton error of user profile.');
-    return console.error(validationError);
-  } else {
-    profileData.save( function(err, updatedUserProfile ) {
-      if ( err ) {
-        console.log('Could not save the updated user profile to MongoDB!');
-        console.error(err);
-      }else {
-        console.log("User profile persisted sucessfully!!\n");
-        // use the refreshUser event on client side (in userProfileController) to refresh the user stats after every game
-        client.emit('refreshUser', { error: null, user: updatedUserProfile } );// not used so far
-      }
-    }); //end save
-  }
-}
-
-
-//Updateing tournament after each game played
-function updateTournamentAfterEveryGame( tournamentId, levelId, gameID, playerList, done ) {
-  console.log('\nUpdate tournament called');
-  Tournament.findOne({ _id: tournamentId }, function( err, tournamentData ) {
-    if(err) {
-      console.log('Tournament ' + tournamentId + ' could not be read from MongoDB.');
-      console.log(err);
-    } else {
-      tournamentData.totalGamesPlayed++;
-      tournamentData.topics.some( function(topic) {
-        if(topic._Id == levelId) {
-          topic.games.push( gameID );
-          return true;
-        }
-      });
-      playerList.forEach( function( player ) {
-        var isPlayerOnBoard = tournamentData.leaderBoard.some( function( boardPlayer ) {
-
-          if ( player.userId == boardPlayer.userId ) {
-            console.log('\nPlayer on LeaderBoard. updating score');
-            boardPlayer.totalScore += new Number(player.score);
-            return true;
-          }
-        });
-        // put the player on leaderBoard
-        if ( !isPlayerOnBoard ) {
-          console.log('\nPushing new player to leaderboard');
-          tournamentData.leaderBoard.push( player );
-        }
-      }); // end playerList.forEach
-
-      // save the updated tournamentData to MongoDB
-      tournamentData.save( function(err, savedTournament ) {
-        if ( err ) {
-          console.log('Tournament could not be saved to MongoDB.');
-          console.error(err);
-        } else {
-          console.log('Tournament saved to MongoDB : ' + tournamentId);
-          done(); // done after saving the game in tournament, updating it, and refreshing the leaderBoard
-        }
-      });
-    }
-  }); // end tournament.findOne
-}
-
-var levelScore = function(n) {
-  return ((35 * (n * n)) +(95*n)-130);
-};
-
-var findLevel = function(points) {
-  var i=1;
-  while(points>=levelScore(i)) {
-    i++;
-  }
-  return i-1;
-};

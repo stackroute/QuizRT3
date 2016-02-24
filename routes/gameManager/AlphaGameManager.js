@@ -16,7 +16,8 @@
 
 var uuid = require('node-uuid'), // used to generate unique game ids
     questionBank = require('./questionBank'),
-    LeaderBoard = require('./Leaderboard.js');
+    LeaderBoard = require('./Leaderboard.js'),
+    MongoDB = require('./mongoOperations.js');
 
 /**
 ** @param no constructor params
@@ -38,7 +39,8 @@ var GameManager = function() {
       topicId: topicId,
       playersNeeded: playersNeeded,
       leaderBoard: [],
-      players: []
+      players: [],
+      playersFinished: 0
     }
     var gameId = uuid.v1(); // generate a unique gameId
     this.games.set( gameId, newGame );// set the game into this.games against the new gameId
@@ -146,6 +148,20 @@ var GameManager = function() {
 
   /**
   ** @param gameId as String
+  ** @desc emits 'playerLeft' event for every player in a game with gameId = gameId
+  */
+  this.emitPlayerLeft = function( gameId, leavingPlayer ) {
+    var game = this.games.get( gameId );
+    if ( game.players ) {
+      game.players.forEach( function(player) {
+        console.log('Emitting player left = '+ leavingPlayer.playerName + ' for ' + player.userId);
+        player.client.emit('playerLeft', { gameId: gameId, playerName: leavingPlayer.playerName } );
+      });
+    }
+  };
+
+  /**
+  ** @param gameId as String
   ** @return true if everything is setup before starting a Game and 'startGame' events are emitted
   */
   this.startGame = function( gameId ) {
@@ -189,6 +205,73 @@ var GameManager = function() {
       }); // create the leaderBoard for the game before starting
     });// end getQuizQuestions
   };
+
+  /**
+  ** @param gameId as String
+  ** @return true if game finished properly, all user profiles updated
+  */
+  this.finishGame = function( gameData ) {
+    var game = this.games.get( gameData.gameId ),
+        self = this,
+        gameBoard = this.getLeaderBoard( gameData.gameId );
+
+    game.playersFinished++;
+    if ( game.playersFinished == 1 ) { // start the timer when first player finishes the game
+      game.timer = setTimeout( function() {
+        console.log('\nSaving after 3s...');
+        self.storeResult( gameData, gameBoard, game );
+      }, 3000);
+    }
+    if ( game.playersFinished == game.players.length ) {
+      console.log('\nSaving after all players finished..');
+      clearTimeout( game.timer );
+      this.storeResult( gameData, gameBoard, game );
+    }
+  };
+
+  /**
+  ** @param topicId as String
+  ** @return Array of players playing topicId
+  */
+  this.storeResult = function( gameData, gameBoard, game ) {
+    var noOfCallbacksFinished = 0;
+
+    MongoDB.saveGameToMongo( gameData, gameBoard, function() {
+      noOfCallbacksFinished++;
+      if ( noOfCallbacksFinished == game.players.length+1 ) {
+        //popGame
+        console.log('Popping game');
+
+      }
+    });
+    game.players.forEach( function( player ) {
+      gameBoard.some( function( boardPlayer, index ) {
+        if ( player.userId == boardPlayer.userId ) {
+          var updateProfileObj = {
+           score: boardPlayer.score,
+           rank: index+1,
+           topicid: game.topicId, // change this with $scope.topicId
+           userId: boardPlayer.userId,
+           levelId: game.levelId
+         };
+          MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
+            if ( updatedData.error ) {
+              console.log('Failed to update user profile.');
+            }else {
+              player.client.emit('refreshUser', { error: null, user: updatedData.updatedUserProfile } );// not used so far
+            }
+            noOfCallbacksFinished++;
+            if ( noOfCallbacksFinished == game.players.length+1 ) {
+              //popGame
+              console.log('Popping game');
+            }
+          });
+          return true;
+        }
+      });
+    });
+
+  }
 
   /**
   ** @param topicId as String
@@ -290,7 +373,11 @@ var GameManager = function() {
             if ( savedGamePlayer.userId == userId ) {
               savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions in GameManager will be popped.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
-              self.emitPendingPlayers( gameId );
+              if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players
+                self.emitPendingPlayers( gameId );
+              } else {
+                self.emitPlayerLeft( gameId, savedGamePlayer );
+              }
               removedFromGamesCount++ ;
               return true;
             }

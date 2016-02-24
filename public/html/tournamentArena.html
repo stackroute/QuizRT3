@@ -1,0 +1,65 @@
+<!--
+//Copyright {2016} {NIIT Limited, Wipro Limited}
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+//   Name of Developers   Anil Sawant
+ -->
+
+
+<div  class="container"  id="main">
+
+  <div class="navbar">
+    <div id="quizTitle">
+      <h2>{{quizTitle}}</h2>
+      <p>{{levelDetails}}<p>
+    </div>
+  </div><!--end navigation bar -->
+  <div class="row">
+    <div class="col-xs-5 pull-left myStatus">
+      <h4 class="pull-left">
+        <strong>#1</strong>
+      </h4>
+      <img src="{{topperImage}}" alt="" class="img-circle pull-left"/>
+      <h5 class="score pull-left" id="top-score">{{topperScore}}</h5>
+    </div>
+    <div   id="timer" class="col-xs-2 myStatus">{{time}}
+    </div>
+    <div class="pull-right col-xs-5 myStatus">
+      <h5 class="score pull-right" id="myScore">{{myscore}}</h5>
+      <img src="{{myImage}}" alt="" class="img-circle pull-right"/>
+      <h4 class="pull-right" id="myRank"><strong>{{myrank}}</strong></h4>
+    </div>
+  </div>
+  <div class="row" id="statusInfo">
+    <h5 class="col-xs-12 center-align">
+      <button class="btn btn-success"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ok"></span> : {{correctAnswerers}}</button>
+      <button class="btn btn-danger"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-remove"></span> : {{wrongAnswerers}}</button>
+      <button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ban-circle"></span> : {{unattempted}}</button>
+    </h5>
+  </div><!-- End status Info-->
+
+  <div class="row" id="questionInfo">
+    <div class="col-xs-12 col-sm-12" id="questionInfoPanel">
+      <h4><strong>{{question}}</strong></h4>
+      <img class="img-responsive questionImage"  src="{{questionImage}}" alt="">
+    </div>
+  </div><!-- end question info -->
+
+  <div  class="row myRow">
+    <div ng-repeat="option in options" class="col-sm-6 col-xs-6 myOptions">
+      <button ng-disabled="isDisabled" ng-click = "changeColor(option.id,$event)" id="{{option.id}}" class="btn btn-1 btn-large btn-default btn-block">{{option.name}}</button>
+    </div>
+  </div>
+
+</div><!-- end container -->

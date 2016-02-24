@@ -16,7 +16,8 @@ router.post('/profilePic', function(req,res,next) {
           Profile.findOneAndUpdate( {'userId': userId}, {imageLink:tempUrl}, {upsert:false}, function(err, doc){
             if (err)
               return res.send(500, { error: 'MONGOERROR' });
-            res.send( JSON.stringify( {error:null, tempUrl: doc.imageLink}) );
+              res.send( JSON.stringify( {error:null, tempUrl: tempUrl}) );
+            // res.send( JSON.stringify( {error:null, tempUrl: doc.imageLink}) );
           });
         }
       };
