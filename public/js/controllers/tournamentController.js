@@ -41,8 +41,8 @@
                  successResponse.data.tournament.leaderBoard.sort( function(a,b) {
                    return b.totalScore - a.totalScore;
                  });
-                 console.log('LeaderBoard = ');
-                 console.log(successResponse.data.tournament.leaderBoard);
+                // console.log('LeaderBoard = ');
+              //   console.log(successResponse.data.tournament.leaderBoard);
                  successResponse.data.tournament.leaderBoard.some( function(player,index) {
                    if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
                      $scope.userTournamentStats = player;
@@ -61,7 +61,7 @@
                    }
                  });
               }, function( errorResponse ) {
-                   console.log('Failed to refresh the leader board. Showing old data.');
+                  // console.log('Failed to refresh the leader board. Showing old data.');
               });
           }
           $scope.refreshTournament( $scope.tournamentId );// call for the first time
@@ -81,17 +81,17 @@
 
           };
 
-          $scope.showPlayButton = function(index , levelCleared){
-
-            var showPlayButton = false;
-
-            if(index == levelCleared && ($scope.tournament.startDate <= new Date())){
-              showPlayButton = true;
-
-            }
-
-          return showPlayButton;
-
-          }
-        }
-   });
+          $scope.showPlayButton = function(index){
+             var currentDate = new Date();
+             currentDate.setHours(0,0,0,0);
+             var tournamentStartDate = new Date($scope.tournament.startDate);
+             var tournamentEndDate = new Date($scope.tournament.endDate);
+             var showPlayButton = false;
+          if(index == $scope.levelCleared && (tournamentStartDate.getTime() <= currentDate.getTime()) && (currentDate.getTime() <= tournamentEndDate.getTime()))
+           {
+           showPlayButton = true;
+           }
+           return showPlayButton;
+         }
+       }
+    });
