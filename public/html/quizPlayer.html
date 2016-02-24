@@ -42,6 +42,10 @@
       <h4 class="pull-right" id="myRank"><strong>{{myrank}}</strong></h4>
     </div>
   </div>
+  <div ng-show="playerLeft" class="alert alert-warning" role="alert" style="margin-top:10px;padding: 7px;text-align:center;">
+    <!-- <button type="button" class="close" ng-click="dismissMsg()" aria-label="Close" style="margin-top: -3px;right:0;"><span aria-hidden="true">&times;</span></button> -->
+    {{playerLeft}}
+  </div>
   <div class="row" id="statusInfo">
     <h5 class="col-xs-12 center-align">
       <button class="btn btn-success"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ok"></span> : {{correctAnswerers}}</button>

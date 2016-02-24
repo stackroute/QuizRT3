@@ -76,6 +76,7 @@ angular.module('quizRT')
         $rootScope.socket.on('startGame', function( startGameData ) {
           if ( startGameData.questions && startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
+            $scope.playersCount = startGameData.playersNeeded;
             $scope.questionCounter = 0; // reset the questionCounter for each game
             $scope.question = "Starting Game ...";
             $scope.time = 3;
@@ -88,7 +89,7 @@ angular.module('quizRT')
                     $scope.isDisabled = false;
                     $scope.wrongAnswerers = 0;
                     $scope.correctAnswerers = 0;
-                    $scope.unattempted = startGameData.playersNeeded;
+                    $scope.unattempted = $scope.playersCount;
                     if ( $scope.questionCounter == startGameData.questions.length ) {
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
@@ -162,6 +163,17 @@ angular.module('quizRT')
         });
         $rootScope.socket.on('pendingPlayers', function(data) {
             $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
+        });
+        $rootScope.socket.on('playerLeft', function(data) {
+            $scope.playersCount = data.remainingCount;
+            $scope.playerLeft = data.playerName + " left the game.";
+        });
+        $scope.$watch( 'playerLeft', function(nv,ov) {
+          if ( nv ) {
+            setTimeout( function() {
+              $scope.playerLeft = '';
+            },1000);
+          }
         });
         $rootScope.socket.on( 'takeResult', function( resultData ) {
             $rootScope.recentGames[resultData.gameResult.gameId] = {

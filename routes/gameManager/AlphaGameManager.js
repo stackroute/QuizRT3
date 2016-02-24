@@ -155,7 +155,7 @@ var GameManager = function() {
     if ( game.players ) {
       game.players.forEach( function(player) {
         console.log('Emitting player left = '+ leavingPlayer.playerName + ' for ' + player.userId);
-        player.client.emit('playerLeft', { gameId: gameId, playerName: leavingPlayer.playerName } );
+        player.client.emit('playerLeft', { gameId: gameId, playerName: leavingPlayer.playerName, remainingCount:game.players.length } );
       });
     }
   };
