@@ -6,7 +6,7 @@ var expect=require("chai").expect,
      categories = require("../models/category"),
      topic = require("../models/topic");
 
-<<<<<<< HEAD
+
     var mockFindOne = {
       exec : function (callback) {
          callback(null, [{
@@ -46,17 +46,17 @@ var expect=require("chai").expect,
    var modelStub = sinon.stub(categories, 'findById');
    var modelStub1=sinon.stub(topic, 'find');
 
-=======
->>>>>>> d9355e81115f5a69e0fd40f72943c1cad65f7c84
+
   describe("Topic Handler router", function(err){
 
        it('Getting /topicsHandler/categories get function from "Topics Handler"  through App.js', function(done){
         address
         .get('/topicsHandler/categories')
         .end(function(err,res) {
-    		 //expect(res.statusCode).to.be.equal(200);
-    		 done();
+    		expect(res.statusCode).to.be.equal(200);
+
     		});
+        done();
         });
 
        describe('Find a item given the argument', function(){
@@ -73,10 +73,7 @@ var expect=require("chai").expect,
          expect(res.statusCode).to.be.equal(200);
          //console.log(res);
           // expect(res.body[0].categoryName).to.be.equal("Big Hello");
-<<<<<<< HEAD
 
-=======
->>>>>>> 3638092e659a1b98aaedd5b733f48790717fa01a
            done();
       });
     });
