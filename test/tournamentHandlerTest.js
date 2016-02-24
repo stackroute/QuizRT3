@@ -6,18 +6,15 @@ var expect = require('chai').expect,
 	Tournament = require("../models/tournament");
 
 
-describe.only('Test Tournament Handler Router', function (err) {
-
-<<<<<<< HEAD
-	it('Respond with 401 : Unauthorized', function (done) {
-
- it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER" through App.js', function (done)
+describe('Test Tournament Handler Router', function () {
+it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER" through App.js', function (done)
 	{address
 		.get('/tournamentHandler/tournaments')
 		.end(function(err,res) {
 		expect(res.statusCode).to.be.equal(200);
-		done();
+     done();
 		});
+
    });
 
 
@@ -29,28 +26,21 @@ describe.only('Test Tournament Handler Router', function (err) {
 		.end(function(err,res) {
 			expect(res.statusCode).to.be.equal(204);
 			expect('Content-Type', /json/);
-			done();
-		});
+     done();
+   });
 
 	});
 
 
-});
-
-
-
-
-describe('Test Tournament Handler Router', function (err) {
-
-=======
->>>>>>> d9355e81115f5a69e0fd40f72943c1cad65f7c84
  it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER" through App.js', function (done)
 	 {address
 		.get('/tournamentHandler/tournaments')
 		.end(function(err,res) {
 		 expect(res.statusCode).to.be.equal(200);
-		 done();
+	   done();
+
 		});
+
    });
 
 
@@ -61,7 +51,7 @@ describe('Test Tournament Handler Router', function (err) {
 		 .end(function(err,res) {
 			 expect(res.statusCode).to.be.equal(204);
 			 expect('Content-Type', /json/);
-			 done();
+         	done();
 		 });
 
 	 });
@@ -73,11 +63,12 @@ describe('Test Tournament Handler Router', function (err) {
 			 .end(function(err,res) {
 	 		  expect(res.statusCode).to.be.equal(200);
 				 expect('Content-Type', /json/);
-			  done();
+        	done();
 	 		 });
+
   });
-});
-<<<<<<< HEAD
+
+
 
 	it('Getting /tournamentHandler/:tId get function from "TOURNAMENT HANDLER" through App.js', function (done)
  	{
@@ -86,9 +77,8 @@ describe('Test Tournament Handler Router', function (err) {
 			.end(function(err,res) {
 			 expect(res.statusCode).to.be.equal(200);
 				expect('Content-Type', /json/);
-			 done();
+			  done();
 			});
+
   });
 });
-=======
->>>>>>> d9355e81115f5a69e0fd40f72943c1cad65f7c84

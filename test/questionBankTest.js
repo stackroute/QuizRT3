@@ -1,9 +1,9 @@
-var questionBank = require('../routes/questionBank.js'),
+var questionBank = require('../routes/gameManager/questionBank.js'),
     Reservoir = require('reservoir'),
     Question = require("../models/question.js"),
     expect = require('chai').expect;
 
-describe.only('Question Bank', function() {
+describe('Question Bank', function() {
   it('require(questionBank) should return an object', function() {
     expect( questionBank ).to.exist.and.to.be.an("object");
   });
