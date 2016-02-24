@@ -11,7 +11,7 @@ angular.module("quizRT")
         // there's one watcher in quizPlayerController to show-hide the footer-nav when user is playing a quiz
         // if footer-nav doesn't show/hide properly
         // use this watcher in every page where footer-nav should be visible
-        // $rootScope.isPlayingAGame = false;
+        // $rootScope.hideFooterNav = false;
       });
       */
 
@@ -66,6 +66,6 @@ angular.module("quizRT")
         $rootScope.roundCount = levelId.substring(levelId.lastIndexOf("_") + 1);
         var quizPlayUrl = '/quizPlayer?levelId=' + levelId + '&topicId=' + topicId + '&'
         $location.path( );
-        $rootScope.isPlayingAGame = true;
+        $rootScope.hideFooterNav = true;
       };
  });

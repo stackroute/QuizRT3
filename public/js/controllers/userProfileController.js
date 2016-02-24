@@ -24,6 +24,7 @@ angular.module('quizRT')
         $rootScope.logInLogOutSuccessMsg = '';
         $location.path('/login');
       } else {
+        $rootScope.hideFooterNav = false;
         $rootScope.stylesheetName="userProfile";
         $scope.a=7;
         $scope.see = true;
@@ -94,7 +95,7 @@ angular.module('quizRT')
           console.log('Refresh user recevied.');
           $rootScope.loggedInUser = refreshData.user;
         });
-        
+
         $http({method : 'GET',url:'/tournamentHandler/tournaments'})
         .success(function(data){
           $scope.tournaments = data;

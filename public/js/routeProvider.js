@@ -35,7 +35,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       $rootScope.logInLogOutSuccessMsg = ''; // used on login.html page to display login/logout status msgs
       $rootScope.logInLogOutErrorMsg = '';
       $rootScope.serverErrorMsg = 'Error! Kindly check your URL.'; // used in eror.html to display Error message received from the server
-      $rootScope.isPlayingAGame = false; // used to identify if the user is playing a game. This is used to hide the footer nav if true
+      $rootScope.hideFooterNav = false; // This is used to hide the footer nav
       $rootScope.recentGames = {}; // save the recent games played by the user since last login. Saved as {gameId:gameBoard}
       $rootScope.playGame = {
         levelId: "",
@@ -54,23 +54,13 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           $cookies.remove('isAuthenticated');
         }
       });
-      $rootScope.$watch( 'isPlayingAGame', function(nv,ov) {
+      $rootScope.$watch( 'hideFooterNav', function(nv,ov) {
         if ( nv ) {
           $( '#footer-nav' ).slideUp();
         } else {
           $( '#footer-nav' ).slideDown();
         }
       });
-
-      // refresh the user profile
-      // socket.on('refreshUser', function( refreshObj ) {
-      //   console.log('Refresh User received');
-      //   if ( refreshObj.error ) {
-      //     console.log('User could not be refreshed. Will be refreshed when user navigates to Profile page.');
-      //   }else {
-      //     $rootScope.loggedInUser = refreshObj.user;
-      //   }
-      // });
 
       // Add app level events here
       $rootScope.$on('login', function(event) {
@@ -102,7 +92,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .factory('socket', function ($rootScope) {
 
       return function($rootScope) {
-        var socket = io.connect('http://172.23.238.188:8080', {'forceNew':true } );
+        var socket = io.connect('http://172.23.238.188:8080/normalGame', {'forceNew':true } );
         console.log('Socket initialized and set to $rootScope.socket.');
 
         return {

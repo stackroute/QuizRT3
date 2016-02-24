@@ -16,7 +16,7 @@
 //                      + Anil Sawant
 
 angular.module('quizRT')
-    .controller('quizPlayerController', function($route, $scope, $location, $interval, $http, $rootScope, $window) {
+    .controller('quizPlayerController', function($route, $scope, $location, $interval, $http, $rootScope, $window, $cookies) {
       if ( !$rootScope.loggedInUser ) {
         $rootScope.isAuthenticatedCookie = false;
         $rootScope.serverErrorMsg = 'User not authenticated.';
@@ -24,6 +24,7 @@ angular.module('quizRT')
         $rootScope.serverErrorStatusText = 'You are not logged in. Kindly do a fresh login.';
         $location.path('/error');
       } else {
+        $rootScope.hideFooterNav = true;
         $scope.levelId = $rootScope.playGame.levelId;
         $scope.topicId = $rootScope.playGame.topicId;
         $scope.quizTitle = $rootScope.playGame.topicName;
@@ -49,7 +50,7 @@ angular.module('quizRT')
         }
         // watch when the user leaves the quiz-play page to show/hide footer nav
         $scope.$on( '$routeChangeStart', function(args) {
-          $rootScope.isPlayingAGame = false;
+          $rootScope.hideFooterNav = false;
         });
 
         // create the playerData obj for the quiz gameManager to identify the player and his client
@@ -141,7 +142,7 @@ angular.module('quizRT')
 
             }, 1000);// to create 1s timer
           } else {
-            $rootScope.isPlayingAGame = false;
+            $rootScope.hideFooterNav = false;
             $scope.question = 'Selected topic does not have any questions in our QuestionBank :(';
           }
 
@@ -173,11 +174,16 @@ angular.module('quizRT')
         });
         $rootScope.socket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
           $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly complete the previous game or play a different one.';
-          $rootScope.isPlayingAGame = false;
+          $rootScope.hideFooterNav = false;
         });
         $rootScope.socket.on( 'serverMsg', function( msgData ) {
           if (msgData.type == 'LOGOUT') {
-            $location.path( '/userProfile' );
+            $cookies.remove('isAuthenticated');
+            $rootScope.loggedInUser = null;
+            $rootScope.isAuthenticatedCookie = false;
+            $rootScope.logInLogOutErrorMsg = 'Server knocked out your session. This may be due to running multiple sessions.';
+            $rootScope.logInLogOutSuccessMsg = '';
+            $location.path('/login');
           }
         });
       }

@@ -24,15 +24,6 @@ angular.module('quizRT')
      $rootScope.stylesheetName = "topic";
      var path = '/topicsHandler/topic/'+ $scope.topicId;
 
-     $rootScope.socket.emit( 'checkIfPlayingThisTopic', { topicId: $scope.topicId, userId: $rootScope.loggedInUser.userId } );
-     $rootScope.socket.on( 'playingThisTopicStatus' , function( isPlaying ) {
-       if ( isPlaying ) {
-         $rootScope.playGame = {};
-         $rootScope.playGame.topicId = $scope.topicId;
-         $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
-         $location.path( '/quizPlayer' );
-       }
-     });
      /*
         HTTP methods are used as follows:
         GET: to retrieve topic details along with userStats
@@ -71,7 +62,7 @@ angular.module('quizRT')
     $scope.playGame = function( topicId ) {
       $rootScope.playGame = {};
       $rootScope.playGame.topicId = topicId;
-      $rootScope.isPlayingAGame = true; // to hide the footer-nav while playing a game
+      $rootScope.hideFooterNav = true; // to hide the footer-nav while playing a game
       $http.post( '/topicsHandler/topic/'+ $scope.topicId )
         .then( function( successResponse ) {
           $location.path( '/quizPlayer' );
