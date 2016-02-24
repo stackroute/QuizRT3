@@ -2,7 +2,7 @@ var LeaderBoard = require('../routes/gameManager/LeaderBoard'),
     expect = require('chai').expect,
     assert = require('assert');
 
-describe.only('LeaderBoard', function() {
+describe('LeaderBoard', function() {
   it('should have a property called games of type Map', function() {
     assert( LeaderBoard.games );
     assert( LeaderBoard.games instanceof Map);
