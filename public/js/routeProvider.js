@@ -20,7 +20,8 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
 
       $rootScope.initializeSockets = function() {
         console.log('Initializing sockets...');
-        $rootScope.socket = socket($rootScope); // to use it through out the app
+        $rootScope.socket = socket($rootScope, '/normalGame'); // to use it through out the app
+        $rootScope.tournamentSocket = socket($rootScope, '/tournament'); // to use it through out the app
       }
 
       // redirect to user-profile page if the user's cookie exists
@@ -74,7 +75,12 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
           if ( $rootScope.socket ) {
             $rootScope.socket.disconnect();
           } else {
-            console.log('Socket not found!!');
+            console.log('NormalSocket not found!!');
+          }
+          if ( $rootScope.tournamentSocket ) {
+            $rootScope.tournamentSocket.disconnect();
+          } else {
+            console.log('Tournament Socket not found!!');
           }
           $cookies.remove('isAuthenticated');
           $rootScope.loggedInUser = null;
@@ -91,9 +97,9 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
     })
     .factory('socket', function ($rootScope) {
 
-      return function($rootScope) {
-        var socket = io.connect('http://172.23.238.188:8080/normalGame', {'forceNew':true } );
-        console.log('Socket initialized and set to $rootScope.socket.');
+      return function($rootScope, type) {
+        var socket = io.connect('http://172.23.238.188:8080' + type, {'forceNew':true } );
+        console.log('Socket initialized for ' + type);
 
         return {
           on: function (eventName, callback) {
@@ -115,7 +121,6 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
             })
           },
           disconnect: function() {
-            console.log('socket.disconnet');
             socket.disconnect();
           }
          };
