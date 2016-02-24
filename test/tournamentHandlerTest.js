@@ -12,9 +12,9 @@ it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER
 		.get('/tournamentHandler/tournaments')
 		.end(function(err,res) {
 		expect(res.statusCode).to.be.equal(200);
-		done();
+     done();
 		});
-		done();
+
    });
 
 
@@ -26,9 +26,9 @@ it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER
 		.end(function(err,res) {
 			expect(res.statusCode).to.be.equal(204);
 			expect('Content-Type', /json/);
-
+     done();
    });
-		done();
+
 	});
 
 
@@ -37,10 +37,10 @@ it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER
 		.get('/tournamentHandler/tournaments')
 		.end(function(err,res) {
 		 expect(res.statusCode).to.be.equal(200);
-		 done();
+	   done();
 
 		});
-		done();
+
    });
 
 
@@ -51,9 +51,9 @@ it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER
 		 .end(function(err,res) {
 			 expect(res.statusCode).to.be.equal(204);
 			 expect('Content-Type', /json/);
-
+         	done();
 		 });
-       done();
+
 	 });
 
 	 it('Getting /tournamentHandler/:tId get function from "TOURNAMENT HANDLER" through App.js', function (done)
@@ -63,9 +63,9 @@ it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER
 			 .end(function(err,res) {
 	 		  expect(res.statusCode).to.be.equal(200);
 				 expect('Content-Type', /json/);
-
+        	done();
 	 		 });
-			 done();
+
   });
 
 
@@ -77,8 +77,8 @@ it('Getting /tournamentHandler/tournaments get function from "TOURNAMENT HANDLER
 			.end(function(err,res) {
 			 expect(res.statusCode).to.be.equal(200);
 				expect('Content-Type', /json/);
-			 done();
+			  done();
 			});
-			done();
+
   });
 });

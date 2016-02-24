@@ -38,7 +38,7 @@ return this;
           if (err) return done(err);
           //expect(res.statusCode).to.be.equal(500);
            console.log(res.body);
-         // expect(res.body[0].multiplier).to.be.equal(76);
+          expect(res.body[0].multiplier).to.be.equal(76);
           done();
         });
     });
