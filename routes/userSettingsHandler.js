@@ -2,7 +2,7 @@ var router = require('express').Router(),
     fs = require('fs'),
     path = require('path'),
     formidable = require('formidable'),
-    Profile = require("./../models/profile");
+    Profile = require("../models/profile");
 
 // to handle profile pic upload
 router.post('/profilePic', function(req,res,next) {
