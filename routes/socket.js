@@ -19,9 +19,6 @@
 var GameManager = require('./gameManager/AlphaGameManager.js'),
     TournamentManager = require('./tournamentManager/TournamentManager2.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    Game = require("./../models/game"),
-    Profile = require("./../models/profile"),
-    Tournament = require("./../models/tournament"),
     defaultMaxPlayers = 2;
     maxPlayers = 0;
 
@@ -112,18 +109,6 @@ module.exports = function(server,sessionMiddleware) {
 
         client.on( 'gameFinished', function( game ) {
           GameManager.finishGame( game );
-        });
-
-        client.on('updateProfile',function(clientData){
-          var updateProfileObj = {
-            score: clientData.score,
-            rank: clientData.rank,
-            topicid: clientData.topicId, // change this with $scope.topicId
-            userId: clientData.userId,
-            levelId: clientData.levelId
-          };
-          console.log('updateProfileObj',updateProfileObj);
-          updateProfile( client, clientData);
         });
 
         client.on('leaveGame', function( gameId ){

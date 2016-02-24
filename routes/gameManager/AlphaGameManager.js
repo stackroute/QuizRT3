@@ -200,7 +200,6 @@ var GameManager = function() {
         if ( !questions || !questions.length ) {
           self.popGame( gameId );
         }
-        console.log('\n');
         return true;
       }); // create the leaderBoard for the game before starting
     });// end getQuizQuestions
@@ -230,21 +229,27 @@ var GameManager = function() {
   };
 
   /**
-  ** @param topicId as String
-  ** @return Array of players playing topicId
+  ** @param gameData as Object, gameBoard as Object, game as Object
+  **
   */
   this.storeResult = function( gameData, gameBoard, game ) {
-    var noOfCallbacksFinished = 0;
+    var noOfCallbacksFinished = 0,
+        self = this;
 
     MongoDB.saveGameToMongo( gameData, gameBoard, function() {
       noOfCallbacksFinished++;
       if ( noOfCallbacksFinished == game.players.length+1 ) {
-        //popGame
-        console.log('Popping game');
-
+        self.popGame( gameData.gameId );
       }
     });
+    var gameResultObj = {
+      gameId: gameData.gameId,
+      topicId: gameData.topicId,
+      levelId: gameData.levelId,
+      gameBoard: gameBoard
+    }
     game.players.forEach( function( player ) {
+      player.client.emit('takeResult', { error: null, gameResult: gameResultObj } );
       gameBoard.some( function( boardPlayer, index ) {
         if ( player.userId == boardPlayer.userId ) {
           var updateProfileObj = {
@@ -262,8 +267,7 @@ var GameManager = function() {
             }
             noOfCallbacksFinished++;
             if ( noOfCallbacksFinished == game.players.length+1 ) {
-              //popGame
-              console.log('Popping game');
+              self.popGame( gameData.gameId );
             }
           });
           return true;
@@ -271,7 +275,7 @@ var GameManager = function() {
       });
     });
 
-  }
+  };
 
   /**
   ** @param topicId as String
@@ -297,11 +301,29 @@ var GameManager = function() {
     var playerGames = this.players.get( userId ),
         game = this.games.get( gameId ),
         gamePlayers = game ? game.players : null, // array of players playing gameId
-        playerLeft = false;
+        playerLeft = false,
+        gameBoard = this.getLeaderBoard( gameId );
 
     if ( gamePlayers && gamePlayers.length ) {
       playerLeft = gamePlayers.some( function( savedPlayer, index ) {
         if ( savedPlayer.userId == userId ) {
+          gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
+            if ( savedPlayer.userId == boardPlayer.userId ) {
+              var updateProfileObj = {
+               score: boardPlayer.score,
+               rank: 0,
+               topicid: game.topicId, // change this with $scope.topicId
+               userId: boardPlayer.userId,
+               levelId: game.levelId
+             };
+              MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
+                if ( updatedData.error ) {
+                  console.log('Failed to update user profile.');
+                }
+              });
+              return true;
+            }
+          });
           console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
           return true;
         }
@@ -364,13 +386,33 @@ var GameManager = function() {
     var playerGames = this.players.get( userId ),
         self = this,
         removedFromGamesCount = 0;
+
     if ( playerGames && playerGames.length ) {
       playerGames.forEach( function( gameId ) { // before popping the player, delete the gamePlayer entry in all the games
         var game = self.games.get( gameId ),
-            gamePlayers = game ? game.players : null; // to check where if gamePlayer entry is there in games
+            gamePlayers = game ? game.players : null, // to check where if gamePlayer entry is there in games
+            gameBoard = self.getLeaderBoard( gameId );
+
         if ( gamePlayers && gamePlayers.length ) { // game has some players
           gamePlayers.some( function( savedGamePlayer, index ) {
             if ( savedGamePlayer.userId == userId ) {
+              gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
+                if ( savedGamePlayer.userId == boardPlayer.userId ) {
+                  var updateProfileObj = {
+                   score: 0,
+                   rank: 0,
+                   topicid: game.topicId, // change this with $scope.topicId
+                   userId: boardPlayer.userId,
+                   levelId: game.levelId
+                 };
+                  MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
+                    if ( updatedData.error ) {
+                      console.log('Failed to update user profile.');
+                    }
+                  });
+                  return true;
+                }
+              });
               savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions in GameManager will be popped.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players

@@ -45,15 +45,6 @@ angular.module('quizRT')
 					$scope.msg = 'Result of your last ' + $scope.topicId + ' quiz.'; // display the name of the topic played
 
 					var levelId = $rootScope.playGame.levelId || false;
-
-					var updateProfileObj = {
-						score: $rootScope.finalScore,
-						rank: $rootScope.finalRank,
-						topicid: $scope.topicId, // change this with $scope.topicId
-						userId: $rootScope.loggedInUser.userId,
-						levelId: levelId
-					};
-					$rootScope.socket.emit('updateProfile', updateProfileObj );//score and rank
 				}
 			}, $scope.timeBeforeResult); // show the results after a delay. LOL!!!! ROFL!!!! LOL!!!!!
 
