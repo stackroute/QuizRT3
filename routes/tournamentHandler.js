@@ -20,7 +20,7 @@ var express = require('express'),
     formidable = require('formidable'),
     path = require('path'),
     fs = require('fs'),
-    slugify = require('slugify'),
+    slug = require('slug'),
     Tournament = require("../models/tournament");
 
 
@@ -74,7 +74,7 @@ router.route('/tournament/:tId')
 
 router.route('/createTournament')
     .post(function(req , res){
-        console.log("Inside Create tournament");
+        
        var form = new formidable.IncomingForm(),
         fields =[],
         tournament = null;
@@ -97,7 +97,7 @@ router.route('/createTournament')
         form.on('file',function(name,file) {
 
             var oldPath = file.path,
-                newFileName = slugify(tournament.title) + '_' + file.name,
+                newFileName = slug(tournament.title) + '_' + file.name,
                 imageUrl = 'images/tournamentIcons/' + newFileName;
 
             fs.rename(file.path , 'public/' + imageUrl , function(err){
@@ -108,12 +108,8 @@ router.route('/createTournament')
                 tournament.imageUrl = imageUrl;
 
                 saveTournament(req, res , tournament);
-
             });
-            
         });
-
-        
 
         form.parse(req);
 
@@ -121,79 +117,98 @@ router.route('/createTournament')
 
 function saveTournament(req, res ,tournament){
 
-    if(validateTournament(req, res, tournament)){
-
-        var tournamentModel = new Tournament(),
-        topics = [];
-
-        // set tournament details to tournament model
-        var tournamentId = slugify(tournament.title);
-        tournamentModel._id = tournamentId;
-        tournamentModel.title = tournament.title;
-        tournamentModel.description = tournament.description;
-        tournamentModel.matches =  tournament.levelTopicArray.length;
-        tournamentModel.playersPerMatch = tournament.playersPerMatch;
-        tournamentModel.imageUrl = tournament.imageUrl;
-
-        var levelsTopicArray = tournament.levelTopicArray;
-            len = levelsTopicArray.length;
-
-        for(var cnt=0; cnt< len ; cnt++){
-            var topic = {};
-            topic['levelId'] = tournamentId + '_' + (cnt+1);
-            topic['topicId'] = levelsTopicArray[cnt];
-
-            topics.push(topic);
-        }
-
-        tournamentModel.topics = topics;
-
-        //tournamentModel
-
-        console.log(tournamentModel);
-
-        tournamentModel.save(function(err, tournament){
-            if(err){
-                console.log('Database error. Could not save tournament details: ' + tournament.title);
-                res.writeHead(500, {'Content-type': 'application/json'});
-                res.end(JSON.stringify({ error:'Could not save tournament details: ' + tournament.title}) );
-            
-            }
-            res.json({ error: null, tournamentId:tournament._id });
-
-        });
-
-
-    }
-}
-
-function validateTournament(req, res ,tournament){
-
-    var isValid = false;
-
     //check whether tournament exist with same _id
-    Tournament.findOne({_id: slugify(tournament.title)})
-        .exec(function(err , tournament){
+    Tournament.findOne({_id: slug(tournament.title)})
+        .exec(function(err , tournamentFromDB){
 
             if(err){
                 console.log('Database error. Could not validate tournament details: ' + tournament.title);
                 res.writeHead(500, {'Content-type': 'application/json'});
                 res.end(JSON.stringify({ error:'Could not validate tournament details: ' + tournament.title}) );
             
-            }else if(tournament){
+            }else if(tournamentFromDB){
                 console.log('Tournament already exist with given title :' + tournament.title);
                 res.writeHead(500, {'Content-type': 'application/json'});
                 res.end(JSON.stringify({ error:'Tournament already exist with given title. Please change your tournament title.'}) );
                           
             }else{
-                isValid = true;
-            }
+                // save tournament
+                var tournamentModel = new Tournament(),
+                topics = [];
 
+                // set tournament details to tournament model
+                var tournamentId = slug(tournament.title);
+                tournamentModel._id = tournamentId;
+                tournamentModel.title = tournament.title;
+                tournamentModel.description = tournament.description;
+                tournamentModel.matches =  tournament.levelTopicArray.length;
+                tournamentModel.playersPerMatch = tournament.playersPerMatch;
+                tournamentModel.imageUrl = tournament.imageUrl;
+                tournamentModel.rulesDescription = tournament.rulesDescription;
+                tournamentModel.registration.startDate = tournament.registrationStartDate;
+                tournamentModel.registration.endDate = tournament.registrationEndDate;
+                tournamentModel.startDate = tournament.startDate;
+                tournamentModel.endDate = tournament.endDate;
+
+                var levelsTopicArray = tournament.levelTopicArray;
+                    len = levelsTopicArray.length;
+
+                for(var cnt=0; cnt< len ; cnt++){
+                    var topic = {};
+                    topic['levelId'] = tournamentId + '_' + (cnt+1);
+                    topic['topicId'] = slug(levelsTopicArray[cnt]);
+
+                    topics.push(topic);
+                }
+
+                tournamentModel.topics = topics;
+
+                console.log("Tournament Model to be saved.",tournamentModel);
+
+                tournamentModel.save(function(err, tournament){
+                    if(err){
+                        console.log('Database error. Could not save tournament details: ' + tournament.title);
+                        res.writeHead(500, {'Content-type': 'application/json'});
+                        res.end(JSON.stringify({ error:'Could not save tournament details: ' + tournament.title}) );
+                    
+                    }
+                     console.log("tournamentId created :",tournament._id);
+                    res.json({ error: null, tournamentId:tournament._id });
+
+                });
+                
+            }
         });
 
-    return isValid;
-
 }
+
+// function validateTournament(req, res ,tournament){
+
+//     var isValid = false;
+
+//     //check whether tournament exist with same _id
+//     Tournament.findOne({_id: slug(tournament.title)})
+//         .exec(function(err , tournament){
+
+//             if(err){
+//                 console.log('Database error. Could not validate tournament details: ' + tournament.title);
+//                 res.writeHead(500, {'Content-type': 'application/json'});
+//                 res.end(JSON.stringify({ error:'Could not validate tournament details: ' + tournament.title}) );
+            
+//             }else if(tournament){
+//                 console.log('Tournament already exist with given title :' + tournament.title);
+//                 res.writeHead(500, {'Content-type': 'application/json'});
+//                 res.end(JSON.stringify({ error:'Tournament already exist with given title. Please change your tournament title.'}) );
+                          
+//             }else{
+//                 isValid = true;
+//             }
+
+//             console.log('sending isValid:' + isValid);
+//             return isValid;
+
+//         });
+// }
 
 router.route('/leaderBoard/:tId')
     .get(function(req, res) {

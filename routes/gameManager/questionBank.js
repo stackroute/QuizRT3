@@ -15,7 +15,7 @@
 //   Name of Developers  Anil Sawant
 
 var Reservoir = require('reservoir'),
-    Question = require("../models/question.js");
+    Question = require("../../models/question.js");
 
 module.exports = {
   getQuizQuestions: function( topicId, noOfQs, done ) {

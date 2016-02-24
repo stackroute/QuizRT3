@@ -22,11 +22,11 @@
         <hr>
     </div>
     
-    <form name="form" class="form-horizontal">
+    <form name="myForm" class="form-horizontal">
         <div class="form-group">
             <label class="control-label col-sm-3" for="title">Title</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control input-sm" id="title" ng-model="tournament.title" placeholder="Give your tournament title">
+                <input type="text" class="form-control input-sm" id="title" ng-model="tournament.title" placeholder="Give your tournament a title" required>
             </div>
         </div>
         <div class="form-group">
@@ -36,21 +36,23 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3" for="imageLink">Image</label>
+            <label class="control-label col-sm-3" for="imageLink" >Image</label>
             <div class="col-sm-9">
-                <input type="file" id="imageLink" file-upload="imageFile" >
+                <input type="file" id="imageLink" file-upload="imageFile" required >
             </div>
         </div>
         <div class="form-group" id ="levels">
             <label class="control-label col-sm-3" for="levels">Levels</label>
             <div class="col-sm-9" >
-                <img ng-src="images/add-icon.png" ng-click="addLevels()">
-                <ul>
-                    <li ng-repeat="level in levelsArray track by $index">
-                        <span>{{level}} :</span>
+                
+                <ul ng-init="tempArray = ['1']">
+                    <li ng-repeat="level in tempArray track by $index">
+                        <span>Level {{$index + 1}} :</span>
                         <select ng-model="initialTopic" ng-change="selectionChange(initialTopic.topicName , $index)" ng-options="topic.topicName for topic in topics">
                             <option value="">-- choose topic --</option>
                         </select>
+                        <img ng-src="images/add-icon.png" ng-click="tempArray.push($index)">
+                        <img ng-src="images/delete-icon.png" ng-click="tempArray.splice($index,1)">
                     </li>
                 </ul>
                 <span id="helpBlock" class="help-block">Choose topic for each level.</span>
@@ -59,7 +61,7 @@
         <div class="form-group">
             <label class="control-label col-sm-3" for="playersPerMatch">Number of Players</label>
             <div class="col-sm-9">
-                <input type="number" class="form-control input-sm" id="playersPerMatch" ng-model="tournament.playersPerMatch" placeholder="Number of Players">
+                <input type="number" min="2" class="form-control input-sm" id="playersPerMatch" ng-model="tournament.playersPerMatch" required placeholder="Number of Players">
             </div>
         </div>
         <div class="form-group">
@@ -68,6 +70,30 @@
                 <textarea rows="3" class="form-control input-sm" id="rulesDescription" ng-model="tournament.rulesDescription" placeholder="Specify Rules for the Tournaments">Rules for the game, You have to select the maximum number of player, and level of the tournament in order to start the tournament. You have to play the game with in the tournament and you can see the result on the go, you can play each level only one time and you have to play all the levels.
                   </textarea>
 
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="registrationStartDate">Registration Start Date</label>
+            <div class="col-sm-9">
+                <input type="date" class="form-control input-sm" id="registrationStartDate" ng-model="tournament.registrationStartDate" required placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="registrationEndDate">Registration End Date</label>
+            <div class="col-sm-9">
+                <input type="date" class="form-control input-sm" id="registrationEndDate" ng-model="tournament.registrationEndDate" required placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="startDate">Tournament Start Date</label>
+            <div class="col-sm-9">
+                <input type="date" class="form-control input-sm" id="startDate" ng-model="tournament.startDate" required placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="endDate">Tournament End Date</label>
+            <div class="col-sm-9">
+                <input type="date" class="form-control input-sm" id="endDate" ng-model="tournament.endDate" required placeholder="yyyy-MM-dd">
             </div>
         </div>
 <!--         <div class="form-group">

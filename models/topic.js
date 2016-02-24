@@ -24,7 +24,7 @@ var mongoose = require('mongoose'),
       topicDescription: String,
       topicFollowers: Number,
       playersPerMatch:{type:Number,default:3},
-      games:{type: String, ref: 'Game'}
+      games:[{type: String, ref: 'Game'}]
 
     }),
     Topic = mongoose.model('Topic', topicSchema, "topics_collection");

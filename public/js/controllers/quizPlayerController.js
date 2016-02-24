@@ -150,7 +150,6 @@ angular.module('quizRT')
             $scope.myrank = data.myRank;
             $scope.topperScore = data.topperScore;
             $scope.topperImage = data.topperImage;
-            console.log(data.topperImage);
         });
         $rootScope.socket.on('isCorrect', function(data) {
             $scope.correctAnswerers++;

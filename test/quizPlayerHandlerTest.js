@@ -20,6 +20,7 @@ return this;
 //callback(null, null);
 };
 
+  describe('Test Tournament Handler Router', function (err) {
  var modelStub = sinon.stub(Quiz, 'findOne');
 
 

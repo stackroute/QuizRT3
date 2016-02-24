@@ -61,7 +61,7 @@
     "serve-favicon": "^2.3.0",
     "session.socket.io": "^0.2.1",
     "session.socket.io-express4": "^0.1.1",
-    "slugify": "^0.1.1",
+    "slug": "^0.9.1",
     "socket.io": "^1.4.4",
     "supervisor": "^0.9.1",
     "url": "^0.11.0"
