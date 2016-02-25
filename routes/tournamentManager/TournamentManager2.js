@@ -21,8 +21,10 @@ var TournamentManager = function() {
     if ( this.tournaments.has( tournamentId ) ) {
       var gameManager = this.tournaments.get( tournamentId );
       var addedSuccessfully = gameManager.managePlayer( topicId, playersNeeded, gamePlayer );
-      if ( addedSuccessfully )
+      if ( addedSuccessfully ) {
+        console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
         return true;
+      }
       console.log( gamePlayer.userId + ' is already playing ' + topicId + ' of ' + tournamentId );
       return false;
     } else {

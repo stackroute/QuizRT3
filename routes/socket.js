@@ -144,8 +144,6 @@ module.exports = function(server,sessionMiddleware) {
                 };
 
                 maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
-                console.log('\nTournamentManager');
-                console.log(TournamentManager);
                 var addedSuccessfully = TournamentManager.managePlayer( playerData.tournamentId, playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
                 if ( addedSuccessfully === false ) {
                   console.log('User is already playing the game ' + playerData.topicId + ' of ' + playerData.tournamentId + '. Cannot add him again.');
