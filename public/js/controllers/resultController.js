@@ -42,7 +42,7 @@ angular.module('quizRT')
 						$scope.gameTopper = $rootScope.recentGames[$scope.gameId].gameBoard[0];
 					}
 					$scope.gameBoard = $rootScope.recentGames[$scope.gameId].gameBoard; // show the results
-					$scope.msg = 'Result of your last ' + $scope.tournamentTitle + ' quiz.'; // display the name of the topic played
+					$scope.msg = 'Result of your last ' + $rootScope.recentGames[$scope.gameId].tournamentId + ' quiz.'; // display the name of the topic played
 
 					var levelId = $rootScope.playGame.levelId || false;
 				}

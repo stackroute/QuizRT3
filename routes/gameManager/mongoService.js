@@ -107,7 +107,7 @@ module.exports = {
             console.log('ERROR: User has already played level '+ levelCleared + ' of ' + tournamentId );
           } else {
             profileData.tournaments[i].levelCleared = levelCleared;
-            profileData.tournaments[i].levelPoints[levelCleared-1] = clientData.score ;
+            profileData.tournaments[i].levelPoints.push( clientData.score );
             profileData.tournaments[i].currentRank = clientData.rank;
             if ( levelCleared == profileData.tournaments[i].finalLevel ) {
               profileData.tournaments[i].status = 'COMPLETED';

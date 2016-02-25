@@ -114,7 +114,6 @@ angular.module('quizRT')
                         }
                         $scope.time = 10;
                         $scope.changeColor = function(id, clickEvent) {
-                          console.log('id,event', id,clickEvent);
                             $scope.isDisabled = true;
                             if (id == $scope.currentQuestion.correctIndex ) {
                                 $(clickEvent.target).addClass('btn-success');

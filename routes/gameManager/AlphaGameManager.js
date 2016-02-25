@@ -239,6 +239,7 @@ var GameManager = function() {
     MongoDB.saveGameToMongo( gameData, gameBoard, function() {
       noOfCallbacksFinished++;
       if ( noOfCallbacksFinished == game.players.length+1 ) {
+        console.log('Saving game to Mongo completed. Game Popped.');
         self.popGame( gameData.gameId );
       }
     });
@@ -246,6 +247,7 @@ var GameManager = function() {
       gameId: gameData.gameId,
       topicId: gameData.topicId,
       levelId: gameData.levelId,
+      tournamentId: gameData.tournamentId,
       gameBoard: gameBoard
     }
     game.players.forEach( function( player ) {
@@ -267,6 +269,7 @@ var GameManager = function() {
             }
             noOfCallbacksFinished++;
             if ( noOfCallbacksFinished == game.players.length+1 ) { // check if saving game and updating all the userProfiles is done
+              console.log('Saving game to Mongo completed. Game Popped.');
               self.popGame( gameData.gameId ); // delete the game from GameManager
             }
           });

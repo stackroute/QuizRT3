@@ -23,6 +23,8 @@ var TournamentManager = function() {
 
       var addedSuccessfully = gameManager.managePlayer( topicId, playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
+        console.log('\nOld GameManager for tournament');
+        console.log(gameManager);
         console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
         return true;
       }
@@ -34,6 +36,8 @@ var TournamentManager = function() {
       var addedSuccessfully = newGameManager.managePlayer( topicId, playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
         this.tournaments.set( tournamentId, newGameManager);
+        console.log('\nNew GameManager for tournament');
+        console.log(newGameManager);
         console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
         return true;
       }

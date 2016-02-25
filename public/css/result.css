@@ -3,6 +3,9 @@
   font-weight: bold;
   text-align: center;
 }
+.gameBoard {
+  min-height: 500px;
+}
 .gameBoard #gameTopper #topper {
   margin: auto !important;
   float: none !important;

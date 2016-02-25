@@ -98,10 +98,16 @@ module.exports = function(server,sessionMiddleware) {
             GameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
 
             var intermediateGameBoard = GameManager.getLeaderBoard( gameData.gameId ),
-                len = intermediateGameBoard.length,
+                myRank = 0,
                 gameTopper = intermediateGameBoard[0];
+            intermediateGameBoard.some( function(player, index ) {
+              if ( player.userId == gameData.userId ) {
+                myRank = index + 1;
+                return true;
+              }
+            });
             GameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
-              player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+              player.client.emit('takeScore', {myRank: myRank, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
             });
           } else {
             console.log('User session does not exist for the user: ' + gameData.userId );
@@ -184,10 +190,17 @@ module.exports = function(server,sessionMiddleware) {
               if ( gameManager ) {
                 gameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
                 var intermediateGameBoard = gameManager.getLeaderBoard( gameData.gameId ),
-                    len = intermediateGameBoard.length,
+                    myRank = 0,
                     gameTopper = intermediateGameBoard[0];
+                intermediateGameBoard.some( function(player, index ) {
+                  if ( player.userId == gameData.userId ) {
+                    myRank = index + 1;
+                    console.log( player.userId + ' rank = ' + myRank );
+                    return true;
+                  }
+                });
                 gameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
-                  player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+                  player.client.emit('takeScore', {myRank: myRank, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
                 });
               } else {
                 console.log('ERROR:UPDATE - Cannot find the gameManager for ' + gameData.tournamentId );
