@@ -12,20 +12,19 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Raghav Goel, Kshitij Jain, Lakshay Bansal, Ayush Jain, Saurabh Gupta, Akshay Meher
-//
 
 var mongoose = require('mongoose'),
+    category = require('./category'),
+    game = require('./game'),
     topicSchema = new mongoose.Schema({
-      _id: String,
+      _id: { type: String, required: true},
       topicName: String,
       topicIcon: String,
-      topicCategory: Array,
+      topicCategory: { type: String, required: true, ref: 'Category'},
       topicDescription: String,
       topicFollowers: Number,
-      playersPerMatch:{type:Number,default:3},
+      playersPerMatch:{type:Number,default:2},
       games:[{type: String, ref: 'Game'}]
-
     }),
     Topic = mongoose.model('Topic', topicSchema, "topics_collection");
 

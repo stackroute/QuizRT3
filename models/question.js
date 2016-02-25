@@ -17,12 +17,22 @@
 
 var mongoose = require('mongoose'),
     questionSchema = mongoose.Schema({
+      questionId: {type: String, required: true},
+      question: { type: String, required: true },
       image: String,
-      question : String,
-      correctIndex: Number,
-      options: Array,
-      topicId:Array
+      options: [{type: String, required: true}],
+      correctIndex: { type: Number, required: true },
+      difficultyLevel: { type: Number, default: 0 },
+      timesUsed: { type: Number, default: 0 },
+      correctRatio: { type: String, default: "" },
+      frequency: { type: Number, default: 0 },
+      lastEdited: { type: Date, required: true },
+      createdOn: { type: Date, required: true },
+      topics: { type: String },
+      topicIds: {type: String },
+      categories: {type: String },
+      topicId: [{type: String, required: true, ref: 'Topics'}]
     }),
-    Question = mongoose.model('Question', questionSchema,'question_bank_collection');
-    
+    Question = mongoose.model('Question', questionSchema,'questionBank');
+
 module.exports = Question;
