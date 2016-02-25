@@ -16,12 +16,9 @@
 //                      + Anil Sawant
 
 // var GameManager = require('./gameManager/GameManager.js'),
-var GameManagerClass = require('./gameManager/AlphaGameManager.js'),
-    GameManager = new GameManagerClass();
-    TournamentManager = require('./tournamentManager/TournamentManager2.js'),
-    tournamentManager = require('./tournamentManager/tournamentManager.js'),
-    defaultMaxPlayers = 2;
-    maxPlayers = 0;
+var GameManagerClass = require('./gameManager/GameManager.js'),
+    GameManager = new GameManagerClass(),
+    TournamentManager = require('./tournamentManager/TournamentManager.js');
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);
@@ -63,8 +60,7 @@ module.exports = function(server,sessionMiddleware) {
               client: client
             };
 
-            maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
-            var addedSuccessfully = GameManager.managePlayer( playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
+            var addedSuccessfully = GameManager.managePlayer( playerData.topicId, playerData.playersPerMatch, gamePlayer ); // add the player against the topicId.
             if ( addedSuccessfully === false ) {
               console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
               client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
@@ -150,8 +146,7 @@ module.exports = function(server,sessionMiddleware) {
                   client: client
                 };
 
-                maxPlayers = playerData.playersPerMatch || defaultMaxPlayers;
-                var addedSuccessfully = TournamentManager.managePlayer( playerData.tournamentId, playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
+                var addedSuccessfully = TournamentManager.managePlayer( playerData.tournamentId, playerData.topicId, playerData.playersPerMatch, gamePlayer ); // add the player against the topicId.
                 if ( addedSuccessfully === false ) {
                   console.log('User is already playing the game ' + playerData.topicId + ' of ' + playerData.tournamentId + '. Cannot add him again.');
                   client.emit('alreadyPlayingTheGame', { levelId: playerData.levelId, tournamentId: playerData.tournamentId, topicId: playerData.topicId });

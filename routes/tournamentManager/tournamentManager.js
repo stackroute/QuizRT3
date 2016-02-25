@@ -12,39 +12,45 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 //
-//   Name of Developers  Abhinav Kareer,Sunil Mekala, Pratik Sinha, Anil Sawant, Chandu
+//   Name of Developers  Anil Sawant
 //
 
-var playTournament=new Map();
-module.exports={
-	players: playTournament,
-	addPlayer: function(topicId, sid, client, name, imageUrl){
-		var clientData = {
-			client:client,
-			name:name,
-			imageUrl: imageUrl
-		};
-		if(playTournament.get(topicId)==null){
-			var temp= new Map();
-			temp.set(sid, clientData);
-		 	playTournament.set(topicId, temp);
-		}
-		else
-			playTournament.get(topicId).set(sid, clientData);
-	},
+var TournamentManager = function() {
+  this.tournaments = new Map();
+  this.managePlayer = function( tournamentId, topicId, playersNeeded, gamePlayer ) {
+    if ( this.tournaments.has( tournamentId ) ) {
+      var gameManager = this.tournaments.get( tournamentId );
 
-	popPlayers: function(topicId){
-		// play.get(topicId).delete(sid);
-		// if(play.get(topicId).size==0)
-		// 	play.delete(topicId);
-			var topicPlayers=[];
-		playTournament.get(topicId).forEach(function(item, key, value){
-			topicPlayers.push({
-				sid: key,
-				clientData: item
-			});
-		});
-		playTournament.delete(topicId);
-		return topicPlayers;
-	}
+      var addedSuccessfully = gameManager.managePlayer( topicId, playersNeeded, gamePlayer );
+      if ( addedSuccessfully ) {
+        console.log('\nOld GameManager for tournament');
+        console.log(gameManager);
+        console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
+        return true;
+      }
+      console.log( gamePlayer.userId + ' is already playing ' + topicId + ' of ' + tournamentId );
+      return false;
+    } else {
+      var GameManagerClass = require('../gameManager/GameManager.js');
+      var newGameManager = new GameManagerClass();
+      var addedSuccessfully = newGameManager.managePlayer( topicId, playersNeeded, gamePlayer );
+      if ( addedSuccessfully ) {
+        this.tournaments.set( tournamentId, newGameManager);
+        console.log('\nNew GameManager for tournament');
+        console.log(newGameManager);
+        console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
+        return true;
+      }
+      return false;
+    }
+  };
+  this.getGameManager = function( tournamentId ) {
+    return this.tournaments.get( tournamentId );
+  };
+  this.finishGame = function( finishGameData ) {
+    var gameManager = this.getGameManager( finishGameData.tournamentId );
+    gameManager ? gameManager.finishGame( finishGameData ) : console.log('ERROR: Failed to find the gameManager for ' + finishGameData.tournamentId);
+  };
 };
+
+module.exports = new TournamentManager();
