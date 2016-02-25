@@ -146,7 +146,7 @@ angular.module('quizRT')
                         else {
                             $scope.questionImage = null;
                         }
-                        $scope.time = 2;
+                        $scope.time = 10;
                     }
                 }
 

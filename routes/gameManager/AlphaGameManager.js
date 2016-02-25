@@ -257,7 +257,7 @@ var GameManager = function() {
            rank: index+1,
            topicid: game.topicId, // change this with $scope.topicId
            userId: boardPlayer.userId,
-           levelId: game.levelId
+           levelId: gameData.levelId
          };
           MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
             if ( updatedData.error ) {

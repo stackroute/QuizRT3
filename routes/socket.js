@@ -194,8 +194,7 @@ module.exports = function(server,sessionMiddleware) {
             });
 
             client.on( 'gameFinished', function( finishGameData ) {
-              var gameManager = TournamentManager.getGameManager( finishGameData.tournamentId );
-              gameManager ? gameManager.finishGame( finishGameData ) : console.log('ERROR: Failed to finish tournament game.');
+              TournamentManager.finishGame( finishGameData );
             });
 
 

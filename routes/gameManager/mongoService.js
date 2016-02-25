@@ -24,7 +24,7 @@ module.exports = {
               'userId': player.userId,
               'playerName' : player.playerName,
               'playerPic': player.playerPic,
-              'totalScore': new Number(player.score)
+              'totalScore': parseInt(player.score,10)
             }
             playerList.push( tempPlayer );
           });
@@ -59,14 +59,15 @@ module.exports = {
 
   // update the user profilePic
   updateProfile: function( clientData, done ) {
+    console.log('updateProfile called');
     var self = this,
         levelId = clientData.levelId,
         tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
     // above logic entirely depends on levelId having underscore('_')
-
+    console.log('tournamentId', tournamentId);
     if ( tournamentId ) { // update coming from a tournament
       Profile.findOne({userId:clientData.userId},function(err,profileData){
-        this.addTournamentToProfile( profileData, levelId, tournamentId, clientData, done );
+        self.addTournamentToProfile( profileData, levelId, tournamentId, clientData, done );
       });
     } else {
       // update solo topic play
@@ -94,7 +95,8 @@ module.exports = {
   addTournamentToProfile: function( client, profileData, levelId, tournamentId ,clientData, done ) {
     var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
         len = profileData.tournaments ? profileData.tournaments.length : 0,
-        tournamentFound = false;
+        tournamentFound = false,
+        self = this;
 
     for (var i = 0; i < len; i++) {
       if ( profileData.tournaments[i].tournamentId == tournamentId ) {
@@ -112,7 +114,7 @@ module.exports = {
             if ( levelCleared == profileData.tournaments[i].finalLevel ) {
               profileData.tournaments[i].status = 'COMPLETED';
             }
-            this.validateAndSaveProfile( profileData, done );
+            self.validateAndSaveProfile( profileData, done );
           }
         }
         break;// break if a Tournament was found
@@ -136,7 +138,7 @@ module.exports = {
           };
           // profileData.tournaments = profileData.tournaments ? profileData.tournaments.push(newTournamentObj) : [newTournamentObj];
           profileData.tournaments.push( newTournamentObj );
-          this.validateAndSaveProfile( profileData, done );
+          self.validateAndSaveProfile( profileData, done );
         }
       }); //end Tournament.findOne()
     }// end if tournament not Found
@@ -155,7 +157,7 @@ module.exports = {
           console.error(err);
           done({error:'Could not save the updated user profile to MongoDB!'});
         }else {
-          console.log("User profile persisted sucessfully!!");
+          console.log("User profile persisted successfully!!");
           done({error:null, updatedUserProfile: updatedUserProfile});
         }
       }); //end save
@@ -182,7 +184,7 @@ module.exports = {
 
             if ( player.userId == boardPlayer.userId ) {
               console.log('\nPlayer on LeaderBoard. updating score');
-              boardPlayer.totalScore += new Number(player.score);
+              boardPlayer.totalScore += parseInt(player.score,10);
               return true;
             }
           });

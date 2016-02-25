@@ -20,8 +20,11 @@ var TournamentManager = function() {
   this.managePlayer = function( tournamentId, topicId, playersNeeded, gamePlayer ) {
     if ( this.tournaments.has( tournamentId ) ) {
       var gameManager = this.tournaments.get( tournamentId );
+
       var addedSuccessfully = gameManager.managePlayer( topicId, playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
+        console.log('\ngameManager');
+        console.log(gameManager);
         console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
         return true;
       }
@@ -29,6 +32,8 @@ var TournamentManager = function() {
       return false;
     } else {
       var newGameManager = require('../gameManager/AlphaGameManager.js');
+      console.log('newGameManager');
+      console.log(newGameManager);
       var addedSuccessfully = newGameManager.managePlayer( topicId, playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
         this.tournaments.set( tournamentId, newGameManager);
@@ -40,6 +45,10 @@ var TournamentManager = function() {
   };
   this.getGameManager = function( tournamentId ) {
     return this.tournaments.get( tournamentId );
+  };
+  this.finishGame = function( finishGameData ) {
+    var gameManager = this.getGameManager( finishGameData.tournamentId );
+    gameManager ? gameManager.finishGame( finishGameData ) : console.log('ERROR: Failed to find the gameManager for ' + finishGameData.tournamentId);
   };
 };
 
