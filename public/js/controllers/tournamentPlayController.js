@@ -105,7 +105,7 @@ angular.module('quizRT')
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
                         $scope.changeColor = function(id, element) {
-                            if (id == "option" + ($scope.temp.correctIndex)) {
+                            if ((id -1) == "option" + ($scope.temp.correctIndex)) {
                                 $(element.target).addClass('btn-success');
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 $rootScope.tournamentSocket.emit('confirmAnswer', {
