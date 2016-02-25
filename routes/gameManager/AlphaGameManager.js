@@ -221,7 +221,7 @@ var GameManager = function() {
         self.storeResult( gameData, gameBoard, game );
       }, 3000);
     }
-    if ( game.playersFinished == game.players.length ) {
+    if ( game.playersFinished === game.players.length ) {
       console.log('\nSaving after all players finished..');
       clearTimeout( game.timer );
       this.storeResult( gameData, gameBoard, game );

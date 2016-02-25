@@ -5,6 +5,7 @@ var Game = require("../../models/game"),
 module.exports = {
 
   saveGameToMongo : function( gameData, gameBoard, done ) {
+    var self = this;
     Game.findOne( {gameId: gameData.gameId}, function(err, game) {
       if (err) {
         console.log('Mongo error while finding a game.');
@@ -45,7 +46,7 @@ module.exports = {
               console.log('Game saved to MongoDB : ' + newGame.gameId );
               if( gameData.levelId ) {
                 var tournamentId = gameData.levelId.substr(0,gameData.levelId.lastIndexOf("_"));
-                updateTournamentAfterEveryGame( tournamentId, gameData.levelId, data._id, playerList, done );
+                self.updateTournamentAfterEveryGame( tournamentId, gameData.levelId, data._id, playerList, done );
               } else {
                 done(); // done after saving if the game is not from a tournament
               }

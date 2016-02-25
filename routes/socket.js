@@ -189,13 +189,13 @@ module.exports = function(server,sessionMiddleware) {
                   player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
                 });
               } else {
-                console.log('ERROR:UPDATE - Cannot find the gameManager for ' + data.tournamentId );
+                console.log('ERROR:UPDATE - Cannot find the gameManager for ' + gameData.tournamentId );
               }
             });
 
-            client.on( 'gameFinished', function( game ) {
-              var gameManager = TournamentManager.getGameManager( game.tournamentId );
-              gameManager ? gameManager.finishGame( game.gameId ) : console.log('ERROR: Failed to finish tournament game.');
+            client.on( 'gameFinished', function( finishGameData ) {
+              var gameManager = TournamentManager.getGameManager( finishGameData.tournamentId );
+              gameManager ? gameManager.finishGame( finishGameData ) : console.log('ERROR: Failed to finish tournament game.');
             });
 
 
