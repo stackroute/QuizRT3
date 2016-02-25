@@ -24,7 +24,7 @@ module.exports = {
               'userId': player.userId,
               'playerName' : player.playerName,
               'playerPic': player.playerPic,
-              'totalScore': parseInt(player.score,10)
+              'totalScore': player.score
             }
             playerList.push( tempPlayer );
           });
@@ -59,12 +59,10 @@ module.exports = {
 
   // update the user profilePic
   updateProfile: function( clientData, done ) {
-    console.log('updateProfile called');
     var self = this,
         levelId = clientData.levelId,
         tournamentId = levelId ? levelId.substring(0, levelId.indexOf('_')) : null;
     // above logic entirely depends on levelId having underscore('_')
-    console.log('tournamentId', tournamentId);
     if ( tournamentId ) { // update coming from a tournament
       Profile.findOne({userId:clientData.userId},function(err,profileData){
         self.addTournamentToProfile( profileData, levelId, tournamentId, clientData, done );
@@ -92,7 +90,7 @@ module.exports = {
   },
 
   // add played tournament to user profile
-  addTournamentToProfile: function( client, profileData, levelId, tournamentId ,clientData, done ) {
+  addTournamentToProfile: function( profileData, levelId, tournamentId ,clientData, done ) {
     var levelCleared = levelId.substr( levelId.indexOf('_') + 1 ),
         len = profileData.tournaments ? profileData.tournaments.length : 0,
         tournamentFound = false,
@@ -166,7 +164,6 @@ module.exports = {
 
   //Updateing tournament after each game played
   updateTournamentAfterEveryGame: function( tournamentId, levelId, gameID, playerList, done ) {
-    console.log('\nUpdate tournament called');
     Tournament.findOne({ _id: tournamentId }, function( err, tournamentData ) {
       if(err) {
         console.log('Tournament ' + tournamentId + ' could not be read from MongoDB.');
@@ -184,7 +181,7 @@ module.exports = {
 
             if ( player.userId == boardPlayer.userId ) {
               console.log('\nPlayer on LeaderBoard. updating score');
-              boardPlayer.totalScore += parseInt(player.score,10);
+              boardPlayer.totalScore += player.totalScore;
               return true;
             }
           });

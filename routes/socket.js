@@ -16,7 +16,8 @@
 //                      + Anil Sawant
 
 // var GameManager = require('./gameManager/GameManager.js'),
-var GameManager = require('./gameManager/AlphaGameManager.js'),
+var GameManagerClass = require('./gameManager/AlphaGameManager.js'),
+    GameManager = new GameManagerClass();
     TournamentManager = require('./tournamentManager/TournamentManager2.js'),
     tournamentManager = require('./tournamentManager/tournamentManager.js'),
     defaultMaxPlayers = 2;

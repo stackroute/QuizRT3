@@ -87,10 +87,9 @@
              var tournamentStartDate = new Date($scope.tournament.startDate);
              var tournamentEndDate = new Date($scope.tournament.endDate);
              var showPlayButton = false;
-          if(index == $scope.levelCleared && (tournamentStartDate.getTime() <= currentDate.getTime()) && (currentDate.getTime() <= tournamentEndDate.getTime()))
-           {
-           showPlayButton = true;
-           }
+          if(index == $scope.levelCleared && (tournamentStartDate.getTime() <= currentDate.getTime()) && (currentDate.getTime() <= tournamentEndDate.getTime())) {
+            showPlayButton = true;
+          }
            return showPlayButton;
          }
        }

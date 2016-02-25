@@ -476,4 +476,4 @@ var GameManager = function() {
   };
 }
 
-module.exports = new GameManager();
+module.exports = GameManager;

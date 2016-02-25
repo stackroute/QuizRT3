@@ -95,7 +95,10 @@ angular.module('quizRT')
           console.log('Refresh user recevied.');
           $rootScope.loggedInUser = refreshData.user;
         });
-
+        $rootScope.tournamentSocket.on( 'refreshUser', function( refreshData ) {
+          console.log('Refresh user recevied.');
+          $rootScope.loggedInUser = refreshData.user;
+        });
         $http({method : 'GET',url:'/tournamentHandler/tournaments'})
         .success(function(data){
           $scope.tournaments = data;

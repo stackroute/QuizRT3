@@ -102,11 +102,22 @@ angular.module('quizRT')
                         };
                         $rootScope.tournamentSocket.emit( 'gameFinished', finishGameData );
                     } else {
-                        $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
-
-                        $scope.changeColor = function(id, element) {
-                            if ((id -1) == "option" + ($scope.temp.correctIndex)) {
-                                $(element.target).addClass('btn-success');
+                        $scope.currentQuestion = startGameData.questions[$scope.questionCounter];
+                        console.log($scope.currentQuestion);
+                        $scope.options = $scope.currentQuestion.options;
+                        $scope.questionCounter++;
+                        $scope.question = $scope.questionCounter + ". " +$scope.currentQuestion.question;
+                        if ($scope.currentQuestion.image != "null")
+                            $scope.questionImage = $scope.currentQuestion.image;
+                        else {
+                            $scope.questionImage = null;
+                        }
+                        $scope.time = 10;
+                        $scope.changeColor = function(id, clickEvent) {
+                          console.log('id,event', id,clickEvent);
+                            $scope.isDisabled = true;
+                            if (id == $scope.currentQuestion.correctIndex ) {
+                                $(clickEvent.target).addClass('btn-success');
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 $rootScope.tournamentSocket.emit('confirmAnswer', {
                                     ans: "correct",
@@ -115,8 +126,8 @@ angular.module('quizRT')
                                     topicId: startGameData.topicId
                                 });
                             } else {
-                                $(element.target).addClass('btn-danger');
-                                angular.element('#option' + $scope.temp.correctIndex).addClass('btn-success');
+                                $(clickEvent.target).addClass('btn-danger');
+                                $('#' + $scope.currentQuestion.correctIndex).addClass('btn-success');
                                 $scope.myscore = $scope.myscore - 5;
                                 $rootScope.tournamentSocket.emit('confirmAnswer', {
                                     ans: "wrong",
@@ -125,7 +136,6 @@ angular.module('quizRT')
                                     topicId: startGameData.topicId
                                 });
                             }
-                            $scope.isDisabled = true;
                             $rootScope.tournamentSocket.emit('updateStatus', {
                                 gameId: startGameData.gameId,
                                 tournamentId: $scope.tournamentId,
@@ -136,17 +146,6 @@ angular.module('quizRT')
                                 playerPic: $rootScope.loggedInUser.imageLink
                             });
                         };
-
-                        $scope.question = $scope.questionCounter + ". " +$scope.temp.question;
-                        $scope.options = $scope.temp.options;
-
-                        if ($scope.temp.image != "null")
-                            $scope.questionImage = $scope.temp.image;
-
-                        else {
-                            $scope.questionImage = null;
-                        }
-                        $scope.time = 10;
                     }
                 }
 
@@ -203,25 +202,3 @@ angular.module('quizRT')
         });
       }
     });
-
-function loadNextQuestion( questions, questionNumber, $scope) {
-    var optionCounter = 0;
-    var obj;
-    var options = [];
-    while (questions[questionNumber].options[optionCounter]) {
-        opt = {
-            name: questions[questionNumber].options[optionCounter],
-            id: "option" + (optionCounter + 1)
-        };
-        options.push(opt);
-        optionCounter++;
-    }
-    obj = {
-        "options": options,
-        "question": questions[questionNumber].question,
-        "image": questions[questionNumber].image,
-        "correctIndex": questions[questionNumber].correctIndex
-    };
-    $scope.questionCounter++;
-    return obj;
-}

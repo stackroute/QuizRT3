@@ -23,17 +23,14 @@ var TournamentManager = function() {
 
       var addedSuccessfully = gameManager.managePlayer( topicId, playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
-        console.log('\ngameManager');
-        console.log(gameManager);
         console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
         return true;
       }
       console.log( gamePlayer.userId + ' is already playing ' + topicId + ' of ' + tournamentId );
       return false;
     } else {
-      var newGameManager = require('../gameManager/AlphaGameManager.js');
-      console.log('newGameManager');
-      console.log(newGameManager);
+      var GameManagerClass = require('../gameManager/AlphaGameManager.js');
+      var newGameManager = new GameManagerClass();
       var addedSuccessfully = newGameManager.managePlayer( topicId, playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
         this.tournaments.set( tournamentId, newGameManager);
