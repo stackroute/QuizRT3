@@ -35,6 +35,9 @@
             <span>{{tournament.tournamentFollowers}}</span>
             </h3>
           </div>
+          <div class="leader">
+           <button href="#leaderBoard" role="button" class="btn btn-info" data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span>Leaderboard</button>
+         </div>
         </div><!--end topic-icon-->
         <div class="col-xs-6 topic-user">
           <div class="row">
@@ -158,23 +161,6 @@
         <p>{{tournament.rulesDescription}}</p>
       </div>
     </div>
-
-    <!-- <div class="row">
-       <div class="dates col-xs-12" id="dates">
-         <div class="col-xs-6">
-        <h4>Registration</h4>
-        <p>Start: {{tournament.registration.startDate | date : 'mediumDate' }}</p>
-        <p>End: {{tournament.registration.endDate | date : 'mediumDate'  }}</p>
-       </div>
-        <div class="col-xs-6">
-        <h4>Tournament</h4>
-        <p>Start: {{tournament.startDate | date : 'mediumDate' }}</p>
-        <p>End: {{tournament.endDate | date : 'mediumDate'  }}</p>
-       </div>
-      </div>
-    </div> -->
-
-
     <hr>
   <div class="heading col-xs-12 col-sm-12 col-lg-12">
     <h3 class="statement pull-left">Rounds</h3>

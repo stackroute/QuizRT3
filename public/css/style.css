@@ -17,7 +17,7 @@
 
 body {
 	background-color: #524f4f;
-	color: #ccc;
+	color: #CFD2DA;
 	font-size: 12px;
 	font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
@@ -48,7 +48,7 @@ a ,a:active, a:visited{
 }
 
 .container {
-	background-color: #2f2d2d;
+	background-color: #252830;
 	width: 80%;
 	margin:auto;
 	border-radius: 5px;
