@@ -104,6 +104,7 @@ var GameManager = function() {
         });
         if ( !isPlayingSameTopic ) {
           playerGames.push( gameId ); // add the gameId to gamePlayer's array of playing-games
+          this.emitPlayerJoined( gameId, gamePlayer ); //Let others know that a new player joined
           gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to players array the game
           console.log( gamePlayer.userId , ' was added to ' , gameId);
           return true;
@@ -112,6 +113,7 @@ var GameManager = function() {
                      // Can't play the same topic until the game is finished/popped
       } else { // gamePlayer is not playing any game(s) so far
         this.players.set( gamePlayer.userId, [gameId] ); // set the gameId as the first game gamePlayer is playing i.e. set it in the map
+        this.emitPlayerJoined( gameId, gamePlayer ); //Let others know that a new player joined
         gamePlayers.push( gamePlayer ); // since the game already exists, add gamePlayer to players array the game
         console.log( gamePlayer.userId , ' was added to ' , gameId);
         return true;
@@ -134,6 +136,20 @@ var GameManager = function() {
 
   /**
   ** @param gameId as String
+  ** @desc emits 'playerLeft' event for every player in a game with gameId = gameId
+  */
+  this.emitPlayerJoined = function( gameId, incomingPlayer ) {
+    var game = this.games.get( gameId );
+    if ( game.players && game.players.length ) {
+      game.players.forEach( function(player) {
+        console.log('Emitting player joined = '+ incomingPlayer.playerName + ' for ' + player.userId);
+        player.client.emit('playerJoined', { gameId: gameId, playerName: incomingPlayer.playerName, newCount:game.players.length + 1 } );
+      });
+    }
+  };
+
+  /**
+  ** @param gameId as String
   ** @desc emits 'pendingPlayers' event for every player in a game with gameId = gameId
   */
   this.emitPendingPlayers = function( gameId ) {
@@ -152,7 +168,7 @@ var GameManager = function() {
   */
   this.emitPlayerLeft = function( gameId, leavingPlayer ) {
     var game = this.games.get( gameId );
-    if ( game.players ) {
+    if ( game.players && game.players.length ) {
       game.players.forEach( function(player) {
         console.log('Emitting player left = '+ leavingPlayer.playerName + ' for ' + player.userId);
         player.client.emit('playerLeft', { gameId: gameId, playerName: leavingPlayer.playerName, remainingCount:game.players.length } );
@@ -281,22 +297,6 @@ var GameManager = function() {
   };
 
   /**
-  ** @param topicId as String
-  ** @return Array of players playing topicId
-  */
-  this.getGamePlayers = function( gameId ) {
-  	return this.games.get( gameId );
-  };
-
-  /**
-  ** @param gamePlayer as Obj
-  ** @return Array of topics gamePlayer is playing
-  */
-  this.getPlayerTopics = function( userId ) {
-  	return this.players.get( userId );
-  };
-
-  /**
   ** @param gameId as String, gamePlayer as Object
   ** @return true if gamePlayer left the game successfully; otherwise false
   */
@@ -330,6 +330,11 @@ var GameManager = function() {
             });
           }
           console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
+          if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players
+            self.emitPendingPlayers( gameId );
+          } else {
+            self.emitPlayerLeft( gameId, savedPlayer );
+          }
           return true;
         }
         return false;
@@ -447,6 +452,22 @@ var GameManager = function() {
       return false; // gamePlayer was removed from a few games but not from all he was part of
     }
   }
+
+  /**
+  ** @param topicId as String
+  ** @return Array of players playing topicId
+  */
+  this.getGamePlayers = function( gameId ) {
+  	return this.games.get( gameId );
+  };
+
+  /**
+  ** @param userId as String
+  ** @return Array of topics gamePlayer is playing
+  */
+  this.getPlayerTopics = function( userId ) {
+  	return this.players.get( userId );
+  };
 
   /**
   ** @param gameId as String

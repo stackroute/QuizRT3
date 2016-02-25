@@ -39,7 +39,7 @@ angular.module('quizRT')
         $scope.quizTitle = $rootScope.title;
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
-        //$scope.question = "WAITING FOR " + playersPerMatch +" OTHER PLAYERS";
+        $scope.question = "Setting up your game...";
         console.log("WAITING FOR " + playersPerMatch +" OTHER PLAYERS");
 
         // levelId is defined for Tournaments only

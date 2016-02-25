@@ -33,13 +33,18 @@
       <img src="{{topperImage}}" alt="" class="img-circle pull-left"/>
       <h5 class="score pull-left" id="top-score">{{topperScore}}</h5>
     </div>
-    <div   id="timer" class="col-xs-2 myStatus">{{time}}
-    </div>
+    <div id="timer" class="col-xs-2 myStatus">{{time}}s</div>
     <div class="pull-right col-xs-5 myStatus">
       <h5 class="score pull-right" id="myScore">{{myscore}}</h5>
       <img src="{{myImage}}" alt="" class="img-circle pull-right"/>
       <h4 class="pull-right" id="myRank"><strong>{{myrank}}</strong></h4>
     </div>
+  </div>
+  <div ng-show="playerJoined" class="alert alert-success" role="alert" style="margin-top:10px;padding: 7px;text-align:center;">
+    {{playerJoined}}
+  </div>
+  <div ng-show="playerLeft" class="alert alert-warning" role="alert" style="margin-top:10px;padding: 7px;text-align:center;">
+    {{playerLeft}}
   </div>
   <div class="row" id="statusInfo">
     <h5 class="col-xs-12 center-align">

@@ -39,7 +39,7 @@ angular.module('quizRT')
         $scope.quizTitle = $rootScope.title;
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
-        //$scope.question = "WAITING FOR " + playersPerMatch +" OTHER PLAYERS";
+        $scope.question = "Setting up your game...";
         console.log("WAITING FOR " + playersPerMatch +" OTHER PLAYERS");
 
         // levelId is defined for Tournaments only
@@ -77,8 +77,9 @@ angular.module('quizRT')
         $rootScope.tournamentSocket.on('startGame', function( startGameData ) {
           if ( startGameData.questions && startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
+            $scope.playersCount = startGameData.playersNeeded;
             $scope.questionCounter = 0; // reset the questionCounter for each game
-            $scope.question = "Starting Game ...";
+            $scope.question = "Starting Game in...";
             $scope.time = 3;
 
             var timeInterval = $interval( function() {
@@ -89,7 +90,7 @@ angular.module('quizRT')
                     $scope.isDisabled = false;
                     $scope.wrongAnswerers = 0;
                     $scope.correctAnswerers = 0;
-                    $scope.unattempted = startGameData.playersNeeded;
+                    $scope.unattempted = $scope.playersCount;
                     if ( $scope.questionCounter == startGameData.questions.length ) {
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
@@ -171,9 +172,27 @@ angular.module('quizRT')
         $rootScope.tournamentSocket.on('pendingPlayers', function(data) {
             $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
         });
-        $rootScope.tournamentSocket.on('playerLeft', function( leavingPlayer ) {
-            $scope.msg = leavingPlayer.userId +" left the game.";
-            console.log(leavingPlayer.userId +" left the game.");
+        $rootScope.tournamentSocket.on('playerLeft', function( data ) {
+          $scope.playersCount = data.remainingCount;
+          $scope.playerLeft = data.playerName + " left the game.";
+        });
+        $scope.$watch( 'playerLeft', function(nv,ov) {
+          if ( nv ) {
+            setTimeout( function() {
+              $scope.playerLeft = '';
+            },1000);
+          }
+        });
+        $rootScope.tournamentSocket.on('playerJoined', function( data ) {
+          // $scope.playersCount = data.newCount;
+          $scope.playerJoined = data.playerName + " joined the game.";
+        });
+        $scope.$watch( 'playerJoined', function(nv,ov) {
+          if ( nv ) {
+            setTimeout( function() {
+              $scope.playerJoined = '';
+            },1000);
+          }
         });
         $rootScope.tournamentSocket.on( 'takeResult', function( resultData ) {
             $rootScope.recentGames[resultData.gameResult.gameId] = {
