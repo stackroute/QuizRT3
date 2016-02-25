@@ -307,23 +307,25 @@ var GameManager = function() {
     if ( gamePlayers && gamePlayers.length ) {
       playerLeft = gamePlayers.some( function( savedPlayer, index ) {
         if ( savedPlayer.userId == userId ) {
-          gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
-            if ( savedPlayer.userId == boardPlayer.userId ) {
-              var updateProfileObj = {
-               score: boardPlayer.score,
-               rank: 0,
-               topicid: game.topicId, // change this with $scope.topicId
-               userId: boardPlayer.userId,
-               levelId: game.levelId
-             };
-              MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
-                if ( updatedData.error ) {
-                  console.log('Failed to update user profile.');
-                }
-              });
-              return true;
-            }
-          });
+          if ( gameBoard && gameBoard.length ) {
+            gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
+              if ( savedPlayer.userId == boardPlayer.userId ) {
+                var updateProfileObj = {
+                 score: boardPlayer.score,
+                 rank: 0,
+                 topicid: game.topicId, // change this with $scope.topicId
+                 userId: boardPlayer.userId,
+                 levelId: game.levelId
+               };
+                MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
+                  if ( updatedData.error ) {
+                    console.log('Failed to update user profile.');
+                  }
+                });
+                return true;
+              }
+            });
+          }
           console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
           return true;
         }
@@ -396,23 +398,25 @@ var GameManager = function() {
         if ( gamePlayers && gamePlayers.length ) { // game has some players
           gamePlayers.some( function( savedGamePlayer, index ) {
             if ( savedGamePlayer.userId == userId ) {
-              gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
-                if ( savedGamePlayer.userId == boardPlayer.userId ) {
-                  var updateProfileObj = {
-                   score: 0,
-                   rank: 0,
-                   topicid: game.topicId, // change this with $scope.topicId
-                   userId: boardPlayer.userId,
-                   levelId: game.levelId
-                 };
-                  MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
-                    if ( updatedData.error ) {
-                      console.log('Failed to update user profile.');
-                    }
-                  });
-                  return true;
-                }
-              });
+              if ( gameBoard && gameBoard.length ) {
+                gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
+                  if ( savedGamePlayer.userId == boardPlayer.userId ) {
+                    var updateProfileObj = {
+                     score: 0,
+                     rank: 0,
+                     topicid: game.topicId, // change this with $scope.topicId
+                     userId: boardPlayer.userId,
+                     levelId: game.levelId
+                   };
+                    MongoDB.updateProfile( updateProfileObj, function( updatedData ) {
+                      if ( updatedData.error ) {
+                        console.log('Failed to update user profile.');
+                      }
+                    });
+                    return true;
+                  }
+                });
+              }
               savedGamePlayer.client.emit('serverMsg', {type:'LOGOUT', msg:'Multiple logins!! All sessions in GameManager will be popped.'});
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players
