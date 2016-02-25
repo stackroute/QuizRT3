@@ -36,6 +36,9 @@ var TournamentManager = function() {
       return false;
     }
   };
+  this.getGameManager = function( tournamentId ) {
+    return this.tournaments.get( tournamentId );
+  };
 };
 
 module.exports = new TournamentManager();

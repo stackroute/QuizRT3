@@ -94,7 +94,7 @@ angular.module('quizRT')
                         $interval.cancel(timeInterval);
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        $rootScope.tournamentSocket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: $scope.levelId } );
+                        $rootScope.tournamentSocket.emit( 'gameFinished', { gameId: startGameData.gameId, tournamentId: $scope.tournamentId, levelId: $scope.levelId, topicId: startGameData.topicId } );
                     } else {
                         $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
@@ -105,6 +105,7 @@ angular.module('quizRT')
                                 $rootScope.tournamentSocket.emit('confirmAnswer', {
                                     ans: "correct",
                                     gameId: startGameData.gameId,
+                                    tournamentId: $scope.tournamentId,
                                     topicId: startGameData.topicId
                                 });
                             } else {
@@ -114,12 +115,14 @@ angular.module('quizRT')
                                 $rootScope.tournamentSocket.emit('confirmAnswer', {
                                     ans: "wrong",
                                     gameId: startGameData.gameId,
+                                    tournamentId: $scope.tournamentId,
                                     topicId: startGameData.topicId
                                 });
                             }
                             $scope.isDisabled = true;
                             $rootScope.tournamentSocket.emit('updateStatus', {
                                 gameId: startGameData.gameId,
+                                tournamentId: $scope.tournamentId,
                                 topicId: startGameData.topicId,
                                 userId: $rootScope.loggedInUser.userId,
                                 playerScore: $scope.myscore,
@@ -171,8 +174,9 @@ angular.module('quizRT')
         $rootScope.tournamentSocket.on( 'takeResult', function( resultData ) {
             $rootScope.recentGames[resultData.gameResult.gameId] = {
               error: resultData.error,
-              topicId: resultData.gameResult.topicId,
               gameId: resultData.gameResult.gameId,
+              tournamentId: resultData.gameResult.tournamentId,
+              topicId: resultData.gameResult.topicId,
               gameBoard: resultData.gameResult.gameBoard
             };
             $location.path( '/quizResult/' + resultData.gameResult.gameId );

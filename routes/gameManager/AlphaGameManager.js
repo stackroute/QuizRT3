@@ -17,7 +17,7 @@
 var uuid = require('node-uuid'), // used to generate unique game ids
     questionBank = require('./questionBank'),
     LeaderBoard = require('./Leaderboard.js'),
-    MongoDB = require('./mongoOperations.js');
+    MongoDB = require('./mongoService.js');
 
 /**
 ** @param no constructor params
@@ -266,8 +266,8 @@ var GameManager = function() {
               player.client.emit('refreshUser', { error: null, user: updatedData.updatedUserProfile } );// not used so far
             }
             noOfCallbacksFinished++;
-            if ( noOfCallbacksFinished == game.players.length+1 ) {
-              self.popGame( gameData.gameId );
+            if ( noOfCallbacksFinished == game.players.length+1 ) { // check if saving game and updating all the userProfiles is done
+              self.popGame( gameData.gameId ); // delete the game from GameManager
             }
           });
           return true;

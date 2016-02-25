@@ -113,7 +113,7 @@ module.exports = function(server,sessionMiddleware) {
 
         client.on('leaveGame', function( gameId ){
           GameManager.leaveGame( gameId, client.request.session.user );
-        }); // end client-on-leaveGame
+        });
       });// end normalGameSocket
 
 
@@ -148,8 +148,8 @@ module.exports = function(server,sessionMiddleware) {
                 console.log(TournamentManager);
                 var addedSuccessfully = TournamentManager.managePlayer( playerData.tournamentId, playerData.topicId, maxPlayers, gamePlayer ); // add the player against the topicId.
                 if ( addedSuccessfully === false ) {
-                  console.log('User is already playing the game ' + playerData.topicId + ' of ' + playerData.levelId + '. Cannot add him again.');
-                  client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId, levelId: playerData.levelId });
+                  console.log('User is already playing the game ' + playerData.topicId + ' of ' + playerData.tournamentId + '. Cannot add him again.');
+                  client.emit('alreadyPlayingTheGame', { levelId: playerData.levelId, tournamentId: playerData.tournamentId, topicId: playerData.topicId });
                 }
               } else {
                 console.log('User session does not exist for: ' + playerData.userId + '. Or the user client was knocked out.');
@@ -158,77 +158,51 @@ module.exports = function(server,sessionMiddleware) {
             }); // end client-on-joinTournament
 
 
-            client.on('confirmAnswer',function(data){
-              if(data.ans =='correct'){
-                //increment correct of allplayers
-                //decrement unsawered of all players
-                GameManager.getGamePlayers(data.gameId).forEach(function(player){
-                  player.client.emit('isCorrect');
-                });
-              }
-              else{
-                //increment wrong of allplayers
-                //decrement unsawered of all players
-                GameManager.getGamePlayers(data.gameId).forEach(function(player){
-                  player.client.emit('isWrong');
-                });
+            client.on('confirmAnswer',function( data ){
+              if(data.ans == 'correct') {
+                var gameManager = TournamentManager.getGameManager( data.tournamentId );
+                if ( gameManager ) {
+                  gameManager.getGamePlayers( data.gameId ).forEach( function(player) {
+                    player.client.emit('isCorrect');
+                  });
+                } else {
+                  console.log('ERROR: Cannot find the gameManager for ' + data.tournamentId );
+                }
+              } else {
+                var gameManager = TournamentManager.getGameManager( data.tournamentId );
+                if ( gameManager ) {
+                  gameManager.getGamePlayers( data.gameId ).forEach( function(player) {
+                    player.client.emit('isWrong');
+                  });
+                } else {
+                  console.log('ERROR: Cannot find the gameManager for ' + data.tournamentId );
+                }
               }
             });
 
             client.on('updateStatus',function( gameData ){
-              if ( client.request.session && gameData.userId == client.request.session.user ) {
-                GameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
-
-                var intermediateGameBoard = GameManager.getLeaderBoard( gameData.gameId ),
+              var gameManager = TournamentManager.getGameManager( gameData.tournamentId );
+              if ( gameManager ) {
+                gameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
+                var intermediateGameBoard = gameManager.getLeaderBoard( gameData.gameId ),
                     len = intermediateGameBoard.length,
                     gameTopper = intermediateGameBoard[0];
-                GameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
+                gameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
                   player.client.emit('takeScore', {myRank: index+1, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
                 });
               } else {
-                console.log('User session does not exist for the user: ' + gameData.userId );
+                console.log('ERROR:UPDATE - Cannot find the gameManager for ' + data.tournamentId );
               }
             });
 
             client.on( 'gameFinished', function( game ) {
-              console.log(client.request.session.user + ' finished game: ' + game.gameId );
-              var gameBoard = GameManager.getLeaderBoard( game.gameId );
-              if ( gameBoard ) {
-                var gameResultObj = {
-                  gameId: game.gameId,
-                  topicId: game.topicId,
-                  levelId: game.levelId,
-                  gameBoard: gameBoard
-                }
-                client.emit('takeResult', { error: null, gameResult: gameResultObj } );
-                // store the finished game into MongoDB
-                storeResult( game.gameId, game.levelId, game.topicId, gameBoard, function() {
-                  setTimeout( function() {
-                    GameManager.popGame( game.gameId ); // pop and delete the reference to the game from GameManager
-                    console.log('Result saved and Game popped: ' + game.gameId);
-                  }, 100);
-                });
-
-              } else {
-                console.log('LeaderBoard for ' + gameId + ' does not exist. Check in GameManager.js.');
-                client.emit('takeResult', { error: 'Result of your last game on ' + game.topicId + ' could not be retrived.'} );
-              }
+              var gameManager = TournamentManager.getGameManager( game.tournamentId );
+              gameManager ? gameManager.finishGame( game.gameId ) : console.log('ERROR: Failed to finish tournament game.');
             });
 
-            client.on('updateProfile',function(clientData){
-              var updateProfileObj = {
-    						score: clientData.score,
-    						rank: clientData.rank,
-    						topicid: clientData.topicId, // change this with $scope.topicId
-    						userId: clientData.userId,
-    						levelId: clientData.levelId
-    					};
-              console.log('updateProfileObj',updateProfileObj);
-              updateProfile( client, clientData);
-            });
 
             client.on('leaveGame', function( gameId ){
               GameManager.leaveGame( gameId, client.request.session.user );
-            }); // end client-on-leaveGame
+            });
           });// end tournament socket
 }

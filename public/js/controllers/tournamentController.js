@@ -41,8 +41,6 @@
                  successResponse.data.tournament.leaderBoard.sort( function(a,b) {
                    return b.totalScore - a.totalScore;
                  });
-                // console.log('LeaderBoard = ');
-              //   console.log(successResponse.data.tournament.leaderBoard);
                  successResponse.data.tournament.leaderBoard.some( function(player,index) {
                    if ( player.userId && player.userId == $rootScope.loggedInUser.userId ) {
                      $scope.userTournamentStats = player;
