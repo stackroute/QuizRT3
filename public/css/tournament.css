@@ -159,6 +159,9 @@
   width: 160px;
   height: auto;
 }
+#leader{
+  margin-top: 50px;
+}
 .rounds-icon{
   text-align: center;
 }
