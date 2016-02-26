@@ -113,6 +113,14 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
             });
            });
           },
+          once: function (eventName, callback) {
+           socket.once(eventName, function () {
+           var args = arguments;
+           $rootScope.$apply(function () {
+             callback.apply(socket, args);
+            });
+           });
+          },
           emit: function (eventName, data, callback) {
             socket.emit(eventName, data, function () {
              var args = arguments;

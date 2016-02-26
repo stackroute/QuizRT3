@@ -168,18 +168,20 @@ module.exports = function(server,sessionMiddleware) {
 
             client.on('confirmAnswer',function( data ){
               if(data.ans == 'correct') {
-                var gameManager = TournamentManager.getGameManager( data.tournamentId );
-                if ( gameManager ) {
-                  gameManager.getGamePlayers( data.gameId ).forEach( function(player) {
+                var gameManager = TournamentManager.getGameManager( data.tournamentId ),
+                    gamePlayers = gameManager ? gameManager.getGamePlayers( data.gameId ) : null ;
+                if ( gamePlayers && gamePlayers.length ) {
+                  gamePlayers.forEach( function(player) {
                     player.client.emit('isCorrect');
                   });
                 } else {
                   console.log('ERROR: Cannot find the gameManager for ' + data.tournamentId );
                 }
               } else {
-                var gameManager = TournamentManager.getGameManager( data.tournamentId );
-                if ( gameManager ) {
-                  gameManager.getGamePlayers( data.gameId ).forEach( function(player) {
+                var gameManager = TournamentManager.getGameManager( data.tournamentId ),
+                    gamePlayers = gameManager ? gameManager.getGamePlayers( data.gameId ) : null ;
+                if ( gamePlayers && gamePlayers.length ) {
+                  gamePlayers.forEach( function(player) {
                     player.client.emit('isWrong');
                   });
                 } else {
@@ -189,7 +191,8 @@ module.exports = function(server,sessionMiddleware) {
             });
 
             client.on('updateStatus',function( gameData ){
-              var gameManager = TournamentManager.getGameManager( gameData.tournamentId );
+              var gameManager = TournamentManager.getGameManager( gameData.tournamentId ),
+                  gamePlayers = gameManager ? gameManager.getGamePlayers( gameData.gameId ) : null ;
               if ( gameManager ) {
                 gameManager.updateScore( gameData.gameId, gameData.userId, gameData.playerScore );
                 var intermediateGameBoard = gameManager.getLeaderBoard( gameData.gameId ),
@@ -202,9 +205,11 @@ module.exports = function(server,sessionMiddleware) {
                     return true;
                   }
                 });
-                gameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
-                  player.client.emit('takeScore', {myRank: myRank, userId: client.request.session.user, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
-                });
+                if ( gamePlayers && gamePlayers.length ) {
+                  gamePlayers.forEach( function( player, index) {
+                    player.client.emit('takeScore', {myRank: myRank, userId: client.request.session.user, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+                  });
+                }
               } else {
                 console.log('ERROR:UPDATE - Cannot find the gameManager for ' + gameData.tournamentId );
               }

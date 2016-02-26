@@ -229,7 +229,7 @@ var GameManager = function() {
     var game = this.games.get( gameData.gameId ),
         self = this,
         gameBoard = this.getLeaderBoard( gameData.gameId );
-
+        
     game.playersFinished++;
     if ( game.playersFinished == 1 ) { // start the timer when first player finishes the game
       game.timer = setTimeout( function() {

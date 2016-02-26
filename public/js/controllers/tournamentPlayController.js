@@ -24,6 +24,7 @@ angular.module('quizRT')
         $location.path('/error');
       } else {
         $rootScope.hideFooterNav = true;
+        console.log('$rootScope.playGame', $rootScope.playGame);
         $scope.levelId = $rootScope.playGame.levelId;
         $scope.tournamentId = $rootScope.playGame.tournamentId;
         $scope.topicId = $rootScope.playGame.topicId;
@@ -74,17 +75,15 @@ angular.module('quizRT')
             console.log('Problem maintaining the user session!');
         });
 
-        $rootScope.tournamentSocket.on('startGame', function( startGameData ) {
+        $rootScope.tournamentSocket.once('startGame', function( startGameData ) {
           if ( startGameData.questions && startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.playersCount = startGameData.playersNeeded;
             $scope.questionCounter = 0; // reset the questionCounter for each game
             $scope.question = "Starting Game in...";
             $scope.time = 3;
-
-            var timeInterval = $interval( function() {
+            $scope.timeInterval = $interval( function() {
                 $scope.time--;
-
                 //waiting for counter to end to start the Quiz
                 if ($scope.time === 0) {
                     $scope.isDisabled = false;
@@ -92,16 +91,17 @@ angular.module('quizRT')
                     $scope.correctAnswerers = 0;
                     $scope.unattempted = $scope.playersCount;
                     if ( $scope.questionCounter == startGameData.questions.length ) {
-                        $interval.cancel(timeInterval);
+                        $interval.cancel($scope.timeInterval);
+                        $scope.timeInterval = undefined;
                         $rootScope.finalScore = $scope.myscore;
                         $rootScope.finalRank = $scope.myrank;
-                        var finishGameData = {
+                        $scope.finishGameData = {
                           gameId: startGameData.gameId,
                           tournamentId: $scope.tournamentId,
                           levelId: $scope.levelId,
                           topicId: startGameData.topicId
                         };
-                        $rootScope.tournamentSocket.emit( 'gameFinished', finishGameData );
+                        $rootScope.tournamentSocket.emit( 'gameFinished', $scope.finishGameData );
                     } else {
                         $scope.currentQuestion = startGameData.questions[$scope.questionCounter];
                         $scope.options = $scope.currentQuestion.options;

@@ -95,7 +95,7 @@ module.exports = {
         len = profileData.tournaments ? profileData.tournaments.length : 0,
         tournamentFound = false,
         self = this;
-
+    console.log('\nSaving tournament to user profile');
     for (var i = 0; i < len; i++) {
       if ( profileData.tournaments[i].tournamentId == tournamentId ) {
         tournamentFound = true;
