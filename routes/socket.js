@@ -16,9 +16,9 @@
 //                      + Anil Sawant
 
 // var GameManager = require('./gameManager/GameManager.js'),
-var GameManagerClass = require('./gameManager/GameManager.js'),
+var GameManagerClass = require('./gameManager/gameManager.js'),
     GameManager = new GameManagerClass(),
-    TournamentManager = require('./tournamentManager/TournamentManager.js');
+    TournamentManager = require('./tournamentManager/tournamentManager.js');
 
 module.exports = function(server,sessionMiddleware) {
   var io = require('socket.io')(server);

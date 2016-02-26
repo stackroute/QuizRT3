@@ -34,7 +34,7 @@ var TournamentManager = function() {
       console.log( gamePlayer.userId + ' is already playing ' + playerData.topicId + ' of ' + playerData.tournamentId );
       return false;
     } else {
-      var GameManagerClass = require('../gameManager/GameManager.js');
+      var GameManagerClass = require('../gameManager/gameManager.js');
       var newGameManager = new GameManagerClass();
       var addedSuccessfully = newGameManager.managePlayer( playerData.topicId, playerData.levelId, playerData.playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
