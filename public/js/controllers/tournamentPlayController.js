@@ -15,7 +15,7 @@
 //   Name of Developers  Anil Sawant
 
 angular.module('quizRT')
-    .controller('tournamentPlayController', function($route, $scope, $location, $interval, $http, $rootScope, $window, $cookies) {
+    .controller('tournamentPlayController', function($route, $scope, $location, $interval, $http, $rootScope, $window, $cookies, $timeout) {
       if ( !$rootScope.loggedInUser ) {
         $rootScope.isAuthenticatedCookie = false;
         $rootScope.serverErrorMsg = 'User not authenticated.';
@@ -104,7 +104,6 @@ angular.module('quizRT')
                         $rootScope.tournamentSocket.emit( 'gameFinished', finishGameData );
                     } else {
                         $scope.currentQuestion = startGameData.questions[$scope.questionCounter];
-                        console.log($scope.currentQuestion);
                         $scope.options = $scope.currentQuestion.options;
                         $scope.questionCounter++;
                         $scope.question = $scope.questionCounter + ". " +$scope.currentQuestion.question;
@@ -157,20 +156,22 @@ angular.module('quizRT')
 
         });
         $rootScope.tournamentSocket.on('takeScore', function(data) {
+          if ( data.userId == $rootScope.loggedInUser.userId ) {
             $scope.myrank = data.myRank;
-            $scope.topperScore = data.topperScore;
-            $scope.topperImage = data.topperImage;
+          }
+          $scope.topperScore = data.topperScore;
+          $scope.topperImage = data.topperImage;
         });
         $rootScope.tournamentSocket.on('isCorrect', function(data) {
-            $scope.correctAnswerers++;
-            $scope.unattempted--;
+          $scope.correctAnswerers++;
+          $scope.unattempted--;
         });
         $rootScope.tournamentSocket.on('isWrong', function(data) {
-            $scope.wrongAnswerers++;
-            $scope.unattempted--;
+          $scope.wrongAnswerers++;
+          $scope.unattempted--;
         });
         $rootScope.tournamentSocket.on('pendingPlayers', function(data) {
-            $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
+          $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
         });
         $rootScope.tournamentSocket.on('playerLeft', function( data ) {
           $scope.playersCount = data.remainingCount;
@@ -178,9 +179,9 @@ angular.module('quizRT')
         });
         $scope.$watch( 'playerLeft', function(nv,ov) {
           if ( nv ) {
-            setTimeout( function() {
+            $timeout( function() {
               $scope.playerLeft = '';
-            },1000);
+            },2000);
           }
         });
         $rootScope.tournamentSocket.on('playerJoined', function( data ) {
@@ -189,9 +190,9 @@ angular.module('quizRT')
         });
         $scope.$watch( 'playerJoined', function(nv,ov) {
           if ( nv ) {
-            setTimeout( function() {
+            $timeout( function() {
               $scope.playerJoined = '';
-            },1000);
+            },2000);
           }
         });
         $rootScope.tournamentSocket.on( 'takeResult', function( resultData ) {

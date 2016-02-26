@@ -332,6 +332,7 @@ var GameManager = function() {
           console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
           if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players
             self.emitPendingPlayers( gameId );
+            self.emitPlayerLeft( gameId, savedPlayer );
           } else {
             self.emitPlayerLeft( gameId, savedPlayer );
           }
@@ -429,6 +430,7 @@ var GameManager = function() {
               console.log( gamePlayers.splice( index, 1 )[0].userId , ' was removed from ' + gameId );
               if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players
                 self.emitPendingPlayers( gameId );
+                self.emitPlayerLeft( gameId, savedGamePlayer );
               } else {
                 self.emitPlayerLeft( gameId, savedGamePlayer );
               }

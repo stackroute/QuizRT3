@@ -70,6 +70,9 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
 
       $rootScope.$on('logout', function(event,user) {
         console.log('Hey ' + user.name + "!, you will be logged out.");
+        $rootScope.tournamentSocket.emit( 'logout', function( status ) {
+          console.log('Logged out of tournament.');
+        });
         $rootScope.socket.emit('logout', $rootScope.loggedInUser.userId, function( status ) {
           console.log('Disconnecting sockets...');
           if ( $rootScope.socket ) {

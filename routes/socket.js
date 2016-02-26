@@ -103,7 +103,7 @@ module.exports = function(server,sessionMiddleware) {
               }
             });
             GameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
-              player.client.emit('takeScore', {myRank: myRank, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+              player.client.emit('takeScore', {myRank: myRank, userId: client.request.session.user, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
             });
           } else {
             console.log('User session does not exist for the user: ' + gameData.userId );
@@ -130,9 +130,17 @@ module.exports = function(server,sessionMiddleware) {
 
             client.on('disconnect', function() {
               if ( client.request.session && client.request.session.user ) {
-                GameManager.popPlayer( client.request.session.user ); // pop the user from all the games
-                console.log( client.request.session.user + ' disconnected from QuizRT server. Tournament Socket Id: ' + client.id);
+                TournamentManager.popPlayer( client.request.session.user );
               }
+            });
+
+            client.on('logout', function( userData, done) {
+              console.log( client.request.session.user + ' logged out.');
+              if ( client.request.session && client.request.session.user ) {
+                TournamentManager.popPlayer( client.request.session.user );
+                client.request.session.user = null;
+              }
+          		client.request.logout();
             });
 
             client.on('joinTournament',function( playerData ) {
@@ -195,7 +203,7 @@ module.exports = function(server,sessionMiddleware) {
                   }
                 });
                 gameManager.getGamePlayers(gameData.gameId).forEach( function( player, index) {
-                  player.client.emit('takeScore', {myRank: myRank, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+                  player.client.emit('takeScore', {myRank: myRank, userId: client.request.session.user, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
                 });
               } else {
                 console.log('ERROR:UPDATE - Cannot find the gameManager for ' + gameData.tournamentId );
@@ -207,8 +215,9 @@ module.exports = function(server,sessionMiddleware) {
             });
 
 
-            client.on('leaveGame', function( gameId ){
-              GameManager.leaveGame( gameId, client.request.session.user );
+            client.on('leaveGame', function( gameData ){
+              var gameManager = TournamentManager.getGameManager( gameData.tournamentId );
+              gameManager ? gameManager.leaveGame( gameId, client.request.session.user ) : console.log('ERROR: Failed to find the gameManager for ' + gameData.tournamentId ); ;
             });
           });// end tournament socket
 }
