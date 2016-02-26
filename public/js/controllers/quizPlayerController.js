@@ -36,7 +36,6 @@ angular.module('quizRT')
         $scope.myscore = 0;
         $scope.correctAnswerers = 0;
         $scope.wrongAnswerers = 0;
-        $scope.quizTitle = $rootScope.title;
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
         $scope.question = "Setting up your game...";
@@ -73,7 +72,7 @@ angular.module('quizRT')
             console.log('Problem maintaining the user session!');
         });
 
-        $rootScope.socket.on('startGame', function( startGameData ) {
+        $rootScope.socket.once('startGame', function( startGameData ) {
           if ( startGameData.questions && startGameData.questions.length && startGameData.questions[0]) {
             $rootScope.freakgid = startGameData.gameId;
             $scope.playersCount = startGameData.playersNeeded;
@@ -137,7 +136,7 @@ angular.module('quizRT')
                         else {
                             $scope.questionImage = null;
                         }
-                        $scope.time = 2;
+                        $scope.time = 10;
                     }
                 }
 
@@ -179,6 +178,7 @@ angular.module('quizRT')
             $rootScope.recentGames[resultData.gameResult.gameId] = {
               error: resultData.error,
               topicId: resultData.gameResult.topicId,
+              topicName: $scope.quizTitle,
               gameId: resultData.gameResult.gameId,
               gameBoard: resultData.gameResult.gameBoard
             };
