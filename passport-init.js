@@ -75,20 +75,17 @@ module.exports = function(passport){
 			passReqToCallback : true // allows us to pass back the entire request to the callback
 		},
 		function(req, username, password, done) {
-           console.log("**********Hello*************");
-           console.log(req.body.country);
-           console.log("**********Hello*************");
 			// find a user in mongo with provided username
 			User.findOne({ 'local.username' :  username }, function(err, user) {
 				// In case of any error, return using the done method
 				if (err){
 					console.log('Error in register: '+err);
-					return done(err);
+					return done('Database error. Kindly try again.');
 				}
 				// already exists
 				if (user) {
 					console.log('User already exists with username: '+username);
-					return done(null, false);
+					return done('Username already exists. Kindly use a new one.');
 				} else {
 					// if there is no user, create the user
 					var newUser = new User();
@@ -109,25 +106,22 @@ module.exports = function(passport){
         	}
 					newProfile.wins=0;
 					newProfile.totalGames=0;
-           console.log("**********************");
-					console.log(newProfile);
-					   console.log("**********************");
 					// save the user
 					newUser.save(function(err) {
 						if (err){
 							console.log('Error in Saving user: '+err);
-							throw err;
+							return done('Database error. Kindly try again.');
+						} else {
+							newProfile.save(function(err, savedProfile) {
+								if (err){
+									console.log('ERROR: Failed to register user profile.');
+									console.error(err);
+									return done('Database error. Kindly try again.');
+								}
+								console.log(savedProfile.userId + ' Registration successful.');
+								return done(null, savedProfile);
+							});
 						}
-						console.log(newUser.local.username + ' Registration succesful');
-						return done(null, newUser);
-					});
-					newProfile.save(function(err) {
-						if (err){
-							console.log('Error in Saving user: '+err);
-							throw err;
-						}
-						console.log(newProfile.userId + ' Registration succesful');
-						return done(null, newProfile);
 					});
 				}
 			});

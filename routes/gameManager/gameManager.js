@@ -16,7 +16,7 @@
 
 var uuid = require('node-uuid'), // used to generate unique game ids
     questionBank = require('./questionBank'),
-    LeaderBoard = require('./Leaderboard.js'),
+    LeaderBoard = require('./LeaderBoard.js'),
     MongoDB = require('./mongoService.js');
 
 /**
@@ -231,18 +231,23 @@ var GameManager = function() {
         self = this,
         gameBoard = this.getLeaderBoard( gameData.gameId );
 
-    game.playersFinished++;
-    if ( game.playersFinished == 1 ) { // start the timer when first player finishes the game
-      game.timer = setTimeout( function() {
-        console.log('\nSaving after 3s...');
-        self.storeResult( gameData, gameBoard, game );
-      }, 3000);
+    if ( game ) {
+      game.playersFinished++;
+      if ( game.playersFinished == 1 ) { // start the timer when first player finishes the game
+        game.timer = setTimeout( function() {
+          console.log('\nSaving after 3s...');
+          self.storeResult( gameData, gameBoard, game );
+        }, 3000);
+      }
+      if ( game.playersFinished === game.players.length ) {
+        console.log('\nSaving after all players finished..');
+        clearTimeout( game.timer );
+        this.storeResult( gameData, gameBoard, game );
+      }
+    } else {
+      console.log('ERROR: Failed to find the game ' + gameData.gameId );
     }
-    if ( game.playersFinished === game.players.length ) {
-      console.log('\nSaving after all players finished..');
-      clearTimeout( game.timer );
-      this.storeResult( gameData, gameBoard, game );
-    }
+
   };
 
   /**

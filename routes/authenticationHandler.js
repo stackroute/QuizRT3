@@ -29,6 +29,12 @@ module.exports = function(passport){
 		res.send({ error: "Invalid username or password"});
 		// req.session.user=null;
 	});
+  router.get('/success-register', function(req, res){
+		res.send({state: 'success'});
+	});
+  router.get('/failure-register', function(req, res){
+		res.send({state: 'failure'});
+	});
 	//log in
 	router.post('/login', passport.authenticate('login', {
 		successRedirect: '/auth/success',
@@ -37,9 +43,9 @@ module.exports = function(passport){
 
 	//sign up
 	router.post('/register', passport.authenticate('register', {
-		successRedirect: '/auth/success',
-		failureRedirect: '/auth/failure'
-	}));
+    successRedirect: '/auth/success-register',
+    failureRedirect: '/auth/failure-register'
+  }));
 
 	//login using facebook
 	router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
