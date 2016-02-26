@@ -101,7 +101,8 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .factory('socket', function ($rootScope) {
 
       return function($rootScope, type) {
-        var socket = io.connect('http://172.23.238.188:8080' + type, {'forceNew':true } );
+        // var socket = io.connect('http://172.23.238.188:8080' + type, {'forceNew':true } );
+        var socket = io.connect('http://52.89.104.235:2000' + type, {'forceNew':true } );
         console.log('Socket initialized for ' + type);
 
         return {
