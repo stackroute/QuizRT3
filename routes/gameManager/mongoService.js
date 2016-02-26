@@ -95,7 +95,7 @@ module.exports = {
         len = profileData.tournaments ? profileData.tournaments.length : 0,
         tournamentFound = false,
         self = this;
-    console.log('\nSaving tournament to user profile');
+    console.log('Saving tournament to user profile');
     for (var i = 0; i < len; i++) {
       if ( profileData.tournaments[i].tournamentId == tournamentId ) {
         tournamentFound = true;
@@ -180,7 +180,7 @@ module.exports = {
           var isPlayerOnBoard = tournamentData.leaderBoard.some( function( boardPlayer ) {
 
             if ( player.userId == boardPlayer.userId ) {
-              console.log('\nPlayer on LeaderBoard. updating score');
+              console.log('Player on LeaderBoard. updating score');
               boardPlayer.totalScore += player.totalScore;
               return true;
             }

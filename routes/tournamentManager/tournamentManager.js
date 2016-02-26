@@ -18,34 +18,34 @@
 var TournamentManager = function() {
   this.tournaments = new Map();
   this.playerTournaments = new Map();
-  this.managePlayer = function( tournamentId, topicId, playersNeeded, gamePlayer ) {
-    if ( this.tournaments.has( tournamentId ) ) {
-      var gameManager = this.tournaments.get( tournamentId );
-      var addedSuccessfully = gameManager.managePlayer( topicId, playersNeeded, gamePlayer );
+  this.managePlayer = function( playerData, gamePlayer ) {
+    if ( this.tournaments.has( playerData.tournamentId ) ) {
+      var gameManager = this.tournaments.get( playerData.tournamentId );
+      var addedSuccessfully = gameManager.managePlayer( playerData.topicId, playerData.levelId, playerData.playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
         if ( this.playerTournaments.has( gamePlayer.userId )) {
-          this.playerTournaments.get( gamePlayer.userId ).push( tournamentId );
+          this.playerTournaments.get( gamePlayer.userId ).push( playerData.tournamentId );
         } else {
-          this.playerTournaments.set( gamePlayer.userId, [tournamentId] );
+          this.playerTournaments.set( gamePlayer.userId, [playerData.tournamentId] );
         }
-        console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
+        console.log( gamePlayer.userId + ' is added to ' + playerData.topicId + ' of ' + playerData.tournamentId );
         return true;
       }
-      console.log( gamePlayer.userId + ' is already playing ' + topicId + ' of ' + tournamentId );
+      console.log( gamePlayer.userId + ' is already playing ' + playerData.topicId + ' of ' + playerData.tournamentId );
       return false;
     } else {
       var GameManagerClass = require('../gameManager/GameManager.js');
       var newGameManager = new GameManagerClass();
-      var addedSuccessfully = newGameManager.managePlayer( topicId, playersNeeded, gamePlayer );
+      var addedSuccessfully = newGameManager.managePlayer( playerData.topicId, playerData.levelId, playerData.playersNeeded, gamePlayer );
       if ( addedSuccessfully ) {
-        this.tournaments.set( tournamentId, newGameManager);
+        this.tournaments.set( playerData.tournamentId, newGameManager);
         if ( this.playerTournaments.has( gamePlayer.userId )) {
-          this.playerTournaments.get( gamePlayer.userId ).push( tournamentId );
+          this.playerTournaments.get( gamePlayer.userId ).push( playerData.tournamentId );
         } else {
-          this.playerTournaments.set( gamePlayer.userId, [tournamentId] );
+          this.playerTournaments.set( gamePlayer.userId, [playerData.tournamentId] );
         }
         console.log('\nNew GameManager for tournament');
-        console.log( gamePlayer.userId + ' is added to ' + topicId + ' of ' + tournamentId );
+        console.log( gamePlayer.userId + ' is added to ' + playerData.topicId + ' of ' + playerData.tournamentId );
         return true;
       }
       return false;
@@ -64,7 +64,8 @@ var TournamentManager = function() {
       playerTournaments.forEach( function( tournamentId, index ) {
         var gameManager = self.getGameManager( tournamentId );
         gameManager.popPlayer( userId ); // pop the user from all the games
-        console.log( playerTournaments.splice( index, 1 ) , '  was removed from the tournament ' + tournamentId );
+        playerTournaments.splice( index, 1 ) ;
+        console.log( userId + '  was removed from the tournament ' + tournamentId );
       });
       this.playerTournaments.delete( userId );
     }

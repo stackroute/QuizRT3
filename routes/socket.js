@@ -60,7 +60,7 @@ module.exports = function(server,sessionMiddleware) {
               client: client
             };
 
-            var addedSuccessfully = GameManager.managePlayer( playerData.topicId, playerData.playersPerMatch, gamePlayer ); // add the player against the topicId.
+            var addedSuccessfully = GameManager.managePlayer( playerData.topicId, playerData.levelId, playerData.playersPerMatch, gamePlayer ); // add the player against the topicId.
             if ( addedSuccessfully === false ) {
               console.log('User is already playing the game ' + playerData.topicId + '. Cannot add him again.');
               client.emit('alreadyPlayingTheGame', { topicId: playerData.topicId });
@@ -154,7 +154,7 @@ module.exports = function(server,sessionMiddleware) {
                   client: client
                 };
 
-                var addedSuccessfully = TournamentManager.managePlayer( playerData.tournamentId, playerData.topicId, playerData.playersPerMatch, gamePlayer ); // add the player against the topicId.
+                var addedSuccessfully = TournamentManager.managePlayer( playerData, gamePlayer ); // add the player against the topicId.
                 if ( addedSuccessfully === false ) {
                   console.log('User is already playing the game ' + playerData.topicId + ' of ' + playerData.tournamentId + '. Cannot add him again.');
                   client.emit('alreadyPlayingTheGame', { levelId: playerData.levelId, tournamentId: playerData.tournamentId, topicId: playerData.topicId });
@@ -201,7 +201,6 @@ module.exports = function(server,sessionMiddleware) {
                 intermediateGameBoard.some( function(player, index ) {
                   if ( player.userId == gameData.userId ) {
                     myRank = index + 1;
-                    console.log( player.userId + ' rank = ' + myRank );
                     return true;
                   }
                 });

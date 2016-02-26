@@ -34,9 +34,10 @@ var GameManager = function() {
   ** @param topicId as String, playersNeeded as Number
   ** @return true if the new game was created, otherwise false
   */
-  this.createNewGame = function( topicId, playersNeeded ) {
+  this.createNewGame = function( topicId, levelId, playersNeeded ) {
     var newGame = { // create a newGame, generate a new gameId using uuid and set the game into this.games
       topicId: topicId,
+      levelId: levelId,
       playersNeeded: playersNeeded ? playersNeeded : 3,
       leaderBoard: [],
       players: [],
@@ -52,7 +53,7 @@ var GameManager = function() {
   ** @param topicId as String, playersNeeded as Number, incomingPlayer as Object
   ** @return true if player was added to a game, otherwise false
   */
-  this.managePlayer = function( topicId, playersNeeded, incomingPlayer ) {
+  this.managePlayer = function( topicId, levelId, playersNeeded, incomingPlayer ) {
     var gameId4TopicInWaitStack = this.topicsWaiting[topicId];
     if ( gameId4TopicInWaitStack ) { // if the game is waiting in the wait stack
       var isPlayerAdded = this.addPlayerToGame( gameId4TopicInWaitStack, topicId, incomingPlayer );
@@ -67,7 +68,7 @@ var GameManager = function() {
       }
       return false;
     } else {
-      var gameId = this.createNewGame( topicId, playersNeeded ); // create a new game
+      var gameId = this.createNewGame( topicId, levelId, playersNeeded ); // create a new game
       if ( gameId ) { // if the game was created successfully
         var isPlayerAdded = this.addPlayerToGame( gameId, topicId, incomingPlayer );
         if ( isPlayerAdded ) {
@@ -229,7 +230,7 @@ var GameManager = function() {
     var game = this.games.get( gameData.gameId ),
         self = this,
         gameBoard = this.getLeaderBoard( gameData.gameId );
-        
+
     game.playersFinished++;
     if ( game.playersFinished == 1 ) { // start the timer when first player finishes the game
       game.timer = setTimeout( function() {
@@ -316,7 +317,7 @@ var GameManager = function() {
                 var updateProfileObj = {
                  score: boardPlayer.score,
                  rank: 0,
-                 topicid: game.topicId, // change this with $scope.topicId
+                 topicid: game.topicId,
                  userId: boardPlayer.userId,
                  levelId: game.levelId
                };
@@ -324,6 +325,7 @@ var GameManager = function() {
                   if ( updatedData.error ) {
                     console.log('Failed to update user profile.');
                   }
+                  console.log('\nProfile update after leaveGame successful.\n');
                 });
                 return true;
               }
@@ -411,7 +413,7 @@ var GameManager = function() {
                 gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
                   if ( savedGamePlayer.userId == boardPlayer.userId ) {
                     var updateProfileObj = {
-                     score: 0,
+                     score: boardPlayer.score > 0 ? 0 : boardPlayer.score,
                      rank: 0,
                      topicid: game.topicId, // change this with $scope.topicId
                      userId: boardPlayer.userId,

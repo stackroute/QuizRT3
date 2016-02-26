@@ -34,7 +34,7 @@ angular.module('quizRT')
 				$scope.isComingFromTournament = true;
 			}
 
-			$timeout( function() {
+			// $timeout( function() {
 				if ( $rootScope.recentGames[$scope.gameId].error ) {
 					$scope.msg = $rootScope.recentGames[$scope.gameId].error;
 				} else {
@@ -46,7 +46,7 @@ angular.module('quizRT')
 
 					var levelId = $rootScope.playGame.levelId || false;
 				}
-			}, $scope.timeBeforeResult); // show the results after a delay. LOL!!!! ROFL!!!! LOL!!!!!
+			// }, $scope.timeBeforeResult); // show the results after a delay. LOL!!!! ROFL!!!! LOL!!!!!
 
 			$scope.nextLevel = function() {
 				if ( $rootScope.playGame.levelId ) {
