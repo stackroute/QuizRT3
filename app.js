@@ -35,6 +35,7 @@ var express = require('express'),
     index = require('./routes/index'),
     authenticationHandler = require('./routes/authenticationHandler')(passport),
     redis_store = new RedisStore({ host: '172.23.238.253', port: 6379, client: redisClient}),
+    redis_store = new RedisStore({ host: 'localhost', port: 6379, client: redisClient}),
     Quiz = require("./models/quiz"),
     sessionMiddleware = session({
       store: redis_store,
@@ -46,8 +47,8 @@ var express = require('express'),
       secret: 'keyboard cat'
     });
 
-mongoose.connect('mongodb://172.23.238.253/quizRT3');
-// mongoose.connect('mongodb://localhost/quizRT3');
+// mongoose.connect('mongodb://172.23.238.253/quizRT3');
+mongoose.connect('mongodb://localhost/quizRT3');
 mongoose.connection.on('error', console.error.bind(console, 'Failed to establish connection to MongoDB@StackRouteHost:PORT/quizRT3'));
 mongoose.connection.on('open', function() {
   console.log('Connected to MongoDB@StackRouteHost:PORT/quizRT3');
@@ -91,6 +92,7 @@ app.use('/topicsHandler', topicsHandler);
 app.use('/tournamentHandler', tournamentHandler);
 
 
-server.listen(8080, function() {
-  console.log('App started for Quiz Play!! Please use ur IP e.g 123.23.123.23:8080');
+// server.listen(8080, function() {
+server.listen(2000, function() {
+  console.log('App started for Quiz Play!! Please use ur IP e.g 123.23.123.23:2000');
 });
