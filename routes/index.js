@@ -19,8 +19,8 @@ var express = require('express'),
     router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  
-	res.render('index', { title: "QuizRT"});
+
+	res.render('index', { title: "QuizART"});
 });
 
 module.exports = router;
