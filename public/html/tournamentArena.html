@@ -11,7 +11,7 @@
             <div class="panel panel-default text-center">
               <div class="panel-heading">
                 <div class="panel-title">
-                  Topper
+                  {{topperName}}
                 </div>
               </div>
               <div class="panel-body">
@@ -50,9 +50,9 @@
         </div>
         <div class="row" id="answerStatus">
           <h5 class="col-xs-12 text-center">
-            <button class="btn btn-success"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ok"></span> : 1</button>
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-remove"></span> : 10</button>
-            <button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ban-circle"></span> : 100</button>
+            <button class="btn btn-success"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ok"></span> : {{correctAnswerers}}</button>
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-remove"></span> : {{wrongAnswerers}}</button>
+            <button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-ban-circle"></span> : {{unattempted}}</button>
           </h5>
         </div>
       </section>

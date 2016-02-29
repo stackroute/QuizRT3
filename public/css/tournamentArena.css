@@ -36,6 +36,7 @@
   padding-left: 10px;
 }
 #tournamentArena .option .btn-option {
+  white-space: normal;
   font-weight: bold;
   min-height: 60px;
 }

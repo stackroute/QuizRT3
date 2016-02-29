@@ -206,7 +206,7 @@ module.exports = function(server,sessionMiddleware) {
                 });
                 if ( gamePlayers && gamePlayers.length ) {
                   gamePlayers.forEach( function( player, index) {
-                    player.client.emit('takeScore', {myRank: myRank, userId: client.request.session.user, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
+                    player.client.emit('takeScore', {myRank: myRank, userId: client.request.session.user, topperName:gameTopper.playerName, topperScore:gameTopper.score, topperImage:gameTopper.playerPic });
                   });
                 }
               } else {

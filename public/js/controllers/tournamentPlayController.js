@@ -35,8 +35,10 @@ angular.module('quizRT')
         $scope.myscore = 0;
         $scope.myrank = 0;
         $scope.topperScore = 0;
+        $scope.topperName = 'Topper';
         $scope.correctAnswerers = 0;
         $scope.wrongAnswerers = 0;
+        $scope.unattempted = 0;
         $scope.quizTitle = $scope.tournamentTitle;
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
@@ -167,6 +169,7 @@ angular.module('quizRT')
           }
           $scope.topperScore = data.topperScore;
           $scope.topperImage = data.topperImage;
+          $scope.topperName = data.topperName;
         });
         $rootScope.tournamentSocket.on('isCorrect', function(data) {
           $scope.correctAnswerers++;
