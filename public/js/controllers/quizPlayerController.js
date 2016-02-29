@@ -59,7 +59,7 @@ angular.module('quizRT')
             userId: $rootScope.loggedInUser.userId,
             playerName: $rootScope.loggedInUser.name,
             playerPic: $rootScope.loggedInUser.imageLink,
-            playersPerMatch: playersPerMatch
+            playersNeeded: playersPerMatch
         };
         $rootScope.socket.emit('join', playerData); // enter the game and wait for other players to join
 
@@ -80,7 +80,7 @@ angular.module('quizRT')
             $scope.question = "Starting Game ...";
             $scope.time = 3;
 
-            var timeInterval = $interval( function() {
+            $scope.timeInterval = $interval( function() {
                 $scope.time--;
 
                 //waiting for counter to end to start the Quiz
@@ -89,16 +89,33 @@ angular.module('quizRT')
                     $scope.wrongAnswerers = 0;
                     $scope.correctAnswerers = 0;
                     $scope.unattempted = $scope.playersCount;
-                    if ( $scope.questionCounter == startGameData.questions.length ) {
-                        $interval.cancel(timeInterval);
-                        $rootScope.finalScore = $scope.myscore;
-                        $rootScope.finalRank = $scope.myrank;
-                        $rootScope.socket.emit( 'gameFinished', { gameId: startGameData.gameId, topicId: startGameData.topicId, levelId: $scope.levelId } );
-                    } else {
-                        $scope.temp = loadNextQuestion( startGameData.questions, $scope.questionCounter, $scope);
 
+                    if ( $scope.questionCounter == startGameData.questions.length ) {
+                        $interval.cancel($scope.timeInterval);
+                        $scope.options = null;
+                        $scope.question = 'Game finished. Compiling the result...';
+                        $scope.questionImage = null;
+                        $scope.unattempted = 0;
+                        $scope.finishGameData = {
+                          gameId: startGameData.gameId,
+                          tournamentId: $scope.tournamentId,
+                          levelId: $scope.levelId,
+                          topicId: startGameData.topicId
+                        };
+                        $rootScope.socket.emit( 'gameFinished', $scope.finishGameData );
+                    } else {
+                        $scope.currentQuestion = startGameData.questions[$scope.questionCounter];
+                        $scope.options = $scope.currentQuestion.options;
+                        $scope.questionCounter++;
+                        $scope.question = $scope.questionCounter + ". " +$scope.currentQuestion.question;
+                        if ($scope.currentQuestion.image != "null")
+                            $scope.questionImage = $scope.currentQuestion.image;
+                        else {
+                            $scope.questionImage = null;
+                        }
+                        $scope.time = 10;
                         $scope.changeColor = function(id, element) {
-                            if (id == "option" + ($scope.temp.correctIndex)) {
+                            if (id == $scope.currentQuestion.correctIndex) {
                                 $(element.target).addClass('btn-success');
                                 $scope.myscore = $scope.myscore + $scope.time + 10;
                                 $rootScope.socket.emit('confirmAnswer', {
@@ -108,7 +125,7 @@ angular.module('quizRT')
                                 });
                             } else {
                                 $(element.target).addClass('btn-danger');
-                                angular.element('#option' + $scope.temp.correctIndex).addClass('btn-success');
+                                $('#' + $scope.currentQuestion.correctIndex).addClass('btn-success');
                                 $scope.myscore = $scope.myscore - 5;
                                 $rootScope.socket.emit('confirmAnswer', {
                                     ans: "wrong",
@@ -126,17 +143,6 @@ angular.module('quizRT')
                                 playerPic: $rootScope.loggedInUser.imageLink
                             });
                         };
-
-                        $scope.question = $scope.questionCounter + ". " +$scope.temp.question;
-                        $scope.options = $scope.temp.options;
-
-                        if ($scope.temp.image != "null")
-                            $scope.questionImage = $scope.temp.image;
-
-                        else {
-                            $scope.questionImage = null;
-                        }
-                        $scope.time = 10;
                     }
                 }
 
@@ -172,6 +178,17 @@ angular.module('quizRT')
             setTimeout( function() {
               $scope.playerLeft = '';
             },1000);
+          }
+        });
+        $rootScope.socket.on('playerJoined', function( data ) {
+          // $scope.playersCount = data.newCount;
+          $scope.playerJoined = data.playerName + " joined the game.";
+        });
+        $scope.$watch( 'playerJoined', function(nv,ov) {
+          if ( nv ) {
+            $timeout( function() {
+              $scope.playerJoined = '';
+            },2000);
           }
         });
         $rootScope.socket.on( 'takeResult', function( resultData ) {

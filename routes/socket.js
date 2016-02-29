@@ -221,7 +221,7 @@ module.exports = function(server,sessionMiddleware) {
 
             client.on('leaveGame', function( gameData ){
               var gameManager = TournamentManager.getGameManager( gameData.tournamentId );
-              gameManager ? gameManager.leaveGame( gameId, client.request.session.user ) : console.log('ERROR: Failed to find the gameManager for ' + gameData.tournamentId ); ;
+              gameManager ? gameManager.leaveGame( gameData.gameId, client.request.session.user ) : console.log('ERROR: Failed to find the gameManager for ' + gameData.tournamentId ); ;
             });
           });// end tournament socket
 }

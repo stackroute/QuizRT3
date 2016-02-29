@@ -24,20 +24,20 @@ angular.module('quizRT')
         $location.path('/error');
       } else {
         $rootScope.hideFooterNav = true;
-        console.log('$rootScope.playGame', $rootScope.playGame);
         $scope.levelId = $rootScope.playGame.levelId;
         $scope.tournamentId = $rootScope.playGame.tournamentId;
         $scope.topicId = $rootScope.playGame.topicId;
-        $scope.quizTitle = $rootScope.playGame.topicName;
+        $scope.topicName = $rootScope.playGame.topicName;
         $scope.tournamentTitle = $rootScope.playGame.tournamentTitle;
         if ( $scope.levelId && $scope.levelId.length ) {
           $scope.roundCount = $scope.levelId.substring($scope.levelId.lastIndexOf("_") + 1);
         }
-        $rootScope.stylesheetName = "quizPlayer";
         $scope.myscore = 0;
+        $scope.myrank = 0;
+        $scope.topperScore = 0;
         $scope.correctAnswerers = 0;
         $scope.wrongAnswerers = 0;
-        $scope.quizTitle = $rootScope.title;
+        $scope.quizTitle = $scope.tournamentTitle;
         var playersPerMatch = $rootScope.playersPerMatch;
         $scope.pendingUsersCount = playersPerMatch;
         $scope.question = "Setting up your game...";
@@ -45,7 +45,7 @@ angular.module('quizRT')
 
         // levelId is defined for Tournaments only
         if($scope.levelId){
-             $scope.levelDetails = "Round "+ $scope.roundCount + " : " + $scope.tournamentTitle;
+             $scope.levelDetails = "Round "+ $scope.roundCount + " : " + $scope.topicName;
         }else{
             $scope.levelDetails = "";
         }
@@ -62,7 +62,7 @@ angular.module('quizRT')
             userId: $rootScope.loggedInUser.userId,
             playerName: $rootScope.loggedInUser.name,
             playerPic: $rootScope.loggedInUser.imageLink,
-            playersPerMatch: playersPerMatch
+            playersNeeded: playersPerMatch
         };
         $rootScope.tournamentSocket.emit('joinTournament', playerData); // enter the tournament and wait for other players to join
 
@@ -82,6 +82,7 @@ angular.module('quizRT')
             $scope.questionCounter = 0; // reset the questionCounter for each game
             $scope.question = "Starting Game in...";
             $scope.time = 3;
+            $scope.timerSpan = $('#timer');
             $scope.timeInterval = $interval( function() {
                 $scope.time--;
                 //waiting for counter to end to start the Quiz
@@ -92,9 +93,10 @@ angular.module('quizRT')
                     $scope.unattempted = $scope.playersCount;
                     if ( $scope.questionCounter == startGameData.questions.length ) {
                         $interval.cancel($scope.timeInterval);
-                        $scope.timeInterval = undefined;
-                        $rootScope.finalScore = $scope.myscore;
-                        $rootScope.finalRank = $scope.myrank;
+                        $scope.options = null;
+                        $scope.question = 'Game finished. Compiling the result...';
+                        $scope.questionImage = null;
+                        $scope.unattempted = 0;
                         $scope.finishGameData = {
                           gameId: startGameData.gameId,
                           tournamentId: $scope.tournamentId,
@@ -112,7 +114,7 @@ angular.module('quizRT')
                         else {
                             $scope.questionImage = null;
                         }
-                        $scope.time = 10;
+                        $scope.time = 15;
                         $scope.changeColor = function(id, clickEvent) {
                             $scope.isDisabled = true;
                             if (id == $scope.currentQuestion.correctIndex ) {
@@ -153,6 +155,10 @@ angular.module('quizRT')
             $rootScope.hideFooterNav = false;
             $scope.question = 'Selected topic does not have any questions in our QuestionBank :(';
           }
+          $scope.leaveGame = function() {
+            console.log('clicked');
+            $rootScope.tournamentSocket.emit('leaveGame', {userId: $rootScope.loggedInUser.userId, tournamentId: $scope.tournamentId, gameId: startGameData.gameId}); // enter the tournament and wait for other players to join
+          };
 
         });
         $rootScope.tournamentSocket.on('takeScore', function(data) {
@@ -203,7 +209,9 @@ angular.module('quizRT')
               topicId: resultData.gameResult.topicId,
               gameBoard: resultData.gameResult.gameBoard
             };
-            $location.path( '/quizResult/' + resultData.gameResult.gameId );
+            $timeout( function() {
+              $location.path( '/quizResult/' + resultData.gameResult.gameId );
+            },2000);
         });
         $rootScope.tournamentSocket.on( 'alreadyPlayingTheGame', function( duplicateEntryData ) {
           $scope.question = 'WARNING!!  You are already playing ' + duplicateEntryData.topicId + '. Kindly complete the previous game or play a different one.';

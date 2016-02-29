@@ -183,6 +183,7 @@
   text-align: center;
 }
 .play-now-button {
+  border-radius: 30px;
   padding: 3px 6px;
   margin-top: -1%;
 }

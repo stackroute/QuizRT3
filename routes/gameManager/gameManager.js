@@ -245,7 +245,7 @@ var GameManager = function() {
         this.storeResult( gameData, gameBoard, game );
       }
     } else {
-      console.log('ERROR: Failed to find the game ' + gameData.gameId );
+      console.log('WARN: Failed to find the game ' + gameData.gameId );
     }
 
   };
@@ -330,7 +330,7 @@ var GameManager = function() {
                   if ( updatedData.error ) {
                     console.log('Failed to update user profile.');
                   }
-                  console.log('\nProfile update after leaveGame successful.\n');
+                  console.log('Profile update after leaveGame successful.');
                 });
                 return true;
               }

@@ -63,7 +63,7 @@
 
   <div  class="row myRow">
     <div ng-repeat="option in options" class="col-sm-6 col-xs-6 myOptions">
-      <button ng-disabled="isDisabled" ng-click = "changeColor(option.id,$event)" id="{{option.id}}" class="btn btn-1 btn-large btn-default btn-block">{{option.name}}</button>
+      <button ng-disabled="isDisabled" ng-click = "changeColor($index,$event)" id="{{$index}}" class="btn btn-1 btn-large btn-default btn-block">{{option}}</button>
     </div>
   </div>
 
