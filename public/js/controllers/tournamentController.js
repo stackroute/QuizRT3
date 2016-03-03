@@ -91,8 +91,10 @@
             showPlayButton = true;
           }
           if(index == $scope.levelCleared ) {
-            return showPlayButton;
+            showPlayButton = true;
           }
+          return showPlayButton;
+          
          }
        }
     });
