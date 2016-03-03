@@ -24,6 +24,7 @@ angular.module('quizRT')
         $location.path('/error');
       } else {
         $rootScope.hideFooterNav = true;
+        $scope.gameId = '';
         $scope.levelId = $rootScope.playGame.levelId;
         $scope.tournamentId = $rootScope.playGame.tournamentId;
         $scope.topicId = $rootScope.playGame.topicId;
@@ -55,7 +56,6 @@ angular.module('quizRT')
         $scope.$on( '$routeChangeStart', function(args) {
           $rootScope.hideFooterNav = false;
         });
-
         // create the playerData obj for the quiz gameManager to identify the player and his client
         var playerData = {
             levelId: $scope.levelId, // defined only for Tournaments
@@ -157,12 +157,17 @@ angular.module('quizRT')
             $rootScope.hideFooterNav = false;
             $scope.question = 'Selected topic does not have any questions in our QuestionBank :(';
           }
-          $scope.leaveGame = function() {
-            console.log('clicked');
-            $rootScope.tournamentSocket.emit('leaveGame', {userId: $rootScope.loggedInUser.userId, tournamentId: $scope.tournamentId, gameId: startGameData.gameId}); // enter the tournament and wait for other players to join
-          };
-
         });
+        $scope.leaveGame = function() {
+          $rootScope.tournamentSocket.emit('leaveGame', {userId: $rootScope.loggedInUser.userId, tournamentId: $scope.tournamentId, gameId: $scope.gameId}, function( leaveData ) {
+            if ( !leaveData.error ) {
+              $('#cancelLeaveGame').click();
+              $timeout( function() {
+                $location.path( '/tournament/' + $scope.tournamentId );
+              }, 500);
+            }
+          }); // leave the game
+        };
         $rootScope.tournamentSocket.on('takeScore', function(data) {
           if ( data.userId == $rootScope.loggedInUser.userId ) {
             $scope.myrank = data.myRank;
@@ -181,6 +186,7 @@ angular.module('quizRT')
         });
         $rootScope.tournamentSocket.on('pendingPlayers', function(data) {
           $scope.question = "WAITING FOR " + data.pendingPlayers +" OTHER PLAYER(S)";
+          $scope.gameId = data.gameId;
         });
         $rootScope.tournamentSocket.on('playerLeft', function( data ) {
           $scope.playersCount = data.remainingCount;

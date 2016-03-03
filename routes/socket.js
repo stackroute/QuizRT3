@@ -219,9 +219,15 @@ module.exports = function(server,sessionMiddleware) {
             });
 
 
-            client.on('leaveGame', function( gameData ){
+            client.on('leaveGame', function( gameData, done ){
               var gameManager = TournamentManager.getGameManager( gameData.tournamentId );
-              gameManager ? gameManager.leaveGame( gameData.gameId, client.request.session.user ) : console.log('ERROR: Failed to find the gameManager for ' + gameData.tournamentId ); ;
+              if( gameManager ) {
+                gameManager.leaveGame( gameData.gameId, client.request.session.user );
+                done( {error:null} );
+              } else {
+                console.log('ERROR: Failed to find the gameManager for ' + gameData.tournamentId );
+                done( {error: 'Could not leave the game.'} );
+              }
             });
           });// end tournament socket
 }

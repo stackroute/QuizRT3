@@ -1,4 +1,6 @@
-
+body {
+  padding-bottom: 0;
+}
 #tournamentArena {
   text-align: center;
   background-color: #524f4f;
@@ -73,6 +75,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#tournamentArena #questionSection {
+  min-height: 300px;
+}
 #tournamentArena #quizTitle {
   color: #ccc;
   text-align: center;
@@ -102,6 +107,7 @@
 }
 #tournamentArena #footer {
   border-top: 1px solid #777;
+  margin-bottom: -75px;
   padding: 10px 0;
 }
 #tournamentArena #leaveGame.modal.in .modal-dialog {
@@ -170,5 +176,8 @@
   #tournamentArena #question img {
     width: 280px;
     height: 190px;
+  }
+  body {
+    padding-bottom: 0;
   }
 }

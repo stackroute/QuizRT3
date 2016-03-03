@@ -35,7 +35,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
       $rootScope.isAuthenticatedCookie = $cookies.get('isAuthenticated');
       $rootScope.logInLogOutSuccessMsg = ''; // used on login.html page to display login/logout status msgs
       $rootScope.logInLogOutErrorMsg = '';
-      $rootScope.serverErrorMsg = 'Error! Kindly check your URL.'; // used in eror.html to display Error message received from the server
+      $rootScope.serverErrorMsg = 'Error! Kindly check your URL.'; // used in error.html to display Error message received from the server
       $rootScope.hideFooterNav = false; // This is used to hide the footer nav
       $rootScope.recentGames = {}; // save the recent games played by the user since last login. Saved as {gameId:gameBoard}
       $rootScope.playGame = {
@@ -43,7 +43,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
         topicId: "",
         topicName: "",
         tournamentTitle: ""
-      }; // used to pass topic/tournament details to quizPlayerController
+      }; // used to pass topic/tournament details to quizPlayerController/tournamentPlayController
 
       // Added application level watcher here
       $rootScope.$watch('isAuthenticatedCookie', function(nv,ov) { // watch that puts/removes cookie based on $rootScope.isAuthenticatedCookie
@@ -101,7 +101,7 @@ angular.module('quizRT', ['ngRoute', 'ngCookies'])
     .factory('socket', function ($rootScope) {
 
       return function($rootScope, type) {
-        // var socket = io.connect('http://172.23.238.186:8080' + type, {'forceNew':true } );
+        // var socket = io.connect('http://172.23.238.154:8080' + type, {'forceNew':true } );
         var socket = io.connect('http://quizart.stackroute.in:2000' + type, {'forceNew':true } );
         console.log('Socket initialized for ' + type);
 

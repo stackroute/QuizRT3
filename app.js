@@ -47,8 +47,9 @@ var express = require('express'),
       secret: 'keyboard cat'
     });
 
+mongoose.connect('mongodb://quizart.stackroute.in/quizRT3');
 // mongoose.connect('mongodb://172.23.238.253/quizRT3');
-mongoose.connect('mongodb://localhost/quizRT3');
+// mongoose.connect('mongodb://localhost/quizRT3');
 mongoose.connection.on('error', console.error.bind(console, 'Failed to establish connection to MongoDB@StackRouteHost:PORT/quizRT3'));
 mongoose.connection.on('open', function() {
   console.log('Connected to MongoDB@StackRouteHost:PORT/quizRT3');

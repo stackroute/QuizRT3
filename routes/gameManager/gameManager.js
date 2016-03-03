@@ -38,6 +38,7 @@ var GameManager = function() {
     var newGame = { // create a newGame, generate a new gameId using uuid and set the game into this.games
       topicId: topicId,
       levelId: levelId,
+      state: 'WAITING', // can be 'WAITING', 'LIVE', "FINISHED"
       playersNeeded: playersNeeded ? playersNeeded : 3,
       leaderBoard: [],
       players: [],
@@ -214,6 +215,7 @@ var GameManager = function() {
           console.log('Starting game for ' + player.userId );
           player.client.emit('startGame', { topicId: game.topicId, gameId: gameId, playersNeeded: game.playersNeeded, questions: questions });
         });
+        game.state = 'LIVE'; // change the state of the game from 'WAITING' to 'LIVE'
         if ( !questions || !questions.length ) {
           self.popGame( gameId );
         }
@@ -311,12 +313,13 @@ var GameManager = function() {
         game = this.games.get( gameId ),
         gamePlayers = game ? game.players : null, // array of players playing gameId
         playerLeft = false,
-        gameBoard = this.getLeaderBoard( gameId );
+        gameBoard = this.getLeaderBoard( gameId ),
+        self = this;
 
     if ( gamePlayers && gamePlayers.length ) {
       playerLeft = gamePlayers.some( function( savedPlayer, index ) {
         if ( savedPlayer.userId == userId ) {
-          if ( gameBoard && gameBoard.length ) {
+          if ( game.state == 'LIVE' && gameBoard && gameBoard.length ) {
             gameBoard.some( function( boardPlayer, index ) { // save the user profile before knocking the player
               if ( savedPlayer.userId == boardPlayer.userId ) {
                 var updateProfileObj = {
@@ -336,7 +339,7 @@ var GameManager = function() {
               }
             });
           }
-          console.log( gamePlayers.splice( index, 1 ) , ' left ' + gameId );
+          console.log( gamePlayers.splice( index, 1 ).userId , ' left ' + gameId );
           if ( self.topicsWaiting[game.topicId] ) { // if still waiting for more players
             self.emitPendingPlayers( gameId );
             self.emitPlayerLeft( gameId, savedPlayer );
@@ -355,7 +358,7 @@ var GameManager = function() {
       }
       var index = playerGames.indexOf( gameId );
       if ( playerGames && playerGames.length &&  (index != -1)) {
-        console.log( playerGames.splice( index, 1 ), ' was removed from ' + userId  + "'s array of games.");
+        console.log( playerGames.splice( index, 1 )[0], ' was removed from ' + userId  + "'s array of games.");
       }
       if ( playerGames && !playerGames.length ) { // remove the player mapping if the player is not playing any topic
         this.players.delete( userId );
