@@ -90,8 +90,9 @@
           if(index == $scope.levelCleared && (tournamentStartDate.getTime() <= currentDate.getTime()) && (currentDate.getTime() <= tournamentEndDate.getTime())) {
             showPlayButton = true;
           }
-          return true;
-          //  return showPlayButton;
+          if(index == $scope.levelCleared ) {
+            return showPlayButton;
+          }
          }
        }
     });
