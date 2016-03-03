@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"quizRT3.game_collection"},{"v":1,"unique":true,"key":{"gameId":1},"name":"gameId_1","ns":"quizRT3.game_collection","background":true}]}
