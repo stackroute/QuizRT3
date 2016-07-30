@@ -16,7 +16,7 @@
 
 var uuid = require('node-uuid'), // used to generate unique game ids
     questionBank = require('../questionBank'),
-    LeaderBoard = require('./Leaderboard.js');
+    LeaderBoard = require('./leaderboard.js');
 
 /**
 ** @param no constructor params
